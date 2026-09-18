@@ -1,5 +1,6 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
+
 # Side Quest: Agent Session Phases Explained
 
 > _Optional: take this detour for a full breakdown of what happens inside the agent session, then return to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)._
@@ -18,13 +19,13 @@ You'll learn what each phase of the agent session does, what to look for in the 
 
 After you submit the scenario prompt, the session shows a live activity feed. The agent works through five phases:
 
-| Phase | What you see | What to look for |
-|---|---|---|
-| **Reading** | The agent fetches the `create.md` reference and reads existing files in your repository | Confirm the agent fetched the reference guide and found your repository files |
-| **Planning** | The agent decides what [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) keys, [permissions](https://github.github.com/gh-aw/reference/permissions/), and [task brief](https://github.github.com/gh-aw/reference/markdown/) to use | The planning output should reflect your intended scenario |
-| **Writing** | The agent creates the workflow `.md` file in `.github/workflows/` | The file should contain a [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) block between `---` fences and a Markdown task brief |
-| **Compiling** | The agent runs `gh aw compile --validate` and fixes any errors it finds | A green success message indicates the `.lock.yml` was generated without errors |
-| **Opening PR** | The agent commits both files and opens a pull request | The pull request should list two changed files: the `.md` source and the `.lock.yml` |
+| Phase          | What you see                                                                                                                                                                                                                                           | What to look for                                                                                                                                          |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Reading**    | The agent fetches the `create.md` reference and reads existing files in your repository                                                                                                                                                                | Confirm the agent fetched the reference guide and found your repository files                                                                             |
+| **Planning**   | The agent decides what [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) keys, [permissions](https://github.github.com/gh-aw/reference/permissions/), and [task brief](https://github.github.com/gh-aw/reference/markdown/) to use | The planning output should reflect your intended scenario                                                                                                 |
+| **Writing**    | The agent creates the workflow `.md` file in `.github/workflows/`                                                                                                                                                                                      | The file should contain a [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) block between `---` fences and a Markdown task brief |
+| **Compiling**  | The agent runs `gh aw compile --validate` and fixes any errors it finds                                                                                                                                                                                | A green success message indicates the `.lock.yml` was generated without errors                                                                            |
+| **Opening PR** | The agent commits both files and opens a pull request                                                                                                                                                                                                  | The pull request should list two changed files: the `.md` source and the `.lock.yml`                                                                      |
 
 > :thinking: **Predict:** Before you open the activity feed on your next run, guess which phase will take the longest. Then expand the individual steps to check — was it the Planning phase (deciding frontmatter), the Writing phase (generating the file), or the Compiling phase (fixing errors)?
 
@@ -58,7 +59,7 @@ gh aw compile --watch
 
 Each save triggers another compile, so you get immediate feedback instead of discovering YAML mistakes later. See [Side Quest: Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md) for a full walkthrough.
 
-## ✅ Checkpoint
+## :white_check_mark: Checkpoint
 
 - [ ] I can name the five phases of an agent session in order
 - [ ] I know what a successful Compiling phase looks like (green success message, `.lock.yml` generated)
@@ -68,6 +69,7 @@ Each save triggers another compile, so you get immediate feedback instead of dis
 ---
 
 <!-- journey: all -->
-Return to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
-<!-- /journey -->
 
+Return to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
+
+<!-- /journey -->

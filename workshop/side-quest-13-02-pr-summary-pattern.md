@@ -1,5 +1,6 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
+
 # Side Quest 13-02: Pattern — Generate a PR Summary Comment
 
 ## :dart: What You'll Do
@@ -24,14 +25,14 @@ Create `.github/workflows/pr-summary.md`:
 ---
 name: PR Summary Generator
 on:
-  pull_request:
-    types: [opened]
+    pull_request:
+        types: [opened]
 permissions:
-  pull-requests: write
-  contents: read
+    pull-requests: write
+    contents: read
 safe-outputs:
-  add-comment:
-    limit: 1
+    add-comment:
+        limit: 1
 ---
 
 You are a changelog assistant. When a pull request is opened:
@@ -39,14 +40,17 @@ You are a changelog assistant. When a pull request is opened:
 1. Read the PR title, description, and list of changed files.
 2. Write a summary using exactly this template:
 
-   ## Summary
-   <!-- One sentence describing what this PR does. -->
+    ## Summary
 
-   ## Changes
-   <!-- Bullet list of the main areas touched, based on file paths. One bullet per distinct area. Maximum five bullets. -->
+    <!-- One sentence describing what this PR does. -->
 
-   ## Notes for reviewers
-   <!-- One or two sentences flagging anything that needs special attention. If nothing stands out, write "No special concerns." -->
+    ## Changes
+
+    <!-- Bullet list of the main areas touched, based on file paths. One bullet per distinct area. Maximum five bullets. -->
+
+    ## Notes for reviewers
+
+    <!-- One or two sentences flagging anything that needs special attention. If nothing stands out, write "No special concerns." -->
 
 3. Post the summary as a comment on the pull request.
 4. Do not add any text outside the template structure.
@@ -70,13 +74,14 @@ Open a test pull request. The workflow fires on `opened` only (not on every push
 The template above is generic. Adapt it to your team's actual workflow by changing one section.
 
 Ideas:
+
 - Replace **Notes for reviewers** with **Testing instructions** — ask the agent to suggest one manual test based on the changed file names.
 - Add a **Breaking changes** section — ask the agent to flag any file deletion or rename that might indicate a breaking change.
 - Replace **Summary** with **Ticket reference** — ask the agent to extract a ticket number from the PR title (for example `[PROJ-123]`) or write "No ticket found" if none is present.
 
 After making your change, recompile and open a fresh PR to see the updated output.
 
-## ✅ Checkpoint
+## :white_check_mark: Checkpoint
 
 - [ ] I created `.github/workflows/pr-summary.md` with an `opened`-only `pull_request` trigger
 - [ ] `gh aw compile` completed without errors and `.lock.yml` is committed and pushed

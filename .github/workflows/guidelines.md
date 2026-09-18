@@ -81,6 +81,7 @@ These guidelines assume the standard delivery context for GitHub- and Microsoft-
 Do not describe `gh-aw` as a runtime bridge, middleware, or orchestrator that runs inside the workflow job. Correct: "gh-aw compiles your `.md` into a `.lock.yml`." Incorrect: "gh-aw runs inside GitHub Actions and calls the AI model."
 
 When creating or updating architecture diagrams for the workshop:
+
 - Show `gh aw compile` in a clearly labeled **compile-time** zone, separate from the GitHub Actions workflow run.
 - Show GitHub Actions executing the `.lock.yml` (not invoking `gh-aw`) in the runtime zone.
 - The runtime flow is: Trigger → GitHub Actions (executes `.lock.yml`) → AI Model → Output.
@@ -99,9 +100,15 @@ generate both light and dark variants during the same run. Name them
 
 ```html
 <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="images/<stem>-dark.svg">
-   <source media="(prefers-color-scheme: light)" srcset="images/<stem>-light.svg">
-   <img alt="Concise descriptive alt text" src="images/<stem>-light.svg">
+    <source
+        media="(prefers-color-scheme: dark)"
+        srcset="images/<stem>-dark.svg"
+    />
+    <source
+        media="(prefers-color-scheme: light)"
+        srcset="images/<stem>-light.svg"
+    />
+    <img alt="Concise descriptive alt text" src="images/<stem>-light.svg" />
 </picture>
 ```
 
@@ -110,19 +117,19 @@ generate both light and dark variants during the same run. Name them
 - Capture or render each variant with Playwright's matching `colorScheme` setting.
 - If an image includes text, size that text to match normal rendered documentation body text so it remains legible after Markdown scaling.
 - Verify in both color schemes that `currentSrc` selects the expected variant and
-   that the image is nonblank, readable, and free of clipping or overflow.
+  that the image is nonblank, readable, and free of clipping or overflow.
 
 Existing single-theme workshop images are migration candidates, not exceptions:
 
 - Inventory Markdown image references and HTML `src`/`srcset` references so
-   existing `<picture>` blocks remain auditable.
+  existing `<picture>` blocks remain auditable.
 - Migrate at most three existing visuals per automated pull request. Process core
-   workshop pages before setup paths, advanced topics, and side quests.
+  workshop pages before setup paths, advanced topics, and side quests.
 - Preserve each visual's stem and alt text while creating `-light` and `-dark`
-   variants and replacing the original reference with the `<picture>` pattern.
+  variants and replacing the original reference with the `<picture>` pattern.
 - Create a genuine theme-specific variant for UI screenshots and diagrams. A
-   theme-neutral photo may use the same existing file for both `<source>` entries
-   instead of duplicating the binary.
+  theme-neutral photo may use the same existing file for both `<source>` entries
+  instead of duplicating the binary.
 - Do not delete an original asset until no Markdown or HTML reference uses it.
 
 ## GitHub visual language system
@@ -136,18 +143,18 @@ Use unmodified path geometry from the MIT-licensed
 in the SVG so diagrams remain self-contained, and preserve the applicable
 license attribution. Do not trace, simplify, redraw, or approximate Octicons.
 
-| Concept | Primer Octicon |
-|---------|-----------------|
-| Issue (open) | `issue-opened` |
-| Issue (closed) | `issue-closed` |
-| Pull request (open) | `git-pull-request` |
-| Pull request (merged) | `git-merge` |
-| Pull request (draft) | `git-pull-request-draft` |
-| Discussion | `comment-discussion` |
-| Commit | `git-commit` |
-| Repository | `repo` |
-| Workflow / Actions run | `workflow` or `play` |
-| Schedule trigger | `clock` |
+| Concept                | Primer Octicon           |
+| ---------------------- | ------------------------ |
+| Issue (open)           | `issue-opened`           |
+| Issue (closed)         | `issue-closed`           |
+| Pull request (open)    | `git-pull-request`       |
+| Pull request (merged)  | `git-merge`              |
+| Pull request (draft)   | `git-pull-request-draft` |
+| Discussion             | `comment-discussion`     |
+| Commit                 | `git-commit`             |
+| Repository             | `repo`                   |
+| Workflow / Actions run | `workflow` or `play`     |
+| Schedule trigger       | `clock`                  |
 
 Use the official 16 × 16 or 24 × 24 viewBox and scale it uniformly to fit the
 diagram's label box.
@@ -156,16 +163,16 @@ diagram's label box.
 
 Apply state-specific colors consistently so learners can interpret diagram nodes at a glance.
 
-| State | Light mode | Dark mode | Applies to |
-|-------|-----------|-----------|------------|
-| Open | `#1a7f37` | `#3fb950` | Open issues, open PRs |
-| Closed | `#cf222e` | `#f85149` | Closed issues, closed PRs |
-| Merged | `#8250df` | `#a371f7` | Merged pull requests |
-| Draft | `#57606a` | `#8b949e` | Draft PRs, pending items |
-| In progress | `#9a6700` | `#e3b341` | Running workflow steps, in-flight items |
-| Done / Success | `#1a7f37` | `#3fb950` | Completed steps, passing checks |
-| Skipped | `#57606a` | `#8b949e` | Skipped steps, inactive paths |
-| Danger / Error | `#cf222e` | `#f85149` | Failed checks, error states |
+| State          | Light mode | Dark mode | Applies to                              |
+| -------------- | ---------- | --------- | --------------------------------------- |
+| Open           | `#1a7f37`  | `#3fb950` | Open issues, open PRs                   |
+| Closed         | `#cf222e`  | `#f85149` | Closed issues, closed PRs               |
+| Merged         | `#8250df`  | `#a371f7` | Merged pull requests                    |
+| Draft          | `#57606a`  | `#8b949e` | Draft PRs, pending items                |
+| In progress    | `#9a6700`  | `#e3b341` | Running workflow steps, in-flight items |
+| Done / Success | `#1a7f37`  | `#3fb950` | Completed steps, passing checks         |
+| Skipped        | `#57606a`  | `#8b949e` | Skipped steps, inactive paths           |
+| Danger / Error | `#cf222e`  | `#f85149` | Failed checks, error states             |
 
 When the diagram is theme-aware, apply the matching column's values to each SVG variant.
 
@@ -234,6 +241,7 @@ GitHub alert callouts (`> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`
 
 ```markdown
 > [!TYPE]
+>
 > <details>
 > <summary>One-line summary visible when collapsed</summary>
 >
@@ -262,6 +270,7 @@ Multi-line callout (summary + body):
 
 ```markdown
 > [!IMPORTANT]
+>
 > <details>
 > <summary><b>Enterprise users: complete this check before continuing.</b></summary>
 >
@@ -351,7 +360,7 @@ The workshop docs are rendered with GFM emoji support: `:emoji_name:` shortcodes
 
 - **Prefer** `:white_check_mark:`, `:rocket:`, `:bulb:`, `:warning:`, and other GitHub-supported shortcodes when you need an icon or decorative symbol in prose, checkpoint headings, or callout text.
 - **Do not** paste raw Unicode emoji characters directly into Markdown prose — use the `:shortcode:` form so the build renders a properly sized and styled `<g-emoji>` element.
-- **Exception — fenced code blocks:** Markdown emoji shortcodes are **not** processed inside fenced code blocks, so they appear as raw text (e.g. `:thinking:` instead of 🤔). When an emoji is part of a code block that simulates agent log output, a correct/wrong marker, or any other display content, use the native Unicode character (e.g. `✅`, `❌`, `🤔`, `🔧`, `📥`) instead of the shortcode so the rendered output matches the visual intent. The `emoji:` field in agentic workflow YAML frontmatter is an exception — keep those values as `:shortcode:` strings because they are literal `gh-aw` syntax.
+- **Exception — fenced code blocks:** Markdown emoji shortcodes are **not** processed inside fenced code blocks, so they appear as raw text (e.g. `:thinking:` instead of `:thinking:` rendered as an emoji). When an emoji is part of a code block that simulates agent log output, a correct/wrong marker, or any other display content, use the native Unicode character at render time rather than the shortcode so the rendered output matches the visual intent. The `emoji:` field in agentic workflow YAML frontmatter is an exception — keep those values as `:shortcode:` strings because they are literal `gh-aw` syntax.
 - Verify the shortcode exists in the [GitHub emoji list](https://github.com/ikatyang/emoji-cheat-sheet) before using it; unknown shortcodes are passed through as literal text.
 - Write checkpoint headings as `## :white_check_mark: Checkpoint` so they use the same browser-independent rendering as other icons.
 
@@ -373,9 +382,9 @@ Use a single activity ID scheme across core steps, branch variants, and side que
 - **Core/shared step IDs**: `NN` (two digits, zero-padded), for example `00`, `01`, `10`.
 - **Choose-your-path branch IDs**: `NNx` where `x` is a lowercase branch letter, for example `02a`, `02b`.
 - **Side-quest IDs**: `NN-SQMM` where:
-  - `NN` is the parent/main step number where learners branch out
-  - `MM` is a two-digit side-quest sequence under that parent (`01`, `02`, ...)
-  - Example IDs: `11-SQ01`, `11-SQ02`, `16-SQ01`
+    - `NN` is the parent/main step number where learners branch out
+    - `MM` is a two-digit side-quest sequence under that parent (`01`, `02`, ...)
+    - Example IDs: `11-SQ01`, `11-SQ02`, `16-SQ01`
 
 Recommended filename patterns for new content:
 
@@ -386,17 +395,17 @@ Recommended filename patterns for new content:
 TOC generation rules (script-friendly):
 
 1. Parse activity IDs from filenames using these regexes:
-   - Core/shared: `^(?<step>\d{2})-`
-   - Branch variant: `^(?<step>\d{2})(?<branch>[a-z])-`
-   - Side quest: `^side-quest-(?<step>\d{2})-(?<sq>\d{2})-`
+    - Core/shared: `^(?<step>\d{2})-`
+    - Branch variant: `^(?<step>\d{2})(?<branch>[a-z])-`
+    - Side quest: `^side-quest-(?<step>\d{2})-(?<sq>\d{2})-`
 2. Sort by `(step ASC, type_order ASC, branch/sq ASC)` where `type_order` is:
-   - `0` = core/shared step
-   - `1` = branch variant
-   - `2` = side quest
+    - `0` = core/shared step
+    - `1` = branch variant
+    - `2` = side quest
 3. Render labels as:
-   - Core/shared: `NN`
-   - Branch variant: `NNx`
-   - Side quest: `NN-SQMM`
+    - Core/shared: `NN`
+    - Branch variant: `NNx`
+    - Side quest: `NN-SQMM`
 
 This keeps IDs lexically sortable, preserves the choose-your-adventure branch model, and cleanly groups optional side quests under their parent step.
 
@@ -460,23 +469,27 @@ Example patterns:
 
 ```markdown
 <!-- journey: codespace -->
+
 > [!TIP]
 > Using a Codespace? Continue to [Step 2a](02a-setup-codespace.md).
+
 <!-- /journey -->
 
 <!-- journey: local -->
+
 **Next:** [Set Up Your Local Terminal](side-quest-02-01-local-terminal.md)
+
 <!-- /journey -->
 ```
 
-| Value | Meaning |
-|-------|---------|
-| `all` | Applicable to every learner regardless of environment |
-| `ui` | GitHub web UI path only (no terminal required) |
-| `terminal` | Any terminal user — Codespace or local |
-| `codespace` | Codespace-specific instructions (subset of `terminal`) |
-| `local` | Local terminal-specific instructions (subset of `terminal`) |
-| `copilot` | Copilot-specific instructions, usually Copilot CLI users |
+| Value       | Meaning                                                     |
+| ----------- | ----------------------------------------------------------- |
+| `all`       | Applicable to every learner regardless of environment       |
+| `ui`        | GitHub web UI path only (no terminal required)              |
+| `terminal`  | Any terminal user — Codespace or local                      |
+| `codespace` | Codespace-specific instructions (subset of `terminal`)      |
+| `local`     | Local terminal-specific instructions (subset of `terminal`) |
+| `copilot`   | Copilot-specific instructions, usually Copilot CLI users    |
 
 Rules for assigning `journey`:
 
@@ -489,31 +502,31 @@ Rules for assigning `journey`:
 
 Describes the role the page plays in the overall workshop structure.
 
-| Value | Meaning |
-|-------|---------|
-| `core` | Required shared path — every learner follows these pages |
-| `setup` | Environment or tool setup steps (Codespace, local, gh-aw install) |
-| `scenario-a` | Adventure Codespace — Daily Repo Status Report |
-| `scenario-b` | Adventure Local — Daily Documentation Updater |
-| `scenario-c` | Adventure C — PR Code Reviewer |
-| `scenario-d` | Adventure D — Build with GitHub Copilot (CLI / CCA) |
-| `advanced` | Optional post-core topics (steps 14 and above) |
+| Value        | Meaning                                                            |
+| ------------ | ------------------------------------------------------------------ |
+| `core`       | Required shared path — every learner follows these pages           |
+| `setup`      | Environment or tool setup steps (Codespace, local, gh-aw install)  |
+| `scenario-a` | Adventure Codespace — Daily Repo Status Report                     |
+| `scenario-b` | Adventure Local — Daily Documentation Updater                      |
+| `scenario-c` | Adventure C — PR Code Reviewer                                     |
+| `scenario-d` | Adventure D — Build with GitHub Copilot (CLI / CCA)                |
+| `advanced`   | Optional post-core topics (steps 14 and above)                     |
 | `side-quest` | Optional deep-dive supplementary content branching off a main step |
 
 ### Assignment rules by file pattern
 
-| Filename pattern | Typical `journey` | Typical `adventure` |
-|-----------------|-------------------|---------------------|
-| `NN-<slug>.md` (core/shared) | `all` | `core` or `advanced` |
-| `NNa-<slug>-terminal.md` | `terminal` | matches parent step |
-| `NNb-<slug>-ui.md` | `ui` | matches parent step |
-| `NNc-<slug>-copilot.md` | `copilot` | matches parent step |
-| `10a-*`, `11a-*`, `11a2-*` | `all` or split by sub-path | `scenario-a` |
-| `10b-*`, `11b-*` | `all` or split by sub-path | `scenario-b` |
-| `10c-*`, `11c-*` | `all` or split by sub-path | `scenario-c` |
-| `11d-*` | `copilot` | `scenario-d` |
-| `02a-*`, `06a-*` | `codespace` | `setup` |
-| `side-quest-NN-MM-<slug>.md` | varies (see below) | `side-quest` |
+| Filename pattern             | Typical `journey`          | Typical `adventure`  |
+| ---------------------------- | -------------------------- | -------------------- |
+| `NN-<slug>.md` (core/shared) | `all`                      | `core` or `advanced` |
+| `NNa-<slug>-terminal.md`     | `terminal`                 | matches parent step  |
+| `NNb-<slug>-ui.md`           | `ui`                       | matches parent step  |
+| `NNc-<slug>-copilot.md`      | `copilot`                  | matches parent step  |
+| `10a-*`, `11a-*`, `11a2-*`   | `all` or split by sub-path | `scenario-a`         |
+| `10b-*`, `11b-*`             | `all` or split by sub-path | `scenario-b`         |
+| `10c-*`, `11c-*`             | `all` or split by sub-path | `scenario-c`         |
+| `11d-*`                      | `copilot`                  | `scenario-d`         |
+| `02a-*`, `06a-*`             | `codespace`                | `setup`              |
+| `side-quest-NN-MM-<slug>.md` | varies (see below)         | `side-quest`         |
 
 Side quest `journey` assignment:
 
@@ -552,6 +565,7 @@ Add the comment `<!-- learning:false -->` anywhere in the file — conventionall
 <!-- page-journey: all -->
 <!-- page-adventure: core -->
 <!-- learning:false -->
+
 # Choose Your Scenario
 ```
 
@@ -559,14 +573,14 @@ Add the comment `<!-- learning:false -->` anywhere in the file — conventionall
 
 Dispatcher pages are **not excluded from scoring**; they are scored using a different dimension profile that rewards clarity and simplicity rather than active learning:
 
-| Dimension | Dispatcher weight | Learning-step weight |
-|-----------|:-----------------:|:--------------------:|
-| `cognitive_load` | 2.0 | 1.0 |
-| `readability` | 2.0 | 1.0 |
-| `style_compliance` | 2.0 | 1.0 |
-| `active_learning` | 0.0 | 2.0 |
-| `checkpoint_quality` | 0.0 | 1.5 |
-| `scaffolding` | 0.0 | 1.5 |
+| Dimension            | Dispatcher weight | Learning-step weight |
+| -------------------- | :---------------: | :------------------: |
+| `cognitive_load`     |        2.0        |         1.0          |
+| `readability`        |        2.0        |         1.0          |
+| `style_compliance`   |        2.0        |         1.0          |
+| `active_learning`    |        0.0        |         2.0          |
+| `checkpoint_quality` |        0.0        |         1.5          |
+| `scaffolding`        |        0.0        |         1.5          |
 
 This means automated tools will flag a dispatcher page for being hard to read or cognitively overloaded, but will not penalize it for lacking exercises or checkpoints.
 

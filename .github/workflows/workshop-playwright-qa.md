@@ -2,101 +2,100 @@
 emoji: 🎭
 name: Workshop Playwright QA
 description: >
-  Daily visual and accessibility QA of the rendered workshop pages. Builds the
-  static site locally, launches a dev server, and uses Playwright to test page
-  navigation, readability, accessibility, and brand alignment across the five
-  viewport sizes defined by the GitHub brand skill. Creates a GitHub issue with
-  embedded screenshots when problems are detected.
+    Daily visual and accessibility QA of the rendered workshop pages. Builds the
+    static site locally, launches a dev server, and uses Playwright to test page
+    navigation, readability, accessibility, and brand alignment across the five
+    viewport sizes defined by the GitHub brand skill. Creates a GitHub issue with
+    embedded screenshots when problems are detected.
 on:
-  schedule: daily
-  workflow_dispatch:
+    schedule: daily
+    workflow_dispatch:
 permissions:
-  contents: read
-  issues: read
-  pull-requests: read
-  copilot-requests: write
+    contents: read
+    issues: read
+    pull-requests: read
+    copilot-requests: write
 strict: true
 network:
-  allowed:
-    - defaults
-    - github
-    - local
-    - playwright
+    allowed:
+        - defaults
+        - github
+        - local
+        - playwright
 tools:
-  github:
-    mode: gh-proxy
-    toolsets: [default]
-  bash: true
-  playwright:
+    github:
+        mode: gh-proxy
+        toolsets: [default]
+    bash: true
+    playwright:
 skills:
-  - github/gh-aw-workshop/.github/skills/github-brand@56127b6381f0f1d976231bb924dadcbae18858de
+    - github/gh-aw-workshop/.github/skills/github-brand@56127b6381f0f1d976231bb924dadcbae18858de
 safe-outputs:
-  create-issue:
-    title-prefix: "[workshop-playwright-qa] "
-    labels: [bug, accessibility]
-    deduplicate-by-title: true
-    max: 10
-    expires: 1d
-  add-comment:
-    max: 5
-  upload-asset:
-    allowed-exts: [.png]
-    max: 30
+    create-issue:
+        title-prefix: '[workshop-playwright-qa] '
+        labels: [bug, accessibility]
+        deduplicate-by-title: true
+        max: 10
+        expires: 1d
+    add-comment:
+        max: 5
+    upload-asset:
+        allowed-exts: [.png]
+        max: 30
 timeout-minutes: 30
 steps:
-  - name: Build workshop docs and start static server
-    run: |
-      set -euo pipefail
-      mkdir -p /tmp/gh-aw/agent/data /tmp/gh-aw/agent/screenshots
+    - name: Build workshop docs and start static server
+      run: |
+          set -euo pipefail
+          mkdir -p /tmp/gh-aw/agent/data /tmp/gh-aw/agent/screenshots
 
-      # Install dependencies (same set as deploy-pages.yml)
-      npm install --no-save marked github-slugger marked-alert \
-        @primer/css "@fontsource-variable/mona-sans" highlight.js marked-highlight node-emoji
+          # Install repository dependencies
+          npm ci
 
-      # Build the static workshop site to dist/
-      node scripts/build-docs.js
+          # Build the static workshop site to dist/
+          node scripts/build-docs.js
 
-      # Start a static HTTP server on port 4000
-      npx --yes http-server dist -p 4000 --silent &
-      echo $! > /tmp/gh-aw/agent/data/server.pid
+          # Start a static HTTP server on port 4000
+          npx --yes http-server dist -p 4000 --silent &
+          echo $! > /tmp/gh-aw/agent/data/server.pid
 
-      # Wait until the server responds (up to 20 s)
-      timeout 20 bash -c \
-        'until curl -sf http://127.0.0.1:4000/ > /dev/null 2>&1; do sleep 0.5; done'
-      echo "Server ready at http://127.0.0.1:4000/"
+          # Wait until the server responds (up to 20 s)
+          timeout 20 bash -c \
+            'until curl -sf http://127.0.0.1:4000/ > /dev/null 2>&1; do sleep 0.5; done'
+          echo "Server ready at http://127.0.0.1:4000/"
 
-      # Enumerate pages via hash anchors found in the built HTML
-      # Each workshop step is a <details id="..."> element — collect their IDs
-      python3 - <<'PYEOF'
-      import re, json, pathlib
+          # Enumerate pages via hash anchors found in the built HTML
+          # Each workshop step is a <details id="..."> element — collect their IDs
+          python3 - <<'PYEOF'
+          import re, json, pathlib
 
-      html = pathlib.Path("dist/index.html").read_text(encoding="utf-8")
-      # Match top-level <details id="..."> elements which correspond to workshop steps
-      ids = re.findall(r'<details[^>]+\bid=["\']([^"\']+)["\']', html)
+          html = pathlib.Path("dist/index.html").read_text(encoding="utf-8")
+          # Match top-level <details id="..."> elements which correspond to workshop steps
+          ids = re.findall(r'<details[^>]+\bid=["\']([^"\']+)["\']', html)
 
-      base = "http://127.0.0.1:4000/"
-      pages = [{"id": pid, "url": f"{base}#{pid}"} for pid in ids]
-      # Always include the root (no hash) as the first entry
-      pages.insert(0, {"id": "__root__", "url": base})
+          base = "http://127.0.0.1:4000/"
+          pages = [{"id": pid, "url": f"{base}#{pid}"} for pid in ids]
+          # Always include the root (no hash) as the first entry
+          pages.insert(0, {"id": "__root__", "url": base})
 
-      out = {
-          "base_url": base,
-          "pages": pages,
-          "viewports": [
-              {"name": "small",     "width": 360,  "height": 800},
-              {"name": "medium",    "width": 768,  "height": 1024},
-              {"name": "desktop",   "width": 1280, "height": 800},
-              {"name": "wide",      "width": 1440, "height": 900},
-              {"name": "full-hd",   "width": 1920, "height": 1080},
-          ],
-      }
-      pathlib.Path("/tmp/gh-aw/agent/data/config.json").write_text(
-          json.dumps(out, indent=2), encoding="utf-8"
-      )
-      print(f"Discovered {len(pages)} pages")
-      PYEOF
+          out = {
+              "base_url": base,
+              "pages": pages,
+              "viewports": [
+                  {"name": "small",     "width": 360,  "height": 800},
+                  {"name": "medium",    "width": 768,  "height": 1024},
+                  {"name": "desktop",   "width": 1280, "height": 800},
+                  {"name": "wide",      "width": 1440, "height": 900},
+                  {"name": "full-hd",   "width": 1920, "height": 1080},
+              ],
+          }
+          pathlib.Path("/tmp/gh-aw/agent/data/config.json").write_text(
+              json.dumps(out, indent=2), encoding="utf-8"
+          )
+          print(f"Discovered {len(pages)} pages")
+          PYEOF
 
-      echo "=== Config ===" && cat /tmp/gh-aw/agent/data/config.json
+          echo "=== Config ===" && cat /tmp/gh-aw/agent/data/config.json
 ---
 
 # Workshop Playwright QA
@@ -115,10 +114,10 @@ contains a chart, diagram, or infographic.
 ## Load Inputs
 
 1. Read `/tmp/gh-aw/agent/data/config.json`. It contains:
-   - `base_url` — the local server URL (`http://127.0.0.1:4000/`)
-   - `pages` — array of `{id, url}` objects, one per discovered workshop step
-     plus a root entry
-   - `viewports` — array of `{name, width, height}` objects
+    - `base_url` — the local server URL (`http://127.0.0.1:4000/`)
+    - `pages` — array of `{id, url}` objects, one per discovered workshop step
+      plus a root entry
+    - `viewports` — array of `{name, width, height}` objects
 
 2. If `pages` is empty or has fewer than 2 entries, call `noop`:
    `No workshop pages discovered — skipping QA.`
@@ -197,6 +196,7 @@ For every failed check, record a finding with:
   after publishing the screenshot
 
 For each finding, take a targeted screenshot:
+
 - Use Playwright to capture a screenshot of the offending element when
   possible, or a full-page screenshot if the element is not isolatable.
 - Save the screenshot to the `screenshot_path` recorded in the finding.
@@ -215,6 +215,7 @@ finding with `viewport: "all"` and a single representative screenshot
 ### If no findings were collected
 
 Call `noop` with:
+
 ```
 Playwright QA passed — tested <N> pages × <V> viewports. No navigation,
 readability, or accessibility issues found.
@@ -241,10 +242,11 @@ Tested at: <ISO 8601 UTC timestamp>
 Viewports: small (360×800), medium (768×1024), desktop (1280×800),
 wide (1440×900), full-hd (1920×1080)
 
-| # | Viewport | Category | Description |
-|---|----------|----------|-------------|
-| 1 | small | accessibility | `<img>` at line 42 missing alt text |
-| 2 | desktop | readability | Font size 12 px — below 14 px threshold |
+| #   | Viewport | Category      | Description                             |
+| --- | -------- | ------------- | --------------------------------------- |
+| 1   | small    | accessibility | `<img>` at line 42 missing alt text     |
+| 2   | desktop  | readability   | Font size 12 px — below 14 px threshold |
+
 ...
 
 ### Screenshots
@@ -255,10 +257,9 @@ wide (1440×900), full-hd (1920×1080)
 
 1. Call `create-issue` (or `add-comment` if the issue already exists)
    with the body above.
-
-   - Use one issue per page (not one issue per finding).
-   - Never create more than 10 issues per run (the safe-outputs limit
-     handles this).
+    - Use one issue per page (not one issue per finding).
+    - Never create more than 10 issues per run (the safe-outputs limit
+      handles this).
 
 ---
 

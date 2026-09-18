@@ -1,5 +1,6 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
+
 # Side Quest: Evaluating and Iterating on Agent Output
 
 > _Optional: use this side quest when you want a repeatable way to judge one workflow run, improve one sentence in the workflow brief, and compare the result — then return to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)._
@@ -30,11 +31,11 @@ If your workflow does not upload an artifact, skip the download and score the la
 
 Open the latest issue comment or downloaded output and score each row from 0 to 2.
 
-| Dimension | 2 points | 1 point | 0 points |
-|-----------|----------|---------|----------|
-| Accuracy | Every fact matches what you can verify in the repo | One fact is unclear or needs manual checking | A fact is wrong, missing, or obviously guessed |
-| Completeness | Every field you asked for is present | One requested field is thin or partially missing | Multiple requested fields are missing |
-| Tone | The wording sounds like the voice you asked for | The wording is usable but generic | The wording feels robotic or off-brand |
+| Dimension    | 2 points                                           | 1 point                                          | 0 points                                       |
+| ------------ | -------------------------------------------------- | ------------------------------------------------ | ---------------------------------------------- |
+| Accuracy     | Every fact matches what you can verify in the repo | One fact is unclear or needs manual checking     | A fact is wrong, missing, or obviously guessed |
+| Completeness | Every field you asked for is present               | One requested field is thin or partially missing | Multiple requested fields are missing          |
+| Tone         | The wording sounds like the voice you asked for    | The wording is usable but generic                | The wording feels robotic or off-brand         |
 
 Record the baseline before you edit anything. For example:
 
@@ -47,11 +48,11 @@ Lowest score: Tone
 
 Pick the lowest-scoring row and modify or add only **one sentence** in your [workflow brief](https://github.github.com/gh-aw/reference/markdown/) to address it.
 
-| Lowest score | One sentence to modify or add |
-|--------------|-------------------------------|
-| Accuracy | Tell the agent not to invent numbers and to skip anything it cannot verify. |
-| Completeness | Name the missing field, such as "Include the age of the oldest open PR." |
-| Tone | Describe the voice you want, such as "Write in a friendly, conversational tone." |
+| Lowest score | One sentence to modify or add                                                    |
+| ------------ | -------------------------------------------------------------------------------- |
+| Accuracy     | Tell the agent not to invent numbers and to skip anything it cannot verify.      |
+| Completeness | Name the missing field, such as "Include the age of the oldest open PR."         |
+| Tone         | Describe the voice you want, such as "Write in a friendly, conversational tone." |
 
 If you use the GitHub Copilot **Agents** tab or the [GitHub Copilot app](side-quest-01-02-environment-reference.md#github-copilot-app), ask for one focused update:
 
@@ -88,13 +89,13 @@ If the lowest row did not improve, keep the first change in place, pick one diff
 
 Quick problem-to-fix guide:
 
-| Problem you see | One sentence to add or tighten |
-|-----------------|--------------------------------|
-| Facts look guessed | "Use only numbers you can verify from GitHub data or repository files." |
-| A requested field is missing | "Include the age of the oldest open PR if one exists." |
-| Tone feels stiff | "Write in a friendly, conversational tone." |
-| The format drifts | "Follow this exact heading and bullet structure." |
-| Duplicate comments appear | "If you have already posted today, skip." |
+| Problem you see              | One sentence to add or tighten                                          |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| Facts look guessed           | "Use only numbers you can verify from GitHub data or repository files." |
+| A requested field is missing | "Include the age of the oldest open PR if one exists."                  |
+| Tone feels stiff             | "Write in a friendly, conversational tone."                             |
+| The format drifts            | "Follow this exact heading and bullet structure."                       |
+| Duplicate comments appear    | "If you have already posted today, skip."                               |
 
 Quick run-log check:
 
@@ -104,7 +105,7 @@ Quick run-log check:
 
 </details>
 
-## ✅ Checkpoint
+## :white_check_mark: Checkpoint
 
 - [ ] You triggered a fresh workflow run and captured one real output to review
 - [ ] You recorded a baseline score for accuracy, completeness, and tone
@@ -112,6 +113,7 @@ Quick run-log check:
 - [ ] You triggered a second run and recorded a before/after comparison such as `Before: Accuracy 2, Completeness 1, Tone 0 → After: Accuracy 2, Completeness 2, Tone 2`
 
 <!-- journey: all -->
-Return to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
-<!-- /journey -->
 
+Return to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
+
+<!-- /journey -->

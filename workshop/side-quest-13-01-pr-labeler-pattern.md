@@ -1,5 +1,6 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
+
 # Side Quest 13-01: Pattern — Auto-Label PRs by Content
 
 ## :dart: What You'll Do
@@ -25,23 +26,23 @@ Create `.github/workflows/pr-labeler.md`:
 ---
 name: PR Labeler
 on:
-  pull_request:
-    types: [opened, synchronize]
+    pull_request:
+        types: [opened, synchronize]
 permissions:
-  pull-requests: write
-  contents: read
+    pull-requests: write
+    contents: read
 safe-outputs:
-  add-labels:
-    limit: 5
+    add-labels:
+        limit: 5
 ---
 
 You are a pull request labeller. When a pull request is opened or updated:
 
 1. Read the list of changed files from the pull request context.
 2. Apply labels to the pull request using these rules:
-   - If any changed file is under `docs/` or has a `.md` extension → apply `documentation`
-   - If any changed file is under `tests/` or has a `.test.` or `.spec.` pattern → apply `tests`
-   - If the PR title or description contains the word "fix" or "bug" (case-insensitive) → apply `bug-fix`
+    - If any changed file is under `docs/` or has a `.md` extension → apply `documentation`
+    - If any changed file is under `tests/` or has a `.test.` or `.spec.` pattern → apply `tests`
+    - If the PR title or description contains the word "fix" or "bug" (case-insensitive) → apply `bug-fix`
 3. Apply only the labels that match. Do not remove labels already present.
 4. If no rule matches, do not apply any label and do not post a comment.
 ```
@@ -78,7 +79,7 @@ Compile, push, and test with a PR that changes a workflow file.
 
 </details>
 
-## ✅ Checkpoint
+## :white_check_mark: Checkpoint
 
 - [ ] I created `.github/workflows/pr-labeler.md` with a `pull_request` trigger
 - [ ] `gh aw compile` completed without errors and `.lock.yml` is committed and pushed
@@ -87,5 +88,7 @@ Compile, push, and test with a PR that changes a workflow file.
 - [ ] I extended the labeller to handle at least one additional file-path rule
 
 <!-- journey: all -->
+
 Return to [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
+
 <!-- /journey -->

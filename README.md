@@ -40,12 +40,12 @@ You'll build a scheduled, AI-powered repository status report that runs in GitHu
 
 ## Who this is for
 
-| You are... | You'll get... |
-|---|---|
-| A developer new to agentic workflows | A clear, end-to-end path from zero to a working automation |
-| A GitHub Actions user | A practical mental model for when agentic workflows are a better fit than classic YAML and scripts |
-| A platform or DevOps engineer | A reusable pattern for AI-assisted repository triage with auditable runs in GitHub |
-| An evaluator, mentor, or workshop host | A hands-on artifact that makes agentic workflow concepts easy to demonstrate and assess |
+| You are...                             | You'll get...                                                                                      |
+| -------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| A developer new to agentic workflows   | A clear, end-to-end path from zero to a working automation                                         |
+| A GitHub Actions user                  | A practical mental model for when agentic workflows are a better fit than classic YAML and scripts |
+| A platform or DevOps engineer          | A reusable pattern for AI-assisted repository triage with auditable runs in GitHub                 |
+| An evaluator, mentor, or workshop host | A hands-on artifact that makes agentic workflow concepts easy to demonstrate and assess            |
 
 ## What makes this different from a classic Actions tutorial
 
@@ -61,6 +61,23 @@ That means you focus on:
 ## Ready to begin?
 
 :arrow_right: Start with [workshop/00-welcome.md](workshop/00-welcome.md)
+
+## Local repository setup
+
+If you want to run the workshop site build and local checks from this repository clone, install the Node.js dependencies first:
+
+```bash
+npm ci
+```
+
+This repository targets Node.js 20 or newer.
+
+Useful local commands:
+
+- `npm run build:docs`
+- `npm test`
+- `npm run test:contrast`
+- `npm run lint:md`
 
 ---
 

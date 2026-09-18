@@ -1,5 +1,6 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
+
 # Side Quest: Fuzzy Schedule Expressions
 
 > _Optional: use this quick reference if you want help choosing a schedule expression for [Refine, Test, and Improve Your Workflow](09-agentic-editing.md), then return to the main adventure._
@@ -22,13 +23,13 @@ You do **not** need to write cron by hand for common cases. In `gh-aw`, you can 
 
 ## Fuzzy schedule reference
 
-| Fuzzy expression | Example compiled cron | Best used when… |
-|------------------|-----------------------|-----------------|
-| `schedule: hourly` | `30 */1 * * *` | You want fast feedback while experimenting or monitoring something that changes often. |
-| `schedule: every 6 hours` | `14 */6 * * *` | You want several updates per day without generating hourly noise. |
-| `schedule: daily` | `49 23 * * *` | You need a standard once-a-day summary. |
-| `schedule: daily on weekdays` | `50 11 * * 1-5` | The workflow matters during the work week but can stay quiet on weekends. |
-| `schedule: weekly` | `20 4 * * 5` | You want a low-noise roundup or audit-style report. |
+| Fuzzy expression              | Example compiled cron | Best used when…                                                                        |
+| ----------------------------- | --------------------- | -------------------------------------------------------------------------------------- |
+| `schedule: hourly`            | `30 */1 * * *`        | You want fast feedback while experimenting or monitoring something that changes often. |
+| `schedule: every 6 hours`     | `14 */6 * * *`        | You want several updates per day without generating hourly noise.                      |
+| `schedule: daily`             | `49 23 * * *`         | You need a standard once-a-day summary.                                                |
+| `schedule: daily on weekdays` | `50 11 * * 1-5`       | The workflow matters during the work week but can stay quiet on weekends.              |
+| `schedule: weekly`            | `20 4 * * 5`          | You want a low-noise roundup or audit-style report.                                    |
 
 > [!TIP]
 > `gh-aw` **scatters** schedules across different minutes or hours so not every workflow runs at the same time. Your compiled cron value may differ from the examples above — treat your own [lock file](https://github.github.com/gh-aw/reference/workflow-structure/#lock-file-header) as the source of truth.
@@ -45,9 +46,7 @@ Then open the generated lock file and look for the `cron:` line under `on.schedu
 
 ```markdown
 on:
-  schedule:
-    - cron: "50 11 * * 1-5"
-      # Friendly format: daily on weekdays (scattered)
+schedule: - cron: "50 11 \* \* 1-5" # Friendly format: daily on weekdays (scattered)
 ```
 
 This is the exact schedule GitHub Actions will register for **your** workflow.
@@ -62,9 +61,9 @@ If none of the fuzzy options match your exact timing need, choose the closest fu
 >
 > ```markdown
 > # classic-actions.yml (NOT an agentic workflow)
+>
 > on:
->   schedule:
->     - cron: "15 9 * * 1-5"
+> schedule: - cron: "15 9 \* \* 1-5"
 > ```
 >
 > In an agentic workflow `.md`, always use fuzzy syntax instead:
@@ -72,13 +71,14 @@ If none of the fuzzy options match your exact timing need, choose the closest fu
 > ```markdown
 > ---
 > on:
->   schedule: daily on weekdays
->   workflow_dispatch: {}
+>     schedule: daily on weekdays
+>     workflow_dispatch: {}
 > ---
 > ```
 
 <!-- journey: all -->
-## ✅ Checkpoint
+
+## :white_check_mark: Checkpoint
 
 - [ ] I can explain what a cron expression is at a high level
 - [ ] I know which fuzzy schedule expression best matches my workflow cadence
@@ -91,4 +91,3 @@ If none of the fuzzy options match your exact timing need, choose the closest fu
 Return to the main adventure: [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
 
 <!-- /journey -->
-
