@@ -5,7 +5,7 @@
 
 > _Facultatif : faites ce détour si vous voulez une explication plus poussée du mécanisme [round-robin](https://github.github.com/gh-aw/experimental/experiments/#statistical-balancing) derrière `experiments:`, puis revenez à [l’étape 23](23-ab-experiments.md)._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez examiner le fonctionnement interne de l’assignation `experiments:` et apprendre exactement ce que gh-aw fait à chaque exécution, afin de pouvoir prédire quelle variante vient ensuite et lire l’[artifact](https://github.github.com/gh-aw/reference/artifacts/#quick-reference) `experiment` en toute confiance.
 
@@ -47,7 +47,7 @@ Comme les égalités sont tranchées par l’ordre de premier élément dans le 
 2. Ouvrez le fichier JSON et confirmez que les compteurs correspondent à votre tableau prédit.
 3. Répétez sur plusieurs exécutions pour gagner en confiance dans l’ordre d’assignation avant de vous y fier pour une expérience réelle.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux décrire les cinq étapes exécutées par gh-aw à chaque exécution pour un bloc `experiments:`
 - [ ] Je sais que les égalités sont tranchées par l’ordre de premier élément dans le tableau

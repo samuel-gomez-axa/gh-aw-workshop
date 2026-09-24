@@ -5,7 +5,7 @@
 
 > _Facultatif : suivez cette courte introduction si vous débutez avec le terminal, puis revenez à Step 1._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Un ordinateur sous macOS, Windows ou Linux avec un accès à Internet
 
@@ -31,7 +31,7 @@ Tapez cette commande et appuyez sur **Enter** :
 echo "hello, terminal!"
 ```
 
-Vous devriez voir `hello, terminal!` s’afficher en sortie. Si c’est le cas, votre terminal fonctionne. :white_check_mark:
+Vous devriez voir `hello, terminal!` s’afficher en sortie. Si c’est le cas, votre terminal fonctionne. ✅
 
 ---
 
@@ -97,7 +97,7 @@ rm -r test-dir
 
 <!-- journey: terminal -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez ouvert un terminal et vu une invite (`$`, `%` ou `>`)
 - [ ] Vous avez exécuté `echo "hello, terminal!"` et vu le message s’afficher

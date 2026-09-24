@@ -5,7 +5,7 @@
 
 > _Facultatif : suivez ce guide lorsque votre workflow a besoin d'un token ou d'une cle API qui ne doit pas apparaitre en clair, puis revenez a votre parcours principal._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Il est utile d’être familier avec [Connecter une source de données en direct à votre workflow](16-connect-data-source.md).
 - Vous comprenez a quoi ressemble un YAML de workflow GitHub Actions.
@@ -70,7 +70,7 @@ Utilisez cette comparaison rapide lorsque votre workflow a besoin d’accéder �
 
 ---
 
-## :pencil2: Essayez : vérifier le masquage
+## ✏️ Essayez : vérifier le masquage
 
 Ajoutez un secret de test nommé `WORKSHOP_TOKEN` avec n’importe quelle valeur jetable, puis vérifiez que GitHub le masque dans les logs.
 
@@ -138,7 +138,7 @@ Si un appel avec `GITHUB_TOKEN` échoue avec une erreur 403, vérifiez que la pe
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez ajouter un secret à votre dépôt via la GitHub UI
 - [ ] Vous savez comment referencer un secret avec `${{ secrets.SECRET_NAME }}`

@@ -5,7 +5,7 @@
 
 > _Un MCP tool server compromis peut renvoyer des données empoisonnées à votre agent. Votre travail consiste à repérer rapidement la [trust boundary](side-quest-17-02-security-architecture.md) et à garder la surface d’écriture du workflow étroite._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé la quête annexe [comment fonctionnent les MCP tool servers](side-quest-17-01-mcp-concepts.md).
 - Vous avez déjà un workflow avec un bloc `tools:` configuré.
@@ -25,7 +25,7 @@ Utilisez ce tableau comme [threat model](https://github.github.com/gh-aw/introdu
 | Tool poisoning                                           | Le serveur expose plus de tools que votre tâche n’en exige, donc une mauvaise réponse a davantage de moyens de piloter l’agent.  | La liste des tools est large, vague, ou inclut un [toolset](https://github.github.com/gh-aw/reference/github-tools/#github-toolsets) de type "everything". |
 | [Output injection](side-quest-17-06-output-injection.md) | Le serveur renvoie des données d’apparence normale avec des instructions cachées mélangées au résultat.                          | La sortie d’un tool contient soudain des directives comme "ignore previous instructions" ou demande des actions supplémentaires.                           |
 
-## :pencil2: Exercice : inspecter ce `.mcp.json`
+## ✏️ Exercice : inspecter ce `.mcp.json`
 
 Lisez cette configuration fictive et cherchez les signaux d’alerte du tableau de surface d’attaque ci-dessus.
 
@@ -68,7 +68,7 @@ Adoptez ces habitudes lorsque vous travaillez avec des MCP servers :
 
 gh-aw vous aide en vous obligeant à déclarer explicitement `tools:`, à limiter les destinations [network](https://github.github.com/gh-aw/reference/network/) avec `network.allowed`, et à réduire ce que le workflow peut écrire avec `permissions:` et `safe-outputs`.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux décrire le risque supply chain lié à MCP en une phrase
 - [ ] Je peux utiliser le tableau de surface d’attaque pour repérer au moins un signal de détection

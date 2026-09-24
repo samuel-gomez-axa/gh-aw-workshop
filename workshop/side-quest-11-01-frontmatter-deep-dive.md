@@ -5,7 +5,7 @@
 
 > _Facultatif : configurez chacune des trois premières sections du frontmatter d'un fichier [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) : métadonnées, triggers et [permissions](https://github.github.com/gh-aw/reference/permissions/). Parcourez ceci avant de construire Step 11, puis continuez vers [Part B: Tools, Outputs, and the Agent Body](side-quest-11-08-frontmatter-tools-outputs.md) ou revenez au parcours principal._
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 Ouvrez le brouillon de workflow que vous avez commencé dans [Step 11](07-your-first-workflow.md).
 
@@ -17,7 +17,7 @@ Un fichier [agentic workflow](https://github.github.com/gh-aw/introduction/overv
 
 ## Fence D'ouverture Et `description`
 
-**:mag: Prédisez :** Quelles sont les deux choses que vous écririez en haut d'un fichier de workflow pour l'identifier d'un coup d'oeil, avant de lire l'explication ci-dessous ?
+**🔍 Prédisez :** Quelles sont les deux choses que vous écririez en haut d'un fichier de workflow pour l'identifier d'un coup d'oeil, avant de lire l'explication ci-dessous ?
 
 ```markdown
 ---
@@ -33,7 +33,7 @@ description: Post a daily repository status summary as a GitHub issue comment.
 | `emoji`       | Libellé décoratif dans le dashboard `gh aw`. Choisissez l'emoji approprié. |
 | `description` | Résumé affiché dans l'UI Actions et dans `gh aw list`.                     |
 
-**:pencil2: Essayez :** Mettez à jour les deux champs dans votre brouillon, puis lancez `gh aw compile` et vérifiez qu'aucune erreur n'apparaît.
+**✏️ Essayez :** Mettez à jour les deux champs dans votre brouillon, puis lancez `gh aw compile` et vérifiez qu'aucune erreur n'apparaît.
 
 ```markdown
 # Your turn
@@ -50,7 +50,7 @@ description: ???
 
 ## Triggers (`on:`)
 
-**:mag: Prédisez :** Comment indiqueriez-vous à GitHub Actions d'exécuter le workflow chaque jour _et_ d'autoriser un déclenchement manuel ? Écrivez les deux clés avant de poursuivre.
+**🔍 Prédisez :** Comment indiqueriez-vous à GitHub Actions d'exécuter le workflow chaque jour _et_ d'autoriser un déclenchement manuel ? Écrivez les deux clés avant de poursuivre.
 
 ```markdown
 ---
@@ -71,7 +71,7 @@ on:
 > [!TIP]
 > Conservez `workflow_dispatch: {}` même après le passage en production : cela vous permet de relancer le rapport à la demande.
 
-**:pencil2: Essayez :** Ajoutez les deux clés de trigger à votre brouillon et lancez `gh aw compile`. Étendez ensuite le bloc pour qu'il se déclenche aussi sur les pushes vers la branche principale :
+**✏️ Essayez :** Ajoutez les deux clés de trigger à votre brouillon et lancez `gh aw compile`. Étendez ensuite le bloc pour qu'il se déclenche aussi sur les pushes vers la branche principale :
 
 ```markdown
 ---
@@ -94,13 +94,13 @@ on:
 ---
 ```
 
-**:white_check_mark: Vérifiez :** Lancez `gh aw compile` ; la sortie compilée doit lister les trois triggers.
+**✅ Vérifiez :** Lancez `gh aw compile` ; la sortie compilée doit lister les trois triggers.
 
 ---
 
 ## Permissions
 
-**:mag: Prédisez :** L'agent doit lire des issues et publier un commentaire. Quelles permissions listeriez-vous ? Notez-les avant de lire l'explication.
+**🔍 Prédisez :** L'agent doit lire des issues et publier un commentaire. Quelles permissions listeriez-vous ? Notez-les avant de lire l'explication.
 
 ```markdown
 ---
@@ -124,7 +124,7 @@ permissions:
 | `pull-requests: read`     | Accès en lecture aux données de pull request.                                       |
 | `actions: read`           | Accès en lecture aux résultats d'exécution des workflows.                           |
 
-**:pencil2: Essayez :** Ajoutez le bloc `permissions:` à votre brouillon. Remplissez ensuite la bonne valeur de permission pour chaque scope :
+**✏️ Essayez :** Ajoutez le bloc `permissions:` à votre brouillon. Remplissez ensuite la bonne valeur de permission pour chaque scope :
 
 ```markdown
 ---
@@ -138,7 +138,7 @@ permissions:
 ---
 ```
 
-**:white_check_mark: Vérifiez :** Lancez `gh aw compile` ; la compilation doit se terminer sans erreur de permission.
+**✅ Vérifiez :** Lancez `gh aw compile` ; la compilation doit se terminer sans erreur de permission.
 
 ---
 
@@ -217,7 +217,7 @@ permissions:
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez mis à jour `emoji` et `description` dans votre brouillon et `gh aw compile` n'a produit aucune erreur.
 - [ ] Vous avez ajouté les triggers `schedule: daily` et `workflow_dispatch: {}` ; ils apparaissent tous les deux dans la sortie compilée.

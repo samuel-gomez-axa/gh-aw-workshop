@@ -7,7 +7,7 @@
 
 Par défaut, les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) utilisent le [GitHub Copilot engine](https://github.github.com/gh-aw/reference/engines/). Pour utiliser des **modèles OpenAI**, stockez une clé API OpenAI comme secret de dépôt et ajoutez une ligne au [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous avez terminé [Install `gh-aw`](06-install-gh-aw.md) et disposez d'un agentic workflow fonctionnel.
 - Vous connaissez les blocs `env:` du [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/). Si le frontmatter est nouveau pour vous, parcourez [Side Quest: Frontmatter Deep Dive — Part A](side-quest-11-01-frontmatter-deep-dive.md) avant de continuer.
@@ -37,7 +37,7 @@ Par défaut, les [agentic workflows](https://github.github.com/gh-aw/introductio
 > [!IMPORTANT]
 > Collez la clé dans GitHub Secrets, section suivante, **avant** de fermer l'onglet de la plateforme OpenAI. Si vous le fermez d'abord, vous devrez supprimer la clé et en générer une nouvelle.
 
-**:pencil2: Vérifiez :** Confirmez que votre nouvelle clé apparaît dans la liste à `platform.openai.com/api-keys` avant de continuer.
+**✏️ Vérifiez :** Confirmez que votre nouvelle clé apparaît dans la liste à `platform.openai.com/api-keys` avant de continuer.
 
 ---
 
@@ -53,7 +53,7 @@ Ouvrez votre dépôt dans un **nouvel onglet** afin de garder l'onglet de la pla
 > [!IMPORTANT]
 > Le nom doit être exactement `OPENAI_API_KEY`. Toute variation (`openai_api_key`, `OPENAI-API-KEY`) provoque un échec d'authentification silencieux.
 
-**:pencil2: Vérifiez :** Exécutez cette commande et confirmez que `OPENAI_API_KEY` apparaît dans la sortie :
+**✏️ Vérifiez :** Exécutez cette commande et confirmez que `OPENAI_API_KEY` apparaît dans la sortie :
 
 ```bash
 gh secret list
@@ -80,7 +80,7 @@ network:
 ---
 ```
 
-**:pencil2: Vérifiez :** Confirmez que votre frontmatter inclut `engine: codex` et la référence au secret :
+**✏️ Vérifiez :** Confirmez que votre frontmatter inclut `engine: codex` et la référence au secret :
 
 ```markdown
 ---
@@ -124,7 +124,7 @@ Vous devriez voir :
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez un compte OpenAI et généré une clé API
 - [ ] Ma nouvelle clé est listée sur `platform.openai.com/api-keys`

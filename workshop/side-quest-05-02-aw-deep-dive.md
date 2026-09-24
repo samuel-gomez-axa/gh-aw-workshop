@@ -5,7 +5,7 @@
 
 > _Facultatif : faites cette side quest après [Que sont les agentic workflows ?](05-agentic-workflows-intro.md) pour affiner la distinction grâce à un exercice pratique de classification._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez lu [Que sont les agentic workflows ?](05-agentic-workflows-intro.md)
 
@@ -119,7 +119,7 @@ Votre réponse contient-elle :
 
 Revenez à l’aventure principale : [Que sont les agentic workflows ?](05-agentic-workflows-intro.md).
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez classé la tâche A comme un workflow standard et expliqué pourquoi elle ne demande aucun jugement d’IA
 - [ ] Vous avez classé la tâche B comme un agentic workflow et nommé la décision prise par l’agent

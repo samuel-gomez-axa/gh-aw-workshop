@@ -51,7 +51,7 @@ Revenez à [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md), puis cont
 
 <!-- /journey -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez ouvert un Codespace depuis le navigateur
 - [ ] `gh auth status` confirme que vous êtes connecté

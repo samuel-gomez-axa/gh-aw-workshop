@@ -5,7 +5,7 @@
 
 > _Facultatif : utilisez cette méthode lorsque l’organisation propriétaire de votre dépôt d’exercice a activé la facturation Copilot centralisée pour GitHub Actions. Sinon, utilisez [la méthode PAT](side-quest-06-03b-copilot-github-token.md)._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Une organisation possède votre dépôt d’exercice.
 - Un administrateur de l’organisation a confirmé que la facturation Copilot centralisée est activée pour GitHub Actions.
@@ -61,7 +61,7 @@ Suivez ces vérifications dans l’ordre si l’exécution échoue encore :
 
 </details>
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J’ai confirmé que l’organisation propriétaire a activé la facturation Copilot centralisée
 - [ ] `copilot-requests: write` est présent sous `permissions` dans le frontmatter de mon workflow

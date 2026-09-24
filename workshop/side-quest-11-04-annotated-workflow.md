@@ -5,12 +5,12 @@
 
 > _Facultatif : parcourez ce guide pour comprendre les choix de conception dans `daily-status.md` et les adapter dans votre propre copie, puis revenez à [Créer : Daily Repo Status Workflow](07-your-first-workflow.md)._
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous avez terminé [Step 11](07-your-first-workflow.md) et `.github/workflows/daily-status.md` existe dans votre dépôt.
 - Ouvrez `daily-status.md` dans votre éditeur : vous ferez de petites modifications au fil de ce guide.
 
-## :dart: Ce Que Vous Allez Faire
+## 🎯 Ce Que Vous Allez Faire
 
 Comprenez les quatre décisions de conception qui rendent `daily-status.md` sûr et prévisible, puis modifiez votre propre copie pour vérifier ce que chacune contrôle.
 
@@ -66,14 +66,14 @@ safe-outputs:
 
 ---
 
-## :pencil2: À Vous De Jouer — Metadata
+## ✏️ À Vous De Jouer — Metadata
 
-1. Dans votre `daily-status.md`, notez la valeur actuelle de `emoji:`, puis modifiez-la, par exemple de `:bar_chart:` à `:mag:`.
+1. Dans votre `daily-status.md`, notez la valeur actuelle de `emoji:`, puis modifiez-la, par exemple de `:bar_chart:` à `🔍`.
 2. Exécutez `gh aw list`. Le nouvel emoji apparaît-il à côté du nom du workflow ?
 3. Mettez à jour le texte de `description:` puis exécutez `gh aw list` à nouveau pour confirmer que le changement est pris en compte.
 4. Restaurez les valeurs d'origine de `emoji:` et `description:` lorsque vous avez terminé.
 
-## :pencil2: À Vous De Jouer — [Safe-Outputs](https://github.github.com/gh-aw/reference/safe-outputs/)
+## ✏️ À Vous De Jouer — [Safe-Outputs](https://github.github.com/gh-aw/reference/safe-outputs/)
 
 1. Dans votre `daily-status.md`, commentez l'intégralité du bloc [safe-outputs](https://github.github.com/gh-aw/reference/safe-outputs/).
 2. Exécutez `gh aw compile --validate`.
@@ -93,7 +93,7 @@ safe-outputs:
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J'ai modifié `emoji:`, exécuté `gh aw list` et vu la mise à jour prise en compte
 - [ ] J'ai supprimé `safe-outputs:`, observé l'[erreur de compilation](https://github.github.com/gh-aw/reference/compilation-process/), puis je l'ai restauré et confirmé que l'erreur avait disparu

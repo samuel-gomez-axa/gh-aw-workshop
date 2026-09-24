@@ -7,11 +7,11 @@
 
 **Ce que vous allez apprendre :** à la fin de cette page, vous saurez nommer chaque outil et environnement utilisé dans l’atelier, l’associer à son rôle et savoir quand vous l’utiliserez.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 Il s’agit d’une page de référence : vous pouvez la lire à tout moment. Revenez-y chaque fois que l’atelier utilise un terme que vous voulez clarifier. Aucun terminal n’est nécessaire pour lire cette page.
 
-Quand vous serez prêt à vérifier que vos outils fonctionnent, consultez la section [Checkpoint](#white_check_mark-checkpoint) en bas de page.
+Quand vous serez prêt à vérifier que vos outils fonctionnent, consultez la section [Checkpoint](#-v%C3%A9rifiez-que-vos-outils-sont-pr%C3%AAts) en bas de page.
 
 ## Glossaire des environnements et des outils
 
@@ -32,7 +32,7 @@ Savoir quel nom correspond à quel rôle vous aide à suivre les instructions de
 > [!NOTE]
 > **Utilisateurs GitHub Enterprise (GHES/GHEC)** : les mêmes outils et commandes s’appliquent dans les environnements d’entreprise. L’URL de votre Codespace et vos URLs GitHub utiliseront le nom d’hôte de votre entreprise au lieu de `github.com`. Si votre entreprise utilise un self-hosted runner, la commande `gh aw compile` s’exécute quand même localement dans votre Codespace. Consultez [l’étape 6](06-install-gh-aw.md) pour les notes d’installation propres à l’environnement.
 
-### :white_check_mark: Vérifiez que vos outils sont prêts
+### ✅ Vérifiez que vos outils sont prêts
 
 Ouvrez un terminal dans votre Codespace et exécutez :
 
@@ -154,7 +154,7 @@ Vous pouvez voir OpenAI Codex comme une option de modèle orientée code qui lit
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous savez nommer chaque environnement et outil utilisé dans cet atelier et décrire son rôle
 - [ ] Vous avez exécuté `gh --version` dans votre terminal et obtenu un numéro de version

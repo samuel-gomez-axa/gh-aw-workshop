@@ -5,11 +5,11 @@
 
 > _Les serveurs MCP transforment votre agent, qui passe de simple générateur de texte à participant actif capable de lire, récupérer et agir._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez ajouter un serveur [MCP (Model Context Protocol)](https://github.github.com/gh-aw/guides/mcps/) au [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) de votre workflow, afin de donner à l'agent IA accès à un nouvel ensemble de [tools](https://github.github.com/gh-aw/reference/tools/) qu'il peut appeler à l'exécution. À la fin, votre workflow daily-status fera plus que générer du texte ; il pourra interagir avec des sources de données en direct via des appels d'outil structurés.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez installé l'extension `gh-aw` dans [Install the `gh-aw` CLI Extension](06-install-gh-aw.md).
 - Vous disposez d'un workflow daily-status fonctionnel issu de [Build: Daily Repo Status Workflow](07-your-first-workflow.md).
@@ -80,7 +80,7 @@ tools:
 ```
 
 <details open>
-<summary>:desktop_computer: Terminal path</summary>
+<summary>🖥️ Terminal path</summary>
 
 Ouvrez votre fichier de workflow daily-status, `.github/workflows/daily-status.md`, puis trouvez le frontmatter YAML en haut. Ajoutez un bloc `tools` avec le contenu montré ci-dessus, puis lancez `gh aw compile`.
 
@@ -133,7 +133,7 @@ git push
 
 Ouvrez le journal d'exécution dans **Actions**. Vous verrez l'agent alterner appels d'outils et raisonnement : il récupère des données, les traite, puis produit le résumé. C'est la boucle agentique en action.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Votre frontmatter contient un bloc `tools:` avec `github: mode: gh-proxy`
 - [ ] Votre brief de tâche précise ce que l'agent doit faire avec les outils

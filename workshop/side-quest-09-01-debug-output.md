@@ -5,11 +5,11 @@
 
 > _Facultatif : utilisez cette side quest lorsqu’une exécution se comporte de façon inattendue, puis revenez à [Reading Workflow Output](08b-interpret-your-run.md)._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez diagnostiquer cinq motifs de sortie courants, un par un. Chaque micro-étape comprend une courte explication, un extrait de journal réaliste et un exercice d’identification avant révélation.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Terminez [Lire la sortie du workflow](08b-interpret-your-run.md)
 
@@ -27,7 +27,7 @@ Besoin d’un flux de triage réutilisable après ces exercices sur les motifs ?
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux choisir la bonne micro-étape à partir du tableau des motifs
 - [ ] Je peux utiliser le format d’exercice pour identifier chaque motif avant de vérifier la réponse

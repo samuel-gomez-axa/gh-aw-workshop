@@ -5,7 +5,7 @@
 
 > _Facultatif : suivez cette introduction a la securite pour voir comment un workflow avec un scope trop large peut donner a un agent mal oriente plus d'autorite que votre tache n'en exige._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 Vous avez terminé [Donner plus d’outils à votre agent avec MCP](17-add-mcp-tools.md) et vous avez un fichier de workflow fonctionnel qui utilise `safe-outputs`.
 
@@ -70,7 +70,7 @@ tools:
 
 Avec cette configuration, l’agent peut lire des données et générer une sortie. Il n’a aucun chemin pour créer une PR, publier un commentaire ou modifier un fichier.
 
-### :hammer_and_wrench: Essayez : auditez votre propre workflow
+### 🛠️ Essayez : auditez votre propre workflow
 
 Ouvrez votre fichier de workflow. Vérifiez le bloc `permissions:` et répondez à ces trois questions :
 
@@ -113,7 +113,7 @@ Cela ne donne **pas** à l’agent un accès en écriture ouvert. Cela lui donne
 
 C’est la défense clé. Un agent mal orienté ne peut pas transformer silencieusement une tâche documentaire en mutation arbitraire du dépôt.
 
-### :hammer_and_wrench: Essayez : ajoutez [protected-files](https://github.github.com/gh-aw/reference/safe-outputs-pull-requests/) à votre workflow
+### 🛠️ Essayez : ajoutez [protected-files](https://github.github.com/gh-aw/reference/safe-outputs-pull-requests/) à votre workflow
 
 1. Ouvrez votre fichier de workflow et trouvez le bloc `safe-outputs`.
 2. Ajoutez une entrée `protected-files` qui exclut `.github/workflows/daily-status.md`.
@@ -137,7 +137,7 @@ C’est la défense clé. Un agent mal orienté ne peut pas transformer silencie
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez expliquer la permission escalation en langage simple
 - [ ] Vous avez audité votre propre bloc `permissions:` au regard du principe du moindre privilège

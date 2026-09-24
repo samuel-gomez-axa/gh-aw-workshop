@@ -5,7 +5,7 @@
 
 > _Facultatif : suivez cette introduction a la securite pour comprendre pourquoi les personal access tokens creent une surface d'attaque plus grande que le `GITHUB_TOKEN` ephemere, surtout dans des workflows agentiques sans supervision._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez commencé [Connecter une source de données en direct à votre workflow](16-connect-data-source.md).
 - Vous comprenez que `${{ secrets.GITHUB_TOKEN }}` est le token GitHub intégré, fourni automatiquement pour chaque exécution de workflow.
@@ -133,7 +133,7 @@ Lorsque vous devez utiliser un PAT :
 
 ---
 
-## :pencil2: Exercice : auditer votre workflow actuel
+## ✏️ Exercice : auditer votre workflow actuel
 
 Ouvrez votre fichier de workflow, par exemple `.github/workflows/daily-report.md`, et répondez aux questions suivantes :
 
@@ -157,7 +157,7 @@ Utilisez la checklist ci-dessous pour consigner vos observations dans un comment
 
 ## Comparaison en un coup d’œil
 
-> :thinking: **Prédiction :** Avant de lire le tableau ci-dessous, listez de mémoire les propriétés d’un PAT qui le rendent plus risqué que `GITHUB_TOKEN` dans un workflow sans supervision. Comparez ensuite votre liste au tableau.
+> 🤔 **Prédiction :** Avant de lire le tableau ci-dessous, listez de mémoire les propriétés d’un PAT qui le rendent plus risqué que `GITHUB_TOKEN` dans un workflow sans supervision. Comparez ensuite votre liste au tableau.
 
 | Propriété                  | `GITHUB_TOKEN`                                | PAT                                                  |
 | -------------------------- | --------------------------------------------- | ---------------------------------------------------- |
@@ -182,7 +182,7 @@ Utilisez la checklist ci-dessous pour consigner vos observations dans un comment
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez expliquer en une phrase pourquoi un PAT est plus risqué que `GITHUB_TOKEN` dans un workflow sans supervision
 - [ ] Vous pouvez décrire la différence de fenêtre de risque entre les deux types d’identifiants

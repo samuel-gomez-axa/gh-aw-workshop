@@ -3,11 +3,11 @@
 
 # Side Quest 09-01f : Checklist de débogage
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez appliquer un flux de triage reproductible en sept étapes chaque fois qu’une exécution produit une sortie inattendue.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Terminez [Side Quest : Diagnostiquer les motifs courants de sortie d’agent](side-quest-09-01-debug-output.md)
 
@@ -23,7 +23,7 @@ Vous allez appliquer un flux de triage reproductible en sept étapes chaque fois
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux suivre cette checklist dans l’ordre sans sauter d’étapes
 - [ ] Je sais où trouver à la fois les journaux en direct et les enregistrements [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/)

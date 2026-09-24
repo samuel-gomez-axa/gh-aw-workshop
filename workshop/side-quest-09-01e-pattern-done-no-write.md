@@ -3,15 +3,15 @@
 
 # Side Quest 09-01e : Motif — « Done » mais rien n’est écrit
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez diagnostiquer des exécutions réussies qui ne produisent aucune écriture et resserrer les instructions pour que les écritures attendues se produisent de manière fiable.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Terminez [Side Quest : Diagnostiquer les motifs courants de sortie d’agent](side-quest-09-01-debug-output.md)
 
-Une exécution peut se terminer avec `:white_check_mark: [done]` sans créer de commentaire ni d’issue. Ce résultat est souvent correct : votre condition n’a peut-être pas été remplie. Le défi consiste à déterminer si ce saut était intentionnel ou causé par une logique ambiguë.
+Une exécution peut se terminer avec `✅ [done]` sans créer de commentaire ni d’issue. Ce résultat est souvent correct : votre condition n’a peut-être pas été remplie. Le défi consiste à déterminer si ce saut était intentionnel ou causé par une logique ambiguë.
 
 Commencez par trois vérifications :
 
@@ -44,7 +44,7 @@ Motif : **le résumé indique "done" mais rien n’a été écrit**. Clarifiez l
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux expliquer pourquoi une exécution réussie peut ne pas écrire
 - [ ] Je peux vérifier si les conditions d’écriture ont réellement été remplies

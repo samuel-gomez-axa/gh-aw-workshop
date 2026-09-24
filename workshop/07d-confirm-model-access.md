@@ -3,14 +3,14 @@
 
 # Confirmer l’accès au modèle
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 Cette étape a deux points d’entrée :
 
 - **Arrivée depuis l’étape 07, en récupération d’erreur :** les fichiers de workflow n’ont pas encore besoin d’exister. Corrigez d’abord l’accès au modèle, puis revenez à [Write Your First Agentic Workflow](07-your-first-workflow.md).
 - **Arrivée comme étape suivante après l’étape 07, dans le flux normal :** `daily-report-status.md` et `daily-report-status.lock.yml` sont commités dans votre dépôt d’entraînement.
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez exécuter un prompt de test d’une phrase, confirmer que Copilot est joignable, choisir votre mode de [billing](https://github.github.com/gh-aw/reference/billing/) et configurer le workflow avant de continuer vers [l’étape 8](08-run-your-workflow.md).
 
@@ -48,7 +48,7 @@ Si vous arrivez du contrôle d’accès de l’étape 07 et que le prompt de tes
 
 Suivez toutes les étapes de configuration dans [Side Quest: Copilot Billing Paths](side-quest-07d-billing-paths.md), puis revenez ici une fois votre fichier de workflow et votre [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) commités.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J’ai envoyé le prompt de test dans Copilot CLI et reçu une réponse
 - [ ] J’ai confirmé qu’aucune erreur d’accès n’est apparue

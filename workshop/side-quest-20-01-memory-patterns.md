@@ -5,7 +5,7 @@
 
 > _Facultatif : suivez cette référence si vous voulez comprendre en profondeur `cache-memory` et `repo-memory` avant ou après avoir terminé [l’étape 20](20-persistent-memory.md), puis revenez au parcours principal._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez un agentic workflow fonctionnel provenant des étapes de construction, [l’étape 7](07-your-first-workflow.md) ou équivalent.
 - Vous avez terminé, ou allez commencer, [Faire en sorte que votre workflow se souvienne d’une exécution à l’autre](20-persistent-memory.md).
@@ -36,7 +36,7 @@ Les deux primitives résolvent cela sans que vous ayez à gérer une base de don
 
 Posez-vous la question : _que se passe-t-il si cette mémoire est perdue ?_
 
-> :thinking: **Prédiction :** Pour chaque scénario ci-dessous, décidez quelle primitive vous utiliseriez avant de lire la colonne « Recommended ». Cachez la colonne de droite, faites vos choix, puis révélez-la pour vérifier.
+> 🤔 **Prédiction :** Pour chaque scénario ci-dessous, décidez quelle primitive vous utiliseriez avant de lire la colonne « Recommended ». Cachez la colonne de droite, faites vos choix, puis révélez-la pour vérifier.
 
 | Scénario                                                                                                                                                        | Primitive recommandée |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
@@ -138,7 +138,7 @@ previous run. On each run:
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez expliquer la différence entre `cache-memory` et `repo-memory`
 - [ ] Vous savez quand choisir chaque primitive selon votre cas d'usage

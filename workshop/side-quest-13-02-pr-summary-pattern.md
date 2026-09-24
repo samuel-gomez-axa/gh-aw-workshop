@@ -3,11 +3,11 @@
 
 # Quête Annexe 13-02 : Pattern — Générer Un Commentaire De Résumé De PR
 
-## :dart: Ce Que Vous Allez Faire
+## 🎯 Ce Que Vous Allez Faire
 
 Construisez un workflow de résumé de PR qui publie un [summary comment](https://github.github.com/gh-aw/reference/safe-outputs/#comment-creation-add-comment) structuré et lisible lorsqu'une pull request est ouverte. Le résumé est rédigé dans un format qui peut être copié directement dans un changelog ou une note de version.
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Terminez [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
 
@@ -81,7 +81,7 @@ Idées :
 
 Après votre modification, recompilez puis ouvrez une nouvelle PR pour voir la sortie mise à jour.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J'ai créé `.github/workflows/pr-summary.md` avec un trigger `pull_request` limité à `opened`
 - [ ] `gh aw compile` s'est terminé sans erreur et `.lock.yml` est validé puis poussé

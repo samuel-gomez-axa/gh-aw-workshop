@@ -5,7 +5,7 @@
 
 > _Facultatif : suivez cette introduction a la securite pour comprendre comment un contenu malveillant dans les donnees du depot peut tenter de rediriger votre agent, et pourquoi la conception de gh-aw limite les degats._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé l’étape 9, lecture de la sortie du workflow, et comprenez à quoi ressemblent les appels d’outils dans les logs d’exécution.
 
@@ -121,7 +121,7 @@ La prompt injection rappelle que **les données du dépôt sont des entrées con
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez décrire à quoi ressemble une attaque par prompt injection dans le contexte d’un workflow agentique
 - [ ] Vous pouvez expliquer pourquoi le task brief est la source principale d’instructions dans gh-aw

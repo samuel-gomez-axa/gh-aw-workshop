@@ -5,7 +5,7 @@
 
 > _Un agent disposant de `contents: write` peut être amené à commettre des backdoors ou à écraser des fichiers sensibles ; garder le workflow en lecture seule et faire passer toute véritable écriture par une pull request ferme complètement cette porte._
 
-## :dart: Objectifs d’apprentissage
+## 🎯 Objectifs d’apprentissage
 
 À la fin de cette quête annexe, vous serez capable de :
 
@@ -13,7 +13,7 @@
 - identifier les valeurs dangereuses de `permissions:` et `toolsets:` dans le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/#permissions-permissions) d’un workflow ;
 - appliquer les trois défenses gh-aw : `contents: read`, `safe-outputs: create-pull-request` et `network.allowed-domains`.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Donner plus d’outils à votre agent avec MCP](17-add-mcp-tools.md) et disposez d’un fichier de workflow fonctionnel.
 - Vous êtes familier avec les blocs `permissions:` et `safe-outputs:` des étapes précédentes.
@@ -123,7 +123,7 @@ Même si un attaquant fabrique un payload qui atteint une écriture de fichier, 
 
 ---
 
-## :pencil2: Exercice : repérer le [Frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) dangereux
+## ✏️ Exercice : repérer le [Frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) dangereux
 
 Lisez ce frontmatter de workflow et identifiez chaque configuration qui rend possible le repository poisoning :
 
@@ -158,7 +158,7 @@ tools:
 
 ---
 
-## :pencil2: Exercice : durcir votre workflow
+## ✏️ Exercice : durcir votre workflow
 
 Ouvrez votre fichier de workflow de [l’étape 17](17-add-mcp-tools.md) et appliquez les changements suivants :
 
@@ -189,7 +189,7 @@ Après durcissement, le frontmatter de votre workflow ne doit contenir ni `conte
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux décrire l’attaque de repository poisoning en une phrase
 - [ ] Je peux citer les deux fonctionnalités gh-aw, `contents: read` et `safe-outputs: create-pull-request`, qui suppriment le chemin de commit direct

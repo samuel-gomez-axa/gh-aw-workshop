@@ -5,11 +5,11 @@
 
 _Voir un agent travailler en temps réel rend le workflow concret._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez déclencher le workflow `daily-report-status` créé à l’étape 7, l’observer démarrer dans l’onglet **Actions** et confirmer qu’il se termine avec succès.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Confirmer l’accès au modèle](07d-confirm-model-access.md)
 - `daily-report-status.md` et `daily-report-status.lock.yml` sont commités dans `.github/workflows/` sur `main`
@@ -95,14 +95,14 @@ Vous n’avez pas encore besoin de décoder chaque ligne. Pour le moment, confir
 
 ### Confirmez que l’exécution est terminée
 
-Attendez que l’exécution devienne verte avec un :white_check_mark:. Ouvrez ensuite l’onglet **Issues** de votre dépôt et vérifiez que l’agent a mis à jour une issue ou en a créé une nouvelle.
+Attendez que l’exécution devienne verte avec un ✅. Ouvrez ensuite l’onglet **Issues** de votre dépôt et vérifiez que l’agent a mis à jour une issue ou en a créé une nouvelle.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Le workflow **Daily Report Status** apparaît dans l’onglet **Actions**
 - [ ] J’ai déclenché une exécution manuelle depuis l’interface GitHub
 - [ ] J’ai ouvert le journal en direct pendant que l’exécution était active
-- [ ] L’exécution s’est terminée avec un :white_check_mark: vert
+- [ ] L’exécution s’est terminée avec un ✅ vert
 
 <!-- journey: all -->
 

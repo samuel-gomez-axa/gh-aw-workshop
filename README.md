@@ -60,7 +60,7 @@ That means you focus on:
 
 ## Ready to begin?
 
-:arrow_right: Start with [workshop/00-welcome.md](workshop/00-welcome.md)
+➡️ Start with [workshop/00-welcome.md](workshop/00-welcome.md)
 
 ## Local repository setup
 

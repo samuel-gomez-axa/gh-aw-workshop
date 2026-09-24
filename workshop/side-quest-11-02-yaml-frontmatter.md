@@ -5,7 +5,7 @@
 
 > _Facultatif : parcourez ces erreurs YAML courantes si vous rencontrez une [erreur de compilation](https://github.github.com/gh-aw/reference/compilation-process/) à Step 11, puis revenez au parcours principal._
 
-YAML est peu tolérant. Voici les cinq erreurs que les participants rencontrent le plus souvent lorsqu'ils construisent le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) d'un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/), chacune avec un exemple incorrect :x: et un exemple correct :white_check_mark:.
+YAML est peu tolérant. Voici les cinq erreurs que les participants rencontrent le plus souvent lorsqu'ils construisent le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) d'un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/), chacune avec un exemple incorrect :x: et un exemple correct ✅.
 
 ---
 
@@ -121,7 +121,7 @@ permissions:
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez identifier les cinq pièges YAML présentés ici
 - [ ] Votre `daily-status.md` compile sans erreur après vérification de chaque section

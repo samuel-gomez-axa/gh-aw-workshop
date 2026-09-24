@@ -17,11 +17,11 @@
 
 > _Ajoutez des vérifications automatisées OUI/NON pour que chaque exécution vous dise si votre workflow a réellement atteint son objectif._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez ajouter un bloc `evals:` à votre workflow, définir des questions binaires de qualité, exécuter le workflow et vérifier que les résultats sont enregistrés dans l'[artifact `evals`](https://github.github.com/gh-aw/reference/artifacts/#evals) puis conservés pour comparaison historique.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Test Your Prompt Ideas with A/B Experiments](23-ab-experiments.md).
 - Vous avez terminé [Manage Costs and AI Credit Budgets](26-manage-costs-and-budgets.md).
@@ -40,7 +40,7 @@ Dans votre session Copilot CLI dans le terminal, collez :
 La skill ajoute le bloc `evals:` à votre frontmatter, compile le [lock file](https://github.github.com/gh-aw/reference/compilation-process/) et vous montre le diff.
 
 <details open>
-<summary>:desktop_computer: Terminal path — add the evals block directly</summary>
+<summary>🖥️ Terminal path — add the evals block directly</summary>
 
 Ouvrez `.github/workflows/daily-status.md` et ajoutez des questions binaires au frontmatter :
 
@@ -112,7 +112,7 @@ Pour affiner vos questions, revenez dans Copilot CLI et décrivez ce que vous av
 > [!TIP]
 > Utilisez `gh aw compile --watch` pendant que vous itérez sur les questions d'évaluation pour obtenir un retour instantané sur les erreurs de compilation.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Le frontmatter de votre workflow inclut un bloc `evals:` avec au moins trois questions binaires
 - [ ] `gh aw compile daily-status` réussit après vos changements d'eval

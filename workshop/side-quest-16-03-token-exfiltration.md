@@ -5,7 +5,7 @@
 
 > _Facultatif : suivez cette introduction a la securite pour comprendre comment du contenu de depot malveillant peut tenter d'amener votre agent a divulguer des tokens ou des cles API, et pourquoi la conception de gh-aw rend cela tres difficile._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous disposez d’un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) de base issu de [Créez votre workflow de statut quotidien](07-your-first-workflow.md) ou équivalent.
 - Vous comprenez `safe-outputs` et le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) [`permissions`](https://github.github.com/gh-aw/reference/permissions/) présent dans [Écrivez votre premier agentic workflow](07-your-first-workflow.md).
@@ -116,7 +116,7 @@ ne peut ni écrire, ni supprimer, ni pousser, même si un attaquant fabrique une
 
 ## Défenses en couches en un coup d’œil
 
-> :thinking: **Prédiction :** Avant de lire le tableau ci-dessous, listez de mémoire autant de défenses gh-aw contre l’exfiltration de tokens que possible. Comparez ensuite votre liste avec le tableau.
+> 🤔 **Prédiction :** Avant de lire le tableau ci-dessous, listez de mémoire autant de défenses gh-aw contre l’exfiltration de tokens que possible. Comparez ensuite votre liste avec le tableau.
 
 | Couche                                | Ce qu’elle fait                                                   |
 | ------------------------------------- | ----------------------------------------------------------------- |
@@ -142,7 +142,7 @@ Aucune couche, à elle seule, n’est suffisante. Ensemble, elles rendent une te
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez décrire comment un attaquant pourrait tenter d’exfiltrer un token via du contenu d’issue ou de PR malveillant
 - [ ] Vous pouvez citer trois fonctionnalites de gh-aw qui empechent l'exfiltration de tokens

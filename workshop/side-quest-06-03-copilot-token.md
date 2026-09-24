@@ -5,7 +5,7 @@
 
 > _Facultatif : suivez ce guide lorsque vous devez configurer l’[authentication](https://github.github.com/gh-aw/reference/auth/) de Copilot pour un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-is-an-agentic-workflow), puis revenez à votre parcours principal._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md).
 - Vous avez accès aux paramètres de votre dépôt (nécessaire si vous choisissez Method 2).
@@ -39,7 +39,7 @@ Si vous avez un doute, vérifiez d’abord à qui appartient votre dépôt d’e
 > [!IMPORTANT]
 > Choisissez une seule méthode. Lorsque [`copilot-requests: write`](https://github.github.com/gh-aw/reference/permissions/#special-permission-copilot-requests-write) est présent, `COPILOT_GITHUB_TOKEN` est ignoré pour l’inférence. Supprimez cette permission et recompilez lors du passage à la facturation personnelle.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J’ai identifié la méthode d’authentication adaptée à ma situation.
 - [ ] J’ai terminé soit Method 1 soit Method 2 (en suivant le guide lié jusqu’au bout).

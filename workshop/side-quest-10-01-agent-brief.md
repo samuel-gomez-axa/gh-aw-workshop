@@ -5,11 +5,11 @@
 
 > _Facultatif : utilisez cet exercice rapide pour structurer votre brief avant de revenir à [Step 10](09-agentic-editing.md) ou de passer à [Step 11](07-your-first-workflow.md)._
 
-## :dart: Ce Que Vous Allez Faire
+## 🎯 Ce Que Vous Allez Faire
 
 Construisez votre brief dans un fichier brouillon en cinq étapes. À la fin, vous aurez un brief de statut quotidien que vous pourrez coller dans votre workflow et réutiliser.
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous avez terminé [Interpreting Workflow Output](08b-interpret-your-run.md)
 - Vous avez un dépôt d'entraînement créé pendant [Codespace Setup](02a-setup-codespace.md) ou la quête annexe facultative [Local Terminal](side-quest-02-01-local-terminal.md)
@@ -166,7 +166,7 @@ Guardrails:
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J'ai rédigé un objectif en une phrase pour mon rapport de statut quotidien.
 - [ ] J'ai listé au moins trois entrées dont l'agent aura besoin.

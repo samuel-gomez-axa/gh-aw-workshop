@@ -5,7 +5,7 @@
 
 > _Facultatif : faites cette side quest après [Que sont les agentic workflows ?](05-agentic-workflows-intro.md) pour comprendre la relation entre les fichiers source `.md` et les [lock files](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) `.lock.yml`, et pour vérifier votre vocabulaire._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez lu [Que sont les agentic workflows ?](05-agentic-workflows-intro.md)
 
@@ -113,7 +113,7 @@ Un agent opère toujours en **read-only**. Toute écriture, comme publier un com
 
 Revenez à l’aventure principale : [Que sont les agentic workflows ?](05-agentic-workflows-intro.md).
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous savez repérer le task brief et le trigger dans un exemple de fichier `.md`
 - [ ] Vous savez décrire la différence entre le source `.md` et le `.lock.yml` compilé

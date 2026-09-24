@@ -5,7 +5,7 @@
 
 > _Complément de [Exécutez votre agentic workflow sur un self-hosted runner](24-self-hosted-runners.md). Utilisez cette quête annexe lorsque votre environnement enterprise exige des [ephemeral runners](https://github.github.com/gh-aw/reference/self-hosted-runners/), une configuration proxy ou une isolation réseau air-gapped._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Exécutez votre agentic workflow sur un self-hosted runner](24-self-hosted-runners.md) ou vous êtes en train de la suivre.
 - Vous avez accès à votre infrastructure enterprise de runners, ou pouvez consulter votre administrateur.
@@ -53,7 +53,7 @@ network:
 
 Après une exécution réussie, l’artifact `firewall.md` fournit une liste prête à l’emploi de chaque domaine contacté par l’agent. Partagez-la avec votre équipe sécurité comme baseline d’allowlist. Consultez [Référence d’audit](side-quest-25-01-audit-reference.md) pour les détails de lecture des logs firewall.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous comprenez la différence entre ephemeral runners et JIT runners
 - [ ] Vous savez où définir les variables d’environnement proxy pour un self-hosted runner

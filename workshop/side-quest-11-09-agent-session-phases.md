@@ -5,13 +5,13 @@
 
 > _Facultatif : faites ce détour pour obtenir une vue détaillée de ce qui se passe dans la session d'agent, puis revenez à [Affiner, tester et améliorer votre workflow](09-agentic-editing.md)._
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous avez une session d'agent GitHub Copilot active ou récemment terminée.
 - Vous avez [`gh aw` installé et authentifié](06-install-gh-aw.md), terminé à Step 6.
 - Vous comprenez l'objectif des [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) à partir de [Que sont les Agentic Workflows ?](05-agentic-workflows-intro.md).
 
-## :dart: Ce Que Vous Allez Apprendre
+## 🎯 Ce Que Vous Allez Apprendre
 
 Vous allez apprendre ce que fait chaque phase de la session d'agent, ce qu'il faut regarder dans le flux d'activité et comment réorienter la session si elle part dans la mauvaise direction.
 
@@ -27,7 +27,7 @@ Après l'envoi du prompt de scénario, la session affiche un flux d'activité en
 | **Compilation**     | L'agent exécute `gh aw compile --validate` et corrige les erreurs trouvées                                                                                                                                                                                             | Un message de réussite en vert indique que le `.lock.yml` a été généré sans erreur                                                                      |
 | **Ouverture de PR** | L'agent valide les deux fichiers et ouvre une pull request                                                                                                                                                                                                             | La pull request doit lister deux fichiers modifiés : la source `.md` et le `.lock.yml`                                                                  |
 
-> :thinking: **Prédisez :** Avant d'ouvrir le flux d'activité lors de votre prochain run, devinez quelle phase prendra le plus de temps. Développez ensuite les étapes individuelles pour vérifier : était-ce la phase Planification, la phase Rédaction ou la phase Compilation ?
+> 🤔 **Prédisez :** Avant d'ouvrir le flux d'activité lors de votre prochain run, devinez quelle phase prendra le plus de temps. Développez ensuite les étapes individuelles pour vérifier : était-ce la phase Planification, la phase Rédaction ou la phase Compilation ?
 
 ## Réorienter La Session
 
@@ -59,7 +59,7 @@ gh aw compile --watch
 
 Chaque enregistrement déclenche une nouvelle compilation, ce qui vous donne un retour immédiat au lieu de découvrir les erreurs YAML plus tard. Consultez [Side Quest: Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md) pour un guide complet.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux nommer dans l'ordre les cinq phases d'une session d'agent
 - [ ] Je sais à quoi ressemble une phase Compilation réussie, message de réussite en vert, `.lock.yml` généré

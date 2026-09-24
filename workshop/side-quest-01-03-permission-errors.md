@@ -5,7 +5,7 @@
 
 > _Facultatif : lisez ceci si vous voyez une erreur `permission denied` et avez besoin d’aide pour la résoudre._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez ouvert un terminal (voir [Side Quest: Terminal Basics](side-quest-01-01-terminal-basics.md) si besoin)
 - Vous avez rencontré une erreur `permission denied` pendant l’installation, ou vous voulez savoir quoi faire si cela arrive
@@ -77,7 +77,7 @@ Ouvrez ensuite un PowerShell administrateur et exécutez la même commande : ell
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez exécuté la commande d’exercice et vu `permission denied` (ou un message équivalent de refus d’accès) dans la sortie du terminal
 - [ ] Vous avez identifié le chemin exact du fichier affiché dans le message d’erreur

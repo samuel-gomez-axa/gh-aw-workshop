@@ -5,7 +5,7 @@
 
 > _Facultatif : suivez cette introduction visuelle si vous voulez un modèle mental intuitif pour comprendre pourquoi gh-aw utilise un [sandbox](https://github.github.com/gh-aw/reference/sandbox/), où l’agent s’exécute et quelles sorties sont considérées comme sûres._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous comprenez les bases des agentic workflows grâce à [Que sont les agentic workflows ?](05-agentic-workflows-intro.md).
 - Vous avez un workflow avec le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) `permissions` et `tools` issu de [Écrivez votre premier agentic workflow](07-your-first-workflow.md).
@@ -101,12 +101,12 @@ network:
 ---
 ```
 
-> :thinking: **Prédiction :** Que se passerait-il si vous supprimiez `network.allowed` du frontmatter ci-dessus et qu’un prompt injecté demandait à l’agent d’envoyer des données vers une URL externe ?
-> :thinking: **Prédiction :** Que se passerait-il si vous supprimiez [`network.allowed`](https://github.github.com/gh-aw/reference/network/#caller-extensible-allowlist-networkallowed-input) du frontmatter ci-dessus et qu’un prompt injecté demandait à l’agent d’envoyer des données vers une URL externe ?
+> 🤔 **Prédiction :** Que se passerait-il si vous supprimiez `network.allowed` du frontmatter ci-dessus et qu’un prompt injecté demandait à l’agent d’envoyer des données vers une URL externe ?
+> 🤔 **Prédiction :** Que se passerait-il si vous supprimiez [`network.allowed`](https://github.github.com/gh-aw/reference/network/#caller-extensible-allowlist-networkallowed-input) du frontmatter ci-dessus et qu’un prompt injecté demandait à l’agent d’envoyer des données vers une URL externe ?
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez expliquer pourquoi les limites du sandbox réduisent le risque dans les agentic workflows
 - [ ] Vous pouvez décrire où l’agent s’exécute pendant l’exécution d’un workflow de l’atelier

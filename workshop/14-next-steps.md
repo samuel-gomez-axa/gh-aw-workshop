@@ -5,11 +5,11 @@
 
 > _Vous avez créé un vrai workflow IA planifié : voici comment continuer à progresser à partir d'ici._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Faites le point sur tout ce que vous avez appris, puis choisissez une direction pour ce que vous voulez construire ou explorer ensuite. Ce nœud sert de hub : il renvoie vers des approfondissements, des ressources communautaires et des idées pour vos propres projets.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous disposez d'un workflow daily-status planifié qui s'exécute dans GitHub Actions, créé dans [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
 
@@ -58,21 +58,21 @@ Voici un rappel rapide des concepts que vous avez abordés. Le schéma ci-dessou
 > [!TIP]
 > Quand vous commencerez votre prochain workflow, utilisez le [gh-aw wizard](https://githubnext.github.io/gh-aw-wizard/) pour générer le prompt : répondez à quelques questions sur le déclencheur, les données et la sortie, puis collez le prompt généré dans votre agent IA.
 
-- :arrow_right: [Rendez votre workflow plus malin avec une logique conditionnelle](15-conditional-logic.md) - ajoutez des conditions pour que votre workflow ne s'exécute que lorsqu'il y a une activité utile à signaler.
-- :arrow_right: [Connectez une source de données en direct à votre workflow](16-connect-data-source.md) - récupérez des données de dépôt en direct et transmettez-les à votre prompt IA comme contexte du workflow.
-- :arrow_right: [Donnez plus d'outils à votre agent avec MCP](17-add-mcp-tools.md) - connectez le serveur GitHub MCP pour que votre agent puisse lire des données de dépôt en direct pendant l'exécution.
-- :arrow_right: [Partagez et réutilisez vos workflows agentiques](18-share-and-reuse.md) - publiez votre workflow dans un catalogue afin que d'autres puissent l'installer en une seule commande.
-- :arrow_right: [Faites en sorte que votre workflow se souvienne d'une exécution à l'autre](20-persistent-memory.md) - ajoutez une [cache-backed memory](https://github.github.com/gh-aw/reference/cache-memory/) afin que votre workflow ignore les éléments qu'il a déjà signalés.
-- :arrow_right: [Découpez les workflows complexes avec des Inline Sub-Agents](21-inline-sub-agents.md) - utilisez le modèle planner-worker pour garder votre prompt principal concis et réduire le coût en tokens.
-- :arrow_right: [Rendez vos workflows résilients face aux erreurs](22-error-handling-and-resilience.md) - ajoutez des briefs défensifs, des timeouts et des sorties de secours afin que les exécutions sans supervision restent fiables.
-- :arrow_right: [Testez vos idées de prompt avec des expériences A/B](23-ab-experiments.md) - comparez des variantes de prompt d'une exécution à l'autre et laissez les données décider laquelle conserver.
-- :arrow_right: [Exécutez votre workflow agentique sur un self-hosted runner](24-self-hosted-runners.md) - ciblez la flotte de runners de votre organisation plutôt que des machines GitHub-hosted (équipes enterprise).
-- :arrow_right: [Auditez et surveillez vos workflows agentiques](25-audit-and-observability.md) - consultez les [artifacts](https://github.github.com/gh-aw/reference/artifacts/) d'exécution, comprenez l'usage des tokens et construisez une piste d'audit pour la conformité enterprise.
-- :arrow_right: [Gérez les coûts et budgets d'AI Credits](26-manage-costs-and-budgets.md) - mesurez la consommation d'AIC, fixez des limites de dépense et gardez vos workflows dans le budget (équipes enterprise).
+- ➡️ [Rendez votre workflow plus malin avec une logique conditionnelle](15-conditional-logic.md) - ajoutez des conditions pour que votre workflow ne s'exécute que lorsqu'il y a une activité utile à signaler.
+- ➡️ [Connectez une source de données en direct à votre workflow](16-connect-data-source.md) - récupérez des données de dépôt en direct et transmettez-les à votre prompt IA comme contexte du workflow.
+- ➡️ [Donnez plus d'outils à votre agent avec MCP](17-add-mcp-tools.md) - connectez le serveur GitHub MCP pour que votre agent puisse lire des données de dépôt en direct pendant l'exécution.
+- ➡️ [Partagez et réutilisez vos workflows agentiques](18-share-and-reuse.md) - publiez votre workflow dans un catalogue afin que d'autres puissent l'installer en une seule commande.
+- ➡️ [Faites en sorte que votre workflow se souvienne d'une exécution à l'autre](20-persistent-memory.md) - ajoutez une [cache-backed memory](https://github.github.com/gh-aw/reference/cache-memory/) afin que votre workflow ignore les éléments qu'il a déjà signalés.
+- ➡️ [Découpez les workflows complexes avec des Inline Sub-Agents](21-inline-sub-agents.md) - utilisez le modèle planner-worker pour garder votre prompt principal concis et réduire le coût en tokens.
+- ➡️ [Rendez vos workflows résilients face aux erreurs](22-error-handling-and-resilience.md) - ajoutez des briefs défensifs, des timeouts et des sorties de secours afin que les exécutions sans supervision restent fiables.
+- ➡️ [Testez vos idées de prompt avec des expériences A/B](23-ab-experiments.md) - comparez des variantes de prompt d'une exécution à l'autre et laissez les données décider laquelle conserver.
+- ➡️ [Exécutez votre workflow agentique sur un self-hosted runner](24-self-hosted-runners.md) - ciblez la flotte de runners de votre organisation plutôt que des machines GitHub-hosted (équipes enterprise).
+- ➡️ [Auditez et surveillez vos workflows agentiques](25-audit-and-observability.md) - consultez les [artifacts](https://github.github.com/gh-aw/reference/artifacts/) d'exécution, comprenez l'usage des tokens et construisez une piste d'audit pour la conformité enterprise.
+- ➡️ [Gérez les coûts et budgets d'AI Credits](26-manage-costs-and-budgets.md) - mesurez la consommation d'AIC, fixez des limites de dépense et gardez vos workflows dans le budget (équipes enterprise).
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Votre workflow planifié a terminé au moins une exécution automatisée avec succès
 - [ ] Vous pouvez décrire, avec des mots simples, ce que sont les workflows agentiques et pourquoi ils sont utiles

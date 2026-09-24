@@ -5,7 +5,7 @@
 
 > _Facultatif : lisez ce guide de référence rapide si vous connaissez déjà GitHub Actions et voulez une comparaison rapide avant de continuer avec [Step 5](05-agentic-workflows-intro.md)._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 Pour tirer le meilleur parti de ce guide accéléré, vous devriez déjà avoir :
 
@@ -13,7 +13,7 @@ Pour tirer le meilleur parti de ce guide accéléré, vous devriez déjà avoir 
 - Compris les concepts centraux d’Actions : triggers (`on:`), jobs, steps et runners.
 - Éventuellement parcouru [Que sont les agentic workflows ?](05-agentic-workflows-intro.md) pour une introduction adaptée aux débutants avant d’utiliser cette fiche mémo.
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez examiner le changement clé entre des Actions classiques et des agentic workflows, comparer des exemples de code concrets et retenir une courte liste de ce qui ne change pas. À la fin, vous aurez un angle d’adoption pratique pour des cas d’usage platform et DevOps.
 
@@ -89,7 +89,7 @@ Un chemin de migration pratique est hybride :
 
 Ce modèle fonctionne bien pour les équipes platform et DevOps parce qu’il préserve des garde-fous déterministes tout en réduisant la logique de branchement écrite à la main pour les décisions riches en contexte.
 
-## :hammer_and_wrench: Essayez
+## 🛠️ Essayez
 
 Ouvrez le fichier de workflow que vous avez créé à l’étape 4, ou trouvez un step `run:` dans n’importe quel fichier `.github/workflows/*.yml`. Choisissez un step qui prend une décision : vérifier un label, analyser un titre de PR ou filtrer par chemin de fichier.
 
@@ -124,7 +124,7 @@ Pour les ingénieurs platform et les équipes DevOps qui évaluent l’adoption,
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux expliquer le changement de modèle mental entre des steps scriptés et une exécution orientée objectif
 - [ ] Je peux identifier ce qui change dans les agentic workflows et ce qui reste identique par rapport aux Actions classiques

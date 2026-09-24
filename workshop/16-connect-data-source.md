@@ -5,11 +5,11 @@
 
 > _Les workflows deviennent vraiment puissants lorsqu'ils agissent sur des donnees reelles et a jour, pas seulement sur des prompts predefinis._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez etendre votre workflow daily-status pour recuperer les issues ouvertes de votre depot avec le [GitHub CLI](side-quest-01-02-environment-reference.md#github-cli-gh), puis injecter ces donnees dans votre prompt IA. A la fin, votre resume inclura un apercu des issues en attente en plus de l'activite de commit.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez installe l'extension `gh-aw` dans [Install the `gh-aw` CLI Extension](06-install-gh-aw.md).
 - Vous disposez d'un workflow daily-status fonctionnel issu de [Build: Daily Repo Status Workflow](07-your-first-workflow.md).
@@ -46,7 +46,7 @@ those step outputs into the summary.
 La skill ajoute ces deux etapes et met a jour le brief de la tache. Examinez le diff avant de commit.
 
 <details open>
-<summary>:pencil2: Manual edit path</summary>
+<summary>✏️ Manual edit path</summary>
 
 Ouvrez `.github/workflows/daily-status.md` et ajoutez deux etapes au bloc `steps:` du [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
 
@@ -70,7 +70,7 @@ Commencez par recuperer le journal des commits recents :
     echo "EOF" >> $GITHUB_OUTPUT
 ```
 
-:thinking: Faites une pause et predisez : que contiendra la sortie `commit_log` si aucun commit n'a ete effectue dans les 24 dernieres heures ? Faites votre prediction maintenant puis verifiez-la apres avoir lance une execution.
+🤔 Faites une pause et predisez : que contiendra la sortie `commit_log` si aucun commit n'a ete effectue dans les 24 dernieres heures ? Faites votre prediction maintenant puis verifiez-la apres avoir lance une execution.
 
 ### Recuperer les issues ouvertes
 
@@ -94,9 +94,9 @@ Ensuite, ajoutez une etape pour recuperer les issues ouvertes :
     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided automatically — no setup needed
 ```
 
-:pencil2: Essayez : lancez `gh issue list --state open --json number --jq 'length'` dans votre terminal et notez le total. Apres avoir declenche une execution du workflow, verifiez si le workflow signale le meme nombre.
+✏️ Essayez : lancez `gh issue list --state open --json number --jq 'length'` dans votre terminal et notez le total. Apres avoir declenche une execution du workflow, verifiez si le workflow signale le meme nombre.
 
-:thinking: Faites une pause et predisez : que recevra l'IA si la liste d'issues est vide ? Le prompt produira-t-il quand meme une sortie utile ?
+🤔 Faites une pause et predisez : que recevra l'IA si la liste d'issues est vide ? Le prompt produira-t-il quand meme une sortie utile ?
 
 ### Injecter les donnees dans votre prompt IA
 
@@ -121,9 +121,9 @@ Highlight anything that looks urgent in the issue list.
 
 GitHub resolut les expressions de sortie d'etape avant que l'IA ne voie le prompt ; le modele recoit donc du texte brut au lieu de la syntaxe du workflow.
 
-:thinking: Faites une pause et predisez : si la sortie `commit_log` est vide, le prompt reste-t-il comprehensible pour l'IA ? Quelle modification d'une ligne rendrait l'instruction plus robuste ?
+🤔 Faites une pause et predisez : si la sortie `commit_log` est vide, le prompt reste-t-il comprehensible pour l'IA ? Quelle modification d'une ligne rendrait l'instruction plus robuste ?
 
-:pencil2: Essayez : remplacez `"two short paragraphs"` par `"one bullet list per topic"` puis relancez. Observez comment le format de sortie change.
+✏️ Essayez : remplacez `"two short paragraphs"` par `"one bullet list per topic"` puis relancez. Observez comment le format de sortie change.
 
 ### [Compiler](https://github.github.com/gh-aw/reference/compilation-process/), pousser et tester
 
@@ -157,7 +157,7 @@ Une fois ce schema bien compris, la meme technique fonctionne aussi pour :
 | Executions de workflow en echec | `gh run list --status failure --limit 5` |
 | Statistiques du depot           | `gh api repos/:owner/:repo`              |
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Votre workflow contient une etape recent-commits avec `id: recent`
 - [ ] Votre workflow contient une etape open-issues avec `id: issues`

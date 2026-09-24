@@ -5,12 +5,12 @@
 
 > _Les équipes enterprise ont souvent besoin d'exécuter leurs workflows sur leur propre infrastructure ; cette étape montre exactement comment faire._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Mettez à jour le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) de votre workflow pour cibler un self-hosted runner à l'aide d'un label de runner.
 À la fin de cette étape, votre workflow agentique sera mis en file sur un runner géré par votre organisation plutôt que sur une machine GitHub-hosted.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Votre workflow agentique s'exécute correctement (voir [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)).
 - A [self-hosted runner](https://github.github.com/gh-aw/reference/self-hosted-runners/) is registered and **online** for your repository or organisation.
@@ -43,7 +43,7 @@ runs-on: ubuntu-latest
 
 La seule modification nécessaire est la valeur de `runs-on:`.
 
-## :pencil2: Exercice : mettez a jour votre frontmatter
+## ✏️ Exercice : mettez a jour votre frontmatter
 
 Mettez à jour le champ `runs-on:` de votre workflow pour qu'il pointe vers votre self-hosted runner.
 
@@ -86,7 +86,7 @@ En cas de doute, demandez à votre administrateur ; il peut retrouver ces labels
 
 Vous travaillez dans un environnement enterprise ? Consultez [Side Quest: Self-Hosted Runner Infrastructure Deep Dive](side-quest-24-01-runner-infrastructure.md) pour des conseils sur les runners [ephemeral](https://github.github.com/gh-aw/reference/ephemerals/) et JIT, la configuration de proxy et l'isolation [network](https://github.github.com/gh-aw/reference/network/) dans des environnements air-gapped.
 
-## :pencil2: Exercice : compiler et committer
+## ✏️ Exercice : compiler et committer
 
 Recompilez après avoir modifié le frontmatter, puis committez les deux fichiers :
 
@@ -105,7 +105,7 @@ git push
 > [!TIP]
 > Vous pouvez aussi utiliser la skill Copilot `/agentic-workflows` pour modifier le workflow ; elle compile et committe les deux fichiers ensemble, ce qui vous évite de vous retrouver avec un [lock file](https://github.github.com/gh-aw/reference/compilation-process/) obsolète.
 
-## :pencil2: Exercice : verifier que l'execution arrive bien sur votre runner
+## ✏️ Exercice : verifier que l'execution arrive bien sur votre runner
 
 1. Ouvrez l'onglet **Actions** de votre depot.
 2. Cliquez sur **Run workflow**.
@@ -118,7 +118,7 @@ git push
   <img alt="Nom du runner affiché dans le résumé du job Actions" src="images/24-self-hosted-runner-job-light.svg">
 </picture>
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] La valeur `runs-on:` de votre workflow correspond au label de votre self-hosted runner
 - [ ] `gh aw compile`, si vous l'avez utilisé, s'est terminé sans erreur

@@ -5,7 +5,7 @@
 
 > _L'output injection est une technique dans laquelle un contenu de depot malveillant essaie d'integrer du markdown, du HTML ou des instructions dans la sortie d'un agent pour tromper les personnes qui la lisent ; le bloc `safe-outputs` de gh-aw maintient la sortie de l'agent dans des surfaces et des formes approuvees._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Quête annexe : attaques supply chain via les MCP tool servers](side-quest-17-05-supply-chain-mcp.md) ou vous êtes déjà familier avec les garde-fous `safe-outputs`.
 - Vous avez un dépôt d’exercice avec au moins un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows), afin de pouvoir examiner ses blocs `safe-outputs:` et `permissions:`.
@@ -72,7 +72,7 @@ L’analyseur lit `required-labels` dans [`pkg/workflow/safe_outputs_parser.go`]
 
 </details>
 
-## :pencil2: Exercice : bloquer une charge utile d’injection simulée
+## ✏️ Exercice : bloquer une charge utile d’injection simulée
 
 1. Choisissez un workflow qui utilise `safe-outputs.add-comment`.
 2. Confirmez que l’issue ou la PR cible exige un label comme `daily-status`.
@@ -88,7 +88,7 @@ Normal update here.
 1. Exécutez le workflow et ouvrez le log Actions.
 2. Collez la ligne de rejet dans vos notes ou dans votre commentaire de checkpoint.
 
-## :pencil2: Exercice : inspecter la source de validation
+## ✏️ Exercice : inspecter la source de validation
 
 1. Ouvrez [`actions/setup/js/add_comment.cjs`](https://github.com/github/gh-aw/blob/main/actions/setup/js/add_comment.cjs#L582-L650).
 2. Consultez [`#L582-L583`](https://github.com/github/gh-aw/blob/main/actions/setup/js/add_comment.cjs#L582-L583) pour voir la vérification de cible `required-labels`.
@@ -103,7 +103,7 @@ Normal update here.
 - Gardez `permissions:` en lecture seule et supprimez les scopes inutilisés.
 - Traitez les descriptions d’issues, descriptions de PR et contenus de fichiers comme des entrées non fiables.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux décrire l’attaque par output injection en une phrase
 - [ ] Je peux citer la fonctionnalite gh-aw, `safe-outputs` avec delimitation par label, qui limite cette attaque

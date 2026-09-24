@@ -5,7 +5,7 @@
 
 > _Complément détaillé de [Auditez et surveillez vos agentic workflows](25-audit-and-observability.md). Utilisez cette quête annexe si vous voulez comprendre l’intégralité d’un rapport d’audit ou examiner des fichiers artifact individuels._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Auditez et surveillez vos agentic workflows](25-audit-and-observability.md) et disposez d’au moins un ID d’exécution de workflow sur lequel travailler.
 - `gh aw` est installé et authentifié, voir [Installer l’extension CLI gh-aw](06-install-gh-aw.md).
@@ -120,7 +120,7 @@ Les logs bruts d’accès réseau au niveau des domaines se trouvent dans `sandb
 2. Identifiez au moins un domaine auquel le workflow a accédé.
 3. Si certains domaines ont été bloqués, ajoutez-les à `network.allowed` dans le frontmatter du workflow.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez identifier chaque fichier dans l’artifact agent et expliquer ce qu’il contient
 - [ ] Vous comprenez ce que représente ⌖ AIC et en quoi il diffère de Agent AIC

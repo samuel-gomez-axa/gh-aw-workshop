@@ -5,11 +5,11 @@
 
 > _Facultatif : parcourez ce guide si vous voulez obtenir une sortie plus utile et plus régulière de vos [agentic workflows](https://github.github.com/gh-aw/introduction/overview/), puis revenez à [Step 11](07-your-first-workflow.md) ou [Step 9](09-agentic-editing.md)._
 
-## :dart: Ce Que Vous Allez Faire
+## 🎯 Ce Que Vous Allez Faire
 
 Découvrez cinq techniques pratiques pour rédiger des briefs de tâche IA qui produisent une sortie de workflow plus claire et plus exploitable. À la fin, vous aurez un brief de tâche amélioré pour votre workflow de statut quotidien, avec un meilleur contexte, des contraintes plus précises et un format de sortie prévisible.
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous avez rédigé votre premier brief de tâche de workflow dans [Step 11](07-your-first-workflow.md).
 - Vous avez exécuté le workflow au moins une fois dans [Step 9](09-agentic-editing.md) et vu sa sortie.
@@ -35,7 +35,7 @@ Contrairement à un message de chat, le brief de tâche s'exécute sans supervis
 Summarise the repository activity.
 ```
 
-:white_check_mark: Orienté objectif :
+✅ Orienté objectif :
 
 ```
 Produce a concise daily summary that helps a developer answer: "What changed
@@ -151,7 +151,7 @@ posted to the Actions run summary.
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez citer trois techniques pour améliorer un brief de tâche
 - [ ] Vous avez mis à jour votre workflow de statut quotidien avec au moins une amélioration issue de ce guide

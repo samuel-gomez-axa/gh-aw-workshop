@@ -5,7 +5,7 @@
 
 > _Suite facultative de [Part A](side-quest-11-01-frontmatter-deep-dive.md) : couvre `tools`, `safe-outputs`, la fence de fermeture et le corps de l'agent. Revenez au parcours principal lorsque vous avez terminé._
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 Vous avez terminé [Part A](side-quest-11-01-frontmatter-deep-dive.md) et votre brouillon contient déjà `emoji`, `on:` et `permissions:`.
 
@@ -13,7 +13,7 @@ Vous avez terminé [Part A](side-quest-11-01-frontmatter-deep-dive.md) et votre 
 
 ## `tools:`
 
-**:mag: Prédisez :** Pour permettre à l'agent d'appeler les API GitHub en toute sécurité et de rester dans les permissions que vous avez déclarées, quelle configuration ajouteriez-vous ? Écrivez votre réponse avant de poursuivre.
+**🔍 Prédisez :** Pour permettre à l'agent d'appeler les API GitHub en toute sécurité et de rester dans les permissions que vous avez déclarées, quelle configuration ajouteriez-vous ? Écrivez votre réponse avant de poursuivre.
 
 ```markdown
 ---
@@ -33,13 +33,13 @@ tools:
 | `mode: gh-proxy`      | Fait passer chaque appel à l'API GitHub par un proxy qui applique les `permissions:` déclarées, en bloquant tout appel non préapprouvé.                                                 |
 | `toolsets: [default]` | Active le toolset GitHub standard couvrant les issues, les pull requests, les commits et les runs Actions.                                                                              |
 
-**:pencil2: Essayez :** Ajoutez le bloc `tools:` à votre brouillon. Vérifiez bien que `mode` et `toolsets` sont indentés sous `github:`.
+**✏️ Essayez :** Ajoutez le bloc `tools:` à votre brouillon. Vérifiez bien que `mode` et `toolsets` sont indentés sous `github:`.
 
 ---
 
 ## `safe-outputs:`
 
-**:mag: Prédisez :** Vous voulez que l'agent publie exactement un commentaire par run et rien d'autre. Qu'écririez-vous sous `safe-outputs` ?
+**🔍 Prédisez :** Vous voulez que l'agent publie exactement un commentaire par run et rien d'autre. Qu'écririez-vous sous `safe-outputs` ?
 
 ```markdown
 ---
@@ -60,13 +60,13 @@ safe-outputs:
 > [!IMPORTANT]
 > Sans `safe-outputs`, l'agent ne peut rien écrire, même si vous le lui demandez dans le body. Le YAML frontmatter est la source de vérité pour l'accès en écriture, pas les instructions en prose.
 
-**:pencil2: Essayez :** Ajoutez `safe-outputs` à votre brouillon. Vérifiez que `max: 1` est bien indenté sous `add-comment:`.
+**✏️ Essayez :** Ajoutez `safe-outputs` à votre brouillon. Vérifiez que `max: 1` est bien indenté sous `add-comment:`.
 
 ---
 
 ## Fence De Fermeture
 
-**:mag: Prédisez :** Comment l'analyseur de fichier sait-il où la configuration YAML se termine et où commencent les instructions de l'agent ?
+**🔍 Prédisez :** Comment l'analyseur de fichier sait-il où la configuration YAML se termine et où commencent les instructions de l'agent ?
 
 ```markdown
 ---
@@ -74,13 +74,13 @@ safe-outputs:
 
 **Ce que fait cette section :** Elle ferme le bloc [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/). Tout ce qui se trouve sous cette ligne constitue le corps Markdown, c'est-à-dire le [brief de tâche](https://github.github.com/gh-aw/reference/markdown/) de l'agent en anglais courant.
 
-**:pencil2: Essayez :** Ajoutez le `---` de fermeture à votre brouillon. Confirmez que le fichier comporte maintenant exactement deux fences `---`.
+**✏️ Essayez :** Ajoutez le `---` de fermeture à votre brouillon. Confirmez que le fichier comporte maintenant exactement deux fences `---`.
 
 ---
 
 ## Le Markdown Body
 
-**:mag: Prédisez :** L'agent doit collecter quatre points de données du dépôt. Quelles quatre choses listeriez-vous ?
+**🔍 Prédisez :** L'agent doit collecter quatre points de données du dépôt. Quelles quatre choses listeriez-vous ?
 
 ```markdown
 # Daily Repo Status Report
@@ -111,11 +111,11 @@ Trois conventions rendent un brief de tâche fiable :
 - **Une liste de tâches numérotée** aide l'agent à traiter chaque point de données dans un ordre prévisible.
 - **Un bloc de guidelines** gère les cas particuliers, comme "already posted today", afin que l'agent n'ait pas à deviner.
 
-**:pencil2: Essayez :** Ajoutez le body sous le `---` de fermeture dans votre brouillon, puis lancez `gh aw compile` pour vérifier l'absence d'erreurs.
+**✏️ Essayez :** Ajoutez le body sous le `---` de fermeture dans votre brouillon, puis lancez `gh aw compile` pour vérifier l'absence d'erreurs.
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez expliquer ce que fait `mode: gh-proxy` et pourquoi c'est important pour la sécurité
 - [ ] Vous comprenez que `safe-outputs` est l'unique source d'accès en écriture, pas le texte du body

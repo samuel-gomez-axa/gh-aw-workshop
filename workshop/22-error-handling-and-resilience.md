@@ -5,11 +5,11 @@
 
 > _Un workflow qui gère proprement les erreurs est un workflow auquel vous pouvez faire confiance pour tourner sans surveillance, semaine après semaine._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Apprenez les modes d'échec les plus courants des workflows agentiques en production et appliquez trois techniques pratiques, briefs de tâche défensifs, réglages de timeout et fallbacks de [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/), afin que votre workflow reste utile même quand les choses se passent mal.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous disposez d'un workflow planifié fonctionnel (voir [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)).
 - Vous êtes à l'aise pour modifier le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) et les briefs de tâche d'un workflow.
@@ -40,7 +40,7 @@ Dans votre session Copilot CLI dans le terminal, collez :
 La skill applique ces trois modifications et recompile le [lock file](https://github.github.com/gh-aw/reference/compilation-process/). Examinez le diff avant de commit.
 
 <details open>
-<summary>:pencil2: Manual edit path</summary>
+<summary>✏️ Manual edit path</summary>
 
 Effectuez les trois modifications manuellement, en vous appuyant sur le contenu de référence ci-dessous, puis lancez :
 
@@ -125,7 +125,7 @@ Après le push :
 2. Ouvrez le journal d'exécution et confirmez que l'étape de safe output s'exécute même lorsque le jeu de données est petit ou vide.
 3. Vérifiez la durée d'exécution : elle doit rester largement sous votre limite `timeout-minutes`.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Votre brief de tâche inclut une instruction de secours explicite pour les données vides ou manquantes
 - [ ] Le frontmatter de votre workflow définit `timeout-minutes`

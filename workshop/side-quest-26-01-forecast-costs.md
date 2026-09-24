@@ -108,7 +108,7 @@ Recompilez après modification :
 gh aw compile
 ```
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez exécuté `gh aw forecast` et lu la sortie P10/P50/P90
 - [ ] Vous avez utilise `--period week` pour obtenir une projection plus courte

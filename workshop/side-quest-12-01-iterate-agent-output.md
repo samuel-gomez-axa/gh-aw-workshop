@@ -5,11 +5,11 @@
 
 > _Facultatif : utilisez cette quête annexe lorsque vous voulez une méthode répétable pour juger un run de workflow, améliorer une phrase du brief du workflow et comparer le résultat, puis revenez à [Affiner, tester et améliorer votre workflow](09-agentic-editing.md)._
 
-## :dart: Ce Que Vous Allez Faire
+## 🎯 Ce Que Vous Allez Faire
 
 Exécutez votre workflow une fois, évaluez la sortie avec une courte grille, modifiez une phrase du brief, puis relancez-le. À la fin, vous aurez une comparaison avant/après au lieu d'une impression vague que le prompt est "better."
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous avez terminé [Step 9](09-agentic-editing.md) et disposez déjà d'un run de workflow à inspecter.
 - Votre workflow publie sur une [safe output surface](https://github.github.com/gh-aw/reference/safe-outputs/) telle que l'issue **Daily Status Reports**.
@@ -105,7 +105,7 @@ Vérification rapide du run log :
 
 </details>
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez déclenché un nouveau run de workflow et capturé une sortie réelle à examiner
 - [ ] Vous avez noté un score de référence pour l'accuracy, la completeness et le tone

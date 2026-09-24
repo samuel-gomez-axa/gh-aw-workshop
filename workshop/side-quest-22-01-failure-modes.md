@@ -5,11 +5,11 @@
 
 > _Avant de pouvoir corriger une exécution en panne, vous devez savoir nommer le problème. Cette introduction vous en donne quatre._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous apprendrez les quatre façons les plus courantes dont les agentic workflows échouent en production, verrez un exemple détaillé de chacune, et vous exercerez à associer chaque type d’échec à son effet. À la fin, vous pourrez regarder un log d’exécution et nommer le mode d’échec en un mot avant de commencer le débogage.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez un workflow planifié fonctionnel, voir [Affinez, testez et améliorez votre workflow](09-agentic-editing.md).
 - Vous commencez, ou avez déjà commencé, [Rendez vos workflows résilients face aux échecs](22-error-handling-and-resilience.md), qui utilise ce vocabulaire.
@@ -58,7 +58,7 @@ Avant de vérifier votre réponse, décidez quelle mitigation, defensive brief, 
 
 Ouvrez une exécution récente de votre propre workflow dans l’onglet **Actions** et parcourez rapidement le log. Demandez-vous si quelque chose correspond à l’un des quatre types d’échec ci-dessus, même si l’exécution a techniquement réussi. Une exécution peut "réussir", avec une coche verte, et présenter quand même du prompt drift ou produire une sortie empty-data.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez citer les quatre modes d’échec courants des agentic workflows sans regarder le tableau
 - [ ] Vous avez associé chacun des trois scénarios d’exercice à la mitigation correcte

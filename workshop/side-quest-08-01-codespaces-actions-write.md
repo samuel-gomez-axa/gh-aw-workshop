@@ -5,7 +5,7 @@
 
 > _Facultatif : utilisez ce guide si l’étape 8 échoue dans un Codespace, puis revenez à [Exécuter et suivre votre workflow](08-run-your-workflow.md)._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 Cette side quest vous concerne si **les deux** conditions suivantes sont vraies :
 
@@ -16,7 +16,7 @@ Si vous n’êtes pas dans un Codespace ou ne voyez pas l’erreur 403, revenez 
 
 ---
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez identifier l’erreur de token Codespaces qui bloque `gh aw run` et utiliser le chemin de récupération le plus rapide. Si vous le souhaitez, vous pouvez aussi recréer votre Codespace avec les [permissions](https://github.github.com/gh-aw/reference/permissions/) supplémentaires nécessaires aux [triggers](https://github.github.com/gh-aw/reference/triggers/) de workflow lancés depuis le terminal.
 
@@ -97,7 +97,7 @@ Si vous voyez toujours la même erreur 403 et qu’aucune nouvelle exécution n�
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux voir `HTTP 403: Resource not accessible by integration` dans mon terminal lorsque j’exécute `gh aw run daily-report-status`
 - [ ] Une nouvelle exécution **Daily Report Status** apparaît dans l’onglet **Actions** après l’avoir déclenchée depuis l’UI

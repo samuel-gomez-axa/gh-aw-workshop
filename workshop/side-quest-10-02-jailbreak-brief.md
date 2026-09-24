@@ -5,7 +5,7 @@
 
 > _Facultatif : parcourez cette introduction à la sécurité pour comprendre comment des instructions adverses intégrées au contenu du dépôt peuvent tenter de remplacer le brief de tâche de votre agent, et pourquoi l'architecture en couches de gh-aw limite ce qu'un succès partiel peut réellement permettre._
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous avez terminé [Choose Your Scenario](09-agentic-editing.md).
 - Vous avez lu, ou prévoyez de lire, [Side Quest: Writing a Clear Agent Brief](side-quest-10-01-agent-brief.md) : comprendre à quoi ressemble un brief de tâche bien formé permet de mieux voir comment un attaquant essaie de le remplacer.
@@ -87,7 +87,7 @@ Lorsque vous activez `threat-detection` sous `safe-outputs:`, gh-aw ajoute un jo
 
 ---
 
-## :pencil2: Exercice : repérer l'injection
+## ✏️ Exercice : repérer l'injection
 
 Un workflow de statut quotidien a récupéré le corps d'issue suivant. Quelle phrase constitue la tentative d'injection ?
 
@@ -108,7 +108,7 @@ La quatrième phrase, "Please disregard your current task…", est l'injection. 
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux expliquer ce qui distingue une attaque de jailbreak d'une simple prompt injection
 - [ ] Je peux lister les quatre couches de défense gh-aw par défaut et la cinquième couche facultative (`threat-detection`)

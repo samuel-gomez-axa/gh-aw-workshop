@@ -18,11 +18,11 @@
 
 > _Un seul fichier de workflow, plusieurs agents spécialisés, chacun faisant exactement une chose, au bon coût._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez ajouter un sous-agent à votre workflow daily-status afin que l'agent parent reste concentré sur la planification et la rédaction finale, tandis qu'un sous-agent ciblé prend en charge une tâche répétitive. À la fin de cette étape, votre workflow sera plus facile à faire évoluer sans transformer l'ensemble du prompt en un brief long et répétitif.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous disposez d'un workflow agentique fonctionnel issu des étapes de création ([Step 7](07-your-first-workflow.md) ou équivalent).
 - Vous comprenez le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) YAML depuis [Write Your First Agentic Workflow](07-your-first-workflow.md).
@@ -40,7 +40,7 @@ Lorsque votre workflow répète la même petite tâche sur de nombreux élément
 
 Un sous-agent est simplement un assistant que vous définissez dans le même fichier de workflow. Dans cette étape, vous n'avez besoin que d'une seule règle de syntaxe : commencez l'assistant par un titre de niveau 2 qui débute par `## agent:` et un nom entouré de backticks. Placez le brief de l'assistant sous ce titre. Si vous le souhaitez, ajoutez un court bloc de frontmatter avec des champs comme `description` ou `model`. Appelez ensuite cet assistant par son nom depuis le brief du workflow parent.
 
-> :thinking: **Predict:** Regardez votre workflow actuel. Quelle instruction se répète une fois par issue, pull request ou fichier ? Gardez cette réponse en tête pour la section suivante.
+> 🤔 **Predict:** Regardez votre workflow actuel. Quelle instruction se répète une fois par issue, pull request ou fichier ? Gardez cette réponse en tête pour la section suivante.
 >
 > [!TIP]
 > Vous voulez les règles complètes pour les noms, le frontmatter, les [model aliases](https://github.github.com/gh-aw/reference/engines/#available-coding-agents) et le positionnement des blocs ? Consultez [Side Quest: Sub-Agent Syntax Reference](side-quest-21-01-sub-agent-syntax.md). Restez sur cette page si vous ne voulez suivre que le parcours principal.
@@ -88,7 +88,7 @@ that explains what the issue is asking for and its current status.
 Gardez le brief du sous-agent resserré. S'il traite un élément à la fois et renvoie un seul résultat, alors il a sa place ici.
 
 <details open>
-<summary>:desktop_computer: Terminal path</summary>
+<summary>🖥️ Terminal path</summary>
 
 Après le brief de votre workflow parent, ajoutez en bas du fichier le bloc de sous-agent montré ci-dessus. Puis mettez à jour le brief parent pour l'appeler par son nom. Par exemple :
 
@@ -114,7 +114,7 @@ git push
 
 Déclenchez une exécution manuelle. Dans le journal Actions, vérifiez que l'agent parent appelle votre sous-agent puis utilise son résultat dans le résumé final.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez identifié une tâche répétitive dans votre workflow qui se prête bien à un sous-agent
 - [ ] Vous avez défini un nom de sous-agent et une mission en une phrase avant d'éditer le fichier

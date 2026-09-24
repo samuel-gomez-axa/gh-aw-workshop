@@ -3,11 +3,11 @@
 
 # Side Quest 09-01a : Motif — longues chaînes `[plan]`
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez apprendre à repérer une boucle de planification et à réécrire le brief de votre workflow pour que l’agent commence par un premier appel explicite de [tool](https://github.github.com/gh-aw/reference/tools/).
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Terminez [Side Quest : Diagnostiquer les motifs courants de sortie d’agent](side-quest-09-01-debug-output.md)
 
@@ -42,7 +42,7 @@ Motif : **Long `[plan]` chain without `[tool]` call**. Corrigez-le en ajoutant u
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux reconnaître une boucle de planification à partir des seules lignes du journal
 - [ ] Je peux expliquer pourquoi des objectifs ambigus retardent l’utilisation des tools

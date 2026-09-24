@@ -3,11 +3,11 @@
 
 # Quête Annexe 13-01 : Pattern — Étiqueter Automatiquement Les PRs Selon Leur Contenu
 
-## :dart: Ce Que Vous Allez Faire
+## 🎯 Ce Que Vous Allez Faire
 
 Étendez votre workflow de revue de PR pour appliquer automatiquement des [GitHub labels](https://github.github.com/gh-aw/reference/safe-outputs/#add-labels-add-labels) à partir des fichiers modifiés dans une pull request.
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Terminez [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
 - Votre dépôt d'entraînement contient déjà au moins un label. Sinon, allez dans **Issues → Labels** de votre dépôt et créez des labels comme `documentation`, `tests` et `bug-fix`.
@@ -79,7 +79,7 @@ Compilez, poussez, puis testez avec une PR qui modifie un fichier de workflow.
 
 </details>
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J'ai créé `.github/workflows/pr-labeler.md` avec un trigger `pull_request`
 - [ ] `gh aw compile` s'est terminé sans erreur et `.lock.yml` est validé puis poussé

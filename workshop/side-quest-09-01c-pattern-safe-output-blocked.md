@@ -3,11 +3,11 @@
 
 # Side Quest 09-01c : Motif — [Safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) `limit reached`
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez apprendre à interpréter des écritures bloquées et à choisir entre augmenter les sorties autorisées ou contraindre le comportement de l’agent.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Terminez [Side Quest : Diagnostiquer les motifs courants de sortie d’agent](side-quest-09-01-debug-output.md)
 
@@ -42,7 +42,7 @@ Motif : **safe-output `limit reached`**. Déterminez si la deuxième écriture e
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux expliquer ce que signifie `BLOCKED` dans les journaux safe-output
 - [ ] Je peux décider quand augmenter `max` est approprié

@@ -7,7 +7,7 @@
 
 Les workflows de données fonctionnent mieux lorsque vous séparez délibérément les tâches. Gardez les opérations répétables déterministes. Utilisez l’agent lorsque vous avez besoin de jugement.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Terminez [Connecter une source de données en direct](16-connect-data-source.md) (obligatoire)
 - Soyez familier avec les commandes de la CLI `gh`
@@ -50,7 +50,7 @@ Suivez cette structure pour des flux de statut de dépôt, de triage d’inciden
 
 Cela rend votre pipeline fiable. Cela vous donne aussi un raisonnement souple là où les scripts deviennent fragiles.
 
-## :hammer_and_wrench: Essayez : étiquetez chaque étape D ou A
+## 🛠️ Essayez : étiquetez chaque étape D ou A
 
 Lisez l’extrait de workflow. Dans le bloc de commentaires, étiquetez chaque étape avec **D** pour deterministic ou **A** pour agentic.
 
@@ -92,7 +92,7 @@ gh issue list --state open --search "updated:>=2026-07-13" --json number,title,l
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez expliquer en une phrase la différence entre travail déterministe et travail agentique
 - [ ] Vous pouvez identifier une étape de votre workflow qui doit rester déterministe

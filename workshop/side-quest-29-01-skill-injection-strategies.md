@@ -5,11 +5,11 @@
 
 > _Facultatif : utilisez ce guide plus détaillé si vous voulez une vision complète des choix possibles pour brancher un [`SKILL.md`](https://github.github.com/gh-aw/reference/custom-agent-for-aw/#using-the-skill-files-for-agentic-workflows) dans le prompt d’un workflow avant de revenir à [l’étape 29](29-skills-and-domain-knowledge.md)._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Comparez trois stratégies pour connecter un `SKILL.md` à un prompt de workflow, **hint**, **fusion** et **inline**, puis exercez-vous à écrire chacune d’elles. À la fin, vous serez capable de choisir la bonne stratégie pour une tâche donnée et un budget de contexte donné.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous êtes en train de suivre [Enseignez des connaissances métier à votre agent avec des skills](29-skills-and-domain-knowledge.md).
 - Vous disposez déjà d’un fichier `SKILL.md`, par exemple `.github/skills/issue-triage/SKILL.md` issu de l’étape 29.
@@ -26,7 +26,7 @@ Comparez trois stratégies pour connecter un `SKILL.md` à un prompt de workflow
 | Déterminisme        | Plus faible, l’agent choisit ce qui s’applique | Plus élevé, vous précisez le fragment exact | Le plus élevé, le contenu est embarqué avec le workflow |
 | Réutilisation       | À travers plusieurs workflows                  | À travers plusieurs workflows               | Un seul workflow                                        |
 
-> :thinking: **Prédiction :** Avant de lire les exemples ci-dessous, devinez quelle stratégie correspond à votre skill de l’étape 29. Le domaine de votre tâche reste-t-il étroit, ou pourrait-il s’étendre plus tard à de nouvelles conventions ?
+> 🤔 **Prédiction :** Avant de lire les exemples ci-dessous, devinez quelle stratégie correspond à votre skill de l’étape 29. Le domaine de votre tâche reste-t-il étroit, ou pourrait-il s’étendre plus tard à de nouvelles conventions ?
 
 ---
 
@@ -93,7 +93,7 @@ Après chaque compilation, vérifiez dans le `.lock.yml` l’étape d’activati
 gh aw compile
 ```
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux expliquer quand choisir hint plutôt que fusion, et quand choisir inline plutôt que les deux autres
 - [ ] J'ai ecrit un paragraphe hint faisant reference a `skills/` ou `.github/skills/`

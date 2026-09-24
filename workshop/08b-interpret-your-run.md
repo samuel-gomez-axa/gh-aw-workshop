@@ -5,11 +5,11 @@
 
 _Votre première exécution est plus utile lorsque vous pouvez expliquer ce que l’agent a fait et pourquoi._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez lire le journal en direct de l’étape 8, trouver la sortie du workflow et apprendre trois vérifications rapides pour les problèmes d’exécution les plus fréquents.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Lancer et observer votre workflow](08-run-your-workflow.md)
 - Votre workflow **Daily Report Status** a au moins une exécution terminée
@@ -87,7 +87,7 @@ Avant de cocher le checkpoint, prenez deux minutes pour appliquer ce que vous ve
 
 Mettez vos réponses dans un fichier brouillon, dans votre éditeur ou à l’endroit où vous gardez vos notes. Vous reviendrez à cette comparaison lorsque vous affinerez le workflow à l’étape suivante.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J’ai ouvert le résumé d’exécution et trouvé la note safe-output
 - [ ] J’ai vérifié la sortie réelle sur GitHub créée par le workflow

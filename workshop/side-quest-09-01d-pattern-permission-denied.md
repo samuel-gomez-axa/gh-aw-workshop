@@ -3,11 +3,11 @@
 
 # Side Quest 09-01d : Motif — `permission denied`
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez faire correspondre les échecs de [permission](https://github.github.com/gh-aw/reference/permissions/) au bon mécanisme de contrôle : accès en lecture dans `permissions:` et autorisation d’écriture dans `safe-outputs:`.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Terminez [Side Quest : Diagnostiquer les motifs courants de sortie d’agent](side-quest-09-01-debug-output.md)
 
@@ -42,7 +42,7 @@ Motif : **l’exécution échoue avec `permission denied`**. Il s’agit d’une
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux classer les appels refusés en opérations de lecture ou d’écriture
 - [ ] Je peux corriger un accès en lecture manquant dans `permissions:`

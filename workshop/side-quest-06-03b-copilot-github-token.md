@@ -9,7 +9,7 @@ Cette méthode stocke un [Personal Access Token](https://github.github.com/gh-aw
 
 Si vous voulez un parcours entièrement en UI sans commandes de terminal, utilisez [Method 2 (UI-only)](side-quest-06-03c-copilot-github-token-ui-only.md).
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez un compte GitHub avec un abonnement Copilot actif.
 - Vous avez lu [Side Quest : Configurer l’authentification GitHub Copilot](side-quest-06-03-copilot-token.md) et choisi la méthode 2.
@@ -28,7 +28,7 @@ Ce parcours guidé vérifie si le secret manque, vous accompagne pour créer ou 
 
 Si vous préférez créer et enregistrer le PAT manuellement, suivez la procédure complète ci-dessous.
 
-## :pencil2: Sous-exercice A : générer le token manuellement
+## ✏️ Sous-exercice A : générer le token manuellement
 
 1. Ouvrez [github.com/settings/tokens](https://github.com/settings/tokens) et cliquez sur **Generate new token (fine-grained)**.
 2. Donnez un nom au token (par exemple `gh-aw-copilot`) et définissez une expiration (90 jours est une valeur par défaut courante).
@@ -50,7 +50,7 @@ Remplacez `YYYY-MM-DD` par la date d’expiration de votre token.
 - [ ] J’ai copié la valeur du token avant de quitter la page
 - [ ] J’ai noté la date de rotation du token
 
-## :pencil2: Sous-exercice B : enregistrer le secret manuellement
+## ✏️ Sous-exercice B : enregistrer le secret manuellement
 
 Enregistrez le token comme secret de dépôt :
 
@@ -84,7 +84,7 @@ git push
 
 La compilation met à jour le [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) pour qu’il utilise la méthode fondée sur le token.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez généré un fine-grained PAT avec **Copilot requests: Read-only** sous **Account permissions**
 - [ ] `COPILOT_GITHUB_TOKEN` existe dans les secrets Actions de votre dépôt

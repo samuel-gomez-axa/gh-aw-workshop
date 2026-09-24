@@ -75,7 +75,7 @@ Pour changer d’engine plus tard, consultez :
 - [Side Quest: Configure an Anthropic API Key](side-quest-11-06-anthropic-key.md)
 - [Side Quest: Configure an OpenAI API Key](side-quest-11-07-openai-key.md)
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J’ai choisi un parcours de facturation et terminé toutes les étapes de configuration
 - [ ] `daily-report-status.md` reflète la méthode choisie

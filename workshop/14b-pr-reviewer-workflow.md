@@ -5,7 +5,7 @@
 
 _Transformez la revue de pull request en une petite équipe : un orchestrateur, un relecteur ciblé et des consignes de revue réutilisables._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez utiliser votre agent IA et la skill `/agentic-workflows` pour créer un relecteur de PR piloté par événement. Le workflow définira :
 
@@ -15,7 +15,7 @@ Vous allez utiliser votre agent IA et la skill `/agentic-workflows` pour créer 
 
 À la fin, vous aurez un relecteur qui s'exécute lorsqu'un brouillon devient prêt, qui peut être relancé avec `/review` et qui sépare sa méthode de revue de son orchestration.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous disposez d'un workflow fonctionnel issu de [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
 - Vous avez poussé les fichiers créés par `gh aw init`, y compris `.github/skills/agentic-workflows/`.
@@ -40,7 +40,7 @@ Le schéma ci-dessous montre comment ces trois couches se connectent à l'exécu
 
 L'agent peut changer sa façon d'étudier une pull request sans modifier les standards stables de la skill. Vous pouvez aussi améliorer la skill sans rallonger le brief parent. Cette même séparation permet également d'étendre facilement le relecteur pour appliquer des labels selon les fichiers modifiés (voir [Pattern: Auto-Label PRs by Content](side-quest-13-01-pr-labeler-pattern.md)) ou publier un résumé structuré qui sert aussi de brouillon de note de version (voir [Pattern: Generate a PR Summary Comment](side-quest-13-02-pr-summary-pattern.md)).
 
-> :thinking: **Predict:** Quelle instruction a sa place dans la skill : “review pull request 42” ou “cite a changed file and line for every finding” ? La première relève de l'orchestration propre à l'exécution ; la seconde est une consigne de revue réutilisable.
+> 🤔 **Predict:** Quelle instruction a sa place dans la skill : “review pull request 42” ou “cite a changed file and line for every finding” ? La première relève de l'orchestration propre à l'exécution ; la seconde est une consigne de revue réutilisable.
 
 ## Demandez à votre agent de créer le workflow
 
@@ -169,7 +169,7 @@ Par exemple :
 
 Relancez `/review` puis comparez le nouveau résultat avec la première revue. Une fois quelques variantes essayées, utilisez la side quest [Observe and Reduce Token Costs](side-quest-13-04-token-optimization.md) pour mesurer l'impact AIC de chaque changement et identifier les optimisations les plus utiles.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez créé `.github/workflows/pr-reviewer.md` avec votre agent IA et `/agentic-workflows`
 - [ ] Le workflow contient un agent inline `pr-reviewer` et une skill inline `pr-review-standards`

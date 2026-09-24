@@ -3,7 +3,7 @@
 
 # Comment les Agentic Workflows restent sûrs
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez lu [Qu’est-ce qu’un Agentic Workflow ?](05-agentic-workflows-intro.md)
 
@@ -63,7 +63,7 @@ Pour chacun des scénarios ci-dessous, décidez si la **sandbox** ou le **safe-o
 
 </details>
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux décrire ce que fait la sandbox et pourquoi elle est importante pour la sécurité de l’automatisation
 - [ ] Je peux expliquer comment le système safe-output empêche l’agent d’écrire directement dans le dépôt

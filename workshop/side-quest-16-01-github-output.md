@@ -109,7 +109,7 @@ L’expression `${{ ... }}` est résolue par GitHub Actions **avant** que le cor
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez expliquer pourquoi `export` ne transmet pas de valeurs entre les étapes
 - [ ] Vous pouvez ecrire une valeur sur une seule ligne dans `$GITHUB_OUTPUT`

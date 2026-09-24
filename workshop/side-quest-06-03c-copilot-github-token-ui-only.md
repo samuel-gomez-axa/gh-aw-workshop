@@ -7,12 +7,12 @@
 
 Cette méthode stocke un [fine-grained Personal Access Token](https://github.github.com/gh-aw/reference/auth/#copilot-default) (PAT) comme secret de dépôt nommé `COPILOT_GITHUB_TOKEN`. L’[engine](https://github.github.com/gh-aw/reference/engines/) de l’[agentic workflow](https://github.github.com/gh-aw/introduction/overview/) le récupère automatiquement.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez un compte GitHub avec un abonnement Copilot actif.
 - Vous avez lu [Side Quest : Configurer l’authentification GitHub Copilot](side-quest-06-03-copilot-token.md) et choisi la méthode 2.
 
-## :pencil2: Sous-exercice A : générer le token
+## ✏️ Sous-exercice A : générer le token
 
 1. Ouvrez [github.com/settings/tokens](https://github.com/settings/tokens) et cliquez sur **Generate new token (fine-grained)**.
 2. Donnez un nom au token (par exemple, gh-aw-copilot) et définissez une expiration (90 jours est une valeur par défaut courante). Définissez un rappel pour faire tourner le token avant son expiration.
@@ -33,7 +33,7 @@ Vérification rapide :
 - [ ] J’ai copié la valeur du token avant de quitter la page
 - [ ] J’ai noté la date d’expiration du token
 
-## :pencil2: Sous-exercice B : enregistrer le secret
+## ✏️ Sous-exercice B : enregistrer le secret
 
 Ouvrez votre dépôt dans un nouvel onglet afin de garder la page du token ouverte jusqu’à l’enregistrement du secret.
 
@@ -60,7 +60,7 @@ Vérification rapide :
 
 Lorsque `copilot-requests: write` est présent, le workflow ignore `COPILOT_GITHUB_TOKEN` pour l’inférence.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez généré un nouveau fine-grained PAT et l’avez copié avant de quitter la page du token
 - [ ] Le token a **Copilot requests: Read-only** sous **Account permissions**

@@ -5,13 +5,13 @@
 
 > _Facultatif : utilisez cette référence rapide si vous voulez de l'aide pour choisir une expression de schedule pour [Affiner, tester et améliorer votre workflow](09-agentic-editing.md), puis revenez à l'aventure principale._
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous avez terminé [Refine, Test, and Improve Your Workflow](09-agentic-editing.md) ou êtes en train de la suivre.
 - Vous comprenez que les schedules de [GitHub Actions](https://github.github.com/gh-aw/reference/triggers/) utilisent des **cron expressions**, par exemple `0 9 * * 1` s'exécute à 09:00 UTC chaque lundi.
 - Vous savez exécuter `gh aw compile` pour régénérer le lock file d'un workflow.
 
-## :dart: Ce Que Vous Allez Faire
+## 🎯 Ce Que Vous Allez Faire
 
 Vous allez apprendre comment la syntaxe de schedule en anglais courant de `gh-aw` se traduit en schedules cron GitHub Actions. À la fin, vous saurez quelle [fuzzy expression](https://github.github.com/gh-aw/reference/schedule-syntax/#fuzzy-schedules) convient à votre workflow, comment vérifier la valeur cron compilée et en quoi les agentic workflows diffèrent du YAML classique d'Actions pour la planification.
 
@@ -78,7 +78,7 @@ Si aucune option fuzzy ne correspond exactement à votre besoin de planification
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux expliquer à haut niveau ce qu'est une cron expression
 - [ ] Je sais quelle fuzzy schedule expression correspond le mieux à la cadence de mon workflow

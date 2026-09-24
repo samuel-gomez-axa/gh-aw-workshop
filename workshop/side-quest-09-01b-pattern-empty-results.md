@@ -3,11 +3,11 @@
 
 # Side Quest 09-01b : Motif — données `[result]` vides
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez diagnostiquer des réponses vides de [tool](https://github.github.com/gh-aw/reference/tools/) et décider si la cause racine est une portée de lecture manquante, un filtrage excessif ou des données réellement absentes dans le dépôt.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Terminez [Side Quest : Diagnostiquer les motifs courants de sortie d’agent](side-quest-09-01-debug-output.md)
 
@@ -41,7 +41,7 @@ Motif : **l’appel `[tool]` renvoie des résultats vides**. Vérifiez les [perm
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux distinguer un résultat vide d’un appel de tool en échec
 - [ ] Je peux vérifier les portées de lecture requises dans `permissions:`

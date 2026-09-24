@@ -3,7 +3,7 @@
 
 # Configurer un Codespace
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - [ ] Vous avez un compte GitHub avec accès à GitHub Codespaces
 - [ ] Votre compte peut créer des dépôts publics (le niveau gratuit convient)
@@ -12,7 +12,7 @@
 > [!TIP]
 > Vous ne savez pas si votre offre inclut Codespaces ? Les comptes GitHub gratuits incluent 60 heures par mois. Vérifiez vos [paramètres de facturation](https://github.com/settings/billing/summary) ou demandez à l’administrateur de votre organisation.
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez lancer un GitHub Codespace pour cet atelier, ouvrir le terminal intégré et arriver dans un environnement prêt à l’emploi pour l’étape suivante.
 
@@ -104,7 +104,7 @@ github.com
   ✓ Logged in to github.com as <your-username>
 ```
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez confirmé que votre offre GitHub inclut l’accès à Codespaces (le niveau gratuit inclut 60 heures par mois)
 - [ ] L’éditeur du Codespace est ouvert dans votre navigateur

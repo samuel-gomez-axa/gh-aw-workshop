@@ -16,11 +16,11 @@
 
 > _Écrivez vos conventions de domaine une seule fois dans un `SKILL.md`, et chaque workflow qui en a besoin pourra les réutiliser._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez rédiger un `SKILL.md` local qui encode une convention de domaine reproductible, règle de nommage, checklist de revue ou format de données, puis le référencer depuis un workflow afin que l'agent applique cette connaissance sans que vous ayez à la répéter dans chaque brief. À la fin de cette étape, vous saurez quand laisser l'agent découvrir lui-même les skills, stratégie hint, et quand ne lui fournir que le fragment exact dont il a besoin, stratégie fusion.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Orchestrate Multiple Agentic Workflows](28-orchestrate-workflows.md).
 - Vous disposez d'au moins un workflow agentique fonctionnel que vous pouvez modifier puis recompiler.
@@ -38,7 +38,7 @@ cat .github/skills/agentic-workflows/SKILL.md
 
 Remarquez la structure : un frontmatter YAML avec `name` et `description`, suivi de consignes en langage naturel que l'agent lit puis applique.
 
-> :thinking: **Predict:** Pensez à une convention que vous réexpliquez sans cesse à votre agent d'un workflow à l'autre, format de message de commit, règle de labellisation, checklist. C'est une bonne candidate pour une skill.
+> 🤔 **Predict:** Pensez à une convention que vous réexpliquez sans cesse à votre agent d'un workflow à l'autre, format de message de commit, règle de labellisation, checklist. C'est une bonne candidate pour une skill.
 
 ## Étapes
 
@@ -68,7 +68,7 @@ pieces of information a good bug report must include.
 ```
 
 <details open>
-<summary>:desktop_computer: Terminal path — write the SKILL.md directly</summary>
+<summary>🖥️ Terminal path — write the SKILL.md directly</summary>
 
 Créez `.github/skills/issue-triage/SKILL.md` :
 
@@ -107,7 +107,7 @@ Une fois la skill créée, décidez comment le prompt de votre workflow doit y f
   <img alt="Schéma montrant un fichier SKILL.md alimentant trois stratégies d'injection, hint, fusion et inline, qui convergent chacune vers le prompt de workflow lu par l'agent." src="images/29-skill-injection-strategies-light.svg">
 </picture>
 
-> :bulb: **Side quest facultative :** Pour le tableau de décision complet, des exemples de code pour chaque stratégie et un exercice pratique, consultez [Skill Injection Strategies — Hint, Fusion, and Inline](side-quest-29-01-skill-injection-strategies.md).
+> 💡 **Side quest facultative :** Pour le tableau de décision complet, des exemples de code pour chaque stratégie et un exercice pratique, consultez [Skill Injection Strategies — Hint, Fusion, and Inline](side-quest-29-01-skill-injection-strategies.md).
 
 ### Brancher la skill dans un workflow et valider
 
@@ -119,7 +119,7 @@ gh aw compile
 
 Vérifiez dans le `.lock.yml` compilé l'étape d'activation qui installe votre skill, puis confirmez qu'aucun avertissement de compilation ne mentionne une référence de skill manquante ou non épinglée.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez trouvé un `SKILL.md` existant dans ce dépôt et identifié son `name` et sa `description`
 - [ ] Vous avez rédigé un `SKILL.md` local qui encode une convention métier concrète

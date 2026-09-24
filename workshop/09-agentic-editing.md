@@ -5,13 +5,13 @@
 
 _Le chemin le plus rapide vers un meilleur workflow consiste à boucler serré : décrire ce que vous voulez, relire le diff, tester et comparer le résultat._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez utiliser le skill Copilot `agentic-workflows`, installé dans votre dépôt d’entraînement à l’étape 7, pour modifier, déboguer et optimiser `daily-report-status.md`, puis déclencher une nouvelle exécution et comparer la sortie à la précédente.
 
 À la fin de cette étape, votre workflow produira une sortie plus utile et vous disposerez d’une boucle d’itération reproductible que vous pourrez réutiliser chaque fois que la sortie du workflow sera vague, incorrecte ou incomplète.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Interpréter votre première exécution](08b-interpret-your-run.md)
 - Votre workflow `daily-report-status` a au moins une exécution terminée
@@ -72,7 +72,7 @@ would benefit the team. Keep the existing [safe-output](https://github.github.co
 Le skill charge le prompt de mise à jour, effectue la modification ciblée dans le corps Markdown, recompile le workflow, puis vous montre le diff. Examinez le corps Markdown mis à jour et confirmez que la nouvelle instruction est claire et précise avant de commiter.
 
 <details open>
-<summary>:desktop_computer: Chemin terminal</summary>
+<summary>🖥️ Chemin terminal</summary>
 
 Ouvrez `.github/workflows/daily-report-status.md` et ajoutez une phrase au corps Markdown, par exemple :
 
@@ -108,7 +108,7 @@ Suggest the most likely cause and propose one change to the workflow brief to fi
 Le skill lit le fichier de workflow, identifie des causes probables comme un brief trop vague, une instruction de repli manquante ou une surface safe-output trop large, puis propose une correction ciblée et minimale.
 
 <details open>
-<summary>:desktop_computer: Chemin terminal</summary>
+<summary>🖥️ Chemin terminal</summary>
 
 Ouvrez le journal d’exécution depuis l’onglet **Actions** et trouvez le premier `Tool call` effectué par l’agent. Ouvrez ensuite `.github/workflows/daily-report-status.md` et ajoutez une instruction de repli dans le corps Markdown, par exemple :
 
@@ -135,7 +135,7 @@ to reduce token usage. Apply only changes that do not change the workflow's outc
 Le skill applique des techniques telles que la suppression d’instructions redondantes, la consolidation de contraintes répétées et l’élimination de déclarations safe-output inutilisées.
 
 <details open>
-<summary>:desktop_computer: Chemin terminal</summary>
+<summary>🖥️ Chemin terminal</summary>
 
 Examinez le corps Markdown de votre workflow et retirez toute phrase qui répète la même contrainte ou reformule quelque chose déjà imposé par le frontmatter, par exemple « publier un seul commentaire » si `safe-outputs` vous limite déjà à un commentaire. Recompilez après chaque suppression pour vérifier que rien ne casse.
 
@@ -167,7 +167,7 @@ Si oui, gardez la modification. Sinon, annulez-la et essayez un autre ajustement
 
 Si vous voulez une boucle de revue plus stricte, notez chaque exécution sur l’exactitude, l’exhaustivité et le ton avant de décider du changement suivant.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J’ai identifié un problème précis à partir d’une exécution réelle du workflow
 - [ ] J’ai utilisé le skill `/agentic-workflows`, ou fait une modification manuelle, pour le traiter

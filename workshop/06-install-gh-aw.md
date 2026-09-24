@@ -9,11 +9,11 @@
 > [!NOTE]
 > Vous utilisez plutôt votre propre machine ? Suivez la quête annexe facultative [Install `gh-aw` in a Local Terminal](side-quest-06-04-install-local.md).
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez vérifier que le CLI `gh` est authentifié, installer l’extension `gh-aw`, puis lancer un diagnostic rapide pour confirmer que votre terminal Codespace est prêt pour la configuration d’un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/).
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Qu’est-ce qu’un Agentic Workflow ?](05-agentic-workflows-intro.md)
 - Vous avez un terminal Codespace ouvert, issu de [Set Up a Codespace](02a-setup-codespace.md)
@@ -83,7 +83,7 @@ Exécutez `gh aw --help` et parcourez la liste des sous-commandes.
 Quelle sous-commande pensez-vous utiliser à l’étape 7 lorsque vous créerez et exécuterez votre premier workflow ?
 
 Vous voulez comprendre comment Copilot s’authentifie avec votre workflow ?
-:arrow_right: **[Side Quest: Configure GitHub Copilot for Agentic Workflows](side-quest-06-03-copilot-token.md)**
+➡️ **[Side Quest: Configure GitHub Copilot for Agentic Workflows](side-quest-06-03-copilot-token.md)**
 
 <!-- journey: all -->
 

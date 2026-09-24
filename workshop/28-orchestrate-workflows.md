@@ -16,11 +16,11 @@
 
 > _Enchaînez vos workflows spécialisés : un orchestrateur lit la situation, puis le bon spécialiste agit._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez construire un workflow orchestrateur qui lit l'état du dépôt, décide quel workflow spécialiste activer et le déclenche via la safe-output [`dispatch-workflow`](https://github.github.com/gh-aw/reference/safe-outputs/). À la fin de cette étape, vous aurez un coordinateur qui route le travail vers des spécialistes existants au lieu de tout traiter lui-même.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Verify Your Workflow Quality with Evals](27-evaluate-workflow-quality.md).
 - Vous disposez d'au moins deux workflows agentiques fonctionnels, par exemple votre workflow `daily-status` et un relecteur de PR de [Build Your First Event-Driven Workflow](14b-pr-reviewer-workflow.md).
@@ -38,7 +38,7 @@ La primitive clé est `dispatch-workflow` dans [`safe-outputs`](https://github.g
   <img alt="Schéma : un workflow orchestrateur lit les signaux du dépôt et déclenche exactement un workflow spécialiste, ou consigne un résumé puis s'arrête si aucune condition ne correspond." src="images/28-orchestrator-routing-light.svg">
 </picture>
 
-> :thinking: **Predict:** Regardez vos workflows existants. Lequel traite la tâche la plus large ? Lequel traite la plus étroite ? Le plus large est un candidat naturel à l'orchestration ; le plus étroit est un spécialiste naturel.
+> 🤔 **Predict:** Regardez vos workflows existants. Lequel traite la tâche la plus large ? Lequel traite la plus étroite ? Le plus large est un candidat naturel à l'orchestration ; le plus étroit est un spécialiste naturel.
 
 ## Etapes
 
@@ -72,7 +72,7 @@ Set safe-outputs: dispatch-workflow with the list of allowed workflows.
 ```
 
 <details open>
-<summary>:desktop_computer: Terminal path — write the orchestrator directly</summary>
+<summary>🖥️ Terminal path — write the orchestrator directly</summary>
 
 Créez `.github/workflows/repo-orchestrator.md` à partir de ce modèle initial :
 
@@ -162,7 +162,7 @@ the latest commit is more than 48 hours old and no status issue was created toda
 
 Chaque itération suit la même boucle : éditer le brief, compiler, pousser, exécuter, puis inspecter le journal de dispatch.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez identifié au moins deux workflows spécialistes et une condition d'orchestration pour chacun
 - [ ] Votre `repo-orchestrator.md` inclut un safe-output `dispatch-workflow` avec une allowlist `workflows` explicite

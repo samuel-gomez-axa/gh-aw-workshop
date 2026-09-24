@@ -5,11 +5,11 @@
 
 > _Facultatif : utilisez ce court exercice de correction si vous voulez disposer d’un modèle de sub-agent propre avant de revenir à [l’étape 21](21-inline-sub-agents.md)._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Réparez un bloc [sub-agent](https://github.github.com/gh-aw/reference/inline-sub-agents/) cassé, puis réutilisez le même modèle dans votre propre workflow. À la fin, vous aurez un bloc valide, qui compile proprement et sera facile à étendre plus tard.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous commencez, ou avez déjà commencé, [Découper les workflows complexes avec des sub-agents inline](21-inline-sub-agents.md).
 - Vous savez compiler un workflow grâce à [Quête annexe : utiliser `gh aw compile` pour détecter tôt les erreurs](side-quest-07-01-compile-workflow.md).
@@ -158,7 +158,7 @@ Quand la compilation est terminée, vérifiez que vous ne voyez **pas** d’aver
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J’ai corrigé un nom de sub-agent invalide
 - [ ] Je n’ai conservé que les champs de frontmatter de sub-agent pris en charge

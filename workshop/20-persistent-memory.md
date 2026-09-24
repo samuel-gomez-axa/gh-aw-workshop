@@ -21,11 +21,11 @@
 
 > _Un workflow qui oublie tout après chaque exécution finira par se répéter. Donnez-lui une mémoire et il pourra n'agir que sur ce qui est nouveau._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez ajouter une [persistent memory](https://github.github.com/gh-aw/patterns/memory-ops/) à votre workflow agentique afin qu'il conserve un état d'une exécution à l'autre. À la fin de cette étape, votre workflow se souviendra de ce qu'il a déjà signalé et ignorera les doublons, afin que votre équipe ne reçoive jamais deux fois la même alerte.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous disposez d'un workflow agentique fonctionnel issu des étapes de création ([Step 7](07-your-first-workflow.md) ou équivalent).
 - Vous êtes à l'aise pour modifier le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) YAML depuis [Give Your Agent More Tools with MCP](17-add-mcp-tools.md).
@@ -68,7 +68,7 @@ ttl `7d`, and update the task brief to read and write that memory slot for dedup
 La skill ajoute le bloc de frontmatter et met à jour le brief. Examinez le diff avant de commit.
 
 <details open>
-<summary>:pencil2: Parcours d'édition manuelle</summary>
+<summary>✏️ Parcours d'édition manuelle</summary>
 
 Ouvrez votre fichier de workflow dans `.github/workflows/daily-status.md`. Ajoutez `cache-memory` dans le bloc `tools:` du frontmatter avec le contenu ci-dessous, puis lancez `gh aw compile`.
 
@@ -154,7 +154,7 @@ git push
 > [!TIP]
 > Ouvrez le journal de la deuxième exécution et cherchez la ligne où l'agent lit sa mémoire. Les numéros d'issues enregistrés sur lesquels il filtre y apparaissent ; c'est ainsi que votre workflow se souvient d'une exécution à l'autre.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Le frontmatter de votre workflow contient `cache-memory:` imbriqué sous `tools:`
 - [ ] Votre brief de tâche indique explicitement à l'agent de lire et d'écrire dans l'emplacement mémoire nommé

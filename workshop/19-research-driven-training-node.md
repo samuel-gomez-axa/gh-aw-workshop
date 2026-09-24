@@ -5,11 +5,11 @@
 
 > _Un bon contenu d'atelier vient de signaux produit réels, pas d'hypothèses._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Dans cette étape, vous allez transformer la recherche sur `github/gh-aw` en une mise à jour concrète du plan de formation : examiner les signaux actuels de la documentation gh-aw, identifier un manque pertinent pour les apprenants et rédiger une proposition de nœud d'atelier prête à être mise en œuvre. À la fin, vous disposerez d'une méthode reproductible pour décider avec assurance quoi enseigner ensuite.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Share and Reuse Your Agentic Workflows](18-share-and-reuse.md).
 - Vous savez ouvrir `workshop/README.md` et identifier où de nouveaux nœuds doivent s'insérer dans le tableau du cursus.
@@ -74,7 +74,7 @@ npx --yes markdownlint-cli2 "workshop/**/*.md"
 gh aw compile
 ```
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez examiné les signaux d'orientation gh-aw actuels à partir de `LLMs.txt`
 - [ ] Vous avez identifié un manque concret à combler pour un nouveau nœud de formation

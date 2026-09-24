@@ -3,11 +3,11 @@
 
 # Quête Annexe 13-03 : Pattern — Checklist De Revue De PR
 
-## :dart: Ce Que Vous Allez Faire
+## 🎯 Ce Que Vous Allez Faire
 
 Construisez un workflow qui évalue chaque nouvelle pull request à l'aide d'une courte checklist de revue et publie un résumé pass/fail. Les relecteurs peuvent voir d'un coup d'oeil quels critères sont déjà remplis avant même d'ouvrir le diff.
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Terminez [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
 
@@ -15,7 +15,7 @@ Construisez un workflow qui évalue chaque nouvelle pull request à l'aide d'une
 
 Les checklists de revue appliquent de manière cohérente les standards de l'équipe. Au lieu de compter sur chaque relecteur pour se souvenir de vérifier les mêmes points, vous automatisez l'inspection et exposez les résultats sous forme de [comment](https://github.github.com/gh-aw/reference/safe-outputs/#comment-creation-add-comment). Les relecteurs peuvent alors consacrer leur temps aux sujets qui nécessitent un jugement humain.
 
-Le pattern consiste en une boucle d'évaluation structurée : pour chaque élément de la checklist, l'agent décide si la PR satisfait le critère, explique son raisonnement en une phrase et le marque avec :white_check_mark: ou :warning:.
+Le pattern consiste en une boucle d'évaluation structurée : pour chaque élément de la checklist, l'agent décide si la PR satisfait le critère, explique son raisonnement en une phrase et le marque avec ✅ ou :warning:.
 
 > [!TIP]
 > Consultez la référence [pull request trigger](https://github.github.com/gh-aw/reference/triggers/#pull-request-triggers-pullrequest) pour voir tous les types d'événements disponibles.
@@ -90,14 +90,14 @@ Idées :
 
 Mettez à jour la checklist dans le [workflow brief](https://github.github.com/gh-aw/reference/markdown/), recompilez, puis ouvrez une nouvelle PR pour vérifier que le nouveau critère apparaît dans le tableau.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J'ai créé `.github/workflows/pr-checklist.md` avec un trigger `pull_request`
 - [ ] `gh aw compile` s'est terminé sans erreur et `.lock.yml` est validé puis poussé
 - [ ] J'ai ouvert une PR de test sans description et confirmé que **Description** était marqué :warning:
 - [ ] J'ai mis à jour la description de la PR et confirmé que la checklist s'est rafraîchie au push suivant
 - [ ] J'ai ajouté au moins un critère spécifique à mon équipe à la checklist
-- [ ] Je peux expliquer pourquoi l'usage de :white_check_mark: et :warning: au lieu de pass/fail rend la sortie plus constructive
+- [ ] Je peux expliquer pourquoi l'usage de ✅ et :warning: au lieu de pass/fail rend la sortie plus constructive
 
 <!-- journey: all -->
 

@@ -5,11 +5,11 @@
 
 > _Une skill, trois usages : savoir quelle trigger phrase utiliser vous évite de réécrire des prompts depuis zéro à chaque fois._
 
-## :dart: Ce Que Vous Allez Faire
+## 🎯 Ce Que Vous Allez Faire
 
 Découvrez comment la skill Copilot `agentic-workflows` achemine votre demande en anglais courant vers le bon prompt d'édition, de débogage ou d'optimisation, et entraînez-vous à choisir la bonne trigger phrase selon la situation.
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous avez `.github/skills/agentic-workflows/` dans votre dépôt d'entraînement, créé pendant [Step 7](07-your-first-workflow.md).
 - Vous pouvez ouvrir Copilot CLI avec `gh copilot` dans le terminal de votre Codespace.
@@ -79,7 +79,7 @@ Pour chaque scénario ci-dessous, décidez quel type de tâche, Edit, Debug ou O
 
 Choisissez une observation réelle à propos de votre propre workflow, à partir d'un run récent, et rédigez une trigger phrase en une phrase à l'aide du tableau ci-dessus. Envoyez-la à la skill dans Copilot CLI et examinez le diff proposé avant de l'accepter.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez expliquer en une phrase ce que fait le dispatcher de la skill `agentic-workflows`
 - [ ] Vous pouvez nommer les trois types de tâches et une trigger phrase pour chacun

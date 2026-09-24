@@ -5,11 +5,11 @@
 
 > _Arrêtez de deviner quel prompt fonctionne le mieux ; laissez les exécutions alternées vous le montrer._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez ajouter une expérience A/B avec `experiments:` et comparer les résultats d'une exécution à l'autre.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous disposez d'un workflow agentique fonctionnel issu des étapes de création ([Step 7](07-your-first-workflow.md) ou équivalent).
 - Vous êtes à l'aise pour modifier le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) YAML et les briefs de tâche.
@@ -134,7 +134,7 @@ Après un nombre d'exécutions suffisant, dix ou plus par variante pour réduire
 > [!TIP]
 > Laissez l'expérience tourner jusqu'à atteindre votre taille d'échantillon cible. Supprimer `experiments:` trop tôt remet les comptes à zéro.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Le frontmatter de votre workflow contient un bloc `experiments:` avec au moins deux variantes
 - [ ] Votre brief de tâche utilise des blocs `{{#if experiments.<name> }}` pour permuter les instructions, la variante active étant disponible via `${{ experiments.<name> }}`

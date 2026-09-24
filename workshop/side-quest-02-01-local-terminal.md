@@ -19,7 +19,7 @@ Si l’une des réponses est non, basculez vers [Configurer un Codespace](02a-se
 
 _Travailler en local signifie que vous utiliserez les outils et le shell que vous connaissez déjà ; préparons-les en quelques étapes rapides._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez installer Git et le CLI `gh` sur votre propre machine, puis vous authentifier auprès de GitHub. À la fin, vous serez prêt à créer votre dépôt d’exercice et à poursuivre les étapes principales de l’atelier.
 
@@ -29,7 +29,7 @@ Vous allez installer Git et le CLI `gh` sur votre propre machine, puis vous auth
    <img alt="Flux d’installation locale : quatre étapes successives — Verify Git, Install gh CLI, Authenticate, Clone Repo" src="images/02-local-setup-flow-light.svg">
 </picture>
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Ce qu’il vous faut avant de commencer](01-prerequisites.md)
 - Vous avez un compte GitHub gratuit et vous êtes connecté
@@ -151,7 +151,7 @@ gh repo clone my-agentic-workflows
 cd my-agentic-workflows
 ```
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] J’ai cloné le dépôt `my-agentic-workflows` sur ma machine locale
 - [ ] Je suis entré dans le répertoire `my-agentic-workflows` dans mon terminal

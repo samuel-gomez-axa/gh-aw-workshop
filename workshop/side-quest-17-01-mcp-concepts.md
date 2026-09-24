@@ -5,7 +5,7 @@
 
 > _Facultatif : suivez cette introduction après [l’étape 17](17-add-mcp-tools.md) si vous voulez comprendre comment MCP a changé la boucle agentique de votre workflow, puis poursuivez vers l’étape suivante._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Donner plus d’outils à votre agent avec MCP](17-add-mcp-tools.md).
 - Vous avez un fichier YAML de workflow ouvert dans votre éditeur.
@@ -149,7 +149,7 @@ Comme les MCP tool servers reçoivent et renvoient des données à l’exécutio
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez expliquer ce qu’est un MCP tool server et ce qu’il fournit à l’agent
 - [ ] Vous comprenez comment l’activation de MCP change la boucle de raisonnement agentique

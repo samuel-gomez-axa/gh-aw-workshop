@@ -12,7 +12,7 @@ Avant de passer cette étape, vérifiez que vous savez déjà ceci :
 
 Si les deux s’appliquent, [passez à Installer gh-aw](06-install-gh-aw.md).
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez lu [Qu’est-ce que GitHub Actions ?](04-github-actions-intro.md)
 
@@ -118,7 +118,7 @@ Si l’une des réponses est non, révisez votre brief avant de continuer.
 > [!TIP]
 > Vous voulez des exemples annotés et davantage d’exercices ? Consultez [Side Quest: Agentic Workflows Deep Dive](side-quest-05-02-aw-deep-dive.md).
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous pouvez décrire en une phrase ce qu’est un agentic workflow
 - [ ] Vous pouvez expliquer une différence entre un agentic workflow et un workflow Actions standard

@@ -3,7 +3,7 @@
 
 # Exercice : reconnaître les Agentic Workflows
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez lu [Qu’est-ce qu’un Agentic Workflow ?](05-agentic-workflows-intro.md)
 
@@ -60,7 +60,7 @@ as an issue with the title "Weekly PR Digest".
 > [!TIP]
 > Vous avez du mal à trouver une tâche ? Parcourez le [gh-aw issue-ops pattern](https://github.github.com/gh-aw/patterns/issue-ops/) pour vous inspirer. Vous rédigerez une vraie version de votre brief à l’étape 7. **Toujours hésitant ?** Faites une pause ici et suivez [Side Quest: Agentic Workflows Deep Dive](side-quest-05-02-aw-deep-dive.md). Vous y trouverez davantage de pratique de classification, une vérification du vocabulaire et un exemple de paire `.md` / `.lock.yml` avant de continuer vers l’étape 6. **Vous avez une idée mais pas encore les mots ?** Le [gh-aw wizard](https://githubnext.github.io/gh-aw-wizard/) transforme quelques réponses sur votre idée en un prompt de génération que vous pourrez ensuite coller dans votre agent IA.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux décider si une tâche nécessite un agentic workflow ou un standard Actions workflow
 - [ ] J’ai rédigé un task brief qui couvre les trois critères : source de données, format de sortie et cadence

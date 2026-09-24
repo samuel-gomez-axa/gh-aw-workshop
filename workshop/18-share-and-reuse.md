@@ -5,11 +5,11 @@
 
 > _Votre workflow vaut plus qu'un seul dépôt ; apprenez à le transformer en modèle réutilisable que toute votre équipe peut adopter._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez copier votre fichier de workflow terminé vers un emplacement partagé afin que vos collègues puissent l'ajouter à leurs propres dépôts avec une seule commande. À la fin de cette étape, vous aurez un [reusable workflow template](https://github.github.com/gh-aw/guides/reusing-workflows/) et vous saurez comment le distribuer.
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous disposez d'un workflow agentique fonctionnel (terminé dans [Refine, Test, and Improve Your Workflow](09-agentic-editing.md) ou dans l'une des étapes de création).
 - Vous avez les droits de push sur au moins un dépôt dans lequel vous voulez partager le workflow (cela peut être le même dépôt d'exercice).
@@ -85,7 +85,7 @@ Cet indice évite à vos collègues de devoir deviner quoi faire lorsqu'ils ouvr
 > [!NOTE]
 > Le destinataire doit encore compiler le workflow avec `gh aw compile`, puis le pousser avant que GitHub Actions ne puisse l'exécuter. Pensez à le rappeler à votre équipe.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Votre fichier de workflow `.md` est committé et poussé vers un dépôt GitHub
 - [ ] Vous savez construire la commande `gh aw add` pour votre workflow

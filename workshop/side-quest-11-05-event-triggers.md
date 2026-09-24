@@ -5,11 +5,11 @@
 
 > _Facultatif : utilisez cette introduction si vous voulez de l'aide pour choisir entre des workflows [scheduled](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule) et des workflows événementiels avant de terminer [Créer — PR Code Reviewer](15-conditional-logic.md), puis revenez à l'aventure principale._
 
-## :dart: Ce Que Vous Allez Faire
+## 🎯 Ce Que Vous Allez Faire
 
 Vous allez comparer les [triggers](https://github.github.com/gh-aw/reference/triggers/) scheduled et event-driven, copier quatre blocs de triggers de départ et apprendre comment le choix du trigger influence `safe-outputs`. À la fin, vous saurez quand utiliser `pull_request`, `push`, `issues` ou `schedule`.
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous disposez déjà d'un fichier de workflow venant de Step 7 ou Step 15, comme `.github/workflows/daily-status.md`.
 - Vous savez comment valider et pousser des changements dans le parcours que vous avez choisi.
@@ -138,7 +138,7 @@ C'est la décision centrale : choisissez le trigger qui correspond au moment qui
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je peux expliquer la différence entre un workflow scheduled et un workflow event-driven
 - [ ] Je connais les blocs de trigger de départ pour `pull_request`, `push`, `issues` et `schedule`

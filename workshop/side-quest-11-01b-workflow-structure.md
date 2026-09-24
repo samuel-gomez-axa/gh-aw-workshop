@@ -5,7 +5,7 @@
 
 > _Facultatif : lisez ceci avant de construire Step 11 pour comprendre ce que vous êtes en train d'écrire, puis revenez à [Build the Daily Repo Status Workflow](07-your-first-workflow.md)._
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Gardez [Build the Daily Repo Status Workflow](07-your-first-workflow.md) ouvert afin de pouvoir faire correspondre chaque section ici au workflow que vous construirez ensuite.
 
@@ -32,7 +32,7 @@ Les cinq sections de frontmatter que vous construirez dans Step 7 :
 | [Tools](https://github.github.com/gh-aw/reference/tools/)             | `tools:`               | Active l'outil [GitHub MCP](https://github.github.com/gh-aw/reference/tools/#github-tools-github) via `gh-proxy`, limité par les [permissions](https://github.github.com/gh-aw/reference/permissions/) ci-dessus. |
 | Garde-fou d'écriture                                                  | `safe-outputs:`        | Les seules actions d'écriture que l'agent peut effectuer : ici, un commentaire d'issue par run.                                                                                                                   |
 
-## :pencil2: Essayez : Étiquetez La Structure
+## ✏️ Essayez : Étiquetez La Structure
 
 Avant de regarder la réponse, copiez cet extrait dans votre éditeur et ajoutez vos propres libellés au-dessus de chaque partie.
 
@@ -71,7 +71,7 @@ Summarize the open issues, recent pull requests, and latest workflow runs.
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez étiqueté l'exemple et identifié les cinq sections du frontmatter.
 - [ ] Vous pouvez montrer le bloc `on:` et expliquer qu'il contrôle quand le workflow s'exécute.

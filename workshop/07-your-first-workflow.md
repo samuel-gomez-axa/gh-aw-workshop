@@ -5,7 +5,7 @@
 
 _Rédiger votre premier workflow, c’est le moment où la théorie devient pratique. Construisons quelque chose de réel._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous allez utiliser Copilot pour créer `.github/workflows/daily-report-status.md`, un workflow planifié qui prend aussi en charge le déclenchement manuel. Vous le configurerez avec [`permissions`](https://github.github.com/gh-aw/reference/permissions/), [`safe-outputs`](https://github.github.com/gh-aw/reference/safe-outputs/) et un task brief, puis vous le compilerez pour produire `daily-report-status.lock.yml`, le fichier exécuté par [GitHub Actions](https://github.github.com/gh-aw/guides/github-actions-primer/).
 
@@ -15,7 +15,7 @@ Vous allez utiliser Copilot pour créer `.github/workflows/daily-report-status.m
   <img alt="Schéma montrant comment vous demandez à un agent, avec le skill agentic-workflows, de créer daily-report-status.md, lequel est compilé par gh aw compile en daily-report-status.lock.yml, puis exécuté par GitHub Actions" src="images/07-compile-flow-light.svg">
 </picture>
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez terminé [Installer l’extension CLI gh-aw](06-install-gh-aw.md)
 - La commande `gh aw` fonctionne dans votre terminal
@@ -113,7 +113,7 @@ git push
 
 Pour les modifications suivantes, continuez à utiliser un agent avec le skill `agentic-workflows` et évitez l’édition manuelle du workflow, sauf si vous déboguez un problème précis à l’échelle d’une ligne.
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] L’accès à Copilot a été confirmé dans Copilot CLI avant de commencer, avec une réponse au prompt de test
 - [ ] `.github/workflows/daily-report-status.md` existe et contient un trigger `on: schedule:` dans le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)

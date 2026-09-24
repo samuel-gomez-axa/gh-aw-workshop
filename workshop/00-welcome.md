@@ -29,7 +29,7 @@ Au passage, vous apprendrez à [compile](https://github.github.com/gh-aw/referen
   <img alt="Aperçu d’une exécution de workflow terminée dans l’onglet Actions" src="images/00-workflow-run-complete-light.svg">
 </picture>
 
-Prêt à commencer ? C’est parti ! :rocket:
+Prêt à commencer ? C’est parti ! 🚀
 
 <details open>
 <summary>Instructions pour l’agent : charger tout le contexte de l’atelier</summary>

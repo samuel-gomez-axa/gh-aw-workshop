@@ -7,7 +7,7 @@
 
 Par défaut, les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) s'exécutent sur le [GitHub Copilot engine](https://github.github.com/gh-aw/reference/engines/). Si vous préférez utiliser **[Claude](https://github.github.com/gh-aw/reference/auth/#claude)**, vous aurez besoin d'une clé API Anthropic stockée comme secret de dépôt et d'une modification d'une ligne dans le [workflow frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
 
-## :clipboard: Avant De Commencer
+## 📋 Avant De Commencer
 
 - Vous avez un compte Anthropic sur [console.anthropic.com](https://console.anthropic.com/).
 - Vous avez un dépôt d'entraînement avec au moins un fichier `.md` d'agentic workflow.
@@ -108,7 +108,7 @@ Vous devriez voir une sortie confirmant que le fichier a compilé sans erreur.
 
 ---
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Vous avez un compte Anthropic et généré une clé API
 - [ ] `ANTHROPIC_API_KEY` est stocké comme secret de dépôt

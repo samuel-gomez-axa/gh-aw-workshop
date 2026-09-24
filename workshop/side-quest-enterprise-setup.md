@@ -5,7 +5,7 @@
 
 > _Obligatoire pour les utilisateurs GHES avant de tenter de créer ou d’exécuter des [agentic workflows](https://github.github.com/gh-aw/introduction/overview/). Également utile si vous exécutez une étape de setup dans un environnement enterprise géré. Terminez ce guide, puis revenez à votre étape actuelle._
 
-## :clipboard: Avant de commencer
+## 📋 Avant de commencer
 
 - Vous avez un compte GitHub et vous savez si votre environnement est `github.com`, GitHub Enterprise Cloud, GHEC, ou GitHub Enterprise Server, GHES.
 - Vous pouvez joindre votre administrateur GitHub Enterprise afin de confirmer la version de GHES et les réglages de politique.
@@ -19,9 +19,9 @@ Les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/#w
 
 | Déploiement GitHub                         | Agentic workflows pris en charge ?                                                                                  |
 | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
-| **github.com**                             | :white_check_mark: Pleinement pris en charge                                                                        |
-| **GitHub Enterprise Cloud (GHEC)**         | :white_check_mark: Pleinement pris en charge                                                                        |
-| **GitHub Enterprise Server (GHES) 3.12+**  | :white_check_mark: Pris en charge lorsque Copilot Enterprise et l’accès réseau sont configurés par l’administrateur |
+| **github.com**                             | ✅ Pleinement pris en charge                                                                        |
+| **GitHub Enterprise Cloud (GHEC)**         | ✅ Pleinement pris en charge                                                                        |
+| **GitHub Enterprise Server (GHES) 3.12+**  | ✅ Pris en charge lorsque Copilot Enterprise et l’accès réseau sont configurés par l’administrateur |
 | **GitHub Enterprise Server (GHES) < 3.12** | :x: Non pris en charge, mise à niveau requise                                                                       |
 
 Avant de continuer :
@@ -46,7 +46,7 @@ Avant de continuer :
 3. Utilisez le nom d’hôte de votre environnement enterprise dans toutes les commandes d’authentification et d’extensions `gh` lorsqu’il est requis, par exemple `gh auth login --hostname ghes.example.com`.
    Consultez [Quête annexe : dépannage de l’installation de `gh-aw`](side-quest-06-01-install-troubleshooting.md) pour la séquence complète de commandes avec nom d’hôte enterprise.
 
-> :thinking: **Prédiction :** Recherchez le nom d’hôte de votre environnement enterprise avant de continuer. Après l’avoir confirmé, exécutez la commande suivante et vérifiez que la sortie affiche bien votre instance GHES :
+> 🤔 **Prédiction :** Recherchez le nom d’hôte de votre environnement enterprise avant de continuer. Après l’avoir confirmé, exécutez la commande suivante et vérifiez que la sortie affiche bien votre instance GHES :
 >
 > ```bash
 > gh auth login --hostname <your-ghes-hostname>
@@ -77,7 +77,7 @@ Avant d’installer `gh-aw`, vérifiez avec votre administrateur que votre compt
 
 <!-- journey: all -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Votre instance GHES est en version 3.12 ou plus récente, ou vous êtes sur `github.com` ou GHEC
 - [ ] Vous savez si Codespaces est disponible dans votre environnement enterprise

@@ -5,7 +5,7 @@
 
 > _Facultatif : faites ce détour si vous voulez une présentation plus approfondie de `gh aw compile`, puis revenez à [l’étape 7](07-your-first-workflow.md) ou [l’étape 9](09-agentic-editing.md)._
 
-## :dart: Ce que vous allez faire
+## 🎯 Ce que vous allez faire
 
 Vous utiliserez `gh aw compile` comme boucle de retour rapide pendant que vous modifiez des fichiers de workflow. À la fin, vous saurez quand utiliser `--no-emit` pour des vérifications à blanc, quand utiliser `--validate` pour un dépannage ciblé, quand laisser `--watch` actif et comment corriger les erreurs de compilation les plus courantes.
 
@@ -110,7 +110,7 @@ on:
 
 <!-- journey: terminal -->
 
-## :white_check_mark: Checkpoint
+## ✅ Checkpoint
 
 - [ ] Je sais ce que `gh aw compile` vérifie avant l’exécution d’un workflow
 - [ ] Je peux utiliser `--no-emit` pour des vérifications rapides de structure sans générer de lock file
