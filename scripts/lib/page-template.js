@@ -1,14 +1,14 @@
 'use strict';
 
 // Generate the single-page workshop reader HTML.
-const SITE_URL = 'https://githubnext.github.io/gh-aw-workshop';
+const SITE_URL = 'https://samuel-gomez-axa.github.io/gh-aw-workshop';
 const SITE_TITLE = 'GitHub Agentic Workflows Workshop';
 const SITE_DESCRIPTION =
-  'A hands-on workshop that teaches you how to build GitHub Agentic Workflows with the gh-aw CLI. Go from zero to a working AI-powered automation in GitHub Actions.';
+    'A hands-on workshop that teaches you how to build GitHub Agentic Workflows with the gh-aw CLI. Go from zero to a working AI-powered automation in GitHub Actions.';
 const OG_IMAGE_URL = `${SITE_URL}/og-image.png`;
 
 function generatePage(htmlContent, workshopMenu) {
-  return `<!DOCTYPE html>
+    return `<!DOCTYPE html>
 <html lang="en" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark">
 <head>
   <meta charset="UTF-8">
