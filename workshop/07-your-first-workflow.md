@@ -23,7 +23,7 @@ Vous allez utiliser Copilot pour créer `.github/workflows/daily-report-status.m
 
 **Vérifiez l’accès à Copilot avant de commencer.**
 
-1. Dans le terminal déjà ouvert dans votre Codespace, exécutez :
+1. Dans le terminal déjà ouvert dans votre dépôt local, exécutez :
 
 ```bash
 gh copilot

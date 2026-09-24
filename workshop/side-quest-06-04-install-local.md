@@ -3,9 +3,9 @@
 
 # Side Quest : Installer `gh-aw` dans un terminal local
 
-> _Facultatif : installez `gh-aw` sur votre propre machine plutôt que dans le Codespace recommandé._
+> _Facultatif : utilisez cette page si vous voulez une version plus détaillée de l’installation de `gh-aw` sur votre propre machine._
 
-Vous utilisez plutôt un Codespace ? Revenez à [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md).
+Pour le parcours principal condensé, revenez à [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md).
 
 ## 🎯 Ce que vous allez faire
 

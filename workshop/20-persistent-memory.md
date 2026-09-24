@@ -57,7 +57,7 @@ Pour ce cas d'usage de déduplication, `cache-memory` est le bon choix.
 
 ### Ajouter `cache-memory` a votre frontmatter
 
-Dans votre terminal Codespace, lancez `gh copilot` puis envoyez ce prompt :
+Dans votre terminal local, lancez `gh copilot` puis envoyez ce prompt :
 
 ```prompt
 /agentic-workflows update .github/workflows/daily-status.md to add `cache-memory`

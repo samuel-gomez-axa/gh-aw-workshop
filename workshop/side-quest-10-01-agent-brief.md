@@ -12,7 +12,7 @@ Construisez votre brief dans un fichier brouillon en cinq étapes. À la fin, vo
 ## 📋 Avant De Commencer
 
 - Vous avez terminé [Interpreting Workflow Output](08b-interpret-your-run.md)
-- Vous avez un dépôt d'entraînement créé pendant [Codespace Setup](02a-setup-codespace.md) ou la quête annexe facultative [Local Terminal](side-quest-02-01-local-terminal.md)
+- Vous avez un dépôt d'entraînement créé pendant [Configurer votre terminal local](02a-setup-codespace.md) ou la quête annexe facultative [Local Terminal](side-quest-02-01-local-terminal.md)
 
 ---
 

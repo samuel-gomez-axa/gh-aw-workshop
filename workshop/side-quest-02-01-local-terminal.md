@@ -3,7 +3,7 @@
 
 # Side Quest : Configurer votre terminal local
 
-> _Facultatif : utilisez votre propre machine au lieu du Codespace recommandé, puis revenez au parcours principal de l’atelier._
+> _Guide d’appoint : utilisez votre propre machine et revenez ensuite au parcours principal de l’atelier._
 
 ## :test_tube: Auto-évaluation terminal en 5 questions
 
@@ -15,7 +15,7 @@ Vérifiez chaque affirmation :
 - [ ] Je sais lire la sortie d’une commande et repérer les erreurs.
 - [ ] Je suis à l’aise pour dépanner des problèmes d’installation locale ou de proxy.
 
-Si l’une des réponses est non, basculez vers [Configurer un Codespace](02a-setup-codespace.md) pour une installation plus rapide sans dépendances locales.
+Si l’une des réponses est non, progressez lentement et utilisez aussi [Bases du terminal](side-quest-01-01-terminal-basics.md) pendant la préparation de votre machine.
 
 _Travailler en local signifie que vous utiliserez les outils et le shell que vous connaissez déjà ; préparons-les en quelques étapes rapides._
 

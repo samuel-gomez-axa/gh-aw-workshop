@@ -12,9 +12,9 @@ Connectez-vous sur [github.com](https://github.com). Si vous n’avez pas encore
 
 ## Préparez votre environnement
 
-Cet atelier se déroule dans un **GitHub Codespace**, un terminal hébergé dans le cloud qui ne nécessite aucune installation locale. Vous allez en configurer un à l’étape suivante.
+Cet atelier se déroule dans un **terminal local** sur votre propre machine. À l’étape suivante, vous allez préparer votre dépôt d’exercice, vérifier vos outils CLI et arriver dans un environnement prêt pour la suite.
 
-Vous êtes déjà à l’aise pour gérer Git et GitHub CLI sur votre machine ? Vous pouvez suivre la quête annexe facultative [Configurer votre terminal local](side-quest-02-01-local-terminal.md), puis revenir à l’atelier principal.
+Si vous devez d’abord vous remettre en tête les bases du terminal, lisez [Configurer votre terminal local](side-quest-02-01-local-terminal.md), puis revenez à l’atelier principal.
 
 ## Vérifiez l’accès au [AI engine](https://github.github.com/gh-aw/reference/engines/)
 
@@ -30,6 +30,6 @@ Cet atelier utilise GitHub Copilot de bout en bout ; vous n’avez donc pas beso
 
 <!-- journey: all -->
 
-**Étape suivante :** ouvrez [Configurer un Codespace](02a-setup-codespace.md).
+**Étape suivante :** ouvrez [Configurer votre terminal local](02a-setup-codespace.md).
 
 <!-- /journey -->

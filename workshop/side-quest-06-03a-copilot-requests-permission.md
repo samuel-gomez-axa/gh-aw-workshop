@@ -10,7 +10,7 @@
 - Une organisation possède votre dépôt d’exercice.
 - Un administrateur de l’organisation a confirmé que la facturation Copilot centralisée est activée pour GitHub Actions.
 - Vous avez terminé [Side Quest : Configurer l’authentification GitHub Copilot](side-quest-06-03-copilot-token.md) et confirmé que la méthode 1 s’applique à votre dépôt.
-- Votre dépôt d’exercice a été créé pendant [la configuration du Codespace](02a-setup-codespace.md) ou dans la [side quest facultative du terminal local](side-quest-02-01-local-terminal.md).
+- Votre dépôt d’exercice a été créé pendant [la configuration de votre terminal local](02a-setup-codespace.md) ou avec la [side quest facultative du terminal local](side-quest-02-01-local-terminal.md).
 
 C’est la manière la plus simple de donner à votre [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) l’accès à l’API Copilot lorsque l’organisation peut facturer les requêtes Copilot via le token d’exécution du workflow. GitHub Actions émet déjà un token de courte durée à chaque exécution ; vous devez simplement lui accorder la permission [`copilot-requests: write`](https://github.github.com/gh-aw/reference/permissions/#special-permission-copilot-requests-write).
 

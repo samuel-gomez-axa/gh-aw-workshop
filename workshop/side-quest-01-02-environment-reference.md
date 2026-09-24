@@ -15,14 +15,13 @@ Quand vous serez prêt à vérifier que vos outils fonctionnent, consultez la se
 
 ## Glossaire des environnements et des outils
 
-Savoir quel nom correspond à quel rôle vous aide à suivre les instructions de l’atelier sans devoir vous arrêter pour vous demander ce que signifient "the terminal" ou "Codespaces" dans ce contexte.
+Savoir quel nom correspond à quel rôle vous aide à suivre les instructions de l’atelier sans devoir vous arrêter pour vous demander ce que signifient "the terminal" ou "VS Code" dans ce contexte.
 
 | Terme                            | Ce qu’il signifie dans cet atelier                                                                                                                                                      | Quand vous l’utilisez                                            | Documentation officielle                                                                                    |
 | -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **GitHub Codespaces**            | Votre environnement de développement cloud quand vous choisissez le parcours d’installation dans le navigateur. Pré-ouvert dans les golden-ticket workshops.                            | Étapes 2 à 14 : rédaction, compilation et exécution de workflows | [GitHub Codespaces docs](https://docs.github.com/en/codespaces)                                             |
-| **Visual Studio Code (VS Code)** | L’expérience d’éditeur à l’intérieur de Codespaces (et éventuellement sur votre machine locale).                                                                                        | Édition des fichiers de workflow et lecture des sorties          | [Visual Studio Code docs](https://code.visualstudio.com/docs)                                               |
+| **Visual Studio Code (VS Code)** | L’éditeur recommandé pour ouvrir votre dépôt local, modifier les fichiers de workflow et garder un terminal intégré à portée de main.                                                   | Étapes 2 à 14 : rédaction, compilation et exécution de workflows | [Visual Studio Code docs](https://code.visualstudio.com/docs)                                               |
 | **Terminal (command line)**      | Le shell dans lequel vous exécutez les commandes de l’atelier (`gh`, `gh aw`, `git`, etc.).                                                                                             | Toute étape qui affiche un bloc de code `bash`                   | [GitHub CLI manual](https://cli.github.com/manual/)                                                         |
-| **GitHub CLI (`gh`)**            | Le CLI officiel de GitHub, requis pour cet atelier. Il est préinstallé dans le Codespace.                                                                                               | À partir de l’étape 6 (installation de l’extension)              | [GitHub CLI docs](https://cli.github.com/manual/)                                                           |
+| **GitHub CLI (`gh`)**            | Le CLI officiel de GitHub, requis pour cet atelier. Vous l’installez ou vérifiez sur votre machine locale avant de poursuivre.                                                          | À partir de l’étape 2                                            | [GitHub CLI docs](https://cli.github.com/manual/)                                                           |
 | **`gh-aw` CLI extension**        | L’extension GitHub Agentic Workflows que vous installez et utilisez dans le terminal pour compiler des fichiers de workflow.                                                            | À partir de l’étape 6                                            | [Install `gh-aw`](https://github.com/github/gh-aw#readme)                                                   |
 | **GitHub Copilot CLI**           | Copilot dans le terminal pour l’aide aux commandes et au développement assistée par IA. C’est la principale surface d’IA dans cet atelier.                                              | Toute étape qui affiche un bloc de code `prompt`                 | [GitHub Copilot CLI docs](https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli) |
 | **GitHub Copilot app**           | L’application desktop et web GitHub Copilot dans laquelle vous pouvez ouvrir des dépôts, démarrer des sessions d’agent, piloter des tâches de développement et gérer des pull requests. | Facultatif ; des side quests couvrent cette surface              | [GitHub Copilot app](https://github.com/features/ai/github-app)                                             |
@@ -30,18 +29,18 @@ Savoir quel nom correspond à quel rôle vous aide à suivre les instructions de
 | **OpenAI Codex**                 | La famille de modèles de code d’OpenAI utilisable dans des workflows de développement et d’agent.                                                                                       | Les étapes qui utilisent un modèle non par défaut                | [OpenAI Codex CLI repository](https://github.com/openai/codex#readme)                                       |
 
 > [!NOTE]
-> **Utilisateurs GitHub Enterprise (GHES/GHEC)** : les mêmes outils et commandes s’appliquent dans les environnements d’entreprise. L’URL de votre Codespace et vos URLs GitHub utiliseront le nom d’hôte de votre entreprise au lieu de `github.com`. Si votre entreprise utilise un self-hosted runner, la commande `gh aw compile` s’exécute quand même localement dans votre Codespace. Consultez [l’étape 6](06-install-gh-aw.md) pour les notes d’installation propres à l’environnement.
+> **Utilisateurs GitHub Enterprise (GHES/GHEC)** : les mêmes outils et commandes s’appliquent dans les environnements d’entreprise. Vos URLs GitHub peuvent utiliser le nom d’hôte de votre entreprise au lieu de `github.com`. Si votre entreprise utilise un self-hosted runner, la commande `gh aw compile` continue de s’exécuter localement sur votre machine. Consultez [l’étape 6](06-install-gh-aw.md) pour les notes d’installation propres à l’environnement.
 
 ### ✅ Vérifiez que vos outils sont prêts
 
-Ouvrez un terminal dans votre Codespace et exécutez :
+Ouvrez un terminal sur votre machine et exécutez :
 
 ```bash
 gh --version
 git --version
 ```
 
-Les deux commandes doivent afficher un numéro de version. Si l’une d’elles échoue, consultez [Configurer un Codespace](02a-setup-codespace.md).
+Les deux commandes doivent afficher un numéro de version. Si l’une d’elles échoue, consultez [Configurer votre terminal local](02a-setup-codespace.md).
 
 > [!NOTE]
 > `gh aw --version` ne fonctionne qu’après avoir terminé [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md). Ignorez cette vérification jusqu’à l’étape 6.
@@ -59,16 +58,6 @@ Reconnaître l’apparence de chaque environnement à l’écran vous aide à vo
 Ces visuels sont des modèles mentaux simplifiés, pas des captures produit littérales. Utilisez-les pour reconnaître à quoi renvoie chaque nom lorsqu’il apparaît dans les étapes suivantes.
 
 ### Environnements de développement
-
-#### GitHub Codespaces
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="images/side-quest-01-02-github-codespaces-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="images/side-quest-01-02-github-codespaces-light.svg">
-  <img alt="Capture conceptuelle de GitHub Codespaces montrant un éditeur dans le navigateur, un explorateur de dépôt et un terminal intégré" src="images/side-quest-01-02-github-codespaces-light.svg">
-</picture>
-
-Vous utilisez Codespaces quand vous voulez un environnement de développement prêt à l’emploi dans votre navigateur.
 
 #### Visual Studio Code (VS Code)
 

@@ -1,22 +1,19 @@
-<!-- page-journey: codespace -->
+<!-- page-journey: local -->
 <!-- page-adventure: setup -->
 
-# Configurer un Codespace
+# Configurer votre terminal local
 
 ## 📋 Avant de commencer
 
-- [ ] Vous avez un compte GitHub avec accès à GitHub Codespaces
+- [ ] Vous avez un compte GitHub
 - [ ] Votre compte peut créer des dépôts publics (le niveau gratuit convient)
-- [ ] Vous voulez un terminal dans le navigateur et n’avez pas besoin d’installer d’outils localement
-
-> [!TIP]
-> Vous ne savez pas si votre offre inclut Codespaces ? Les comptes GitHub gratuits incluent 60 heures par mois. Vérifiez vos [paramètres de facturation](https://github.com/settings/billing/summary) ou demandez à l’administrateur de votre organisation.
+- [ ] Vous voulez travailler depuis le terminal de votre machine locale
 
 ## 🎯 Ce que vous allez faire
 
-Vous allez lancer un GitHub Codespace pour cet atelier, ouvrir le terminal intégré et arriver dans un environnement prêt à l’emploi pour l’étape suivante.
+Vous allez créer votre dépôt d’exercice, le cloner sur votre machine, puis vérifier que `git` et `gh` fonctionnent dans votre terminal local avant de passer à l’étape suivante.
 
-Codespaces est l’environnement recommandé pour cet atelier et le chemin utilisé tout au long des étapes principales.
+Le parcours principal de cet atelier suppose désormais que vous travaillez en local.
 
 ## Étapes
 
@@ -32,41 +29,42 @@ Ces étapes prennent environ 5 minutes. Si vous bloquez sur une commande, [Side 
 - Cochez **Add a README file**.
 - Cliquez sur **Create repository**.
 
-### Ouvrez le Codespace
+### Créez et clonez votre dépôt
 
-1. Dans votre nouveau dépôt, cliquez sur le bouton vert **Code**.
-2. Cliquez sur l’onglet **Codespaces**.
-    - Laissez **main** sélectionné comme branche.
-    - Cliquez sur **Create codespace on main**.
-    - Attendez 30 à 60 secondes pendant que GitHub prépare le conteneur.
-3. Le Codespace s’ouvre dans un nouvel onglet du navigateur avec un éditeur de style VS Code. Laissez cet onglet ouvert pour le reste de l’atelier.
+1. Ouvrez votre nouveau dépôt dans le navigateur.
+2. Ouvrez ensuite un terminal sur votre machine.
+3. Clonez le dépôt, puis placez-vous dedans :
+
+```bash
+gh repo clone my-agentic-workflows
+cd my-agentic-workflows
+```
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/02a-open-codespace-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/02a-open-codespace-light.svg">
-  <img alt="Ouvrir le Codespace" src="images/02a-open-codespace-light.svg">
+  <img alt="Créer puis cloner le dépôt d’exercice" src="images/02a-open-codespace-light.svg">
 </picture>
 
-Codespaces enregistre automatiquement votre travail. Si vous fermez l’onglet, ouvrez [github.com/codespaces](https://github.com/codespaces) pour reprendre là où vous vous êtes arrêté.
+À partir de maintenant, gardez ce terminal ouvert pendant l’atelier. Toutes les commandes du parcours principal y seront exécutées.
 
 <details open>
-<summary>Le Codespace n’apparaît pas ou prend trop de temps ?</summary>
+<summary>Le clonage ou l’authentification échoue ?</summary>
 
-- **"Create codespace on main" est grisé** : votre compte n’a peut-être pas Codespaces activé. Vérifiez les détails de votre offre GitHub ou demandez à l’administrateur de votre organisation.
-- **L’indicateur de chargement tourne plus de 3 minutes** : actualisez l’onglet du navigateur. Si cela reste bloqué, allez sur [github.com/codespaces](https://github.com/codespaces), trouvez le Codespace en attente, cliquez sur **⋯ → Delete** et réessayez.
-- **"Codespace storage limit reached"** : vous avez peut-être déjà des Codespaces qui utilisent votre quota. Rendez-vous sur [github.com/codespaces](https://github.com/codespaces), supprimez ceux dont vous n’avez plus besoin, puis réessayez.
-- **VS Code desktop s’ouvre au lieu du navigateur** : consultez [Side Quest: Install Local](side-quest-06-04-install-local.md) si vous préférez cette option, ou cliquez sur **Open in Browser** pour continuer ici.
+- **`gh repo clone` échoue avec un accès refusé** : exécutez d’abord `gh auth login`, puis recommencez.
+- **Le dépôt existe déjà localement** : entrez simplement dans le dossier existant avec `cd my-agentic-workflows`.
+- **Vous préférez utiliser HTTPS ou SSH manuellement** : clonez avec la méthode Git que vous utilisez déjà, puis revenez ici.
 
 </details>
 
-### Ouvrez le terminal du Codespace
+### Ouvrez votre terminal de travail
 
-1. Une fois l’éditeur du Codespace chargé, ouvrez le terminal intégré avec **Ctrl+\`** (ou **Cmd+Option+\`** sur Mac).
-2. Attendez que l’invite du terminal apparaisse.
-3. Gardez ce terminal ouvert. Il se trouve déjà dans votre dépôt d’entraînement.
+1. Gardez le terminal ouvert dans le dossier `my-agentic-workflows`.
+2. Si vous utilisez VS Code en local, vous pouvez aussi ouvrir le dossier dans l’éditeur avec `code .`.
+3. Vérifiez que l’invite de commande se trouve bien dans votre dépôt d’entraînement avant de continuer.
 
 > [!TIP]
-> Si le terminal de votre Codespace affiche une invite `$`, le conteneur est prêt. Si vous voyez une erreur de permission en exécutant `gh auth status`, essayez `gh auth login` pour vous authentifier.
+> Si `gh auth status` renvoie une erreur, exécutez `gh auth login` avant de continuer.
 
 <details open>
 <summary>Première fois dans un terminal ?</summary>
@@ -75,17 +73,17 @@ Tapez votre commande après l’invite `$`, puis appuyez sur Entrée. La sortie 
 
 </details>
 
-### Vérifiez que votre Codespace est prêt
+### Vérifiez que votre terminal local est prêt
 
-Le schéma ci-dessous montre la connexion entre votre Codespace et GitHub.
+Le schéma ci-dessous montre la connexion entre votre machine locale et GitHub.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/02a-codespace-architecture-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/02a-codespace-architecture-light.svg">
-  <img alt="Architecture de l’environnement Codespace : votre navigateur se connecte à un conteneur cloud avec des outils préinstallés, qui communique avec GitHub" src="images/02a-codespace-architecture-light.svg">
+  <img alt="Architecture de l’environnement local : votre terminal et votre éditeur se connectent à GitHub depuis votre machine" src="images/02a-codespace-architecture-light.svg">
 </picture>
 
-1. Exécutez ces commandes dans le terminal du Codespace :
+1. Exécutez ces commandes dans votre terminal local :
 
 ```bash
 gh --version
@@ -106,14 +104,13 @@ github.com
 
 ## ✅ Checkpoint
 
-- [ ] Vous avez confirmé que votre offre GitHub inclut l’accès à Codespaces (le niveau gratuit inclut 60 heures par mois)
-- [ ] L’éditeur du Codespace est ouvert dans votre navigateur
-- [ ] Le terminal intégré est ouvert dans votre Codespace
+- [ ] Vous avez cloné le dépôt `my-agentic-workflows` sur votre machine
+- [ ] Votre terminal local est ouvert dans le dossier `my-agentic-workflows`
 - [ ] `gh --version` renvoie la version 2.40.0 ou une version plus récente
 - [ ] `gh auth status` confirme que vous êtes connecté à `github.com`
-- [ ] Le Codespace est rattaché à votre dépôt d’entraînement `my-agentic-workflows`
+- [ ] Votre dépôt local `my-agentic-workflows` est prêt pour les étapes suivantes
 
-<!-- journey: codespace -->
+<!-- journey: local -->
 
 **Étape suivante :** [Introduction à GitHub Actions](04-github-actions-intro.md)
 

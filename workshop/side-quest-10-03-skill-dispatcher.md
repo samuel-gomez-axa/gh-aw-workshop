@@ -12,7 +12,7 @@ Découvrez comment la skill Copilot `agentic-workflows` achemine votre demande e
 ## 📋 Avant De Commencer
 
 - Vous avez `.github/skills/agentic-workflows/` dans votre dépôt d'entraînement, créé pendant [Step 7](07-your-first-workflow.md).
-- Vous pouvez ouvrir Copilot CLI avec `gh copilot` dans le terminal de votre Codespace.
+- Vous pouvez ouvrir Copilot CLI avec `gh copilot` dans votre terminal local.
 
 ## Étapes
 
@@ -20,7 +20,7 @@ Découvrez comment la skill Copilot `agentic-workflows` achemine votre demande e
 
 La skill `agentic-workflows` agit comme un dispatcher : lorsque vous décrivez une tâche de workflow en anglais courant et mentionnez la skill par son nom, elle dirige votre demande vers le bon prompt d'édition, de débogage ou d'optimisation et effectue les changements directement dans votre dépôt.
 
-Vous l'appelez dans Copilot CLI depuis le terminal de votre Codespace :
+Vous l'appelez dans Copilot CLI depuis votre terminal local :
 
 ```bash
 gh copilot
@@ -42,7 +42,7 @@ La skill reconnaît trois types de tâches principaux pour la maintenance quotid
 | **Debug**     | Examiner une sortie inattendue ou un run en échec                                                                | "debug the workflow — it ran but …"                                                                            |
 | **Optimize**  | Réduire l'usage de tokens ou resserrer les [permissions](https://github.github.com/gh-aw/reference/permissions/) | "optimize the workflow to reduce [AI Credit](https://github.github.com/gh-aw/reference/cost-management/) cost" |
 
-Si vous travaillez en local ou dans un Codespace sans session Copilot, vous pouvez quand même effectuer chacun de ces changements manuellement : ouvrez le fichier de workflow, faites l'édition ciblée, puis lancez `gh aw compile` avant de valider.
+Si vous n'avez pas de session Copilot disponible, vous pouvez quand même effectuer chacun de ces changements manuellement : ouvrez le fichier de workflow, faites l'édition ciblée, puis lancez `gh aw compile` avant de valider.
 
 ### S'entraîner À Associer Une Demande À Un Type De Tâche
 

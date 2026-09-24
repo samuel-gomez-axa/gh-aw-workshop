@@ -73,7 +73,7 @@ permissions:
     issues: read
 ```
 
-**Essayez :** exécutez `gh aw compile` dans le terminal de votre Codespace et ouvrez le `.lock.yml` généré. Trouvez la valeur `cron:` et comparez-la à `schedule: daily` dans votre source `.md`.
+**Essayez :** exécutez `gh aw compile` dans votre terminal local et ouvrez le `.lock.yml` généré. Trouvez la valeur `cron:` et comparez-la à `schedule: daily` dans votre source `.md`.
 
 ## Vérifiez votre vocabulaire
 

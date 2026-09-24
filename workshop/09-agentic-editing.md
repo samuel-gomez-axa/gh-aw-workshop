@@ -21,7 +21,7 @@ Vous allez utiliser le skill Copilot `agentic-workflows`, installé dans votre d
 
 Le skill `agentic-workflows` est un skill Copilot installé dans votre dépôt d’entraînement. Il agit comme un répartiteur : lorsque vous décrivez une tâche de workflow en langage clair et mentionnez le skill par son nom, il achemine votre demande vers le bon prompt d’édition, de débogage ou d’optimisation et effectue directement les changements dans votre dépôt.
 
-Vous l’invoquez dans Copilot CLI depuis le terminal de votre Codespace :
+Vous l’invoquez dans Copilot CLI depuis votre terminal local :
 
 ```bash
 gh copilot
@@ -33,7 +33,7 @@ Puis envoyez :
 /agentic-workflows [your request here]
 ```
 
-Le skill reconnaît trois grands types de tâche, **Edit**, **Debug** et **Optimize**, puis achemine votre demande vers le prompt correspondant. Si vous travaillez en local ou dans un Codespace sans session Copilot, le chemin terminal indiqué dans chaque section ci-dessous montre l’équivalent manuel.
+Le skill reconnaît trois grands types de tâche, **Edit**, **Debug** et **Optimize**, puis achemine votre demande vers le prompt correspondant. Si vous n’avez pas de session Copilot disponible, le chemin terminal indiqué dans chaque section ci-dessous montre l’équivalent manuel.
 
 > [!TIP]
 >
@@ -61,7 +61,7 @@ Choisissez un seul problème pour cette itération. De petits changements isolé
 
 Après avoir examiné la sortie de l’exécution, vous avez peut-être remarqué que le commentaire de l’agent était générique. Vous allez maintenant rendre le brief plus spécifique afin que l’agent explique _pourquoi_ l’issue qui suscite le plus de réactions compte, et pas seulement laquelle c’est.
 
-Dans le terminal de votre Codespace, exécutez `gh copilot`, puis collez :
+Dans votre terminal local, exécutez `gh copilot`, puis collez :
 
 ```prompt
 /agentic-workflows update .github/workflows/daily-report-status.md
@@ -96,7 +96,7 @@ git push
 
 Si l’exécution de l’étape 8 s’est terminée mais que la sortie était vide, vague ou entièrement absente, utilisez le skill pour diagnostiquer la cause la plus probable et proposer une correction.
 
-Dans le terminal de votre Codespace, exécutez `gh copilot`, puis collez ce prompt en remplaçant le texte entre crochets par ce que vous avez réellement observé :
+Dans votre terminal local, exécutez `gh copilot`, puis collez ce prompt en remplaçant le texte entre crochets par ce que vous avez réellement observé :
 
 ```prompt
 /agentic-workflows debug .github/workflows/daily-report-status.md.
@@ -125,7 +125,7 @@ Recompilez puis poussez la modification.
 
 Une fois que le workflow produit une sortie correcte, vous pouvez réduire la quantité d’[AI Credit](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) consommée à chaque exécution. C’est particulièrement important pour les workflows qui s’exécutent selon un [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule).
 
-Dans le terminal de votre Codespace, exécutez `gh copilot`, puis collez :
+Dans votre terminal local, exécutez `gh copilot`, puis collez :
 
 ```prompt
 /agentic-workflows optimize .github/workflows/daily-report-status.md

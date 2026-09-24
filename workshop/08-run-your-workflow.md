@@ -45,7 +45,7 @@ En cas d’écart, revenez à [Confirmer l’accès au modèle](07d-confirm-mode
 
 Commencez depuis l’onglet Actions, car cette méthode fonctionne pour tout le monde, même si le jeton de votre terminal n’a pas la permission de déclencher des workflows.
 
-Si vous préférez le terminal, vous pouvez utiliser [`gh aw run daily-report-status`](https://github.github.com/gh-aw/setup/cli/#run) comme option avancée. Si cette commande échoue dans Codespaces, utilisez plutôt l’onglet Actions ou suivez [Side Quest: Fix Codespaces `actions:write` Errors](side-quest-08-01-codespaces-actions-write.md).
+Si vous préférez le terminal, vous pouvez utiliser [`gh aw run daily-report-status`](https://github.github.com/gh-aw/setup/cli/#run) comme option avancée. Si cette commande échoue à cause de permissions de déclenchement de workflow, utilisez plutôt l’onglet Actions.
 
 ### Avant de cliquer sur Run
 

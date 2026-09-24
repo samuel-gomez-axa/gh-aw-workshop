@@ -45,7 +45,7 @@ MCP (Model Context Protocol) connecte des serveurs d'outils externes à l'agent 
 
 ### Ajouter un serveur MCP à votre workflow
 
-Dans le terminal déjà ouvert dans votre Codespace, lancez :
+Dans le terminal déjà ouvert dans votre dépôt local, lancez :
 
 ```bash
 gh copilot

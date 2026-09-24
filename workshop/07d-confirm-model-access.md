@@ -16,7 +16,7 @@ Vous allez exécuter un prompt de test d’une phrase, confirmer que Copilot est
 
 ## Vérifiez l’accès au modèle
 
-1. Dans le terminal déjà ouvert dans votre Codespace, exécutez :
+1. Dans le terminal déjà ouvert dans votre dépôt local, exécutez :
 
 ```bash
 gh copilot

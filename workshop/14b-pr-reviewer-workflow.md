@@ -19,7 +19,7 @@ Vous allez utiliser votre agent IA et la skill `/agentic-workflows` pour créer 
 
 - Vous disposez d'un workflow fonctionnel issu de [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
 - Vous avez poussé les fichiers créés par `gh aw init`, y compris `.github/skills/agentic-workflows/`.
-- La commande `gh aw` fonctionne dans le terminal de votre Codespace.
+- La commande `gh aw` fonctionne dans votre terminal local.
 
 ## Comprendre la séparation entre agent et skill
 
@@ -116,7 +116,7 @@ La formulation exacte peut varier. Vérifiez que les responsabilités restent bi
 
 ## Compiler et pousser
 
-Dans le terminal de votre Codespace, lancez :
+Dans votre terminal local, lancez :
 
 ```bash
 gh aw compile

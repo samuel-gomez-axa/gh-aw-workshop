@@ -17,32 +17,30 @@ Utilisez cette quête annexe si votre environnement diffère des valeurs par dé
 
 Les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) exigent **GHES 3.12 ou plus récent**. Sur des versions antérieures, la fonctionnalité [Copilot cloud agent](https://github.github.com/gh-aw/reference/copilot-cloud-agent/) est indisponible, quels que soient la licence ou les réglages de politique.
 
-| Déploiement GitHub                         | Agentic workflows pris en charge ?                                                                                  |
-| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| Déploiement GitHub                         | Agentic workflows pris en charge ?                                                                  |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------- |
 | **github.com**                             | ✅ Pleinement pris en charge                                                                        |
 | **GitHub Enterprise Cloud (GHEC)**         | ✅ Pleinement pris en charge                                                                        |
 | **GitHub Enterprise Server (GHES) 3.12+**  | ✅ Pris en charge lorsque Copilot Enterprise et l’accès réseau sont configurés par l’administrateur |
-| **GitHub Enterprise Server (GHES) < 3.12** | :x: Non pris en charge, mise à niveau requise                                                                       |
+| **GitHub Enterprise Server (GHES) < 3.12** | :x: Non pris en charge, mise à niveau requise                                                       |
 
 Avant de continuer :
 
 1. Demandez à votre administrateur GitHub Enterprise de confirmer la version de GHES exécutée dans votre environnement.
 2. Si votre instance est inférieure à 3.12, vous ne pouvez pas exécuter les agentic workflows en pratique. Vous pouvez suivre en mode lecture seule ou demander un compte `github.com` pour effectuer les étapes d’exécution.
-3. Si votre instance est en 3.12 ou plus, poursuivez avec les sections ci-dessous pour confirmer les prérequis Codespaces, runner et accès au modèle.
+3. Si votre instance est en 3.12 ou plus, poursuivez avec les sections ci-dessous pour confirmer les prérequis de terminal local, runner et accès au modèle.
 
-## Confirmer la disponibilité de Codespaces sur GHES ou via les politiques enterprise
+## Confirmer la disponibilité de votre environnement local sur GHES ou via les politiques enterprise
 
-La disponibilité de Codespaces varie selon la plateforme et la politique appliquée :
+Même avec un parcours local, certaines politiques enterprise influencent encore la façon dont vous authentifiez `gh`, installez `gh-aw` et exécutez vos workflows :
 
-- **GHES:** Codespaces n’est disponible que sur les versions GHES prises en charge et lorsqu’il est activé par les administrateurs.
-  Verifiez la prise en charge dans la [documentation d'organisation Codespaces](https://docs.github.com/en/enterprise-cloud@latest/codespaces/managing-codespaces-for-your-organization/enabling-or-disabling-github-codespaces-for-your-organization).
-- **GHEC:** Les politiques d’organisation peuvent restreindre les personnes autorisées à créer des Codespaces ou les dépôts autorisés.
+- **GHES:** votre administrateur peut imposer un nom d’hôte spécifique, un proxy sortant, ou des restrictions d’installation pour le CLI.
+- **GHEC:** les politiques d’organisation peuvent restreindre l’usage de certaines extensions, secrets ou permissions GitHub Actions.
 
 Avant de continuer :
 
-1. Demandez à votre administrateur enterprise si Codespaces est activé pour votre organisation et votre dépôt.
-2. Si Codespaces est disponible, poursuivez avec [Configurer un Codespace](02a-setup-codespace.md).
-   Si Codespaces n’est pas disponible, suivez [Quête annexe : configurer votre terminal local](side-quest-02-01-local-terminal.md).
+1. Demandez à votre administrateur enterprise quel nom d’hôte, quel proxy et quelles politiques de poste de travail s’appliquent à votre dépôt.
+2. Poursuivez ensuite avec [Configurer votre terminal local](02a-setup-codespace.md) ou, si vous voulez plus de détail, [Quête annexe : configurer votre terminal local](side-quest-02-01-local-terminal.md).
 3. Utilisez le nom d’hôte de votre environnement enterprise dans toutes les commandes d’authentification et d’extensions `gh` lorsqu’il est requis, par exemple `gh auth login --hostname ghes.example.com`.
    Consultez [Quête annexe : dépannage de l’installation de `gh-aw`](side-quest-06-01-install-troubleshooting.md) pour la séquence complète de commandes avec nom d’hôte enterprise.
 
@@ -80,12 +78,12 @@ Avant d’installer `gh-aw`, vérifiez avec votre administrateur que votre compt
 ## ✅ Checkpoint
 
 - [ ] Votre instance GHES est en version 3.12 ou plus récente, ou vous êtes sur `github.com` ou GHEC
-- [ ] Vous savez si Codespaces est disponible dans votre environnement enterprise
+- [ ] Vous connaissez les contraintes de terminal local et d’authentification dans votre environnement enterprise
 - [ ] Vous savez si vous avez besoin d'un [self-hosted runner](https://github.github.com/gh-aw/reference/self-hosted-runners/) et qu'il est pret
 - [ ] Vous avez confirmé avec votre administrateur que Copilot Enterprise et l’accès au modèle sont activés
 - [ ] Vous êtes prêt à reprendre votre étape actuelle du workshop
 
 Revenez à l’étape du workshop depuis laquelle vous avez ouvert cette quête annexe.
-Les points de retour les plus courants sont [Prerequisites](01-prerequisites.md), [Configurer un Codespace](02a-setup-codespace.md), [Quête annexe : configurer votre terminal local](side-quest-02-01-local-terminal.md) et [Que sont les agentic workflows ?](05-agentic-workflows-intro.md).
+Les points de retour les plus courants sont [Prerequisites](01-prerequisites.md), [Configurer votre terminal local](02a-setup-codespace.md), [Quête annexe : configurer votre terminal local](side-quest-02-01-local-terminal.md) et [Que sont les agentic workflows ?](05-agentic-workflows-intro.md).
 
 <!-- /journey -->

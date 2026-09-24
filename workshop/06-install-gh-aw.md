@@ -7,16 +7,16 @@
 `gh-aw` est l’extension CLI qui compile vos fichiers Markdown d’[agentic workflow](https://github.github.com/gh-aw/introduction/overview/) et déclenche des exécutions depuis votre terminal.
 
 > [!NOTE]
-> Vous utilisez plutôt votre propre machine ? Suivez la quête annexe facultative [Install `gh-aw` in a Local Terminal](side-quest-06-04-install-local.md).
+> Le parcours principal suppose désormais que vous utilisez votre propre machine. La quête annexe [Install `gh-aw` in a Local Terminal](side-quest-06-04-install-local.md) reste utile si vous voulez une version plus détaillée de l’installation.
 
 ## 🎯 Ce que vous allez faire
 
-Vous allez vérifier que le CLI `gh` est authentifié, installer l’extension `gh-aw`, puis lancer un diagnostic rapide pour confirmer que votre terminal Codespace est prêt pour la configuration d’un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/).
+Vous allez vérifier que le CLI `gh` est authentifié, installer l’extension `gh-aw`, puis lancer un diagnostic rapide pour confirmer que votre terminal local est prêt pour la configuration d’un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/).
 
 ## 📋 Avant de commencer
 
 - Vous avez terminé [Qu’est-ce qu’un Agentic Workflow ?](05-agentic-workflows-intro.md)
-- Vous avez un terminal Codespace ouvert, issu de [Set Up a Codespace](02a-setup-codespace.md)
+- Vous avez un terminal local ouvert dans votre dépôt d’entraînement, issu de [Configurer votre terminal local](02a-setup-codespace.md)
 
 Exécutez cette commande pour confirmer que `gh` est authentifié avant de continuer :
 
@@ -24,7 +24,7 @@ Exécutez cette commande pour confirmer que `gh` est authentifié avant de conti
 gh auth status
 ```
 
-Sortie attendue : `Logged in to github.com as <your-username>`. Si vous voyez une erreur, revenez à [Verify your Codespace is ready](02a-setup-codespace.md#verify-your-codespace-is-ready).
+Sortie attendue : `Logged in to github.com as <your-username>`. Si vous voyez une erreur, revenez à [Configurer votre terminal local](02a-setup-codespace.md#vérifiez-que-votre-terminal-local-est-prêt).
 
 ## Installez depuis le terminal
 
@@ -45,7 +45,7 @@ gh aw --version
 Vous devriez voir une sortie du type `gh-aw version 0.81.6`.
 
 > [!NOTE]
-> En dehors de Codespaces, vous pouvez aussi installer avec `gh extension install github/gh-aw`. Dans les Codespaces appartenant à une organisation, le jeton GitHub est limité à l’organisation et ne peut pas accéder au marketplace des extensions ; le script curl est donc la voie la plus fiable.
+> Vous pouvez aussi installer l’extension avec `gh extension install github/gh-aw`. Le script curl reste la voie la plus fiable si votre environnement d’entreprise applique des restrictions au marketplace GitHub CLI.
 
 Besoin d’aide supplémentaire ? Consultez [Side Quest: Install gh-aw Troubleshooting](side-quest-06-01-install-troubleshooting.md).
 
