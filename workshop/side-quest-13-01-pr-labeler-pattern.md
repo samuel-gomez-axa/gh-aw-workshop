@@ -1,26 +1,26 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
 
-# Side Quest 13-01: Pattern — Auto-Label PRs by Content
+# Quête Annexe 13-01 : Pattern — Étiqueter Automatiquement Les PRs Selon Leur Contenu
 
-## :dart: What You'll Do
+## :dart: Ce Que Vous Allez Faire
 
-Extend your PR reviewer workflow to automatically apply [GitHub labels](https://github.github.com/gh-aw/reference/safe-outputs/#add-labels-add-labels) based on the files that changed in a pull request.
+Étendez votre workflow de revue de PR pour appliquer automatiquement des [GitHub labels](https://github.github.com/gh-aw/reference/safe-outputs/#add-labels-add-labels) à partir des fichiers modifiés dans une pull request.
 
-## :clipboard: Before You Start
+## :clipboard: Avant De Commencer
 
-- Complete [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
-- Your practice repository has at least one label already created. If not, go to **Issues → Labels** in your repository and create labels like `documentation`, `tests`, and `bug-fix`.
+- Terminez [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
+- Votre dépôt d'entraînement contient déjà au moins un label. Sinon, allez dans **Issues → Labels** de votre dépôt et créez des labels comme `documentation`, `tests` et `bug-fix`.
 
-## Why Auto-Labelling?
+## Pourquoi L'étiquetage Automatique ?
 
-Labels help teams filter and prioritise pull requests at a glance. Applying them manually is easy to forget, especially on busy repositories. An agentic labeller reads the list of changed files and applies the right labels before a human reviewer opens the PR.
+Les labels aident les équipes à filtrer et prioriser les pull requests d'un coup d'oeil. Les appliquer manuellement s'oublie facilement, surtout sur des dépôts actifs. Un labeller agentique lit la liste des fichiers modifiés et applique les bons labels avant même qu'un relecteur humain n'ouvre la PR.
 
-The [LabelOps pattern](https://github.github.com/gh-aw/patterns/label-ops/) keeps the approach simple: map file path patterns to label names in your workflow brief, then instruct the agent to pick and apply the matching labels.
+Le [LabelOps pattern](https://github.github.com/gh-aw/patterns/label-ops/) garde l'approche simple : associez des motifs de chemins de fichiers à des noms de labels dans votre brief de workflow, puis demandez à l'agent de choisir et d'appliquer les labels correspondants.
 
-## The Labeller Workflow
+## Le Workflow D'étiquetage
 
-Create `.github/workflows/pr-labeler.md`:
+Créez `.github/workflows/pr-labeler.md` :
 
 ```markdown
 ---
@@ -47,7 +47,7 @@ You are a pull request labeller. When a pull request is opened or updated:
 4. If no rule matches, do not apply any label and do not post a comment.
 ```
 
-Compile and push:
+Compilez puis poussez :
 
 ```bash
 gh aw compile
@@ -56,39 +56,39 @@ git commit -m "feat: add PR labeller workflow"
 git push
 ```
 
-## Test It
+## Testez-Le
 
-Open a test pull request that touches a Markdown file. After the workflow runs, check the pull request sidebar — the `documentation` label should appear automatically.
+Ouvrez une pull request de test qui modifie un fichier Markdown. Une fois le workflow exécuté, vérifiez la barre latérale de la pull request : le label `documentation` doit apparaître automatiquement.
 
-Then open another PR that touches a test file and verify the `tests` label is applied.
+Ouvrez ensuite une autre PR qui modifie un fichier de test et vérifiez que le label `tests` est appliqué.
 
-## Hands-On Exercise
+## Exercice Pratique
 
-The current rules use simple path patterns. Extend the labeller to also apply a `config-change` label when any file under `.github/` or named `*.yaml` / `*.yml` changes.
+Les règles actuelles utilisent des motifs de chemins simples. Étendez le labeller pour appliquer aussi un label `config-change` lorsqu'un fichier sous `.github/` ou nommé `*.yaml` / `*.yml` est modifié.
 
 <details>
-<summary>Show one way to add this rule</summary>
+<summary>Afficher une manière d'ajouter cette règle</summary>
 
-Add this rule to the workflow brief:
+Ajoutez cette règle au workflow brief :
 
 ```text
 - If any changed file is under `.github/` or has a `.yaml` or `.yml` extension → apply `config-change`
 ```
 
-Compile, push, and test with a PR that changes a workflow file.
+Compilez, poussez, puis testez avec une PR qui modifie un fichier de workflow.
 
 </details>
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I created `.github/workflows/pr-labeler.md` with a `pull_request` trigger
-- [ ] `gh aw compile` completed without errors and `.lock.yml` is committed and pushed
-- [ ] I opened a test PR and the workflow applied the correct label automatically
-- [ ] I can explain why `safe-outputs: add-labels` is the right surface for this pattern
-- [ ] I extended the labeller to handle at least one additional file-path rule
+- [ ] J'ai créé `.github/workflows/pr-labeler.md` avec un trigger `pull_request`
+- [ ] `gh aw compile` s'est terminé sans erreur et `.lock.yml` est validé puis poussé
+- [ ] J'ai ouvert une PR de test et le workflow a appliqué automatiquement le bon label
+- [ ] Je peux expliquer pourquoi `safe-outputs: add-labels` est la bonne surface pour ce pattern
+- [ ] J'ai étendu le labeller pour gérer au moins une règle supplémentaire basée sur le chemin de fichier
 
 <!-- journey: all -->
 
-Return to [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
+Revenez à [Créer votre premier workflow événementiel : PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
 
 <!-- /journey -->

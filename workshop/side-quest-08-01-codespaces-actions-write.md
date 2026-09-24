@@ -1,110 +1,113 @@
 <!-- page-journey: codespace -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Fix Codespaces `actions:write` Errors When Running `gh aw run`
 
-> _Optional: use this guide if Step 8 fails in a Codespace, then return to [Run and Watch Your Workflow](08-run-your-workflow.md)._
+# Side Quest : Corriger les erreurs Codespaces `actions:write` lors de l’exécution de `gh aw run`
 
-## :clipboard: Before You Start
+> _Facultatif : utilisez ce guide si l’étape 8 échoue dans un Codespace, puis revenez à [Exécuter et suivre votre workflow](08-run-your-workflow.md)._
 
-This side quest applies to you if **both** of the following are true:
+## :clipboard: Avant de commencer
 
-- You are running `gh aw run` inside a GitHub Codespace (not a local environment).
-- You see an `actions:write` [permission](https://github.github.com/gh-aw/reference/permissions/) error (HTTP 403) in your terminal run log.
+Cette side quest vous concerne si **les deux** conditions suivantes sont vraies :
 
-If you are not in a Codespace or you do not see the 403 error, return to [Run and Watch Your Workflow](08-run-your-workflow.md) and use the GitHub Actions UI path instead.
+- Vous exécutez `gh aw run` dans un GitHub Codespace (et non dans un environnement local).
+- Vous voyez une erreur de [permission](https://github.github.com/gh-aw/reference/permissions/) `actions:write` (HTTP 403) dans le journal d’exécution de votre terminal.
 
----
-
-## :dart: What You'll Do
-
-You'll identify the Codespaces token error that blocks `gh aw run` and use the fastest recovery path. Optionally, you can re-create your Codespace with the extra [permissions](https://github.github.com/gh-aw/reference/permissions/) needed for terminal-based workflow [triggers](https://github.github.com/gh-aw/reference/triggers/).
+Si vous n’êtes pas dans un Codespace ou ne voyez pas l’erreur 403, revenez à [Exécuter et suivre votre workflow](08-run-your-workflow.md) et utilisez plutôt le parcours GitHub Actions UI.
 
 ---
 
-## Symptom
+## :dart: Ce que vous allez faire
 
-When you run:
+Vous allez identifier l’erreur de token Codespaces qui bloque `gh aw run` et utiliser le chemin de récupération le plus rapide. Si vous le souhaitez, vous pouvez aussi recréer votre Codespace avec les [permissions](https://github.github.com/gh-aw/reference/permissions/) supplémentaires nécessaires aux [triggers](https://github.github.com/gh-aw/reference/triggers/) de workflow lancés depuis le terminal.
+
+---
+
+## Symptôme
+
+Lorsque vous exécutez :
 
 ```bash
 gh aw run daily-report-status
 ```
 
-you may see:
+vous pouvez voir :
 
 ```text
 HTTP 403: Resource not accessible by integration
 ```
 
-Some versions of `gh aw` also show a follow-up message explaining that the default Codespaces token does not have [`actions:write`](https://github.github.com/gh-aw/reference/permissions/) and `workflows:write`.
+Certaines versions de `gh aw` affichent aussi un message complémentaire expliquant que le token Codespaces par défaut ne possède pas [`actions:write`](https://github.github.com/gh-aw/reference/permissions/) ni `workflows:write`.
 
 ---
 
 ## Cause
 
-The default token inside a Codespace usually has enough access to work with your repository. However, it may not have the [permissions](https://github.github.com/gh-aw/reference/permissions/) that `gh aw run` needs. In practice, the missing permissions are usually `actions:write` and `workflows:write`.
+Le token par défaut à l’intérieur d’un Codespace dispose généralement d’un accès suffisant pour travailler avec votre dépôt. En revanche, il peut ne pas avoir les [permissions](https://github.github.com/gh-aw/reference/permissions/) requises par `gh aw run`. En pratique, les permissions manquantes sont généralement `actions:write` et `workflows:write`.
 
 ---
 
-## Fix A (recommended): use the GitHub Actions UI
+## Correction A (recommandée) : utiliser l’UI GitHub Actions
 
 <!-- journey: codespace -->
-Return to [Run and Watch Your Workflow](08-run-your-workflow.md#trigger-the-workflow-via-github-actions-ui) and trigger the workflow from the **Actions** tab instead.
+
+Revenez à [Exécuter et suivre votre workflow](08-run-your-workflow.md#trigger-the-workflow-via-github-actions-ui) et déclenchez plutôt le workflow depuis l’onglet **Actions**.
+
 <!-- /journey -->
 
-This is the best path for the workshop because it works even when your Codespace terminal token is limited.
+C’est le meilleur parcours pour l’atelier, car il fonctionne même lorsque le token du terminal de votre Codespace est limité.
 
 ---
 
-## Fix B (advanced): create a new Codespace with extra permissions
+## Correction B (avancée) : créer un nouveau Codespace avec des permissions supplémentaires
 
-If you want `gh aw run` to work from the terminal, add a `.devcontainer/devcontainer.json` file to **your practice repository** and commit it. Then create a brand-new Codespace from that updated repository.
+Si vous voulez que `gh aw run` fonctionne depuis le terminal, ajoutez un fichier `.devcontainer/devcontainer.json` à **votre dépôt d’exercice** puis validez-le. Créez ensuite un tout nouveau Codespace à partir de ce dépôt mis à jour.
 
 ```json
 {
-  "customizations": {
-    "codespaces": {
-      "repositories": {
-        "YOUR-USERNAME/YOUR-REPO": {
-          "permissions": {
-            "actions": "write",
-            "workflows": "write"
-          }
+    "customizations": {
+        "codespaces": {
+            "repositories": {
+                "YOUR-USERNAME/YOUR-REPO": {
+                    "permissions": {
+                        "actions": "write",
+                        "workflows": "write"
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
 ```
 
-Existing Codespaces do not pick up new permissions after a rebuild, so you must create a new Codespace after the file is committed. For more detail, see [Managing access to other repositories within your codespace](https://docs.github.com/en/codespaces/managing-your-codespaces/managing-repository-access-for-your-codespaces).
+Les Codespaces existants ne récupèrent pas les nouvelles permissions après une reconstruction ; vous devez donc créer un nouveau Codespace après validation du fichier. Pour plus de détails, consultez [Managing access to other repositories within your codespace](https://docs.github.com/en/codespaces/managing-your-codespaces/managing-repository-access-for-your-codespaces).
 
 > [!IMPORTANT]
-> Add this file to your **practice repository**, not to `githubnext/gh-aw-workshop`.
+> Ajoutez ce fichier à votre **practice repository**, pas à `githubnext/gh-aw-workshop`.
 
 ---
 
-## Verify the fix
+## Vérifier la correction
 
-Before you retry `gh aw run daily-report-status`, confirm one of these is true:
+Avant de réessayer `gh aw run daily-report-status`, vérifiez qu’une de ces affirmations est vraie :
 
-- A new **Daily Report Status** run appears after you use the Actions tab
-- A new **Daily Report Status** run appears after you run `gh aw run daily-report-status` from your newly created Codespace
+- Une nouvelle exécution **Daily Report Status** apparaît après utilisation de l’onglet Actions
+- Une nouvelle exécution **Daily Report Status** apparaît après avoir exécuté `gh aw run daily-report-status` depuis votre Codespace nouvellement créé
 
-If you still see the same 403 error and no new run appears in the **Actions** tab, go back to **Fix A** and use the UI path for this workshop.
+Si vous voyez toujours la même erreur 403 et qu’aucune nouvelle exécution n’apparaît dans l’onglet **Actions**, revenez à **Fix A** et utilisez le parcours UI pour cet atelier.
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I can see `HTTP 403: Resource not accessible by integration` in my terminal when running `gh aw run daily-report-status`
-- [ ] A new **Daily Report Status** run appears in the **Actions** tab after I trigger it from the UI
-- [ ] If I used Fix B: running `gh aw run daily-report-status` in my new Codespace completes without a 403 error and a new run appears in the **Actions** tab
-- [ ] I'm ready to return to [Run and Watch Your Workflow](08-run-your-workflow.md)
+- [ ] Je peux voir `HTTP 403: Resource not accessible by integration` dans mon terminal lorsque j’exécute `gh aw run daily-report-status`
+- [ ] Une nouvelle exécution **Daily Report Status** apparaît dans l’onglet **Actions** après l’avoir déclenchée depuis l’UI
+- [ ] Si j’ai utilisé Fix B : l’exécution de `gh aw run daily-report-status` dans mon nouveau Codespace se termine sans erreur 403 et une nouvelle exécution apparaît dans l’onglet **Actions**
+- [ ] Je suis prêt à revenir à [Run and Watch Your Workflow](08-run-your-workflow.md)
 
 ---
 
 <!-- journey: codespace -->
-Return to [Run and Watch Your Workflow](08-run-your-workflow.md).
+
+Revenez à [Exécuter et suivre votre workflow](08-run-your-workflow.md).
+
 <!-- /journey -->
-
-

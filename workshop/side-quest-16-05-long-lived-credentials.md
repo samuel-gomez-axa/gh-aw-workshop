@@ -1,138 +1,146 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Long-Lived Credential Risks in Agentic Workflows
 
-> _Optional: work through this security primer to understand why personal access tokens create a larger attack surface than the ephemeral `GITHUB_TOKEN` — especially in unattended agentic workflows._
+# Quête annexe : risques liés aux identifiants longue durée dans les agentic workflows
 
-## :clipboard: Before You Start
+> _Facultatif : suivez cette introduction a la securite pour comprendre pourquoi les personal access tokens creent une surface d'attaque plus grande que le `GITHUB_TOKEN` ephemere, surtout dans des workflows agentiques sans supervision._
 
-- You have started [Connect a Live Data Source to Your Workflow](16-connect-data-source.md).
-- You understand that `${{ secrets.GITHUB_TOKEN }}` is the built-in GitHub token provided automatically for each workflow run.
-- You are familiar with [Side Quest: Storing Credentials with GitHub Secrets](side-quest-16-02-secrets-and-permissions.md).
+## :clipboard: Avant de commencer
 
----
-
-## The core risk: credentials that never expire
-
-A **personal access token (PAT)** is a credential you generate manually and store in a secret. It:
-
-- Is valid for days, months, or indefinitely — depending on how it was configured.
-- Carries whatever scopes you granted when you created it, across every repository those scopes touch.
-- Remains valid unless you explicitly revoke it.
-
-The built-in `GITHUB_TOKEN` is different. GitHub creates it at the start of each run and invalidates it the moment the run ends. No rotation. No revocation steps. No credential that persists after the job exits.
-
-For a scheduled, unattended agentic workflow that runs every day, this distinction matters a great deal.
+- Vous avez commencé [Connecter une source de données en direct à votre workflow](16-connect-data-source.md).
+- Vous comprenez que `${{ secrets.GITHUB_TOKEN }}` est le token GitHub intégré, fourni automatiquement pour chaque exécution de workflow.
+- Vous êtes familier avec [Quête annexe : stocker des identifiants avec GitHub Secrets](side-quest-16-02-secrets-and-permissions.md).
 
 ---
 
-## Why unattended workflows amplify the risk
+## Le risque central : des identifiants qui n’expirent jamais
 
-Classic CI/CD scripts are narrow and [deterministic](https://github.github.com/gh-aw/patterns/deterministic-ops/): they run a fixed set of commands. If a PAT leaks from a classic pipeline, the attacker gains whatever those specific commands needed.
+Un **personal access token (PAT)** est un identifiant que vous générez manuellement et stockez dans un secret. Il :
 
-An [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) is broader. The agent decides at runtime which tools to call. If a wide-scoped PAT leaks, it can happen through:
+- reste valide pendant des jours, des mois, voire indéfiniment, selon sa configuration.
+- porte tous les scopes que vous lui avez accordés lors de sa création, sur tous les dépôts touchés par ces scopes.
+- reste valide tant que vous ne le révoquez pas explicitement.
 
-- A compromised dependency
-- A crafted issue or PR body that tricks the agent into printing it
-- A misconfigured `safe-outputs` surface
+Le `GITHUB_TOKEN` intégré est différent. GitHub le crée au début de chaque exécution et l’invalide au moment même où elle se termine. Pas de rotation. Pas d’étape de révocation. Aucun identifiant qui persiste après la fin du job.
 
-When that happens, the attacker gains access to every repository and organisation the PAT covers — not just the one the workflow ran against. The PAT does not expire on its own. It persists until someone notices and revokes it manually.
-
-Unattended workflows run without a human watching every log. The window between a leak and discovery can be hours or days.
+Pour un workflow agentique planifié, sans supervision, qui s’exécute chaque jour, cette différence compte énormément.
 
 ---
 
-## How gh-aw limits the [blast radius](https://github.github.com/gh-aw/introduction/architecture/#threat-model)
+## Pourquoi les workflows sans supervision amplifient le risque
 
-gh-aw gives you three design features that reduce long-lived credential risk:
+Les scripts CI/CD classiques sont étroits et [deterministic](https://github.github.com/gh-aw/patterns/deterministic-ops/) : ils exécutent un ensemble fixe de commandes. Si un PAT fuit depuis un pipeline classique, l’attaquant obtient ce que ces commandes précises exigeaient.
 
-### Prefer the ephemeral `GITHUB_TOKEN`
+Un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) est plus large. L’agent décide à l’exécution quels outils appeler. Si un PAT à large scope fuit, cela peut arriver via :
 
-For any operation that touches only the current repository, use `${{ secrets.GITHUB_TOKEN }}` instead of a PAT. You do not need to create it, rotate it, or revoke it. The risk window is the duration of a single run.
+- une dépendance compromise
+- le contenu malveillant d’une issue ou d’une PR qui pousse l’agent à l’afficher
+- une surface `safe-outputs` mal configurée
+
+Lorsque cela arrive, l’attaquant obtient un accès à tous les dépôts et organisations couverts par le PAT, pas seulement celui visé par le workflow. Le PAT n’expire pas de lui-même. Il persiste jusqu’à ce que quelqu’un le remarque et le révoque manuellement.
+
+Les workflows sans supervision s’exécutent sans humain pour surveiller chaque log. La fenêtre entre la fuite et sa découverte peut durer des heures ou des jours.
+
+---
+
+## Comment gh-aw limite le [blast radius](https://github.github.com/gh-aw/introduction/architecture/#threat-model)
+
+gh-aw vous donne trois mécanismes de conception qui réduisent le risque lié aux identifiants de longue durée de vie :
+
+### Préférer le `GITHUB_TOKEN` éphémère
+
+Pour toute opération qui ne touche que le dépôt courant, utilisez `${{ secrets.GITHUB_TOKEN }}` plutôt qu’un PAT. Vous n’avez ni à le créer, ni à le faire tourner, ni à le révoquer. La fenêtre de risque est la durée d’une seule exécution.
 
 ```markdown
 - name: Fetch open issues
   id: issues
   run: |
-    gh issue list --state open --limit 10 --json number,title \
-      --jq '.[] | "#\(.number) \(.title)"'
+  gh issue list --state open --limit 10 --json number,title \
+   --jq '.[] | "#\(.number) \(.title)"'
   env:
-    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### Keep `permissions:` minimal
+### Garder `permissions:` minimal
 
-Even an ephemeral `GITHUB_TOKEN` carries risk if it is over-scoped. Declare only the [permissions](https://github.github.com/gh-aw/reference/permissions/) your task actually needs. In gh-aw, `write` permissions are rejected by the compiler for security reasons — use read-only scopes or `none`, and keep any write intent behind [`safe-outputs`](https://github.github.com/gh-aw/reference/safe-outputs/).
+Même un `GITHUB_TOKEN` éphémère comporte un risque s’il a trop de scopes. Ne déclarez que les [permissions](https://github.github.com/gh-aw/reference/permissions/) dont votre tâche a réellement besoin. Dans gh-aw, les permissions `write` sont rejetées par le compilateur pour des raisons de sécurité : utilisez des scopes en lecture seule ou `none`, et laissez toute intention d’écriture derrière [`safe-outputs`](https://github.github.com/gh-aw/reference/safe-outputs/).
 
-Compare the two blocks below:
+Comparez les deux blocs ci-dessous :
 
 ```markdown
 # ❌ Invalid in gh-aw: write permissions are rejected by the compiler
+
 # Use safe-outputs for any write operation instead.
+
 ---
+
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+contents: write
+issues: write
+pull-requests: write
+
 ---
 ```
 
 ```markdown
 # ✅ Safe: minimal scopes matching actual needs
+
 ---
+
 permissions:
-  contents: read
-  issues: read
+contents: read
+issues: read
+
 ---
 ```
 
-With read-only permissions, a compromised or misdirected token cannot push code, open PRs, or modify secrets — even if an attacker gains access to it during the run window.
+Avec des permissions en lecture seule, un token compromis ou mal orienté ne peut ni pousser du code, ni ouvrir des PR, ni modifier des secrets, même si un attaquant y accède pendant la fenêtre d’exécution.
 
 > [!TIP]
-> If a `GITHUB_TOKEN` call fails with a 403, check that the required permission is listed. Adding the minimum permission that makes the call succeed is safer than widening to `write` by default.
+> Si un appel avec `GITHUB_TOKEN` échoue avec une erreur 403, vérifiez que la permission requise est bien listée. Ajouter la permission minimale qui permet à l’appel de réussir est plus sûr que d’élargir par défaut à `write`.
 
-### Use `network.allowed` to block exfiltration
+### Utiliser `network.allowed` pour bloquer l’exfiltration
 
-If a PAT is present in the workflow environment, the main concern is that it could be sent to an attacker-controlled endpoint. A `network` allowlist stops that at the [network layer](https://github.github.com/gh-aw/reference/network/):
+Si un PAT est présent dans l’environnement du workflow, le principal risque est qu’il puisse être envoyé vers un endpoint contrôlé par un attaquant. Une allowlist `network` arrête cela à la [network layer](https://github.github.com/gh-aw/reference/network/) :
 
 ```markdown
 ---
 network:
-  allowed:
-    - api.github.com
-    - copilot-proxy.githubusercontent.com
+    allowed:
+        - api.github.com
+        - copilot-proxy.githubusercontent.com
 ---
 ```
 
-Even if an injected instruction tells the agent to `curl` a PAT to an external server, the connection is rejected before any data leaves the runner.
+Même si une instruction injectée demande à l’agent d’envoyer un PAT avec `curl` vers un serveur externe, la connexion est rejetée avant qu’aucune donnée ne quitte le runner.
 
 ---
 
-## When a PAT is unavoidable
+## Quand un PAT est inévitable
 
-Sometimes your workflow genuinely needs access beyond what `GITHUB_TOKEN` can provide — for example, reading a private repository in a different organisation or calling an API that requires a service account token.
+Parfois, votre workflow a réellement besoin d’un accès dépassant ce que `GITHUB_TOKEN` peut fournir, par exemple pour lire un dépôt privé dans une autre organisation ou appeler une API qui exige un token de compte de service.
 
-When you must use a PAT:
+Lorsque vous devez utiliser un PAT :
 
-| Practice | Why it helps |
-|---|---|
-| Use a fine-grained PAT with the minimum scopes | Limits what an attacker gains if it leaks |
-| Set the shortest practical expiry | Reduces the window during which a leaked token remains valid |
-| Rotate the PAT on a schedule | A rotated PAT invalidates any copy an attacker already has |
-| Inject the PAT at the step level, not globally | Keeps it out of other steps' environments, including the AI prompt step |
-| Add `network.allowed` | Prevents the token from being sent to attacker-controlled endpoints |
+| Pratique                                              | Pourquoi c’est utile                                                               |
+| ----------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Utiliser un PAT fine-grained avec les scopes minimaux | Limite ce qu’un attaquant obtient s’il fuit                                        |
+| Définir l’expiration la plus courte possible          | Réduit la période pendant laquelle un token divulgué reste valide                  |
+| Faire tourner le PAT selon un calendrier              | Un PAT tourné invalide toute copie déjà récupérée par un attaquant                 |
+| Injecter le PAT au niveau de l’étape, pas globalement | Le garde hors de l’environnement des autres étapes, y compris celle du prompt d’IA |
+| Ajouter `network.allowed`                             | Empêche que le token soit envoyé vers des endpoints contrôlés par un attaquant     |
 
 ---
 
-## :pencil2: Exercise: Audit your current workflow
+## :pencil2: Exercice : auditer votre workflow actuel
 
-Open your workflow file (e.g., `.github/workflows/daily-report.md`) and answer the following questions:
+Ouvrez votre fichier de workflow, par exemple `.github/workflows/daily-report.md`, et répondez aux questions suivantes :
 
-- [ ] Verify that the workflow uses `GITHUB_TOKEN` rather than a PAT stored in a secret wherever possible.
-- [ ] If a PAT is present, confirm that its scopes are limited to the minimum required and do not include write access to other repositories.
-- [ ] Verify that the workflow declares a `permissions:` block limiting token scope to only what is needed.
+- [ ] Vérifiez que le workflow utilise `GITHUB_TOKEN` plutôt qu’un PAT stocké dans un secret partout où c’est possible.
+- [ ] Si un PAT est présent, confirmez que ses scopes sont limités au strict nécessaire et n’incluent pas d’accès en écriture à d’autres dépôts.
+- [ ] Vérifiez que le workflow déclare un bloc `permissions:` limitant le scope du token à ce qui est nécessaire.
 
-Use the checklist below to record your findings in a comment or your workflow's issue log:
+Utilisez la checklist ci-dessous pour consigner vos observations dans un commentaire ou dans le journal d’issues de votre workflow :
 
 ```markdown
 ## Credential audit — <workflow name>
@@ -146,46 +154,46 @@ Use the checklist below to record your findings in a comment or your workflow's 
 
 ---
 
-## Comparison at a glance
+## Comparaison en un coup d’œil
 
-> :thinking: **Predict:** Before reading the table below, list from memory which properties of a PAT make it riskier than `GITHUB_TOKEN` in an unattended workflow. Then check your list against the table.
+> :thinking: **Prédiction :** Avant de lire le tableau ci-dessous, listez de mémoire les propriétés d’un PAT qui le rendent plus risqué que `GITHUB_TOKEN` dans un workflow sans supervision. Comparez ensuite votre liste au tableau.
 
-| Property | `GITHUB_TOKEN` | PAT |
-|---|---|---|
-| Created by | GitHub, automatically | You, manually |
-| Expiry | End of the workflow run | Configurable — can be indefinite |
-| Scope | Limited to the current repository | Any repository or organisation you granted |
-| Rotation | Automatic (new token each run) | Manual or scripted |
-| Revocation if leaked | Automatic at run end | Manual action required |
-| Risk window | Seconds to minutes | Days to months (or indefinitely) |
+| Propriété                  | `GITHUB_TOKEN`                                | PAT                                                  |
+| -------------------------- | --------------------------------------------- | ---------------------------------------------------- |
+| Créé par                   | GitHub, automatiquement                       | Vous, manuellement                                   |
+| Expiration                 | Fin de l’exécution du workflow                | Configurable, potentiellement indéfinie              |
+| Scope                      | Limité au dépôt courant                       | Tout dépôt ou organisation que vous avez autorisé    |
+| Rotation                   | Automatique, nouveau token a chaque execution | Manuelle ou scriptable                               |
+| Révocation en cas de fuite | Automatique à la fin de l’exécution           | Action manuelle requise                              |
+| Fenêtre de risque          | De quelques secondes à quelques minutes       | De plusieurs jours à plusieurs mois, voire indéfinie |
 
 ---
 
-## What you can do as a workflow author
+## Ce que vous pouvez faire en tant qu’auteur de workflow
 
-| Practice | Why it helps |
-|---|---|
-| Use `GITHUB_TOKEN` whenever the task stays within the current repository | Eliminates long-lived credential entirely |
-| Declare a minimal `permissions:` block | Caps what any token can authorize |
-| Add `network.allowed` | Blocks outbound exfiltration of any credential |
-| Inject PATs at the step level with `env:` | Keeps the credential out of the AI prompt step |
-| Use fine-grained PATs with short expiry when a PAT is necessary | Limits blast radius and persistence |
+| Pratique                                                                       | Pourquoi c’est utile                                         |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| Utiliser `GITHUB_TOKEN` tant que la tâche reste dans le dépôt courant          | Élimine complètement les identifiants longue durée           |
+| Déclarer un bloc `permissions:` minimal                                        | Limite ce que n’importe quel token peut autoriser            |
+| Ajouter `network.allowed`                                                      | Bloque l’exfiltration sortante de n’importe quel identifiant |
+| Injecter les PAT avec `env:` au niveau de l’étape                              | Garde l’identifiant hors de l’étape du prompt d’IA           |
+| Utiliser des PAT fine-grained à courte expiration lorsqu’un PAT est nécessaire | Limite le blast radius et la persistance                     |
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can explain in one sentence why a PAT is riskier than `GITHUB_TOKEN` in an unattended workflow
-- [ ] You can describe the risk window difference between the two credential types
-- [ ] You know how to keep `permissions:` minimal and can explain why it matters
-- [ ] You know how to add `network.allowed` to block credential exfiltration
-- [ ] You can list two practices that reduce risk when a PAT is unavoidable
-- [ ] You identified whether your workflow uses a PAT or the ephemeral `GITHUB_TOKEN` and noted the difference in your log or issue
+- [ ] Vous pouvez expliquer en une phrase pourquoi un PAT est plus risqué que `GITHUB_TOKEN` dans un workflow sans supervision
+- [ ] Vous pouvez décrire la différence de fenêtre de risque entre les deux types d’identifiants
+- [ ] Vous savez garder `permissions:` minimal et expliquer pourquoi c'est important
+- [ ] Vous savez ajouter `network.allowed` pour bloquer l’exfiltration d’identifiants
+- [ ] Vous pouvez citer deux pratiques qui reduisent le risque lorsqu'un PAT est inevitable
+- [ ] Vous avez identifié si votre workflow utilise un PAT ou le `GITHUB_TOKEN` éphémère, et noté la différence dans votre log ou votre issue
 
 ---
 
 <!-- journey: all -->
-Return to [Connect a Live Data Source to Your Workflow](16-connect-data-source.md).
+
+Retour à [Connecter une source de données en direct à votre workflow](16-connect-data-source.md).
+
 <!-- /journey -->
-
-

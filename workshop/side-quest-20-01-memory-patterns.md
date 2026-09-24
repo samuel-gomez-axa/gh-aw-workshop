@@ -1,125 +1,126 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Choosing Between [Cache Memory](https://github.github.com/gh-aw/reference/cache-memory/) and [Repo Memory](https://github.github.com/gh-aw/reference/repo-memory/)
 
-> _Optional: work through this reference if you want to understand both `cache-memory` and `repo-memory` in depth before or after completing [Step 20](20-persistent-memory.md), then return to the main path._
+# Quête annexe : choisir entre [Cache Memory](https://github.github.com/gh-aw/reference/cache-memory/) et [Repo Memory](https://github.github.com/gh-aw/reference/repo-memory/)
 
-## :clipboard: Before You Start
+> _Facultatif : suivez cette référence si vous voulez comprendre en profondeur `cache-memory` et `repo-memory` avant ou après avoir terminé [l’étape 20](20-persistent-memory.md), puis revenez au parcours principal._
 
-- You have a working agentic workflow from the build steps ([Step 7](07-your-first-workflow.md) or equivalent).
-- You have completed or are about to start [Make Your Workflow Remember Across Runs](20-persistent-memory.md).
-- You understand [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) from [Write Your First Agentic Workflow](07-your-first-workflow.md).
+## :clipboard: Avant de commencer
 
-`gh-aw` gives you two primitives for persisting state between workflow runs. They behave differently, store data in different places, and suit different use cases. This side quest walks through both in detail so you can pick the right one for your workflow — and know how to switch if your needs change.
+- Vous avez un agentic workflow fonctionnel provenant des étapes de construction, [l’étape 7](07-your-first-workflow.md) ou équivalent.
+- Vous avez terminé, ou allez commencer, [Faire en sorte que votre workflow se souvienne d’une exécution à l’autre](20-persistent-memory.md).
+- Vous comprenez le [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) de [Écrivez votre premier agentic workflow](07-your-first-workflow.md).
 
----
-
-## Why Memory Matters
-
-Every workflow run starts with a blank slate. That is fine for a daily summary, but it causes problems the moment you want to:
-
-- **Deduplicate alerts** — alert only on _new_ open issues, not the same ones every morning.
-- **Compare against a baseline** — "did the number of failing tests increase since yesterday?"
-- **Scan incrementally** — skip pull requests you have already reviewed.
-
-Both primitives solve this without you managing a database:
-
-| Tool | Where state is stored | Lifetime | Best for |
-|------|----------------------|----------|----------|
-| [`cache-memory`](https://github.github.com/gh-aw/reference/cache-memory/) | [GitHub Actions cache](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows) | Until cache eviction (typically 7 days of inactivity) | Short-lived deduplication; data that is fine to lose |
-| [`repo-memory`](https://github.github.com/gh-aw/reference/repo-memory/) | A file committed to your repository | As long as the file exists | Durable baselines; data that must survive cache eviction |
+`gh-aw` vous donne deux primitives pour persister l’état entre les exécutions de workflow. Elles se comportent différemment, stockent les données à des endroits différents et conviennent à des cas d’usage différents. Cette quête annexe détaille les deux pour vous aider à choisir la bonne pour votre workflow, et à savoir changer si vos besoins évoluent.
 
 ---
 
-## Choosing Between the Two
+## Pourquoi la mémoire compte
 
-Ask yourself: _what happens if the memory is lost?_
+Chaque exécution de workflow démarre avec une page blanche. C’est très bien pour un résumé quotidien, mais cela pose problème dès que vous voulez :
 
-> :thinking: **Predict:** For each scenario below, decide which primitive you'd use before reading the "Recommended" column. Cover the right column, make your choices, then reveal it to check.
+- **Dédoubler des alertes** : alerter seulement sur les _nouvelles_ issues ouvertes, pas sur les mêmes chaque matin.
+- **Comparer à une baseline** : le nombre de tests en échec a-t-il augmenté depuis hier ?
+- **Scanner de manière incrémentale** : ignorer les pull requests déjà examinées.
 
-| Scenario | Recommended primitive |
-|----------|-----------------------|
-| A few duplicate alerts on cache expiry is tolerable | `cache-memory` |
-| Losing state would flood your team with false positives | `repo-memory` |
-| You need a baseline that survives a repository clone or transfer | `repo-memory` |
-| You want the simplest setup with no extra permissions | `cache-memory` |
-| You need to inspect or edit the stored state manually | `repo-memory` |
-| You expect the workflow to run infrequently (less than once a week) | `repo-memory` |
+Les deux primitives résolvent cela sans que vous ayez à gérer une base de données :
 
-For most deduplication use cases, `cache-memory` is the right starting point. Switch to `repo-memory` only when the cost of losing state is too high — for example, when loss would flood your team with false-positive alerts or require manual cleanup before the workflow runs correctly again.
+| Tool                                                                      | Où l’état est stocké                                                                                                  | Durée de vie                                                | Idéal pour                                                              |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------- |
+| [`cache-memory`](https://github.github.com/gh-aw/reference/cache-memory/) | [GitHub Actions cache](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows) | Jusqu’à éviction du cache, typiquement 7 jours d’inactivité | Dédoublonnage de courte durée ; données qu’il est acceptable de perdre  |
+| [`repo-memory`](https://github.github.com/gh-aw/reference/repo-memory/)   | Un fichier committé dans votre dépôt                                                                                  | Tant que le fichier existe                                  | Baselines durables ; données qui doivent survivre à l’éviction du cache |
 
 ---
 
-## `cache-memory` in Depth
+## Choisir entre les deux
 
-`cache-memory` backs a memory slot with the [GitHub Actions cache](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows). The agent reads and writes a small JSON object keyed by the name you provide.
+Posez-vous la question : _que se passe-t-il si cette mémoire est perdue ?_
 
-### `cache-memory` frontmatter
+> :thinking: **Prédiction :** Pour chaque scénario ci-dessous, décidez quelle primitive vous utiliseriez avant de lire la colonne « Recommended ». Cachez la colonne de droite, faites vos choix, puis révélez-la pour vérifier.
+
+| Scénario                                                                                 | Primitive recommandée |
+| ---------------------------------------------------------------------------------------- | --------------------- |
+| Quelques alertes en double lors de l’expiration du cache sont tolérables                 | `cache-memory`        |
+| Perdre l’état inonderait votre équipe de faux positifs                                   | `repo-memory`         |
+| Vous avez besoin d’une baseline qui survive à un clonage ou à un transfert du dépôt      | `repo-memory`         |
+| Vous voulez la configuration la plus simple, sans permissions supplémentaires            | `cache-memory`        |
+| Vous devez inspecter ou modifier manuellement l’état stocké                              | `repo-memory`         |
+| Vous vous attendez à ce que le workflow s’exécute rarement, moins d’une fois par semaine | `repo-memory`         |
+
+Pour la plupart des cas de dédoublonnage, `cache-memory` est le bon point de départ. Passez à `repo-memory` seulement lorsque le coût d’une perte d’état est trop élevé, par exemple si cette perte inondera votre équipe de faux positifs ou exigera un nettoyage manuel avant que le workflow ne refonctionne correctement.
+
+---
+
+## `cache-memory` en profondeur
+
+`cache-memory` adosse un emplacement mémoire au [GitHub Actions cache](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows). L’agent lit et écrit un petit objet JSON indexé par le nom que vous fournissez.
+
+### Frontmatter `cache-memory`
 
 ```markdown
 ---
 name: Daily Status Report
 on:
-  schedule: daily
-  workflow_dispatch: {}
+    schedule: daily
+    workflow_dispatch: {}
 permissions:
-  contents: read
-  issues: write
+    contents: read
+    issues: write
 tools:
-  cache-memory:
-    key: daily-status-seen-issues
-    ttl: 7d
+    cache-memory:
+        key: daily-status-seen-issues
+        ttl: 7d
 ---
 ```
 
-### `cache-memory` field reference
+### Référence des champs `cache-memory`
 
-| Field | Purpose |
-|-------|---------|
-| `tools:` | Parent key that enables tool integrations for this workflow. |
-| `cache-memory:` | Tells `gh-aw` to back this memory slot with the GitHub Actions cache. |
-| `key:` | A unique name for this memory slot. Prefix it with your workflow name to avoid collisions if you have multiple workflows in the same repository. |
-| `ttl: 7d` | How long to keep cached data without a refresh. After 7 days of no runs the cache expires and the agent starts fresh. Common values: `1d`, `7d`, `30d`. |
+| Champ           | Rôle                                                                                                                                                                              |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tools:`        | Clé parente qui active les intégrations d’outils pour ce workflow.                                                                                                                |
+| `cache-memory:` | Indique à `gh-aw` d’adosser cet emplacement mémoire au cache GitHub Actions.                                                                                                      |
+| `key:`          | Nom unique de cet emplacement mémoire. Préfixez-le avec le nom de votre workflow pour éviter les collisions si vous avez plusieurs workflows dans le même dépôt.                  |
+| `ttl: 7d`       | Durée de conservation des données en cache sans rafraîchissement. Après 7 jours sans exécution, le cache expire et l’agent repart de zéro. Valeurs courantes : `1d`, `7d`, `30d`. |
 
-### `cache-memory` task brief example
+### Exemple de task brief `cache-memory`
 
-See the task brief example in [Make Your Workflow Remember Across Runs](20-persistent-memory.md) for a complete illustration of this pattern.
+Consultez l’exemple de task brief dans [Faire en sorte que votre workflow se souvienne d’une exécution à l’autre](20-persistent-memory.md) pour une illustration complète de ce modèle.
 
 ---
 
-## `repo-memory` in Depth
+## `repo-memory` en profondeur
 
-`repo-memory` backs a memory slot with a JSON file committed directly to your repository. The agent reads the file at the start of each run and commits an updated version at the end.
+`repo-memory` adosse un emplacement mémoire à un fichier JSON committé directement dans votre dépôt. L’agent lit le fichier au début de chaque exécution et en commit une version mise à jour à la fin.
 
-### `repo-memory` frontmatter
+### Frontmatter `repo-memory`
 
 ```markdown
 ---
 name: Daily Status Report
 on:
-  schedule: daily
-  workflow_dispatch: {}
+    schedule: daily
+    workflow_dispatch: {}
 permissions:
-  contents: write
-  issues: write
+    contents: write
+    issues: write
 tools:
-  repo-memory: true
+    repo-memory: true
 ---
 ```
 
-### `repo-memory` field reference
+### Référence des champs `repo-memory`
 
-| Field | Purpose |
-|-------|---------|
-| `tools:` | Parent key that enables tool integrations for this workflow. |
-| `repo-memory:` | Enables repository-backed memory for this workflow (`true` to enable). |
+| Champ          | Rôle                                                                             |
+| -------------- | -------------------------------------------------------------------------------- |
+| `tools:`       | Clé parente qui active les intégrations d’outils pour ce workflow.               |
+| `repo-memory:` | Active la mémoire adossée au dépôt pour ce workflow, avec `true` pour l’activer. |
 
 > [!IMPORTANT]
-> `repo-memory` requires `contents: write` in your `permissions` block so the agent can commit the updated file. Add it alongside your existing permissions. This is a broader permission than `cache-memory` requires — keep the stored data small and review commits regularly.
+> `repo-memory` exige `contents: write` dans votre bloc `permissions:` afin que l’agent puisse committer le fichier mis à jour. Ajoutez-le en plus de vos permissions existantes. Cette permission est plus large que ce qu’exige `cache-memory` ; gardez les données stockées petites et examinez régulièrement les commits.
 
-Keep the stored data small — a list of IDs or a compact summary object — to avoid cluttering your commit history with large file changes.
+Gardez les données stockées petites, par exemple une liste d’ID ou un objet résumé compact, afin d’éviter d’encombrer l’historique avec de gros changements de fichiers.
 
-### `repo-memory` task brief example
+### Exemple de task brief `repo-memory`
 
 ```markdown
 You compare today's open issue count against a stored baseline.
@@ -139,15 +140,15 @@ previous run. On each run:
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can explain the difference between `cache-memory` and `repo-memory`
-- [ ] You know when to choose each primitive based on your use case
-- [ ] You understand what `contents: write` is needed for and when it is required
-- [ ] You can write a task brief that explicitly reads and writes a named memory slot
+- [ ] Vous pouvez expliquer la différence entre `cache-memory` et `repo-memory`
+- [ ] Vous savez quand choisir chaque primitive selon votre cas d'usage
+- [ ] Vous comprenez a quoi sert `contents: write` et dans quels cas il est requis
+- [ ] Vous pouvez ecrire un task brief qui lit et ecrit explicitement un emplacement memoire nomme
 
 ---
 
 <!-- journey: all -->
-Return to [Make Your Workflow Remember Across Runs](20-persistent-memory.md).
+
+Retour à [Faire en sorte que votre workflow se souvienne d’une exécution à l’autre](20-persistent-memory.md).
+
 <!-- /journey -->
-
-

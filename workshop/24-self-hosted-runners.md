@@ -1,40 +1,39 @@
 <!-- page-journey: all -->
 <!-- page-adventure: advanced -->
-# Run Your Agentic Workflow on a Self-Hosted Runner
 
-> _Enterprise teams often need workflows to run on their own infrastructure — this step shows you exactly how._
+# Executez votre workflow agentique sur un self-hosted runner
 
-## :dart: What You'll Do
+> _Les équipes enterprise ont souvent besoin d'exécuter leurs workflows sur leur propre infrastructure ; cette étape montre exactement comment faire._
 
-Update your workflow's [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) to target a self-hosted runner using a runner label.
-By the end of this step, your agentic workflow queues on a runner your organisation manages
-rather than a GitHub-hosted machine.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Mettez à jour le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) de votre workflow pour cibler un self-hosted runner à l'aide d'un label de runner.
+À la fin de cette étape, votre workflow agentique sera mis en file sur un runner géré par votre organisation plutôt que sur une machine GitHub-hosted.
 
-- Your agentic workflow runs successfully (see [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)).
+## :clipboard: Avant de commencer
+
+- Votre workflow agentique s'exécute correctement (voir [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)).
 - A [self-hosted runner](https://github.github.com/gh-aw/reference/self-hosted-runners/) is registered and **online** for your repository or organisation.
   If you need to set one up first, see [Side Quest: Enterprise Setup Considerations](side-quest-enterprise-setup.md).
-- You know the label assigned to your runner (for example, `self-hosted`, `ubuntu-self-hosted`, or a custom label your admin configured).
+- Vous connaissez le label assigné à votre runner, par exemple `self-hosted`, `ubuntu-self-hosted` ou un label personnalisé configuré par votre administrateur.
 
 > [!NOTE]
-> Not on an enterprise plan? GitHub-hosted runners work for the main workshop path. Come back to this step if you later move to a GHES or GHEC environment with self-hosted runners.
+> Vous n'êtes pas sur un plan enterprise ? Les runners GitHub-hosted suffisent pour le parcours principal de l'atelier. Revenez à cette étape si vous passez plus tard dans un environnement GHES ou GHEC avec des self-hosted runners.
 
-## Understand runner targeting in frontmatter
+## Comprendre le ciblage des runners dans le frontmatter
 
-An agentic workflow's frontmatter is compatible with standard GitHub Actions YAML.
-The `runs-on:` field tells Actions which runner to use — it works identically for
-agentic workflows and classic jobs.
+Le frontmatter d'un workflow agentique est compatible avec le YAML standard de GitHub Actions.
+Le champ `runs-on:` indique à Actions quel runner utiliser ; il fonctionne de la même manière pour les workflows agentiques et les jobs classiques.
 
-The diagram below shows how Actions reads your labels and dispatches the job to the first idle runner that satisfies all of them.
+Le schéma ci-dessous montre comment Actions lit vos labels et envoie le job au premier runner inactif qui les satisfait tous.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/24-runner-label-dispatch-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/24-runner-label-dispatch-light.svg">
-  <img alt="Runner label dispatch: how runs-on labels in frontmatter route a workflow job to a matching self-hosted runner" src="images/24-runner-label-dispatch-light.svg">
+  <img alt="Routage par labels de runner : comment les labels runs-on dans le frontmatter envoient un job de workflow vers un self-hosted runner correspondant" src="images/24-runner-label-dispatch-light.svg">
 </picture>
 
-Your current workflow likely targets a GitHub-hosted runner. Look for the `runs-on:` field in your frontmatter:
+Votre workflow actuel cible probablement un runner GitHub-hosted. Recherchez le champ `runs-on:` dans votre frontmatter :
 
 ```markdown .github/workflows/daily-status.md
 ---
@@ -42,28 +41,28 @@ runs-on: ubuntu-latest
 ---
 ```
 
-The only change needed is the value of `runs-on:`.
+La seule modification nécessaire est la valeur de `runs-on:`.
 
-## :pencil2: Exercise: Update your frontmatter
+## :pencil2: Exercice : mettez a jour votre frontmatter
 
-Update your workflow's `runs-on:` field to point at your self-hosted runner.
+Mettez à jour le champ `runs-on:` de votre workflow pour qu'il pointe vers votre self-hosted runner.
 
-### Open your workflow file
+### Ouvrir votre fichier de workflow
 
-Open `.github/workflows/daily-status.md` (or whichever workflow you want to move).
+Ouvrez `.github/workflows/daily-status.md`, ou le workflow que vous souhaitez déplacer.
 
-Open the file in your editor of choice:
+Ouvrez ce fichier dans l'editeur de votre choix :
 
 ```bash
 code .github/workflows/daily-status.md
 ```
 
-### Change the `runs-on:` value
+### Modifier la valeur `runs-on:`
 
-Replace `ubuntu-latest` with your runner's label.
-Use a list if your runner has multiple required labels:
+Remplacez `ubuntu-latest` par le label de votre runner.
+Utilisez une liste si votre runner exige plusieurs labels :
 
-Single label:
+Label unique :
 
 ```markdown .github/workflows/daily-status.md
 ---
@@ -71,7 +70,7 @@ runs-on: self-hosted
 ---
 ```
 
-Multiple labels (all must match):
+Plusieurs labels, qui doivent tous correspondre :
 
 ```markdown .github/workflows/daily-status.md
 ---
@@ -79,24 +78,23 @@ runs-on: [self-hosted, linux, x64]
 ---
 ```
 
-The labels must exactly match what your admin registered on the runner.
-Ask your admin if you are unsure — they can find the labels in the runner's
-registration settings (Settings → Actions → Runners).
+Les labels doivent correspondre exactement à ceux enregistrés par votre administrateur sur le runner.
+En cas de doute, demandez à votre administrateur ; il peut retrouver ces labels dans les paramètres d'enregistrement du runner, dans Settings → Actions → Runners.
 
 > [!TIP]
-> Labels act as filters. A workflow job is dispatched to the first idle runner that satisfies all labels in the list. Adding `linux` alongside `self-hosted` ensures the job only lands on Linux runners when your fleet is mixed.
+> Les labels servent de filtres. Un job de workflow est envoyé au premier runner inactif qui satisfait tous les labels de la liste. Ajouter `linux` à côté de `self-hosted` garantit que le job n'atterrit que sur des runners Linux lorsque votre flotte est hétérogène.
 
-Running in an enterprise environment? See [Side Quest: Self-Hosted Runner Infrastructure Deep Dive](side-quest-24-01-runner-infrastructure.md) for guidance on [ephemeral](https://github.github.com/gh-aw/reference/ephemerals/) and JIT runners, proxy configuration, and [network](https://github.github.com/gh-aw/reference/network/) isolation for air-gapped environments.
+Vous travaillez dans un environnement enterprise ? Consultez [Side Quest: Self-Hosted Runner Infrastructure Deep Dive](side-quest-24-01-runner-infrastructure.md) pour des conseils sur les runners [ephemeral](https://github.github.com/gh-aw/reference/ephemerals/) et JIT, la configuration de proxy et l'isolation [network](https://github.github.com/gh-aw/reference/network/) dans des environnements air-gapped.
 
-## :pencil2: Exercise: Compile and commit
+## :pencil2: Exercice : compiler et committer
 
-Recompile after editing the frontmatter, then commit both files:
+Recompilez après avoir modifié le frontmatter, puis committez les deux fichiers :
 
 ```bash
 gh aw compile daily-status
 ```
 
-Commit both the `.md` source and the regenerated `.lock.yml`:
+Committez à la fois la source `.md` et le `.lock.yml` régénéré :
 
 ```bash
 git add .
@@ -105,33 +103,35 @@ git push
 ```
 
 > [!TIP]
-> You can also use the `/agentic-workflows` Copilot skill to edit the workflow — it compiles and commits both files together, so you never end up with a stale [lock file](https://github.github.com/gh-aw/reference/compilation-process/).
+> Vous pouvez aussi utiliser la skill Copilot `/agentic-workflows` pour modifier le workflow ; elle compile et committe les deux fichiers ensemble, ce qui vous évite de vous retrouver avec un [lock file](https://github.github.com/gh-aw/reference/compilation-process/) obsolète.
 
-## :pencil2: Exercise: Verify the run lands on your runner
+## :pencil2: Exercice : verifier que l'execution arrive bien sur votre runner
 
-1. Go to the **Actions** tab in your repository.
-2. Click Run workflow.
-3. Open the run and look at the job summary.
-4. Confirm the Runner field shows your self-hosted runner name (not `GitHub Actions`).
+1. Ouvrez l'onglet **Actions** de votre depot.
+2. Cliquez sur **Run workflow**.
+3. Ouvrez l'exécution et regardez le résumé du job.
+4. Confirmez que le champ Runner affiche le nom de votre self-hosted runner, et non `GitHub Actions`.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/24-self-hosted-runner-job-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/24-self-hosted-runner-job-light.svg">
-  <img alt="Runner name shown in the Actions job summary" src="images/24-self-hosted-runner-job-light.svg">
+  <img alt="Nom du runner affiché dans le résumé du job Actions" src="images/24-self-hosted-runner-job-light.svg">
 </picture>
 
 ## :white_check_mark: Checkpoint
 
-- [ ] Your workflow's `runs-on:` value matches the label of your self-hosted runner
-- [ ] `gh aw compile` (if used) completed without errors
-- [ ] `daily-status.md` and its `.lock.yml` file are committed and pushed
-- [ ] A manual workflow run started without an error
-- [ ] The Actions job summary Runner field shows your self-hosted runner's name, not `GitHub Actions`
-- [ ] The workflow run log shows your runner's hostname in the job header
-- [ ] You can explain why a list of labels (`[self-hosted, linux, x64]`) narrows runner selection
-- [ ] You know where to find proxy and ephemeral runner guidance if your environment needs it
-- [ ] No workflow steps failed due to runner availability or label mismatch
+- [ ] La valeur `runs-on:` de votre workflow correspond au label de votre self-hosted runner
+- [ ] `gh aw compile`, si vous l'avez utilisé, s'est terminé sans erreur
+- [ ] `daily-status.md` et son fichier `.lock.yml` sont committés et poussés
+- [ ] Une exécution manuelle du workflow a démarré sans erreur
+- [ ] Le champ Runner du résumé du job Actions affiche le nom de votre self-hosted runner, et non `GitHub Actions`
+- [ ] Le journal d'exécution du workflow affiche le nom d'hôte de votre runner dans l'en-tête du job
+- [ ] Vous pouvez expliquer pourquoi une liste de labels comme `[self-hosted, linux, x64]` restreint la sélection du runner
+- [ ] Vous savez où trouver des indications sur les runners proxy et ephemeral si votre environnement en a besoin
+- [ ] Aucune étape du workflow n'a échoué à cause d'une indisponibilité du runner ou d'un label non concordant
 
 <!-- journey: all -->
-**Next:** [Audit and Monitor Your Agentic Workflows](25-audit-and-observability.md)
+
+**Suite :** [Auditez et surveillez vos workflows agentiques](25-audit-and-observability.md)
+
 <!-- /journey -->

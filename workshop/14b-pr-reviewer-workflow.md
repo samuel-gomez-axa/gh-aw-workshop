@@ -1,96 +1,100 @@
 <!-- page-journey: all -->
 <!-- page-adventure: advanced -->
-# Build a PR Reviewer with an Agent and Skill
 
-_Turn pull request review into a small team: an orchestrator, a focused reviewer, and reusable review guidance._
+# Creez un relecteur de PR avec un agent et une skill
 
-## :dart: What You'll Do
+_Transformez la revue de pull request en une petite équipe : un orchestrateur, un relecteur ciblé et des consignes de revue réutilisables._
 
-You'll use your AI agent and the `/agentic-workflows` skill to create an event-driven PR reviewer. The workflow will define:
+## :dart: Ce que vous allez faire
 
-- an inline `pr-reviewer` agent that inspects one pull request
-- an inline `pr-review-standards` skill that keeps findings evidence-based
-- a parent brief that turns the reviewer's findings into one safe pull request review
+Vous allez utiliser votre agent IA et la skill `/agentic-workflows` pour créer un relecteur de PR piloté par événement. Le workflow définira :
 
-By the end, you'll have a reviewer that runs when a draft becomes ready, can be rerun with `/review`, and keeps its review method separate from its orchestration.
+- un agent inline `pr-reviewer` qui inspecte une pull request
+- une skill inline `pr-review-standards` qui maintient des constats fondés sur des preuves
+- un brief parent qui transforme les constats du relecteur en une unique revue de pull request sûre
 
-## :clipboard: Before You Start
+À la fin, vous aurez un relecteur qui s'exécute lorsqu'un brouillon devient prêt, qui peut être relancé avec `/review` et qui sépare sa méthode de revue de son orchestration.
 
-- You have a working workflow from [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
-- You have pushed the files created by `gh aw init`, including `.github/skills/agentic-workflows/`.
-- The `gh aw` command works in your Codespace terminal.
+## :clipboard: Avant de commencer
 
-## Understand the Agent and Skill Split
+- Vous disposez d'un workflow fonctionnel issu de [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
+- Vous avez poussé les fichiers créés par `gh aw init`, y compris `.github/skills/agentic-workflows/`.
+- La commande `gh aw` fonctionne dans le terminal de votre Codespace.
 
-The parent workflow should coordinate the run, not contain every review rule. It delegates the diff analysis to a focused [inline agent](https://github.github.com/gh-aw/reference/inline-sub-agents/). That agent applies an inline skill containing the review method.
+## Comprendre la séparation entre agent et skill
 
-| Part | Responsibility |
-|---|---|
-| Parent brief | Identify the pull request, call the reviewer, and submit the result |
-| `pr-reviewer` agent | Read the diff and return prioritized, evidence-backed findings |
-| `pr-review-standards` skill | Define what counts as a useful finding and how to format it |
+Le workflow parent doit coordonner l'exécution, pas contenir toutes les règles de revue. Il délègue l'analyse du diff à un [inline agent](https://github.github.com/gh-aw/reference/inline-sub-agents/) ciblé. Cet agent applique une skill inline qui contient la méthode de revue.
 
-The diagram below shows how these three layers connect at runtime, with the safe output performing the only repository write.
+| Element                     | Responsabilité                                                            |
+| --------------------------- | ------------------------------------------------------------------------- |
+| Brief parent                | Identifier la pull request, appeler le relecteur et soumettre le résultat |
+| Agent `pr-reviewer`         | Lire le diff et renvoyer des constats priorisés et étayés                 |
+| Skill `pr-review-standards` | Définir ce qui constitue un constat utile et comment le formater          |
+
+Le schéma ci-dessous montre comment ces trois couches se connectent à l'exécution, avec la safe output qui effectue la seule écriture dans le dépôt.
 
 <picture>
   <source srcset="images/14b-pr-reviewer-layers-dark.svg" media="(prefers-color-scheme: dark)">
-  <img src="images/14b-pr-reviewer-layers-light.svg" alt="PR Reviewer three-layer architecture: Parent Brief orchestrates, pr-reviewer Agent investigates the diff, pr-review-standards Skill defines quality, and a Safe Output submits the review" width="1200" height="560">
+    <img src="images/14b-pr-reviewer-layers-light.svg" alt="Architecture en trois couches du relecteur de PR : le brief parent orchestre, l'agent pr-reviewer examine le diff, la skill pr-review-standards définit la qualité, et une Safe Output soumet la revue" width="1200" height="560">
 </picture>
 
-The agent can change how it investigates a pull request without changing the stable standards in the skill. You can also improve the skill without making the parent brief longer. The same split makes it straightforward to extend the reviewer to apply labels based on which files changed (see [Pattern: Auto-Label PRs by Content](side-quest-13-01-pr-labeler-pattern.md)) or to post a structured summary that doubles as a release note draft (see [Pattern: Generate a PR Summary Comment](side-quest-13-02-pr-summary-pattern.md)).
+L'agent peut changer sa façon d'étudier une pull request sans modifier les standards stables de la skill. Vous pouvez aussi améliorer la skill sans rallonger le brief parent. Cette même séparation permet également d'étendre facilement le relecteur pour appliquer des labels selon les fichiers modifiés (voir [Pattern: Auto-Label PRs by Content](side-quest-13-01-pr-labeler-pattern.md)) ou publier un résumé structuré qui sert aussi de brouillon de note de version (voir [Pattern: Generate a PR Summary Comment](side-quest-13-02-pr-summary-pattern.md)).
 
-> :thinking: **Predict:** Which instruction belongs in the skill: “review pull request 42” or “cite a changed file and line for every finding”? The first is run-specific orchestration; the second is reusable review guidance.
+> :thinking: **Predict:** Quelle instruction a sa place dans la skill : “review pull request 42” ou “cite a changed file and line for every finding” ? La première relève de l'orchestration propre à l'exécution ; la seconde est une consigne de revue réutilisable.
 
-## Ask Your Agent to Create the Workflow
+## Demandez à votre agent de créer le workflow
 
-Open your AI agent in the practice repository and pass this prompt:
+Ouvrez votre agent IA dans le dépôt d'exercice et donnez-lui ce prompt :
 
 ```prompt
 /agentic-workflows Create a PR reviewer workflow at .github/workflows/pr-reviewer.md with an inline pr-reviewer agent and pr-review-standards skill, triggering on pull_request ready_for_review and the /review slash command.
 ```
 
-Review the agent's diff before accepting it. The source should contain one parent brief plus both inline blocks near the bottom of the file.
+Examinez le diff de l'agent avant de l'accepter. La source doit contenir un brief parent ainsi que les deux blocs inline vers le bas du fichier.
 
 > [!TIP]
-> For workflows beyond this workshop, the [gh-aw wizard](https://githubnext.github.io/gh-aw-wizard/) can generate a similar prompt for you from a short questionnaire.
+> Pour les workflows au-delà de cet atelier, le [gh-aw wizard](https://githubnext.github.io/gh-aw-wizard/) peut vous générer un prompt similaire à partir d'un court questionnaire.
 
-## Inspect the Generated Structure
+## Inspectez la structure générée
 
-The workflow frontmatter should follow this shape:
+Le frontmatter du workflow doit suivre cette forme :
 
 ```markdown .github/workflows/pr-reviewer.md
 ---
 on:
-  pull_request:
-    types: [ready_for_review]
-  slash_command:
-    strategy: centralized
-    name: review
-    events: [pull_request_comment, pull_request_review_comment]
+    pull_request:
+        types: [ready_for_review]
+    slash_command:
+        strategy: centralized
+        name: review
+        events: [pull_request_comment, pull_request_review_comment]
 permissions:
-  contents: read
-  pull-requests: read
-  copilot-requests: write
+    contents: read
+    pull-requests: read
+    copilot-requests: write
 tools:
-  github:
-    mode: gh-proxy
-    toolsets: [pull_requests, repos]
+    github:
+        mode: gh-proxy
+        toolsets: [pull_requests, repos]
 safe-outputs:
-  submit-pull-request-review:
-    max: 1
-    allowed-events: [COMMENT, REQUEST_CHANGES]
+    submit-pull-request-review:
+        max: 1
+        allowed-events: [COMMENT, REQUEST_CHANGES]
 ---
 ```
 
-Notice that the agent job has no repository or pull request write permission. `copilot-requests: write` only authenticates Copilot. The `submit-pull-request-review` [safe output](https://github.github.com/gh-aw/reference/safe-outputs/) performs the controlled repository write after the agent finishes. `APPROVE` is intentionally absent because the default GitHub Actions token cannot approve pull requests.
+Remarquez que le job de l'agent n'a aucune permission d'écriture sur le dépôt ou la pull request. `copilot-requests: write` sert seulement à authentifier Copilot. La [safe output](https://github.github.com/gh-aw/reference/safe-outputs/) `submit-pull-request-review` effectue l'écriture contrôlée dans le dépôt une fois l'agent terminé. `APPROVE` est volontairement absent, car le token GitHub Actions par défaut ne peut pas approuver les pull requests.
 
-Near the bottom, look for the two reusable blocks:
+Vers le bas du fichier, cherchez les deux blocs réutilisables :
 
 ```markdown .github/workflows/pr-reviewer.md
 ## agent: `pr-reviewer`
+
 ---
+
 description: Reviews one pull request for actionable problems
 model: small
+
 ---
 
 Inspect the pull request diff. Discover the relevant skill under the available
@@ -98,20 +102,21 @@ skills directories and apply its review guidance. Return prioritized findings
 with evidence for the parent agent.
 
 ## skill: `pr-review-standards`
+
 ---
-description: Produces evidence-based pull request review findings
----
+
+## description: Produces evidence-based pull request review findings
 
 Report only actionable problems introduced by the changed lines. For every
 finding, cite the changed file and line, explain the impact, and suggest a
 specific next step. Omit style-only and speculative feedback.
 ```
 
-The exact wording may differ. Confirm that the responsibilities stay separated: the parent coordinates, the agent investigates, and the skill defines review quality. If your team works from a shared checklist rather than open-ended criteria, [Pattern: PR Review Checklist](side-quest-13-03-pr-checklist-pattern.md) shows how to restructure the skill around that format.
+La formulation exacte peut varier. Vérifiez que les responsabilités restent bien séparées : le parent coordonne, l'agent enquête et la skill définit la qualité de la revue. Si votre équipe travaille à partir d'une checklist partagée plutôt que de critères ouverts, [Pattern: PR Review Checklist](side-quest-13-03-pr-checklist-pattern.md) montre comment restructurer la skill autour de ce format.
 
-## Compile and Push
+## Compiler et pousser
 
-In your Codespace terminal, run:
+Dans le terminal de votre Codespace, lancez :
 
 ```bash
 gh aw compile
@@ -120,62 +125,64 @@ git commit -m "feat: add agent and skill PR reviewer"
 git push
 ```
 
-Optional while your agent edits: run `gh aw compile --watch` in a separate terminal for immediate compiler feedback.
+En option pendant que votre agent édite : lancez `gh aw compile --watch` dans un terminal séparé pour obtenir un retour immédiat du compilateur.
 
-## Test the Ready-for-Review Trigger
+## Tester le déclencheur Ready for review
 
-1. Create a branch with a small code change that has an obvious, non-security bug.
-2. Open a **draft** pull request against your default branch.
-3. Select **Ready for review**.
-4. Open the **Actions** tab and inspect the **PR Reviewer** run.
-5. Return to the pull request and inspect the submitted review.
+1. Créez une branche avec une petite modification de code contenant un bug évident, sans enjeu de sécurité.
+2. Ouvrez une pull request **draft** vers votre branche par défaut.
+3. Sélectionnez **Ready for review**.
+4. Ouvrez l'onglet **Actions** et inspectez l'exécution **PR Reviewer**.
+5. Revenez à la pull request et inspectez la revue soumise.
 
-In the run log, confirm that the parent calls `pr-reviewer` and that the reviewer loads the review skill before returning findings.
+Dans le journal d'exécution, vérifiez que le parent appelle `pr-reviewer` et que le relecteur charge la skill de revue avant de renvoyer ses constats.
 
-To test the manual path, add a `/review` comment to the pull request. After pushing another commit, use `/review` again instead of moving the pull request back to draft.
+Pour tester le parcours manuel, ajoutez un commentaire `/review` à la pull request. Après avoir poussé un autre commit, réutilisez `/review` au lieu de remettre la pull request en brouillon.
 
 > [!NOTE]
-> If no run starts, confirm that the workflow is on your default branch and that you changed the pull request from draft to ready. Opening a pull request as ready does not emit the `ready_for_review` event.
+> Si aucune exécution ne démarre, vérifiez que le workflow se trouve sur votre branche par défaut et que vous avez bien fait passer la pull request de draft à ready. Ouvrir directement une pull request en état ready n'émet pas l'événement `ready_for_review`.
 
-If the run completes but the review does not mention the `pr-review-standards` skill or does not cite changed files and lines, the reviewer likely could not find the skills directory. Use this checklist to recover:
+Si l'exécution se termine mais que la revue ne mentionne pas la skill `pr-review-standards` ou ne cite pas les fichiers et lignes modifiés, le relecteur n'a probablement pas trouvé le répertoire de skills. Utilisez cette checklist pour corriger cela :
 
-1. Confirm `.github/skills/agentic-workflows/` exists and was pushed. Run `ls .github/skills/` in your terminal. If the directory is missing, run `gh aw init`, commit the generated files, and push.
-2. If the directory exists but the skill was still not applied, ask the agent to reinforce the instruction:
+1. Vérifiez que `.github/skills/agentic-workflows/` existe et a bien été poussé. Lancez `ls .github/skills/` dans votre terminal. Si le répertoire manque, lancez `gh aw init`, committez les fichiers générés puis poussez-les.
+2. Si le répertoire existe mais que la skill n'a toujours pas été appliquée, demandez à l'agent de renforcer l'instruction :
 
 ```prompt
 /agentic-workflows Update .github/workflows/pr-reviewer.md so the pr-reviewer agent explicitly searches for and applies the pr-review-standards skill before returning findings.
 ```
 
-1. Compile, commit, and re-trigger `/review` to confirm the skill is now applied.
+1. Compilez, committez et relancez `/review` pour confirmer que la skill est maintenant appliquée.
 
-## Improve One Layer
+## Améliorez une couche
 
-Choose one change and send it through `/agentic-workflows`:
+Choisissez une modification et faites-la passer par `/agentic-workflows` :
 
-- Update the **skill** if the review standard needs to change across every review.
-- Update the **agent** if its investigation or returned evidence needs to change.
-- Update the **parent brief** if review submission or orchestration needs to change.
+- Mettez à jour la **skill** si le standard de revue doit changer pour toutes les revues.
+- Mettez à jour l'**agent** si sa méthode d'investigation ou les preuves qu'il renvoie doivent évoluer.
+- Mettez à jour le **brief parent** si la soumission de revue ou l'orchestration doit changer.
 
-For example:
+Par exemple :
 
 ```prompt
 /agentic-workflows Update the pr-review-standards skill in .github/workflows/pr-reviewer.md to distinguish blocking findings from non-blocking observations.
 ```
 
-Run `/review` again and compare the new result with the first review. Once you have run a few variations, use the [Observe and Reduce Token Costs](side-quest-13-04-token-optimization.md) side quest to measure the AIC impact of each change and identify the highest-value optimizations.
+Relancez `/review` puis comparez le nouveau résultat avec la première revue. Une fois quelques variantes essayées, utilisez la side quest [Observe and Reduce Token Costs](side-quest-13-04-token-optimization.md) pour mesurer l'impact AIC de chaque changement et identifier les optimisations les plus utiles.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You created `.github/workflows/pr-reviewer.md` through your AI agent and `/agentic-workflows`
-- [ ] The workflow contains a `pr-reviewer` inline agent and a `pr-review-standards` inline skill
-- [ ] The parent brief calls the reviewer, and the reviewer applies the skill
-- [ ] The agent job has read-only repository and pull request [permissions](https://github.github.com/gh-aw/reference/permissions/)
-- [ ] The safe output allows one `COMMENT` or `REQUEST_CHANGES` review, but not `APPROVE`
-- [ ] `gh aw compile` completed and both workflow files are committed and pushed
-- [ ] Marking a draft ready or commenting `/review` triggered the workflow
-- [ ] The submitted review cites evidence from the changed lines
-- [ ] You changed one layer and compared the rerun with the first review
+- [ ] Vous avez créé `.github/workflows/pr-reviewer.md` avec votre agent IA et `/agentic-workflows`
+- [ ] Le workflow contient un agent inline `pr-reviewer` et une skill inline `pr-review-standards`
+- [ ] Le brief parent appelle le relecteur, et le relecteur applique la skill
+- [ ] Le job de l'agent dispose de [permissions](https://github.github.com/gh-aw/reference/permissions/) en lecture seule sur le dépôt et les pull requests
+- [ ] La safe output autorise une revue `COMMENT` ou `REQUEST_CHANGES`, mais pas `APPROVE`
+- [ ] `gh aw compile` s'est terminé et les deux fichiers du workflow sont committés et poussés
+- [ ] Le passage d'une draft en ready ou le commentaire `/review` a déclenché le workflow
+- [ ] La revue soumise cite des preuves issues des lignes modifiées
+- [ ] Vous avez modifié une couche et comparé la nouvelle exécution à la première revue
 
 <!-- journey: all -->
-**Next:** [Make Your Workflow Smarter with Conditional Logic](15-conditional-logic.md)
+
+**Suite :** [Rendez votre workflow plus malin avec une logique conditionnelle](15-conditional-logic.md)
+
 <!-- /journey -->

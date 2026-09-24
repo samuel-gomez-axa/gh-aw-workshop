@@ -1,54 +1,55 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Permission Errors
 
-> _Optional: read this if you see a `permission denied` error and need help resolving it._
+# Side Quest : Erreurs de permission
 
-## :clipboard: Before You Start
+> _Facultatif : lisez ceci si vous voyez une erreur `permission denied` et avez besoin d’aide pour la résoudre._
 
-- You have opened a terminal (see [Side Quest: Terminal Basics](side-quest-01-01-terminal-basics.md) if needed)
-- You encountered a `permission denied` error during setup, or want to know what to do when you do
+## :clipboard: Avant de commencer
+
+- Vous avez ouvert un terminal (voir [Side Quest: Terminal Basics](side-quest-01-01-terminal-basics.md) si besoin)
+- Vous avez rencontré une erreur `permission denied` pendant l’installation, ou vous voulez savoir quoi faire si cela arrive
 
 ---
 
-## What is a permission error?
+## Qu’est-ce qu’une erreur de permission ?
 
-When you see `permission denied`, your user account does not have the rights to run that command as written. This is a security feature — it prevents accidental changes to system files.
+Quand vous voyez `permission denied`, votre compte utilisateur n’a pas les droits nécessaires pour exécuter cette commande telle qu’elle est écrite. C’est une fonctionnalité de sécurité : elle évite les modifications accidentelles des fichiers système.
 
 <picture>
    <source media="(prefers-color-scheme: dark)" srcset="images/side-quest-01-03-permission-decision-dark.svg">
    <source media="(prefers-color-scheme: light)" srcset="images/side-quest-01-03-permission-decision-light.svg">
-   <img alt="Decision flow for a permission denied error: run a command, check permission, and if denied, elevate access with sudo or Run as administrator before the command succeeds" src="images/side-quest-01-03-permission-decision-light.svg">
+   <img alt="Flux de décision pour une erreur permission denied : exécuter une commande, vérifier la permission, puis en cas de refus, élever l’accès avec sudo ou Run as administrator avant que la commande réussisse" src="images/side-quest-01-03-permission-decision-light.svg">
 </picture>
 
 ---
 
-## How to fix it
+## Comment la corriger
 
-### macOS and Linux
+### macOS et Linux
 
-Re-run the command with `sudo` in front:
+Relancez la commande en ajoutant `sudo` devant :
 
 ```bash
 sudo <your-command>
 ```
 
-You'll be prompted for your password. `sudo` stands for "superuser do" and temporarily grants elevated rights for that one command.
+Votre mot de passe vous sera demandé. `sudo` signifie "superuser do" et accorde temporairement des droits élevés pour cette commande uniquement.
 
 ### Windows
 
-Right-click **Windows Terminal** or **PowerShell** and choose **Run as administrator**, then retry the command.
+Faites un clic droit sur **Windows Terminal** ou **PowerShell** et choisissez **Run as administrator**, puis réessayez la commande.
 
 ---
 
 > [!TIP]
-> Only use elevated access when workshop instructions explicitly tell you to. Running everything as root or administrator is not recommended and can cause hard-to-reverse changes.
+> N’utilisez un accès élevé que lorsque les instructions de l’atelier vous le demandent explicitement. Exécuter tout en root ou en administrateur n’est pas recommandé et peut provoquer des changements difficiles à annuler.
 
 ---
 
-## Practice: Observe and fix a permission error
+## Exercice : observer et corriger une erreur de permission
 
-Run this command to deliberately trigger a `permission denied` message.
+Exécutez cette commande pour provoquer volontairement un message `permission denied`.
 
 **macOS / Linux:**
 
@@ -56,33 +57,35 @@ Run this command to deliberately trigger a `permission denied` message.
 cat /etc/sudoers
 ```
 
-You should see output like `cat: /etc/sudoers: Permission denied`. Note the exact file path in the message.
+Vous devriez voir une sortie comme `cat: /etc/sudoers: Permission denied`. Notez le chemin exact du fichier indiqué dans le message.
 
-Now re-run it with `sudo` and confirm the error disappears:
+Relancez-la maintenant avec `sudo` et vérifiez que l’erreur disparaît :
 
 ```bash
 sudo cat /etc/sudoers
 ```
 
-**Windows:** Open a standard (non-admin) PowerShell and run:
+**Windows:** Ouvrez un PowerShell standard (non administrateur) et exécutez :
 
 ```powershell
 Get-Content "$env:SystemRoot\System32\drivers\etc\hosts"
 ```
 
-Then open an administrator PowerShell and run the same command — it should succeed.
+Ouvrez ensuite un PowerShell administrateur et exécutez la même commande : elle devrait réussir.
 
 ---
 
 <!-- journey: all -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] You ran the practice command and saw `permission denied` (or an equivalent access-denied message) in your terminal output
-- [ ] You identified the exact file path shown in the error message
-- [ ] You re-ran the command with elevated rights (`sudo` or Run as administrator) and confirmed it completed without an error
-- [ ] You can explain in one sentence why your account lacked access — write it as a comment on your practice repo issue
+- [ ] Vous avez exécuté la commande d’exercice et vu `permission denied` (ou un message équivalent de refus d’accès) dans la sortie du terminal
+- [ ] Vous avez identifié le chemin exact du fichier affiché dans le message d’erreur
+- [ ] Vous avez relancé la commande avec des droits élevés (`sudo` ou Run as administrator) et confirmé qu’elle s’exécute sans erreur
+- [ ] Vous pouvez expliquer en une phrase pourquoi votre compte n’avait pas l’accès requis ; écrivez-la comme commentaire sur l’issue de votre dépôt d’exercice
 
 ---
 
-When you're done here, return to [Side Quest: Terminal Basics](side-quest-01-01-terminal-basics.md).
+Quand vous avez terminé ici, revenez à [Side Quest : Bases du terminal](side-quest-01-01-terminal-basics.md).
+
 <!-- /journey -->

@@ -1,39 +1,40 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Workflow File Structure at a Glance
 
-> _Optional: read this before building Step 11 to understand what you are writing, then return to [Build the Daily Repo Status Workflow](07-your-first-workflow.md)._
+# Quête Annexe : Structure D'un Fichier De Workflow En Un Coup D'oeil
 
-## :clipboard: Before You Start
+> _Facultatif : lisez ceci avant de construire Step 11 pour comprendre ce que vous êtes en train d'écrire, puis revenez à [Build the Daily Repo Status Workflow](07-your-first-workflow.md)._
 
-- Keep [Build the Daily Repo Status Workflow](07-your-first-workflow.md) open so you can map each section here to the workflow you build next.
+## :clipboard: Avant De Commencer
 
----
-
-An [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) file has two parts:
-
-- **[Frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)** — YAML between `---` fences at the top of the file. This configures how and when the workflow runs.
-- **Markdown body** — the agent's task brief, written below the closing `---`. The AI reads this at runtime.
-
-The file ends in `.md` instead of `.yml` because the [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) is only the opening config block — the rest of the file is a Markdown brief that the agent reads at runtime. See the [Classic vs. Agentic comparison in Step 5](05-agentic-workflows-intro.md).
+- Gardez [Build the Daily Repo Status Workflow](07-your-first-workflow.md) ouvert afin de pouvoir faire correspondre chaque section ici au workflow que vous construirez ensuite.
 
 ---
 
-## Frontmatter sections at a glance
+Un fichier [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) comporte deux parties :
 
-The five frontmatter sections you'll build in Step 7:
+- **[Frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)** — du YAML entre des fences `---` en haut du fichier. Cela configure comment et quand le workflow s'exécute.
+- **Corps Markdown** — le brief de tâche de l'agent, écrit sous le `---` de fermeture. L'IA le lit à l'exécution.
 
-| Section | Key(s) | What it does |
-|---------|--------|--------------|
-| Metadata | `emoji`, `description` | Human-readable labels shown in the `gh aw` dashboard and Actions UI. |
-| [Triggers](https://github.github.com/gh-aw/reference/triggers/) | `on:` | Tells GitHub Actions when to run — `schedule: daily` plus a manual `workflow_dispatch` button. |
-| [Permissions](https://github.github.com/gh-aw/reference/permissions/) | `permissions:` | Declares the minimum GitHub API scopes the workflow may use. |
-| [Tools](https://github.github.com/gh-aw/reference/tools/) | `tools:` | Enables the [GitHub MCP](https://github.github.com/gh-aw/reference/tools/#github-tools-github) tool via `gh-proxy`, scoped to the [permissions](https://github.github.com/gh-aw/reference/permissions/) above. |
-| Write guardrail | `safe-outputs:` | The only write actions the agent may take — here, one issue comment per run. |
+Le fichier se termine par `.md` plutôt que `.yml` parce que le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) n'est que le bloc de configuration d'ouverture ; le reste du fichier est un brief Markdown lu par l'agent à l'exécution. Consultez la [Classic vs. Agentic comparison in Step 5](05-agentic-workflows-intro.md).
 
-## :pencil2: Try It: Label the Structure
+---
 
-Before you look at the answer, copy this snippet into your editor and add your own labels above each part.
+## Les Sections Du Frontmatter En Un Coup D'oeil
+
+Les cinq sections de frontmatter que vous construirez dans Step 7 :
+
+| Section                                                               | Clé(s)                 | Ce qu'elle fait                                                                                                                                                                                                   |
+| --------------------------------------------------------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Métadonnées                                                           | `emoji`, `description` | Libellés lisibles par un humain, affichés dans le dashboard `gh aw` et l'UI Actions.                                                                                                                              |
+| [Triggers](https://github.github.com/gh-aw/reference/triggers/)       | `on:`                  | Indique à GitHub Actions quand exécuter le workflow : `schedule: daily` plus un bouton manuel `workflow_dispatch`.                                                                                                |
+| [Permissions](https://github.github.com/gh-aw/reference/permissions/) | `permissions:`         | Déclare les scopes d'API GitHub minimaux que le workflow peut utiliser.                                                                                                                                           |
+| [Tools](https://github.github.com/gh-aw/reference/tools/)             | `tools:`               | Active l'outil [GitHub MCP](https://github.github.com/gh-aw/reference/tools/#github-tools-github) via `gh-proxy`, limité par les [permissions](https://github.github.com/gh-aw/reference/permissions/) ci-dessus. |
+| Garde-fou d'écriture                                                  | `safe-outputs:`        | Les seules actions d'écriture que l'agent peut effectuer : ici, un commentaire d'issue par run.                                                                                                                   |
+
+## :pencil2: Essayez : Étiquetez La Structure
+
+Avant de regarder la réponse, copiez cet extrait dans votre éditeur et ajoutez vos propres libellés au-dessus de chaque partie.
 
 ```md
 ---
@@ -52,18 +53,19 @@ safe-outputs:
   add-comment:
     max: 1
 ---
+
 Summarize the open issues, recent pull requests, and latest workflow runs.
 ```
 
 <details>
-<summary>Show the section labels</summary>
+<summary>Afficher les libellés des sections</summary>
 
-- `emoji` and `description` = **Metadata**
+- `emoji` and `description` = **Métadonnées**
 - `on:` = **Triggers**
 - `permissions:` = **Permissions**
 - `tools:` = **Tools**
-- `safe-outputs:` = **Write guardrail**
-- The sentence below the closing `---` = **Markdown body**
+- `safe-outputs:` = **Garde-fou d'écriture**
+- La phrase sous le `---` de fermeture = **Corps Markdown**
 
 </details>
 
@@ -71,16 +73,16 @@ Summarize the open issues, recent pull requests, and latest workflow runs.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You labeled the example snippet and matched all five frontmatter sections.
-- [ ] You can point to the `on:` block and explain that it controls when the workflow runs.
-- [ ] You can point to `safe-outputs:` and explain that it limits what the agent may write.
-- [ ] You can point to the text below the closing `---` and identify it as the Markdown body.
-- [ ] You can explain in one sentence why the file ends in `.md` instead of `.yml`.
+- [ ] Vous avez étiqueté l'exemple et identifié les cinq sections du frontmatter.
+- [ ] Vous pouvez montrer le bloc `on:` et expliquer qu'il contrôle quand le workflow s'exécute.
+- [ ] Vous pouvez montrer `safe-outputs:` et expliquer qu'il limite ce que l'agent peut écrire.
+- [ ] Vous pouvez montrer le texte sous le `---` de fermeture et l'identifier comme le corps Markdown.
+- [ ] Vous pouvez expliquer en une phrase pourquoi le fichier se termine par `.md` au lieu de `.yml`.
 
 ---
 
 <!-- journey: all -->
-Return to [Build the Daily Repo Status Workflow](07-your-first-workflow.md).
+
+Revenez à [Build the Daily Repo Status Workflow](07-your-first-workflow.md).
+
 <!-- /journey -->
-
-

@@ -1,89 +1,91 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Enterprise Setup Considerations
 
-> _Required for GHES users before attempting to create or run [agentic workflows](https://github.github.com/gh-aw/introduction/overview/). Also useful if you are running any setup step in a managed enterprise environment — complete this guide, then return to your current step._
+# Quête annexe : considérations de configuration enterprise
 
-## :clipboard: Before You Start
+> _Obligatoire pour les utilisateurs GHES avant de tenter de créer ou d’exécuter des [agentic workflows](https://github.github.com/gh-aw/introduction/overview/). Également utile si vous exécutez une étape de setup dans un environnement enterprise géré. Terminez ce guide, puis revenez à votre étape actuelle._
 
-- You have a GitHub account and know whether your environment is `github.com`, GitHub Enterprise Cloud (GHEC), or GitHub Enterprise Server (GHES).
-- You can reach your GitHub Enterprise administrator to confirm GHES version and policy settings.
-- You have started [Prerequisites](01-prerequisites.md) or an early setup step that directed you here.
+## :clipboard: Avant de commencer
 
-Use this side quest if your environment differs from standard `github.com` defaults.
+- Vous avez un compte GitHub et vous savez si votre environnement est `github.com`, GitHub Enterprise Cloud, GHEC, ou GitHub Enterprise Server, GHES.
+- Vous pouvez joindre votre administrateur GitHub Enterprise afin de confirmer la version de GHES et les réglages de politique.
+- Vous avez commencé [Prerequisites](01-prerequisites.md) ou une étape de setup initiale qui vous a dirigé ici.
 
-## Confirm GHES version and agentic workflow support
+Utilisez cette quête annexe si votre environnement diffère des valeurs par défaut standard de `github.com`.
 
-[Agentic workflows](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) require **GHES 3.12 or later**. On earlier versions, the [Copilot cloud agent](https://github.github.com/gh-aw/reference/copilot-cloud-agent/) feature is unavailable regardless of licensing or policy settings.
+## Confirmer la version de GHES et la prise en charge des agentic workflows
 
-| GitHub deployment | Agentic workflows supported? |
-|---|---|
-| **github.com** | :white_check_mark: Fully supported |
-| **GitHub Enterprise Cloud (GHEC)** | :white_check_mark: Fully supported |
-| **GitHub Enterprise Server (GHES) 3.12+** | :white_check_mark: Supported when Copilot Enterprise and network access are configured by admin |
-| **GitHub Enterprise Server (GHES) < 3.12** | :x: Not supported — upgrade required |
+Les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) exigent **GHES 3.12 ou plus récent**. Sur des versions antérieures, la fonctionnalité [Copilot cloud agent](https://github.github.com/gh-aw/reference/copilot-cloud-agent/) est indisponible, quels que soient la licence ou les réglages de politique.
 
-Before continuing:
+| Déploiement GitHub                         | Agentic workflows pris en charge ?                                                                                  |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| **github.com**                             | :white_check_mark: Pleinement pris en charge                                                                        |
+| **GitHub Enterprise Cloud (GHEC)**         | :white_check_mark: Pleinement pris en charge                                                                        |
+| **GitHub Enterprise Server (GHES) 3.12+**  | :white_check_mark: Pris en charge lorsque Copilot Enterprise et l’accès réseau sont configurés par l’administrateur |
+| **GitHub Enterprise Server (GHES) < 3.12** | :x: Non pris en charge, mise à niveau requise                                                                       |
 
-1. Ask your GitHub Enterprise administrator to confirm the GHES version running in your environment.
-2. If your instance is below 3.12, you cannot run agentic workflows hands-on — you can follow along in read-only mode or request a `github.com` account to complete the execution steps.
-3. If your instance is 3.12+, continue with the sections below to confirm Codespaces, runner, and model access prerequisites.
+Avant de continuer :
 
-## Confirm Codespaces availability on GHES or enterprise policies
+1. Demandez à votre administrateur GitHub Enterprise de confirmer la version de GHES exécutée dans votre environnement.
+2. Si votre instance est inférieure à 3.12, vous ne pouvez pas exécuter les agentic workflows en pratique. Vous pouvez suivre en mode lecture seule ou demander un compte `github.com` pour effectuer les étapes d’exécution.
+3. Si votre instance est en 3.12 ou plus, poursuivez avec les sections ci-dessous pour confirmer les prérequis Codespaces, runner et accès au modèle.
 
-Codespaces availability varies by platform and policy:
+## Confirmer la disponibilité de Codespaces sur GHES ou via les politiques enterprise
 
-- **GHES:** Codespaces is only available on supported GHES versions and when enabled by admins.
-  Verify support in the [Codespaces organization documentation](https://docs.github.com/en/enterprise-cloud@latest/codespaces/managing-codespaces-for-your-organization/enabling-or-disabling-github-codespaces-for-your-organization).
-- **GHEC:** Org policies can restrict who can create Codespaces or which repositories are allowed.
+La disponibilité de Codespaces varie selon la plateforme et la politique appliquée :
 
-Before continuing:
+- **GHES:** Codespaces n’est disponible que sur les versions GHES prises en charge et lorsqu’il est activé par les administrateurs.
+  Verifiez la prise en charge dans la [documentation d'organisation Codespaces](https://docs.github.com/en/enterprise-cloud@latest/codespaces/managing-codespaces-for-your-organization/enabling-or-disabling-github-codespaces-for-your-organization).
+- **GHEC:** Les politiques d’organisation peuvent restreindre les personnes autorisées à créer des Codespaces ou les dépôts autorisés.
 
-1. Ask your enterprise admin whether Codespaces is enabled for your organization and repository.
-2. If Codespaces is available, continue with [Set Up a Codespace](02a-setup-codespace.md).
-   If Codespaces is unavailable, take [Side Quest: Set Up Your Local Terminal](side-quest-02-01-local-terminal.md).
-3. Use your enterprise hostname in all `gh` auth and extension commands when required (for example, `gh auth login --hostname ghes.example.com`).
-   See [Side Quest: Install `gh-aw` Troubleshooting](side-quest-06-01-install-troubleshooting.md) for a complete enterprise hostname command sequence.
+Avant de continuer :
 
-> :thinking: **Predict:** Look up your enterprise hostname before continuing. After confirming it, run the following command and verify the output shows your GHES instance:
+1. Demandez à votre administrateur enterprise si Codespaces est activé pour votre organisation et votre dépôt.
+2. Si Codespaces est disponible, poursuivez avec [Configurer un Codespace](02a-setup-codespace.md).
+   Si Codespaces n’est pas disponible, suivez [Quête annexe : configurer votre terminal local](side-quest-02-01-local-terminal.md).
+3. Utilisez le nom d’hôte de votre environnement enterprise dans toutes les commandes d’authentification et d’extensions `gh` lorsqu’il est requis, par exemple `gh auth login --hostname ghes.example.com`.
+   Consultez [Quête annexe : dépannage de l’installation de `gh-aw`](side-quest-06-01-install-troubleshooting.md) pour la séquence complète de commandes avec nom d’hôte enterprise.
+
+> :thinking: **Prédiction :** Recherchez le nom d’hôte de votre environnement enterprise avant de continuer. Après l’avoir confirmé, exécutez la commande suivante et vérifiez que la sortie affiche bien votre instance GHES :
 >
 > ```bash
 > gh auth login --hostname <your-ghes-hostname>
 > gh auth status
 > ```
 
-## [Self-hosted runner](https://github.github.com/gh-aw/reference/self-hosted-runners/) prerequisites
+## Prérequis des [self-hosted runners](https://github.github.com/gh-aw/reference/self-hosted-runners/)
 
-If your enterprise requires [self-hosted runners](https://github.github.com/gh-aw/reference/self-hosted-runners/) for [GitHub Actions](https://docs.github.com/en/actions), confirm these before you continue:
+Si votre environnement enterprise exige des [self-hosted runners](https://github.github.com/gh-aw/reference/self-hosted-runners/) pour [GitHub Actions](https://docs.github.com/en/actions), confirmez les points suivants avant de continuer :
 
-- A runner is registered and online for your repository or org.
-- The runner allows workflow jobs from your repository.
-- If your network uses an outbound proxy, proxy settings are configured for runner jobs.
-- Network egress allows access to required endpoints such as `github.com`, `api.github.com`, `raw.githubusercontent.com`, and any model or MCP endpoints your workflow uses.
-- Required secrets and permissions are configured for runner-based execution.
+- un runner est enregistré et en ligne pour votre dépôt ou votre organisation ;
+- le runner autorise les jobs de workflow provenant de votre dépôt ;
+- si votre réseau utilise un proxy sortant, les réglages de proxy sont configurés pour les jobs du runner ;
+- la sortie réseau autorise l’accès aux endpoints requis comme `github.com`, `api.github.com`, `raw.githubusercontent.com` et tous les endpoints de modèle ou MCP utilisés par votre workflow ;
+- les secrets et permissions requis sont configurés pour l’exécution sur runner.
 
-If you do not have this access yet, ask your admin to provide a ready-to-use runner target before you build and run workflows.
+Si vous ne disposez pas encore de cet accès, demandez à votre administrateur de fournir une cible de runner prête à l’emploi avant de construire et d’exécuter des workflows.
 
-## Model access and Copilot licensing requirements
+## Exigences d’accès au modèle et de licence Copilot
 
-Agentic workflows require both Actions execution and model access:
+Les agentic workflows exigent à la fois une exécution Actions et un accès au modèle :
 
-- You need an active Copilot plan supported by your enterprise policy (Business or Enterprise where required).
-- Confirm your organization and repository allow Copilot model access in workflow runs.
-- If model access is blocked by policy, workflow runs can start but fail when the agent step executes.
+- vous avez besoin d’un plan Copilot actif pris en charge par votre politique enterprise, Business ou Enterprise selon le cas ;
+- confirmez que votre organisation et votre dépôt autorisent l’accès au modèle Copilot pendant les exécutions de workflow ;
+- si l’accès au modèle est bloqué par une politique, les exécutions de workflow peuvent démarrer mais échoueront lorsque l’étape agent s’exécutera.
 
-Before installing `gh-aw`, verify with your admin that your account and repository are permitted to run Copilot-powered workflow jobs.
+Avant d’installer `gh-aw`, vérifiez avec votre administrateur que votre compte et votre dépôt sont autorisés à exécuter des jobs de workflow propulsés par Copilot.
 
 <!-- journey: all -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] Your GHES instance is version 3.12 or later (or you are on `github.com`/GHEC)
-- [ ] You know whether Codespaces is available in your enterprise environment
-- [ ] You know whether you need a [self-hosted runner](https://github.github.com/gh-aw/reference/self-hosted-runners/) and that it is ready
-- [ ] You confirmed Copilot Enterprise and model access are enabled with your admin
-- [ ] You're ready to continue your current workshop step
+- [ ] Votre instance GHES est en version 3.12 ou plus récente, ou vous êtes sur `github.com` ou GHEC
+- [ ] Vous savez si Codespaces est disponible dans votre environnement enterprise
+- [ ] Vous savez si vous avez besoin d'un [self-hosted runner](https://github.github.com/gh-aw/reference/self-hosted-runners/) et qu'il est pret
+- [ ] Vous avez confirmé avec votre administrateur que Copilot Enterprise et l’accès au modèle sont activés
+- [ ] Vous êtes prêt à reprendre votre étape actuelle du workshop
 
-Return to the workshop step where you opened this side quest.
-Common return points are [Prerequisites](01-prerequisites.md), [Set Up a Codespace](02a-setup-codespace.md), [Side Quest: Set Up Your Local Terminal](side-quest-02-01-local-terminal.md), and [What Are Agentic Workflows?](05-agentic-workflows-intro.md).
+Revenez à l’étape du workshop depuis laquelle vous avez ouvert cette quête annexe.
+Les points de retour les plus courants sont [Prerequisites](01-prerequisites.md), [Configurer un Codespace](02a-setup-codespace.md), [Quête annexe : configurer votre terminal local](side-quest-02-01-local-terminal.md) et [Que sont les agentic workflows ?](05-agentic-workflows-intro.md).
 
 <!-- /journey -->

@@ -1,77 +1,78 @@
 <!-- page-journey: all -->
 <!-- page-adventure: advanced -->
-# Audit and Monitor Your Agentic Workflows
 
-> _Knowing what your agent did — and proving it — is what turns a useful automation into a trustworthy one._
+# Auditez et surveillez vos workflows agentiques
 
-## :dart: What You'll Do
+> _Savoir ce que votre agent a fait, et pouvoir le prouver, c'est ce qui transforme une automatisation utile en automatisation digne de confiance._
 
-Use `gh aw logs` and `gh aw audit` to review the built-in [artifacts](https://github.github.com/gh-aw/reference/artifacts/) that every agentic workflow run produces, understand [token usage](https://github.github.com/gh-aw/reference/cost-management/#monitoring-costs-with-gh-aw-logs), and debug unexpected behavior. By the end you know where to look when a run behaves unexpectedly or when a compliance review asks what the agent did.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Utilisez `gh aw logs` et `gh aw audit` pour examiner les [artifacts](https://github.github.com/gh-aw/reference/artifacts/) integres que produit chaque execution de workflow agentique, comprendre l'[usage des tokens](https://github.github.com/gh-aw/reference/cost-management/#monitoring-costs-with-gh-aw-logs) et deboguer les comportements inattendus. A la fin, vous saurez ou regarder lorsqu'une execution se comporte de facon anormale ou lorsqu'une revue de conformite demande ce que l'agent a fait.
 
-- Your workflow runs successfully (see [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)).
-- `gh aw` is installed and authenticated (see [Install the gh-aw CLI Extension](06-install-gh-aw.md)).
+## :clipboard: Avant de commencer
 
-## Steps
+- Votre workflow s'execute correctement (voir [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)).
+- `gh aw` est installe et authentifie (voir [Install the gh-aw CLI Extension](06-install-gh-aw.md)).
 
-The diagram below shows how artifacts flow from a workflow run through the two audit commands to their outputs.
+## Etapes
+
+Le schema ci-dessous montre comment les artifacts circulent depuis une execution de workflow, a travers les deux commandes d'audit, jusqu'a leurs sorties.
 
 <picture>
    <source media="(prefers-color-scheme: dark)" srcset="images/25-audit-lifecycle-dark.svg">
    <source media="(prefers-color-scheme: light)" srcset="images/25-audit-lifecycle-light.svg">
-   <img alt="Audit artifacts lifecycle: a workflow run produces artifacts that gh aw logs and gh aw audit consume to generate summaries and compliance reports" src="images/25-audit-lifecycle-light.svg">
+   <img alt="Cycle de vie des artifacts d'audit : une execution de workflow produit des artifacts que gh aw logs et gh aw audit exploitent pour generer des resumes et des rapports de conformite" src="images/25-audit-lifecycle-light.svg">
 </picture>
 
-### Review recent runs with [gh aw logs](https://github.github.com/gh-aw/reference/audit/#gh-aw-logs---format)
+### Examiner les executions recentes avec [gh aw logs](https://github.github.com/gh-aw/reference/audit/#gh-aw-logs---format)
 
-`gh aw logs` downloads artifacts from your workflow's recent runs and prints a summary table showing duration, token usage, and cost in [AI Credits (AIC)](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic).
+`gh aw logs` telecharge les artifacts des executions recentes de votre workflow et affiche un tableau de synthese montrant la duree, l'usage des tokens et le cout en [AI Credits (AIC)](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic).
 
-Run it from inside your repository:
+Lancez-la depuis votre depot :
 
 ```bash
 gh aw logs <your-workflow-id>
 ```
 
-Replace `<your-workflow-id>` with the basename of your workflow file (for example, `daily-status` for `daily-status.md`).
+Remplacez `<your-workflow-id>` par le nom de base de votre fichier de workflow, par exemple `daily-status` pour `daily-status.md`.
 
-The summary table shows one row per run. Key columns:
+Le tableau de synthese montre une ligne par execution. Colonnes importantes :
 
-| Column | What it tells you |
-|---|---|
-| AIC | Total AI Credits consumed by the agent |
-| Model | The AI model that ran the agent |
-| Conclusion | Whether the run succeeded |
+| Colonne    | Ce qu'elle vous indique                    |
+| ---------- | ------------------------------------------ |
+| AIC        | Total des AI Credits consommes par l'agent |
+| Model      | Le modele IA qui a execute l'agent         |
+| Conclusion | Si l'execution a reussi                    |
 
-To download all artifacts for further inspection, add `--artifacts all`:
+Pour telecharger tous les artifacts en vue d'une inspection plus poussee, ajoutez `--artifacts all` :
 
 ```bash
 gh aw logs <your-workflow-id> --artifacts all
 ```
 
-Downloaded files land in `.github/aw/logs/<run-id>/` by default.
+Les fichiers telecharges arrivent par defaut dans `.github/aw/logs/<run-id>/`.
 
-### Audit a specific run with [gh aw audit](https://github.github.com/gh-aw/reference/audit/#gh-aw-audit)
+### Auditer une execution precise avec [gh aw audit](https://github.github.com/gh-aw/reference/audit/#gh-aw-audit)
 
-When you need a deeper look at one run — for debugging or compliance evidence — use `gh aw audit` with the run ID or URL from the Actions tab (both numeric IDs and full GitHub Actions URLs are accepted):
+Lorsque vous avez besoin d'examiner plus en profondeur une execution, pour du debogage ou comme preuve de conformite, utilisez `gh aw audit` avec l'identifiant d'execution ou l'URL recuperee depuis l'onglet Actions, les identifiants numeriques comme les URL completes GitHub Actions etant acceptes :
 
 ```bash
 gh aw audit <run-id>
 ```
 
-This downloads all artifacts for that run and generates a concise Markdown report covering run metadata, AIC, and any flagged issues.
+La commande telecharge tous les artifacts de cette execution et genere un rapport Markdown concis couvrant les metadonnees de l'execution, l'AIC et les problemes eventuellement signales.
 
-To also parse the raw agent and firewall logs into readable Markdown, add `--parse`:
+Pour analyser egalement les journaux bruts de l'agent et du firewall en Markdown lisible, ajoutez `--parse` :
 
 ```bash
 gh aw audit <run-id> --parse
 ```
 
-For a full breakdown of report contents and artifact files, see [Side Quest: Audit Reference](side-quest-25-01-audit-reference.md).
+Pour une vue complete du contenu du rapport et des fichiers d'artifacts, consultez [Side Quest: Audit Reference](side-quest-25-01-audit-reference.md).
 
-### Debug with an agent
+### Deboguer avec un agent
 
-Once you have an audit report, bring it to your AI agent with the **`/agentic-workflows` skill** and describe what puzzled you:
+Une fois le rapport d'audit en main, apportez-le a votre agent IA avec la skill **`/agentic-workflows`** et decrivez ce qui vous surprend :
 
 ```prompt
 /agentic-workflows Here is my audit report. The agent called github.list_issues
@@ -81,32 +82,33 @@ suggest how to reduce it.
 <paste report here>
 ```
 
-The skill understands agentic workflow [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) and [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) rules. It can suggest a more efficient prompt, validate your changes, or walk you through a fix — all without leaving the chat. Ask the agent to make edits directly so it can run `gh aw compile` to validate before committing.
+La skill comprend les regles de [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) et de [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) des workflows agentiques. Elle peut suggérer un prompt plus efficace, valider vos modifications ou vous guider vers une correction, sans quitter le chat. Demandez a l'agent d'editer directement afin qu'il puisse lancer `gh aw compile` pour valider avant le commit.
 
-### Browse artifacts in the GitHub UI
+### Parcourir les artifacts dans l'interface GitHub
 
-Every artifact is also available in the browser without the CLI:
+Chaque artifact est aussi disponible dans le navigateur sans passer par le CLI :
 
-1. Go to the **Actions** tab in your repository.
-2. Click a completed workflow run.
-3. Scroll to the **Artifacts** section and download the archive you need.
+1. Ouvrez l'onglet **Actions** de votre depot.
+2. Cliquez sur une execution de workflow terminee.
+3. Faites defiler jusqu'a la section **Artifacts** et telechargez l'archive voulue.
 
-### Retention policy
+### Politique de retention
 
-GitHub retains artifacts for **90 days** by default. Ask your GitHub administrator whether a policy overrides this and whether you need to copy artifacts to external storage for longer-term audit requirements.
+Par defaut, GitHub conserve les artifacts pendant **90 jours**. Demandez a votre administrateur GitHub si une politique remplace cette duree et si vous devez copier les artifacts vers un stockage externe pour repondre a des exigences d'audit de plus longue duree.
 
 > [!NOTE]
-> Retention defaults may differ on GitHub Enterprise Server. Check with your admin before relying on the default 90-day window.
+> Les durees de retention par defaut peuvent differer sur GitHub Enterprise Server. Verifiez cela avec votre administrateur avant de compter sur la fenetre standard de 90 jours.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You ran `gh aw logs <your-workflow-id>` and read the AIC summary for your workflow
-- [ ] You ran `gh aw audit <run-id>` and reviewed the generated report
-- [ ] You brought an audit report to your AI agent with the `/agentic-workflows` skill and got actionable feedback
-- [ ] You can browse artifacts in the GitHub Actions UI
-- [ ] You know your organisation's artifact retention policy (or know who to ask)
+- [ ] Vous avez lance `gh aw logs <your-workflow-id>` et lu le resume AIC de votre workflow
+- [ ] Vous avez lance `gh aw audit <run-id>` et examine le rapport genere
+- [ ] Vous avez apporte un rapport d'audit a votre agent IA avec la skill `/agentic-workflows` et obtenu des retours actionnables
+- [ ] Vous savez parcourir les artifacts dans l'interface GitHub Actions
+- [ ] Vous connaissez la politique de retention des artifacts de votre organisation, ou vous savez a qui la demander
 
 <!-- journey: all -->
-**Next:** [Manage Costs and AI Credit Budgets](26-manage-costs-and-budgets.md)
-<!-- /journey -->
 
+**Suite :** [Gerez les couts et budgets d'AI Credits](26-manage-costs-and-budgets.md)
+
+<!-- /journey -->

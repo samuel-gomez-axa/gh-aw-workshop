@@ -1,66 +1,67 @@
 <!-- page-journey: all -->
 <!-- page-adventure: advanced -->
-# Side Quest: Recognizing Common Agentic Workflow Failure Modes
 
-> _Before you can fix a broken run, you need a name for what went wrong — this primer gives you four._
+# Quête annexe : reconnaître les modes d’échec courants des agentic workflows
 
-## :dart: What You'll Do
+> _Avant de pouvoir corriger une exécution en panne, vous devez savoir nommer le problème. Cette introduction vous en donne quatre._
 
-You'll learn the four most common ways agentic workflows fail in production, see a worked example of each, and practice matching a failure type to its effect. By the end, you'll be able to look at a run log and name the failure mode in one word before you start debugging.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Vous apprendrez les quatre façons les plus courantes dont les agentic workflows échouent en production, verrez un exemple détaillé de chacune, et vous exercerez à associer chaque type d’échec à son effet. À la fin, vous pourrez regarder un log d’exécution et nommer le mode d’échec en un mot avant de commencer le débogage.
 
-- You have a working scheduled workflow (see [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)).
-- You're starting (or have already started) [Make Your Workflows Resilient to Failure](22-error-handling-and-resilience.md), which uses this vocabulary.
+## :clipboard: Avant de commencer
 
-## Steps
+- Vous avez un workflow planifié fonctionnel, voir [Affinez, testez et améliorez votre workflow](09-agentic-editing.md).
+- Vous commencez, ou avez déjà commencé, [Rendez vos workflows résilients face aux échecs](22-error-handling-and-resilience.md), qui utilise ce vocabulaire.
 
-### The four failure modes
+## Étapes
 
-Agentic workflows can fail for several reasons:
+### Les quatre modes d’échec
 
-| Failure type | Example | Effect |
-|---|---|---|
-| **Empty data** | No open issues to summarise | Agent produces a vague or empty report |
-| **Tool error** | GitHub API rate-limit hit mid-run | Agent stops mid-task without writing output |
-| **Timeout** | Complex reasoning takes too long | Workflow job is cancelled by Actions |
-| **Prompt drift** | Instructions are ambiguous | Agent takes an unexpected code path |
+Les agentic workflows peuvent échouer pour plusieurs raisons :
 
-Recognising these patterns helps you write instructions that stay on track — most workflow bugs are one of these four things, not something exotic.
+| Type d’échec     | Exemple                                                              | Effet                                                          |
+| ---------------- | -------------------------------------------------------------------- | -------------------------------------------------------------- |
+| **Empty data**   | Aucune issue ouverte à résumer                                       | L’agent produit un rapport vague ou vide                       |
+| **Tool error**   | Une limite de taux de l’API GitHub est atteinte en cours d’exécution | L’agent s’arrête au milieu de la tâche sans produire de sortie |
+| **Timeout**      | Un raisonnement complexe prend trop de temps                         | Le job de workflow est annulé par Actions                      |
+| **Prompt drift** | Les instructions sont ambiguës                                       | L’agent emprunte un chemin de code inattendu                   |
 
-The diagram below shows how these failure modes map to three mitigations: a defensive brief, a `timeout-minutes` setting, and a fallback [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/).
+Reconnaître ces modèles vous aide à écrire des instructions qui restent sur la bonne voie. La plupart des bugs de workflow relèvent de l’un de ces quatre cas, pas de quelque chose d’exotique.
+
+Le schéma ci-dessous montre comment ces modes d’échec se rattachent à trois mitigations : un brief défensif, un réglage `timeout-minutes` et un [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) de secours.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/22-resilience-techniques-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/22-resilience-techniques-light.svg">
-  <img alt="Four failure modes — prompt drift, timeout, tool error, and empty data — each mapped to one of three mitigations: defensive brief, timeout-minutes, and fallback safe-output, which together produce a reliably running workflow" src="images/22-resilience-techniques-light.svg">
+  <img alt="Quatre modes d’échec, prompt drift, timeout, tool error et empty data, chacun rattaché à l’une de trois mitigations, defensive brief, timeout-minutes et fallback safe-output, qui ensemble produisent un workflow exécuté de manière fiable" src="images/22-resilience-techniques-light.svg">
 </picture>
 
-### Practice: match the failure to the mitigation
+### Entraînement : associer l’échec à la mitigation
 
-Before checking your answer, decide which mitigation (defensive brief, `timeout-minutes`, or fallback safe-output) best addresses each scenario:
+Avant de vérifier votre réponse, décidez quelle mitigation, defensive brief, `timeout-minutes` ou fallback safe-output, répond le mieux à chaque scénario :
 
-1. A run consistently takes 18 minutes to finish reasoning about a large diff, and Actions cancels it.
-2. A run finishes cleanly but never calls a safe-output tool because the repository had no activity that day.
-3. A run's summary is technically correct but ignores the instruction to flag blockers, because the brief never defined what a "blocker" is.
+1. Une exécution prend régulièrement 18 minutes pour terminer le raisonnement sur un gros diff, et Actions l’annule.
+2. Une exécution se termine proprement mais n’appelle jamais un tool de safe-output, parce que le dépôt n’avait eu aucune activité ce jour-là.
+3. Le résumé d’une exécution est techniquement correct mais ignore l’instruction de signaler les blockers, parce que le brief ne définit jamais ce qu’est un "blocker".
 
 <details>
-<summary>Reveal the answers</summary>
+<summary>Afficher les réponses</summary>
 
-1. **Timeout.** Set `timeout-minutes` to a value that gives the agent headroom, or reduce the size of the input it reasons over.
-2. **Empty data.** Add a defensive brief instruction that tells the agent to write a "no activity" report — and always call the safe output — even when nothing changed.
-3. **Prompt drift.** The brief was ambiguous about what counts as a blocker. Tighten the instruction with a concrete definition or example.
+1. **Timeout.** Définissez `timeout-minutes` sur une valeur qui donne plus de marge à l’agent, ou réduisez la taille des entrées sur lesquelles il raisonne.
+2. **Empty data.** Ajoutez au brief une instruction défensive demandant à l’agent de rédiger un rapport "no activity" et d’appeler quand même la safe output, même lorsqu’il n’y a rien de nouveau.
+3. **Prompt drift.** Le brief était ambigu sur ce qui compte comme blocker. Resserrez l’instruction avec une définition concrète ou un exemple.
 
 </details>
 
-### Watch for this pattern in your own runs
+### Repérez ce schéma dans vos propres exécutions
 
-Open a recent run of your own workflow in the **Actions** tab and skim the log. Ask yourself: does anything here match one of the four failure types above, even if the run technically succeeded? A run can "succeed" (green checkmark) and still exhibit prompt drift or produce empty-data output.
+Ouvrez une exécution récente de votre propre workflow dans l’onglet **Actions** et parcourez rapidement le log. Demandez-vous si quelque chose correspond à l’un des quatre types d’échec ci-dessus, même si l’exécution a techniquement réussi. Une exécution peut "réussir", avec une coche verte, et présenter quand même du prompt drift ou produire une sortie empty-data.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can name the four common agentic workflow failure modes without looking at the table
-- [ ] You matched each of the three practice scenarios to its correct mitigation
-- [ ] You reviewed one of your own workflow runs and identified whether any failure mode applied
+- [ ] Vous pouvez citer les quatre modes d’échec courants des agentic workflows sans regarder le tableau
+- [ ] Vous avez associé chacun des trois scénarios d’exercice à la mitigation correcte
+- [ ] Vous avez examiné une exécution de votre propre workflow et identifié si l’un de ces modes d’échec s’y appliquait
 
-**Return to the main adventure:** [Make Your Workflows Resilient to Failure](22-error-handling-and-resilience.md)
+**Retour à l’aventure principale :** [Rendez vos workflows résilients face aux échecs](22-error-handling-and-resilience.md)

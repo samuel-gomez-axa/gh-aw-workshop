@@ -1,46 +1,48 @@
 <!-- page-journey: all -->
 <!-- page-adventure: advanced -->
-# Make Your Workflows Resilient to Failure
 
-> _A workflow that handles errors gracefully is one you can trust to run unattended, week after week._
+# Rendez vos workflows resilients face aux erreurs
 
-## :dart: What You'll Do
+> _Un workflow qui gère proprement les erreurs est un workflow auquel vous pouvez faire confiance pour tourner sans surveillance, semaine après semaine._
 
-Learn the most common ways agentic workflows fail in production and apply three practical techniques — defensive task briefs, timeout settings, and [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) fallbacks — to keep your workflow useful even when things go wrong.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Apprenez les modes d'échec les plus courants des workflows agentiques en production et appliquez trois techniques pratiques, briefs de tâche défensifs, réglages de timeout et fallbacks de [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/), afin que votre workflow reste utile même quand les choses se passent mal.
 
-- You have a working scheduled workflow (see [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)).
-- You're comfortable editing workflow [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) and task briefs.
+## :clipboard: Avant de commencer
 
-## Steps
+- Vous disposez d'un workflow planifié fonctionnel (voir [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)).
+- Vous êtes à l'aise pour modifier le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) et les briefs de tâche d'un workflow.
 
-### Understand common failure modes
+## Étapes
 
-Agentic workflows most often fail in one of four ways: empty data, tool errors, timeouts, and prompt drift. This step applies three mitigations — a defensive brief, `timeout-minutes`, and a fallback safe-output — that address all four.
+### Comprendre les modes d'échec courants
+
+Les workflows agentiques échouent le plus souvent de quatre façons : données vides, erreurs d'outils, timeouts et dérive du prompt. Cette étape applique trois mitigations, un brief défensif, `timeout-minutes` et une safe-output de secours, qui couvrent ces quatre cas.
 
 > [!TIP]
-> <details>
-> <summary><b>Optional Side Quest:</b> Want a worked example of each failure mode and practice matching failures to fixes before you dive in?</summary>
 >
-> Work through [Side Quest: Recognizing Common Agentic Workflow Failure Modes](side-quest-22-01-failure-modes.md), then come back here.
+> <details>
+> <summary><b>Side quest facultative :</b> Vous voulez un exemple détaillé de chaque mode d'échec et vous exercer à associer chaque échec à sa correction avant de commencer ?</summary>
+>
+> Parcourez [Side Quest: Recognizing Common Agentic Workflow Failure Modes](side-quest-22-01-failure-modes.md), puis revenez ici.
 >
 > </details>
 
-### Apply all three changes with the skill
+### Appliquer les trois changements avec la skill
 
-In your Copilot CLI session in the terminal, paste:
+Dans votre session Copilot CLI dans le terminal, collez :
 
 ```prompt
 /agentic-workflows make daily-status.md resilient: add a fallback brief for empty data, set timeout-minutes to 10, and include a fallback message on the safe-output call.
 ```
 
-The skill applies all three changes and recompiles the [lock file](https://github.github.com/gh-aw/reference/compilation-process/). Review the diff before committing.
+La skill applique ces trois modifications et recompile le [lock file](https://github.github.com/gh-aw/reference/compilation-process/). Examinez le diff avant de commit.
 
-<details>
+<details open>
 <summary>:pencil2: Manual edit path</summary>
 
-Make the three edits manually (see the reference content below), then run:
+Effectuez les trois modifications manuellement, en vous appuyant sur le contenu de référence ci-dessous, puis lancez :
 
 ```bash
 gh aw compile
@@ -51,9 +53,9 @@ git push
 
 </details>
 
-### Write a defensive task brief
+### Rédiger un brief de tâche défensif
 
-A defensive task brief tells the agent what to do when data is missing or sparse. Add an explicit fallback instruction in your task description:
+Un brief de tâche défensif indique à l'agent quoi faire lorsque les données sont manquantes ou peu fournies. Ajoutez une instruction de secours explicite dans votre description de tâche :
 
 ```markdown .github/workflows/daily-status.md
 If there are no open pull requests or issues to summarise,
@@ -61,49 +63,50 @@ write a brief "No activity" report instead of skipping the output step.
 Always call the safe output tool — even for empty results.
 ```
 
-This prevents the most common failure: the agent silently completes without writing any output.
+Cela évite l'échec le plus courant : l'agent termine en silence sans rien écrire.
 
-### Set a timeout
+### Définir un timeout
 
-Long-running tasks can stall a workflow run indefinitely. Add `timeout-minutes` to your workflow frontmatter to cap the run (see [Timeouts](https://github.github.com/gh-aw/reference/rate-limiting-controls/#timeouts)):
+Les tâches longues peuvent bloquer une exécution de workflow indéfiniment. Ajoutez `timeout-minutes` au frontmatter de votre workflow pour limiter la durée d'exécution, comme expliqué dans [Timeouts](https://github.github.com/gh-aw/reference/rate-limiting-controls/#timeouts) :
 
 ```markdown .github/workflows/daily-status.md
 ---
 name: Daily Status Report
 on:
-  schedule: daily
-  workflow_dispatch: {}
+    schedule: daily
+    workflow_dispatch: {}
 permissions:
-  contents: read
-  issues: write
+    contents: read
+    issues: write
 timeout-minutes: 10
 ---
 ```
 
 > [!TIP]
-> <details>
-> <summary>`timeout-minutes` belongs at the top level of gh-aw frontmatter. Do not nest it under `jobs:` or `run:`.</summary>
 >
-> Start with a generous limit (10–15 minutes) and tighten it once you know how long typical runs take.
+> <details>
+> <summary>`timeout-minutes` doit se trouver au niveau racine du frontmatter gh-aw. Ne l'imbriquez pas sous `jobs:` ni sous `run:`.</summary>
+>
+> Commencez par une limite confortable, entre 10 et 15 minutes, puis resserrez-la une fois que vous connaîtrez la durée habituelle des exécutions.
 >
 > </details>
 
-On GitHub Enterprise Server (GHES) and GitHub Enterprise Cloud (GHEC), administrators can set a maximum job timeout at the organisation or enterprise level. When that policy is more restrictive than your `timeout-minutes` value, the enterprise limit takes precedence and the workflow job will be cancelled at the admin-set threshold. Check with your GitHub administrator before relying on a specific `timeout-minutes` value in an enterprise environment.
+Sur GitHub Enterprise Server (GHES) et GitHub Enterprise Cloud (GHEC), les administrateurs peuvent définir un timeout maximal pour les jobs au niveau de l'organisation ou de l'entreprise. Lorsque cette politique est plus restrictive que votre valeur `timeout-minutes`, la limite enterprise l'emporte et le job de workflow sera annulé au seuil défini par l'administration. Vérifiez ce point avec votre administrateur GitHub avant de vous appuyer sur une valeur `timeout-minutes` précise dans un environnement enterprise.
 
-### Add a fallback message to [safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/)
+### Ajouter un message de secours aux [safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/)
 
-When your workflow uses a `noop` or comment safe output, always include a meaningful fallback body. If the agent reaches the output step but has nothing to report, this ensures the run still records a visible result:
+Lorsque votre workflow utilise une safe output `noop` ou de commentaire, incluez toujours un message de secours utile. Si l'agent atteint l'étape de sortie mais n'a rien à signaler, cela garantit que l'exécution laisse tout de même un résultat visible :
 
 ```markdown .github/workflows/daily-status.md
 If no meaningful changes were found, call noop with the message:
 "No changes found in the past 24 hours — workflow ran successfully."
 ```
 
-This makes it easy to distinguish a healthy "quiet" run from a silent failure in the Actions run log.
+Cela permet de distinguer facilement une exécution calme mais saine d'un échec silencieux dans le journal Actions.
 
-### Commit and push your changes
+### Committer et pousser vos changements
 
-The `/agentic-workflows` skill recompiles the lock file automatically. Commit both files and push:
+La skill `/agentic-workflows` recompile automatiquement le lock file. Committez les deux fichiers puis poussez :
 
 ```bash
 git add .
@@ -112,25 +115,27 @@ git push
 ```
 
 > [!IMPORTANT]
-> Frontmatter changes — including `timeout-minutes` — only take effect after the lock file is recompiled. The `/agentic-workflows` skill handles this automatically. If you edited manually in a terminal, run `gh aw compile` before pushing.
+> Les modifications du frontmatter, y compris `timeout-minutes`, ne prennent effet qu'après recompilation du lock file. La skill `/agentic-workflows` s'en charge automatiquement. Si vous avez édité manuellement dans un terminal, lancez `gh aw compile` avant de pousser.
 
-### Verify your changes
+### Vérifier vos changements
 
-After pushing:
+Après le push :
 
-1. Trigger a manual run from the **Actions** tab.
-2. Open the run log and confirm the safe output step runs even when the data set is small or empty.
-3. Check the run duration — it should complete well within your `timeout-minutes` limit.
+1. Déclenchez une exécution manuelle depuis l'onglet **Actions**.
+2. Ouvrez le journal d'exécution et confirmez que l'étape de safe output s'exécute même lorsque le jeu de données est petit ou vide.
+3. Vérifiez la durée d'exécution : elle doit rester largement sous votre limite `timeout-minutes`.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] Your task brief includes an explicit fallback instruction for empty or missing data
-- [ ] Your workflow frontmatter sets `timeout-minutes`
-- [ ] Your safe-output call includes a fallback message for quiet runs
-- [ ] The compiled lock file was updated and committed alongside the workflow source
-- [ ] A manual run completes successfully and the safe output step is visible in the log
-- [ ] You can name at least two common agentic workflow failure modes and how to mitigate them
+- [ ] Votre brief de tâche inclut une instruction de secours explicite pour les données vides ou manquantes
+- [ ] Le frontmatter de votre workflow définit `timeout-minutes`
+- [ ] Votre appel de safe-output inclut un message de secours pour les exécutions calmes
+- [ ] Le lock file compilé a été mis à jour et committé avec la source du workflow
+- [ ] Une exécution manuelle se termine avec succès et l'étape de safe output est visible dans le journal
+- [ ] Vous pouvez citer au moins deux modes d'échec courants d'un workflow agentique et expliquer comment les atténuer
 
 <!-- journey: all -->
-**Next:** [Test Your Prompt Ideas with A/B Experiments](23-ab-experiments.md)
+
+**Suite :** [Testez vos idees de prompt avec des experiences A/B](23-ab-experiments.md)
+
 <!-- /journey -->

@@ -1,117 +1,118 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Agentic Workflow Security Architecture (Explain Like You're 5)
 
-> _Optional: work through this visual primer if you want an intuitive mental model for why gh-aw uses a [sandbox](https://github.github.com/gh-aw/reference/sandbox/), where the agent runs, and what outputs are considered safe._
+# Quête annexe : architecture de sécurité des agentic workflows (comme si vous aviez 5 ans)
 
-## :clipboard: Before You Start
+> _Facultatif : suivez cette introduction visuelle si vous voulez un modèle mental intuitif pour comprendre pourquoi gh-aw utilise un [sandbox](https://github.github.com/gh-aw/reference/sandbox/), où l’agent s’exécute et quelles sorties sont considérées comme sûres._
 
-- You understand the basics of agentic workflows from [What Are Agentic Workflows?](05-agentic-workflows-intro.md).
-- You have a workflow with `permissions` and `tools` [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) from [Write Your First Agentic Workflow](07-your-first-workflow.md).
-- You have started or are about to start [Give Your Agent More Tools with MCP](17-add-mcp-tools.md).
+## :clipboard: Avant de commencer
 
-Think of your workflow like a smart helper in a playroom.
+- Vous comprenez les bases des agentic workflows grâce à [Que sont les agentic workflows ?](05-agentic-workflows-intro.md).
+- Vous avez un workflow avec le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) `permissions` et `tools` issu de [Écrivez votre premier agentic workflow](07-your-first-workflow.md).
+- Vous avez commencé, ou allez commencer, [Donner plus d’outils à votre agent avec MCP](17-add-mcp-tools.md).
 
-- The **repository** is your toy box.
-- The **agent** is the helper who can look at toys and organize them.
-- The **[sandbox](https://github.github.com/gh-aw/reference/sandbox/)** is the play area boundary that keeps the helper from running into the street.
+Imaginez votre workflow comme un assistant intelligent dans une salle de jeux.
+
+- Le **repository** est votre boîte à jouets.
+- L’**agent** est l’assistant qui peut regarder les jouets et les organiser.
+- Le **[sandbox](https://github.github.com/gh-aw/reference/sandbox/)** est la limite de la zone de jeu qui empêche l’assistant de courir dans la rue.
 
 ---
 
-## Why you need a sandbox
+## Pourquoi vous avez besoin d’un sandbox
 
-A powerful helper without boundaries can accidentally do unsafe things.
+Un assistant puissant sans limites peut faire des choses dangereuses par accident.
 
-The sandbox gives your helper clear rules:
+Le sandbox donne à votre assistant des règles claires :
 
-- It can only use the tools you allowed.
-- It can only do actions covered by your declared permissions.
-- It cannot reach random places outside the workflow environment.
+- Il ne peut utiliser que les tools que vous avez autorisés.
+- Il ne peut faire que des actions couvertes par les permissions que vous avez déclarées.
+- Il ne peut pas atteindre des endroits arbitraires en dehors de l’environnement du workflow.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/side-quest-17-02-sandbox-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/side-quest-17-02-sandbox-light.svg">
-  <img alt="Sandbox boundary model for agentic workflows" src="images/side-quest-17-02-sandbox-light.svg">
+  <img alt="Modèle de limite sandbox pour les agentic workflows" src="images/side-quest-17-02-sandbox-light.svg">
 </picture>
 
-Without a sandbox, one mistake could affect too much. With a sandbox, mistakes stay contained.
+Sans sandbox, une seule erreur pourrait affecter trop de choses. Avec un sandbox, les erreurs restent contenues.
 
 ---
 
-## Where the agent is actually running
+## Où l’agent s’exécute réellement
 
-The agent does **not** run on your laptop by default. In this workshop flow, it runs inside a GitHub Actions job on a temporary runner.
+Par défaut, l’agent ne s’exécute **pas** sur votre ordinateur. Dans le parcours de cet atelier, il s’exécute dans un job GitHub Actions sur un runner temporaire.
 
-That means:
+Cela signifie que :
 
-- The environment is created for the run.
-- The agent reads your workflow brief and repository context there.
-- When the run ends, that runtime is discarded.
+- l’environnement est créé pour cette exécution ;
+- l’agent y lit votre brief de workflow et le contexte du dépôt ;
+- lorsque l’exécution se termine, cet environnement d’exécution est supprimé.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/side-quest-17-02-runtime-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/side-quest-17-02-runtime-light.svg">
-  <img alt="Where the agent runs in GitHub Actions" src="images/side-quest-17-02-runtime-light.svg">
+  <img alt="Emplacement d’exécution de l’agent dans GitHub Actions" src="images/side-quest-17-02-runtime-light.svg">
 </picture>
 
-This design reduces long-lived risk because the environment is short-lived and isolated.
+Cette conception réduit les risques de longue durée parce que l’environnement est temporaire et isolé.
 
 ---
 
-## What "[safe output](https://github.github.com/gh-aw/reference/safe-outputs/)" means
+## Ce que signifie « [safe output](https://github.github.com/gh-aw/reference/safe-outputs/) »
 
-Safe output is useful information that avoids harmful leakage or unsafe actions.
+Une safe output est une information utile qui évite les fuites nocives ou les actions dangereuses.
 
-Good output usually:
+Une bonne sortie :
 
-- Summarizes repository activity (issues, PRs, commits, CI status).
-- Uses approved tool results and avoids guessing hidden data.
-- Avoids secrets, tokens, credentials, and private personal data.
-- Stays within the permissions and intent you defined.
+- résume l’activité du dépôt, comme les issues, les PR, les commits ou l’état de la CI ;
+- utilise des résultats d’outils approuvés et évite d’inventer des données cachées ;
+- évite les secrets, tokens, identifiants et données personnelles privées ;
+- reste dans les permissions et l’intention que vous avez définies.
 
 > [!NOTE]
-> Treat logs and comments as public-to-collaborators surfaces. Never design prompts that ask the agent to print secrets.
+> Traitez les logs et les commentaires comme des surfaces visibles par les collaborateurs. Ne concevez jamais de prompts qui demandent à l’agent d’afficher des secrets.
 
 ---
 
-## Security architecture in one sentence
+## L’architecture de sécurité en une phrase
 
-You declare **[permissions](https://github.github.com/gh-aw/reference/permissions/) + tools + task intent**, the runner enforces boundaries, and the agent produces constrained output from allowed data.
+Vous déclarez **[permissions](https://github.github.com/gh-aw/reference/permissions/) + tools + task intent**, le runner applique les limites, et l’agent produit une sortie contrainte à partir de données autorisées.
 
-Here is what a well-scoped workflow frontmatter looks like in practice:
+Voici à quoi ressemble en pratique un frontmatter de workflow correctement délimité :
 
 ```markdown
 ---
 permissions:
-  contents: read
-  issues: read
+    contents: read
+    issues: read
 tools:
-  github:
-    mode: gh-proxy
+    github:
+        mode: gh-proxy
 safe-outputs:
-  add-comment: # presence flag — declares this output surface is allowed
+    add-comment: # presence flag — declares this output surface is allowed
 network:
-  allowed:
-    - api.github.com
-    - copilot-proxy.githubusercontent.com
+    allowed:
+        - api.github.com
+        - copilot-proxy.githubusercontent.com
 ---
 ```
 
-> :thinking: **Predict:** What would happen if you removed `network.allowed` from the frontmatter above and an injected prompt told the agent to send data to an external URL?
+> :thinking: **Prédiction :** Que se passerait-il si vous supprimiez `network.allowed` du frontmatter ci-dessus et qu’un prompt injecté demandait à l’agent d’envoyer des données vers une URL externe ?
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can explain why sandbox boundaries reduce risk in agentic workflows
-- [ ] You can describe where the agent runs during a workshop workflow execution
-- [ ] You can list what makes an output safe vs. unsafe
-- [ ] You can explain how permissions, tools, and [task brief](https://github.github.com/gh-aw/reference/markdown/) work together as a security architecture
+- [ ] Vous pouvez expliquer pourquoi les limites du sandbox réduisent le risque dans les agentic workflows
+- [ ] Vous pouvez décrire où l’agent s’exécute pendant l’exécution d’un workflow de l’atelier
+- [ ] Vous pouvez citer ce qui rend une sortie sûre ou non sûre
+- [ ] Vous pouvez expliquer comment `permissions`, `tools` et le [task brief](https://github.github.com/gh-aw/reference/markdown/) fonctionnent ensemble comme architecture de sécurité
 
 ---
 
 <!-- journey: all -->
-Return to [Give Your Agent More Tools with MCP](17-add-mcp-tools.md).
+
+Retour à [Donner plus d’outils à votre agent avec MCP](17-add-mcp-tools.md).
+
 <!-- /journey -->
-
-

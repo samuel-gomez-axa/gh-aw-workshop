@@ -1,33 +1,34 @@
 <!-- page-journey: all -->
 <!-- page-adventure: advanced -->
-# Manage Costs and AI Credit Budgets
 
-> _Agentic workflows consume [AI Credits (AIC)](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) on every run — learning to measure, predict, and control that spend turns a powerful tool into a sustainable one._
+# Gerez les couts et budgets d'AI Credits
 
-## :dart: What You'll Do
+> _Les workflows agentiques consomment des [AI Credits (AIC)](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) a chaque execution ; apprendre a mesurer, predire et controler cette depense transforme un outil puissant en outil durable._
 
-You'll review your workflow's AI Credit consumption in the GitHub billing dashboard, estimate monthly costs for a scheduled workflow, and apply at least one technique to keep spending within budget.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Vous allez consulter la consommation d'AI Credits de votre workflow dans le tableau de bord de facturation GitHub, estimer les couts mensuels d'un workflow planifie et appliquer au moins une technique pour garder les depenses dans le budget.
 
-- You have completed [Audit and Monitor Your Agentic Workflows](25-audit-and-observability.md).
-- You have run your workflow at least once and seen token usage data in `gh aw logs` output.
-- _(Enterprise users)_ Your GitHub administrator has confirmed that Copilot Enterprise billing is enabled for your organisation.
+## :clipboard: Avant de commencer
 
-## Steps
+- Vous avez termine [Audit and Monitor Your Agentic Workflows](25-audit-and-observability.md).
+- Vous avez execute votre workflow au moins une fois et vu les donnees d'usage des tokens dans la sortie de `gh aw logs`.
+- _(Utilisateurs enterprise)_ Votre administrateur GitHub a confirme que la facturation Copilot Enterprise est activee pour votre organisation.
 
-### Understand AI Credits
+## Etapes
 
-Every agentic workflow run uses an AI model to process your task brief and produce output. GitHub bills this inference as **AI Credits (AIC)**.
+### Comprendre les AI Credits
 
-- One AIC corresponds roughly to 1,000 input tokens processed by the model.
-- A typical daily-status workflow run costs between 0.5 and 3 AIC depending on brief length and tool calls.
-- You pay for both input and output tokens, but input dominates cost for most briefs.
+Chaque execution de workflow agentique utilise un modele IA pour traiter votre brief de tache et produire une sortie. GitHub facture cette inference en **AI Credits (AIC)**.
+
+- Un AIC correspond approximativement a 1 000 tokens d'entree traites par le modele.
+- Une execution typique d'un workflow daily-status coute entre 0,5 et 3 AIC selon la longueur du brief et les appels d'outils.
+- Vous payez a la fois les tokens d'entree et de sortie, mais pour la plupart des briefs, le cout est surtout porte par l'entree.
 
 > [!NOTE]
-> Exact pricing and AIC conversion rates are listed on the [GitHub billing documentation page](https://docs.github.com/en/billing/managing-billing-for-github-copilot/about-billing-for-github-copilot). Rates vary by Copilot plan.
+> Les tarifs exacts et les taux de conversion AIC sont indiques dans la [documentation GitHub sur la facturation](https://docs.github.com/en/billing/managing-billing-for-github-copilot/about-billing-for-github-copilot). Les tarifs varient selon le plan Copilot.
 
-### Check current usage in the billing dashboard
+### Verifier l'usage actuel dans le tableau de bord de facturation
 
 1. Open **github.com** and click your profile picture → **Settings**.
 2. In the left sidebar, click **Billing and plans**.
@@ -40,65 +41,65 @@ Every agentic workflow run uses an AI model to process your task brief and produ
   <img alt="Copilot billing usage dashboard showing AI Credit consumption by feature" src="images/26-billing-dashboard-light.svg">
 </picture>
 
-### Estimate monthly cost for a scheduled workflow
+### Estimer le cout mensuel d'un workflow planifie
 
-Use the per-run cost from `gh aw logs` to project monthly spend.
+Utilisez le cout par execution obtenu via `gh aw logs` pour projeter la depense mensuelle.
 
 ```bash
 gh aw logs daily-status --count 5
 ```
 
-Look at the **AIC** column. Average the last five runs, then multiply:
+Regardez la colonne **AIC**. Faites la moyenne des cinq dernieres executions, puis multipliez :
 
 ```text
 monthly cost = average AIC per run × runs per day × 30
 ```
 
-If your workflow averages 1.5 AIC and runs once a day: `1.5 × 1 × 30 = 45 AIC per month`. Share this estimate with your GitHub administrator before enabling a high-frequency [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule).
+Si votre workflow consomme en moyenne 1.5 AIC et s'execute une fois par jour : `1.5 × 1 × 30 = 45 AIC per month`. Partagez cette estimation avec votre administrateur GitHub avant d'activer une [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule) tres frequente.
 
-### Project costs with [gh aw forecast](https://github.github.com/gh-aw/setup/cli/#forecast-experimental)
+### Projeter les couts avec [gh aw forecast](https://github.github.com/gh-aw/setup/cli/#forecast-experimental)
 
-`gh aw forecast` uses your actual run history and Monte Carlo simulation to project future AIC consumption. Run it for a single workflow to see a P10/P50/P90 probability distribution:
+`gh aw forecast` utilise votre historique reel d'execution et une simulation Monte Carlo pour projeter la consommation future d'AIC. Lancez-le pour un seul workflow afin d'obtenir une distribution de probabilite P10/P50/P90 :
 
 ```bash
 gh aw forecast daily-status
 ```
 
-Use the **P90** figure as a conservative upper bound when requesting a spending limit from your administrator or setting `max-daily-ai-credits`.
+Utilisez la valeur **P90** comme borne haute prudente lorsque vous demandez une limite de depense a votre administrateur ou que vous configurez `max-daily-ai-credits`.
 
 > [!TIP]
-> Try [Side Quest: Project Future AI Credit Costs with `gh aw forecast`](side-quest-26-01-forecast-costs.md) for weekly projections, limited-history forecasting with `--days`, multi-workflow forecasting, and deriving a `max-daily-ai-credits` value from P90.
+> Essayez [Side Quest: Project Future AI Credit Costs with `gh aw forecast`](side-quest-26-01-forecast-costs.md) pour les projections hebdomadaires, les previsions sur historique limite avec `--days`, les previsions multi-workflow et la derivation d'une valeur `max-daily-ai-credits` a partir de P90.
 
-### Reduce token consumption and set guardrails
+### Reduire la consommation de tokens et definir des garde-fous
 
-A few techniques keep spend in check:
+Quelques techniques permettent de garder la depense sous controle :
 
-- **Shorten the task brief** — fewer input tokens per run.
-- **Filter data before passing it to the agent** — smaller context lowers cost.
-- **Cache results with persistent memory** — skip re-processing unchanged data. See [Make Your Workflow Remember Across Runs](20-persistent-memory.md).
-- **Reduce run frequency** — fewer runs means fewer AIC.
+- **Raccourcir le brief de tache** - moins de tokens en entree a chaque execution.
+- **Filtrer les donnees avant de les transmettre a l'agent** - un contexte plus petit reduit le cout.
+- **Mettre les resultats en cache avec une persistent memory** - evitez de retraiter des donnees inchangees. Voir [Make Your Workflow Remember Across Runs](20-persistent-memory.md).
+- **Reduire la frequence d'execution** - moins d'executions signifie moins d'AIC.
 
 > [!TIP]
-> Want a deeper activity for observing where tokens go and testing cost reductions one change at a time? Try [Side Quest: Observe and Reduce Token Costs](side-quest-13-04-token-optimization.md).
+> Vous voulez un exercice plus approfondi pour observer ou partent les tokens et tester les reductions de cout une modification a la fois ? Essayez [Side Quest: Observe and Reduce Token Costs](side-quest-13-04-token-optimization.md).
 
-Three [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) fields enforce hard limits directly in the workflow file:
+Trois champs de [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) imposent des limites strictes directement dans le fichier de workflow :
 
-- **[`timeout-minutes`](https://github.github.com/gh-aw/reference/rate-limiting-controls/#timeouts)** cancels the entire Actions job if it exceeds the limit. The run fails and you are billed only for tokens consumed before cancellation.
-- **[`max-ai-credits`](https://github.github.com/gh-aw/reference/cost-management/#cap-ai-credits-per-run)** caps the AIC a single run may consume, enforced by the AWF firewall. The default when omitted is 1000 AIC. Set to a negative value (e.g. `-1`) to disable enforcement and token steering.
-- **[`max-daily-ai-credits`](https://github.github.com/gh-aw/reference/cost-management/#cap-daily-ai-credits-per-workflow)** caps the total AIC consumed by this workflow across the last 24 hours for the triggering user. Runs that would exceed the cap are blocked before they start. A system default threshold applies when this field is omitted; set to `-1` to disable the guardrail, or provide an explicit integer value to override the default.
+- **[`timeout-minutes`](https://github.github.com/gh-aw/reference/rate-limiting-controls/#timeouts)** annule l'ensemble du job Actions s'il depasse la limite. L'execution echoue et vous n'etes facture que pour les tokens consommes avant l'annulation.
+- **[`max-ai-credits`](https://github.github.com/gh-aw/reference/cost-management/#cap-ai-credits-per-run)** plafonne l'AIC qu'une execution unique peut consommer, avec application par le firewall AWF. La valeur par defaut lorsqu'il est omis est 1000 AIC. Utilisez une valeur negative, par exemple `-1`, pour desactiver l'application de la limite et le token steering.
+- **[`max-daily-ai-credits`](https://github.github.com/gh-aw/reference/cost-management/#cap-daily-ai-credits-per-workflow)** plafonne l'AIC total consomme par ce workflow sur les dernieres 24 heures pour l'utilisateur declencheur. Les executions qui depasseraient cette limite sont bloquees avant de commencer. Un seuil par defaut du systeme s'applique si ce champ est omis ; utilisez `-1` pour desactiver cette garde-fou, ou fournissez une valeur entiere explicite pour remplacer la valeur par defaut.
 
 ```markdown .github/workflows/daily-status.md
 ---
 name: Daily Status Report
 on:
-  schedule: daily on weekdays
+    schedule: daily on weekdays
 timeout-minutes: 10
 max-ai-credits: 1000
 max-daily-ai-credits: 2500
 ---
 ```
 
-In this example, each run is capped at 1000 AIC and the 24-hour total is capped at 2500 AIC — roughly two full runs before the daily guardrail engages. Compile after editing:
+Dans cet exemple, chaque execution est plafonnee a 1000 AIC et le total sur 24 heures a 2500 AIC, soit environ deux executions completes avant que la garde-fou quotidienne ne s'active. Compilez apres la modification :
 
 ```bash
 gh aw compile
@@ -106,13 +107,15 @@ gh aw compile
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You located your AIC usage for this billing cycle in the GitHub billing dashboard
-- [ ] You calculated an estimated monthly AIC cost for your scheduled workflow
-- [ ] You ran `gh aw forecast` and identified the P50 and P90 projections for your workflow
-- [ ] You added `max-ai-credits` and `max-daily-ai-credits` to your workflow frontmatter
-- [ ] You added or verified a `timeout-minutes` value in your workflow frontmatter
-- [ ] You identified at least one technique to reduce token consumption
+- [ ] Vous avez localise votre usage d'AIC pour ce cycle de facturation dans le tableau de bord GitHub
+- [ ] Vous avez calcule un cout mensuel estime en AIC pour votre workflow planifie
+- [ ] Vous avez lance `gh aw forecast` et identifie les projections P50 et P90 pour votre workflow
+- [ ] Vous avez ajoute `max-ai-credits` et `max-daily-ai-credits` au frontmatter de votre workflow
+- [ ] Vous avez ajoute ou verifie une valeur `timeout-minutes` dans le frontmatter de votre workflow
+- [ ] Vous avez identifie au moins une technique pour reduire la consommation de tokens
 
 <!-- journey: all -->
-Want to choose another branch from the workshop hub? Return to [What's Next? Keep Exploring](14-next-steps.md).
+
+Vous voulez choisir une autre branche depuis le hub de l'atelier ? Revenez a [Et maintenant ? Continuez a explorer](14-next-steps.md).
+
 <!-- /journey -->

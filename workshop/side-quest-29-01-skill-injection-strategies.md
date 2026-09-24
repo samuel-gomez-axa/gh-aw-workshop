@@ -1,37 +1,38 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Skill Injection Strategies — Hint, Fusion, and Inline
 
-> _Optional: use this deeper guide if you want the full decision picture for wiring a [`SKILL.md`](https://github.github.com/gh-aw/reference/custom-agent-for-aw/#using-the-skill-files-for-agentic-workflows) into a workflow prompt before you return to [Step 29](29-skills-and-domain-knowledge.md)._
+# Quête annexe : stratégies d’injection de skill — hint, fusion et inline
 
-## :dart: What You'll Do
+> _Facultatif : utilisez ce guide plus détaillé si vous voulez une vision complète des choix possibles pour brancher un [`SKILL.md`](https://github.github.com/gh-aw/reference/custom-agent-for-aw/#using-the-skill-files-for-agentic-workflows) dans le prompt d’un workflow avant de revenir à [l’étape 29](29-skills-and-domain-knowledge.md)._
 
-Compare three strategies for connecting a `SKILL.md` to a workflow prompt — **hint**, **fusion**, and **inline** — and practice writing each one. By the end, you'll be able to pick the right strategy for a given task and context budget.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Comparez trois stratégies pour connecter un `SKILL.md` à un prompt de workflow, **hint**, **fusion** et **inline**, puis exercez-vous à écrire chacune d’elles. À la fin, vous serez capable de choisir la bonne stratégie pour une tâche donnée et un budget de contexte donné.
 
-- You are working through [Teach Your Agent Domain Knowledge with Skills](29-skills-and-domain-knowledge.md).
-- You have a `SKILL.md` file already written, such as `.github/skills/issue-triage/SKILL.md` from Step 29.
+## :clipboard: Avant de commencer
 
----
-
-## Decide with one table
-
-| Factor | Hint (generalist) | Fusion (targeted) | Inline (self-contained) |
-|---|---|---|---|
-| Task domain | Broad or unknown at authoring time | Narrow and well-defined | Specific to one workflow |
-| Skill set | Grows dynamically over time | Known and stable | Not reused elsewhere |
-| Context budget | Generous | Tight | Small — only what fits inline |
-| Determinism | Lower — agent chooses what applies | Higher — you specify the exact fragment | Highest — content ships with the workflow |
-| Reuse | Across many workflows | Across many workflows | Single workflow only |
-
-> :thinking: **Predict:** Before reading the examples below, guess which strategy fits your Step 29 skill. Does your task domain stay narrow, or could it grow to cover new conventions later?
+- Vous êtes en train de suivre [Enseignez des connaissances métier à votre agent avec des skills](29-skills-and-domain-knowledge.md).
+- Vous disposez déjà d’un fichier `SKILL.md`, par exemple `.github/skills/issue-triage/SKILL.md` issu de l’étape 29.
 
 ---
 
-## Hint: let the agent discover skills itself
+## Décider avec un tableau
 
-Use **hint** when you want the agent to look around the repository and self-select relevant skills. This is the lowest-effort option and scales well as your skill library grows, at the cost of some determinism — you're trusting the agent's judgment about what applies.
+| Facteur             | Hint (generalist)                              | Fusion (targeted)                           | Inline (self-contained)                                 |
+| ------------------- | ---------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- |
+| Domaine de la tâche | Large ou inconnu au moment de l’écriture       | Étroit et bien défini                       | Spécifique à un seul workflow                           |
+| Ensemble de skills  | Évolue dynamiquement au fil du temps           | Connu et stable                             | Non réutilisé ailleurs                                  |
+| Budget de contexte  | Large                                          | Restreint                                   | Petit, seulement ce qui tient en inline                 |
+| Déterminisme        | Plus faible, l’agent choisit ce qui s’applique | Plus élevé, vous précisez le fragment exact | Le plus élevé, le contenu est embarqué avec le workflow |
+| Réutilisation       | À travers plusieurs workflows                  | À travers plusieurs workflows               | Un seul workflow                                        |
+
+> :thinking: **Prédiction :** Avant de lire les exemples ci-dessous, devinez quelle stratégie correspond à votre skill de l’étape 29. Le domaine de votre tâche reste-t-il étroit, ou pourrait-il s’étendre plus tard à de nouvelles conventions ?
+
+---
+
+## Hint : laisser l’agent découvrir lui-même les skills
+
+Utilisez **hint** lorsque vous voulez que l’agent explore le dépôt et sélectionne lui-même les skills pertinents. C’est l’option la moins coûteuse en effort et elle passe bien à l’échelle à mesure que votre bibliothèque de skills grandit, au prix d’un peu moins de déterminisme : vous faites confiance au jugement de l’agent pour décider ce qui s’applique.
 
 ```markdown
 If the repository contains `SKILL.md` files under `skills/` or `.github/skills/`,
@@ -39,13 +40,13 @@ check which ones are relevant to this task. For each relevant skill, read its
 content and apply the guidance it provides.
 ```
 
-**Action:** Add this hint paragraph to a workflow brief that touches issues, pull requests, or another domain covered by one of your skills.
+**Action :** Ajoutez ce paragraphe de hint à un workflow brief qui touche aux issues, aux pull requests ou à un autre domaine couvert par l’un de vos skills.
 
 ---
 
-## Fusion: reference the exact fragment you need
+## Fusion : référencer le fragment exact dont vous avez besoin
 
-Use **fusion** when you know exactly which skill section the agent needs and want to keep the prompt compact. A fusion comment references only the relevant fragment — never the whole file — so the compiler pulls in just that piece at compile time.
+Utilisez **fusion** lorsque vous savez exactement de quelle section du skill l’agent a besoin et que vous voulez garder un prompt compact. Un commentaire de fusion ne référence que le fragment pertinent, jamais le fichier entier, afin que le compilateur n’intègre que cette partie au moment de la compilation.
 
 ```markdown
 <!-- gh-skill-fusion: .github/skills/issue-triage/SKILL.md#issue-triage -->
@@ -55,16 +56,16 @@ body includes reproduction steps, expected vs. actual behavior, and environment
 details.
 ```
 
-**Action:** Add a `gh-skill-fusion` comment above one workflow section that maps directly to a heading in your `SKILL.md`.
+**Action :** Ajoutez un commentaire `gh-skill-fusion` au-dessus d’une section de workflow qui correspond directement à un titre de votre `SKILL.md`.
 
 > [!TIP]
-> The anchor after `#` in the fusion comment must match a heading in the target `SKILL.md` exactly. If it doesn't match, the compiler cannot resolve the fragment.
+> L’ancre après `#` dans le commentaire de fusion doit correspondre exactement à un titre du `SKILL.md` cible. Si elle ne correspond pas, le compilateur ne peut pas résoudre le fragment.
 
 ---
 
-## Inline: embed the skill in the workflow file itself
+## Inline : embarquer le skill directement dans le fichier du workflow
 
-Use **inline** skills when the skill is small, specific to a single workflow, and you don't need it anywhere else. Embed the fragment directly in the workflow file under a `## skill: \`name\`` heading — gh-aw extracts it to the right location at setup time, so you don't maintain a separate `SKILL.md` file at all.
+Utilisez les skills **inline** lorsque le skill est petit, spécifique à un seul workflow et inutile ailleurs. Intégrez le fragment directement dans le fichier de workflow sous un titre `## skill: \`name\``; gh-aw l’extrait au bon endroit lors du setup, de sorte que vous n’avez pas à maintenir de fichier`SKILL.md` séparé.
 
 ```markdown
 ## skill: `issue-triage`
@@ -74,19 +75,19 @@ For issues classified as `bug`, confirm the body includes steps to reproduce,
 expected vs. actual behavior, and environment details.
 ```
 
-**Action:** If you have a one-off convention that only this workflow needs, try moving it into a `## skill:` block instead of a separate file.
+**Action :** Si vous avez une convention ponctuelle dont seul ce workflow a besoin, essayez de la déplacer dans un bloc `## skill:` au lieu d’un fichier séparé.
 
 ---
 
-## Practice: apply all three to one skill
+## Entraînement : appliquer les trois stratégies à un seul skill
 
-Take the `.github/skills/issue-triage/SKILL.md` file you wrote in Step 29 (or an equivalent skill of your own) and try each strategy in turn:
+Prenez le fichier `.github/skills/issue-triage/SKILL.md` que vous avez écrit à l’étape 29, ou un skill équivalent de votre cru, et essayez successivement chaque stratégie :
 
-1. Add a **hint** paragraph to a workflow brief and compile it.
-2. Replace the hint with a **fusion** comment pointing at one heading in your skill, and compile again.
-3. Copy the same content into a `## skill:` inline block in the workflow file itself, remove the fusion comment, and compile a third time.
+1. Ajoutez un paragraphe **hint** à un workflow brief et compilez-le.
+2. Remplacez le hint par un commentaire **fusion** pointant vers un titre de votre skill, puis recompilez.
+3. Copiez le même contenu dans un bloc inline `## skill:` directement dans le fichier de workflow, supprimez le commentaire de fusion et compilez une troisième fois.
 
-After each compile, check the `.lock.yml` for the activation step or extracted skill content, and confirm you get no warnings about an unpinned or unresolved skill reference.
+Après chaque compilation, vérifiez dans le `.lock.yml` l’étape d’activation ou le contenu de skill extrait, et confirmez que vous n’obtenez aucun avertissement concernant une référence de skill non épinglée ou non résolue.
 
 ```bash
 gh aw compile
@@ -94,14 +95,16 @@ gh aw compile
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I can explain when to choose hint over fusion, and when to choose inline over both
-- [ ] I wrote a hint paragraph referencing `skills/` or `.github/skills/`
-- [ ] I wrote a fusion comment with a valid anchor matching a `SKILL.md` heading
-- [ ] I wrote an inline `## skill:` block as an alternative to a separate file
-- [ ] `gh aw compile` succeeded for at least one of these strategies with no unpinned-skill warnings
+- [ ] Je peux expliquer quand choisir hint plutôt que fusion, et quand choisir inline plutôt que les deux autres
+- [ ] J'ai ecrit un paragraphe hint faisant reference a `skills/` ou `.github/skills/`
+- [ ] J'ai écrit un commentaire fusion avec une ancre valide correspondant à un titre de `SKILL.md`
+- [ ] J'ai ecrit un bloc inline `## skill:` comme alternative a un fichier separe
+- [ ] `gh aw compile` a réussi pour au moins une de ces stratégies, sans avertissement de skill non épinglé
 
 ---
 
 <!-- journey: all -->
-Return to [Teach Your Agent Domain Knowledge with Skills](29-skills-and-domain-knowledge.md).
+
+Retour à [Enseignez des connaissances métier à votre agent avec des skills](29-skills-and-domain-knowledge.md).
+
 <!-- /journey -->

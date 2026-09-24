@@ -1,28 +1,29 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest 09-01b: Pattern — Empty `[result]` Data
 
-## :dart: What You'll Do
+# Side Quest 09-01b : Motif — données `[result]` vides
 
-You will diagnose empty [tool](https://github.github.com/gh-aw/reference/tools/) responses and decide whether the root cause is missing read scope, over-filtering, or truly empty repository data.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Vous allez diagnostiquer des réponses vides de [tool](https://github.github.com/gh-aw/reference/tools/) et décider si la cause racine est une portée de lecture manquante, un filtrage excessif ou des données réellement absentes dans le dépôt.
 
-- Complete [Side Quest: Diagnosing Common Agent Output Patterns](side-quest-09-01-debug-output.md)
+## :clipboard: Avant de commencer
 
-An empty result does not always mean failure. The call may succeed but return zero records. Start by checking whether your tool needs a read scope that is missing from `permissions:`. Then test whether your query is too narrow. For example, `labels: bug` returns nothing if no issue currently has that label. Your goal is to isolate one variable at a time so you can see whether the problem is authorization, query logic, or data state.
+- Terminez [Side Quest : Diagnostiquer les motifs courants de sortie d’agent](side-quest-09-01-debug-output.md)
 
-Use this sequence:
+Un résultat vide ne signifie pas toujours un échec. L’appel peut réussir mais renvoyer zéro enregistrement. Commencez par vérifier si votre tool a besoin d’une portée de lecture absente de `permissions:`. Vérifiez ensuite si votre requête est trop étroite. Par exemple, `labels: bug` ne renvoie rien si aucune issue n’a actuellement ce label. Votre objectif est d’isoler une variable à la fois pour voir si le problème vient de l’autorisation, de la logique de requête ou de l’état des données.
 
-1. Confirm the required read scope in workflow [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) (for example, `issues: read`).
-2. Re-run with broader filters (or no optional filters).
-3. Compare with repository reality in the GitHub UI.
+Utilisez cette séquence :
 
-If the call still returns empty and data exists, ask the `agentic-workflows` skill to review your tool arguments, or keep [`gh aw compile --watch`](https://github.github.com/gh-aw/setup/cli/#compile) running while you adjust inputs.
+1. Vérifiez la portée de lecture requise dans le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) du workflow (par exemple `issues: read`).
+2. Relancez avec des filtres plus larges, ou sans filtres optionnels.
+3. Comparez avec la réalité du dépôt dans GitHub UI.
 
-## Hands-On Exercise
+Si l’appel renvoie encore un résultat vide alors que les données existent, demandez au skill `agentic-workflows` de relire vos arguments de tool, ou laissez [`gh aw compile --watch`](https://github.github.com/gh-aw/setup/cli/#compile) tourner pendant que vous ajustez les entrées.
 
-Identify the pattern before opening the answer.
+## Exercice pratique
+
+Identifiez le motif avant d’ouvrir la réponse.
 
 ```text
 🔧 [tool] github.list_issues → {state: open, labels: "bug"}
@@ -32,19 +33,19 @@ Identify the pattern before opening the answer.
 ```
 
 <details>
-<summary>Show answer</summary>
+<summary>Afficher la réponse</summary>
 
-Pattern: **`[tool]` call returns empty results**. Check required read [permissions](https://github.github.com/gh-aw/reference/permissions/) and broaden filters to confirm data availability.
+Motif : **l’appel `[tool]` renvoie des résultats vides**. Vérifiez les [permissions](https://github.github.com/gh-aw/reference/permissions/) de lecture requises et élargissez les filtres pour confirmer la disponibilité des données.
 
 </details>
 
 <!-- journey: all -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] I can distinguish an empty result from a failed tool call
-- [ ] I can verify required read scopes in `permissions:`
-- [ ] I can test a broader query to isolate filter problems
-- [ ] I can validate whether matching repository data actually exists
+- [ ] Je peux distinguer un résultat vide d’un appel de tool en échec
+- [ ] Je peux vérifier les portées de lecture requises dans `permissions:`
+- [ ] Je peux tester une requête plus large pour isoler les problèmes de filtre
+- [ ] Je peux vérifier si les données correspondantes existent réellement dans le dépôt
 
 <!-- /journey -->
-

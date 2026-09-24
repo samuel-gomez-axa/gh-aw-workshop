@@ -1,34 +1,29 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Self-Hosted Runner Infrastructure Deep Dive
 
-> _A companion to [Run Your Agentic Workflow on a Self-Hosted Runner](24-self-hosted-runners.md). Use this side quest when your enterprise environment requires [ephemeral runners](https://github.github.com/gh-aw/reference/self-hosted-runners/), proxy configuration, or air-gapped network isolation._
+# Quête annexe : exploration approfondie de l’infrastructure des self-hosted runners
 
-## :clipboard: Before You Start
+> _Complément de [Exécutez votre agentic workflow sur un self-hosted runner](24-self-hosted-runners.md). Utilisez cette quête annexe lorsque votre environnement enterprise exige des [ephemeral runners](https://github.github.com/gh-aw/reference/self-hosted-runners/), une configuration proxy ou une isolation réseau air-gapped._
 
-- You completed [Run Your Agentic Workflow on a Self-Hosted Runner](24-self-hosted-runners.md) or are actively working through it.
-- You have access to your enterprise runner infrastructure or can consult your admin.
+## :clipboard: Avant de commencer
 
-## Ephemeral and [JIT runners](https://github.github.com/gh-aw/reference/self-hosted-runners/)
+- Vous avez terminé [Exécutez votre agentic workflow sur un self-hosted runner](24-self-hosted-runners.md) ou vous êtes en train de la suivre.
+- Vous avez accès à votre infrastructure enterprise de runners, ou pouvez consulter votre administrateur.
 
-Ephemeral runners are destroyed after a single job — each run starts on a fresh machine,
-preventing state from leaking between executions. Register one using the ephemeral flag
-and target it with the same label strategy described in Step 24.
+## Ephemeral et [JIT runners](https://github.github.com/gh-aw/reference/self-hosted-runners/)
 
-Just-in-time (JIT) runners are provisioned on demand and deregistered immediately after use.
-They require a registration token scoped to your organisation or repository and are typically
-managed by a runner controller such as actions-runner-controller.
+Les ephemeral runners sont détruits après un seul job. Chaque exécution démarre donc sur une machine neuve, ce qui évite toute fuite d’état entre exécutions. Enregistrez-en un avec le flag ephemeral et ciblez-le avec la même stratégie de labels que celle décrite dans l’étape 24.
+
+Les runners just-in-time, ou JIT, sont provisionnés à la demande puis désenregistrés immédiatement après usage. Ils exigent un registration token limité à votre organisation ou à votre dépôt et sont généralement gérés par un runner controller comme actions-runner-controller.
 
 > [!TIP]
-> Ephemeral and JIT runners are the recommended pattern for [agentic workflows](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) in enterprise environments: they eliminate residual state and ensure each run begins in a known-clean environment.
+> Les ephemeral et JIT runners sont le modèle recommandé pour les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) en environnement enterprise : ils éliminent l’état résiduel et garantissent que chaque exécution commence dans un environnement propre et connu.
 
-## Proxy and network requirements
+## Exigences proxy et réseau
 
-Self-hosted runners in enterprise environments often sit behind an outbound proxy.
-The [agentic engine](https://github.github.com/gh-aw/reference/engines/) needs to reach model endpoints and GitHub APIs.
+Dans les environnements enterprise, les self-hosted runners se trouvent souvent derrière un proxy sortant. L’[agentic engine](https://github.github.com/gh-aw/reference/engines/) doit pouvoir joindre les endpoints du modèle et les API GitHub.
 
-If your runner uses a proxy, set these environment variables in the runner's system
-configuration **before** registering it, or ask your admin to confirm they are already set:
+Si votre runner utilise un proxy, définissez ces variables d’environnement dans la configuration système du runner **avant** de l’enregistrer, ou demandez à votre administrateur de confirmer qu’elles sont déjà définies :
 
 ```bash
 HTTPS_PROXY=https://proxy.example.com:3128
@@ -36,42 +31,38 @@ HTTP_PROXY=http://proxy.example.com:3128
 NO_PROXY=localhost,127.0.0.1,github.example.com
 ```
 
-You do **not** need to add these to the workflow file itself — the runner process
-inherits them from the system environment automatically.
+Vous n’avez **pas** besoin de les ajouter au fichier de workflow lui-même : le processus du runner les hérite automatiquement de l’environnement système.
 
 > [!NOTE]
-> The exact proxy hostname and port come from your network team or enterprise admin. The values above are examples only.
+> Le nom d’hôte exact du proxy et le port doivent vous être fournis par votre équipe réseau ou votre administrateur enterprise. Les valeurs ci-dessus ne sont que des exemples.
 
-## Network isolation
+## Isolation réseau
 
-If your runner operates in an air-gapped or restricted environment, ensure it can reach
-the GitHub API, your model endpoint, and any MCP tool servers your workflow calls.
-Work with your network admin to allowlist these endpoints before running agentic workflows.
+Si votre runner opère dans un environnement air-gapped ou restreint, assurez-vous qu’il peut joindre l’API GitHub, l’endpoint de votre modèle et tous les MCP tool servers appelés par votre workflow. Travaillez avec votre administrateur réseau pour placer ces endpoints en allowlist avant d’exécuter des agentic workflows.
 
-You can use the `network.allowed` frontmatter field to explicitly declare the domains your
-workflow needs:
+Vous pouvez utiliser le champ de frontmatter `network.allowed` pour déclarer explicitement les domaines dont votre workflow a besoin :
 
 ```markdown
 ---
 network:
-  allowed:
-    - api.github.com
-    - api.example.com
+    allowed:
+        - api.github.com
+        - api.example.com
 ---
 ```
 
-After a successful run, the `firewall.md` artifact provides a ready-made list of every
-domain the agent contacted — share it with your security team as an allowlist baseline.
-See [Audit Reference](side-quest-25-01-audit-reference.md) for details on reading firewall logs.
+Après une exécution réussie, l’artifact `firewall.md` fournit une liste prête à l’emploi de chaque domaine contacté par l’agent. Partagez-la avec votre équipe sécurité comme baseline d’allowlist. Consultez [Référence d’audit](side-quest-25-01-audit-reference.md) pour les détails de lecture des logs firewall.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You understand the difference between ephemeral runners and JIT runners
-- [ ] You know where to set proxy environment variables for a self-hosted runner
-- [ ] You can identify which endpoints an agentic workflow needs to reach (GitHub API, model endpoint, MCP servers)
-- [ ] You know how to use `network.allowed` in frontmatter to declare required domains
-- [ ] You know how to use the `firewall.md` artifact to build an allowlist for your security team
+- [ ] Vous comprenez la différence entre ephemeral runners et JIT runners
+- [ ] Vous savez où définir les variables d’environnement proxy pour un self-hosted runner
+- [ ] Vous pouvez identifier les endpoints qu’un agentic workflow doit joindre, API GitHub, endpoint du modèle, MCP servers
+- [ ] Vous savez utiliser `network.allowed` dans le frontmatter pour declarer les domaines requis
+- [ ] Vous savez utiliser l’artifact `firewall.md` pour construire une allowlist à destination de votre équipe sécurité
 
 <!-- journey: all -->
-Return to [Run Your Agentic Workflow on a Self-Hosted Runner](24-self-hosted-runners.md).
+
+Retour à [Exécutez votre agentic workflow sur un self-hosted runner](24-self-hosted-runners.md).
+
 <!-- /journey -->

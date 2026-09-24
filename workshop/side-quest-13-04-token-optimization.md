@@ -1,146 +1,147 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Observe and Reduce Token Costs
 
-> _Use this activity when you want to move from “my workflow costs something” to “I know why it costs that much, and I can lower it on purpose.”_
+# Quête Annexe : Observer Et Réduire Les Coûts En Tokens
 
-## :clipboard: Before You Start
+> _Utilisez cette activité lorsque vous voulez passer de « mon workflow coûte quelque chose » à « je sais pourquoi il coûte autant, et je peux le réduire intentionnellement »._
 
-- You completed [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
-- You have a working PR reviewer workflow or another workflow with at least 5 completed runs so you can compare before-and-after usage.
-- If you want extra background on [AIC](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic), audit artifacts, or budget guardrails, continue later to [Audit and Monitor Your Agentic Workflows](25-audit-and-observability.md) and [Manage Costs and AI Credit Budgets](26-manage-costs-and-budgets.md).
+## :clipboard: Avant De Commencer
 
-## Build a cost baseline
+- Vous avez terminé [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
+- Vous avez un workflow de revue de PR fonctionnel, ou un autre workflow avec au moins 5 runs terminés pour pouvoir comparer l'usage avant/après.
+- Si vous voulez davantage de contexte sur l'[AIC](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic), les audit artifacts ou les garde-fous de budget, poursuivez plus tard avec [Audit and Monitor Your Agentic Workflows](25-audit-and-observability.md) et [Manage Costs and AI Credit Budgets](26-manage-costs-and-budgets.md).
 
-Start by measuring your current pattern before you change anything:
+## Établissez Une Référence De Coût
+
+Commencez par mesurer votre pattern actuel avant de modifier quoi que ce soit :
 
 ```bash
 gh aw logs <your-workflow-id> --count 5
 ```
 
-Record three things from the last five runs:
+Relevez trois éléments sur les cinq derniers runs :
 
-| Signal | What to record | Why it matters |
-|---|---|---|
-| AIC | Average and highest run | Shows your baseline and worst case |
-| Conclusion | Success or failure | Failed runs still spend credits |
-| Model | Which model ran | Helps explain differences between runs |
+| Signal     | Ce qu'il faut relever        | Pourquoi c'est utile                          |
+| ---------- | ---------------------------- | --------------------------------------------- |
+| AIC        | Moyenne et run le plus élevé | Montre votre référence et le pire cas         |
+| Conclusion | Succès ou échec              | Même les runs en échec consomment des crédits |
+| Model      | Le modèle exécuté            | Aide à expliquer les différences entre runs   |
 
-If one run is much higher than the others, audit it:
+Si un run est nettement plus élevé que les autres, auditez-le :
 
 ```bash
 gh aw audit <run-id> --parse
 ```
 
-> See the [gh aw audit reference](https://github.github.com/gh-aw/reference/audit/#gh-aw-audit) for full options.
+> Consultez la [gh aw audit reference](https://github.github.com/gh-aw/reference/audit/#gh-aw-audit) pour toutes les options.
 
-Then inspect:
+Examinez ensuite :
 
-- `log.md` for long agent turns or repeated reasoning
-- `agent_usage.json` for token totals
-- `mcp-logs/` for repeated tool calls
-- `firewall.md` for blocked domains that may have forced retries or fallback behavior
+- `log.md` pour repérer les longs tours d'agent ou les raisonnements répétés
+- `agent_usage.json` pour les totaux de tokens
+- `mcp-logs/` pour les appels d'outils répétés
+- `firewall.md` pour les domaines bloqués qui ont pu provoquer des retries ou des comportements de repli
 
-## Match cost symptoms to likely causes
+## Associez Les Symptômes De Coût À Leurs Causes Probables
 
-Use your baseline to decide what to change first:
+Utilisez votre référence pour décider quoi changer en premier :
 
-| If you observe this | Check for this cause | First fix to try |
-|---|---|---|
-| AIC grows after you add more repository data | Too much raw context in the brief | Pre-filter the data in a deterministic step before passing it to the agent |
-| One run is much higher than the others | The agent explored too broadly or retried tool calls | Tighten the brief and remove tools the task does not need |
-| Every run costs about the same and feels high | The brief is longer than it needs to be | Shorten instructions, examples, and repeated boilerplate |
-| Costs spike after adding a new schedule | The workflow runs more often than the value it creates | Reduce the schedule frequency or add conditions so no-op runs skip the agent |
-| The workflow keeps talking about the same items | The agent re-processes unchanged data every run | Add [persistent memory](20-persistent-memory.md) or a deterministic diff step |
+| Si vous observez ceci                                    | Vérifiez cette cause                                              | Première correction à essayer                                                                       |
+| -------------------------------------------------------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| L'AIC augmente après l'ajout de plus de données du dépôt | Trop de contexte brut dans le brief                               | Préfiltrez les données dans une étape déterministe avant de les passer à l'agent                    |
+| Un run est bien plus élevé que les autres                | L'agent a exploré trop largement ou a relancé des appels d'outils | Resserrez le brief et retirez les outils dont la tâche n'a pas besoin                               |
+| Chaque run coûte à peu près pareil et paraît élevé       | Le brief est plus long que nécessaire                             | Raccourcissez les instructions, exemples et boilerplate répété                                      |
+| Les coûts montent après l'ajout d'un nouveau schedule    | Le workflow s'exécute plus souvent que sa valeur produite         | Réduisez la fréquence du schedule ou ajoutez des conditions pour que les no-op runs évitent l'agent |
+| Le workflow reparle sans cesse des mêmes éléments        | L'agent retraite des données inchangées à chaque run              | Ajoutez de la [persistent memory](20-persistent-memory.md) ou une étape de diff déterministe        |
 
-## Use the highest-leverage reduction techniques
+## Utilisez Les Techniques De Réduction Les Plus Rentables
 
-Apply one change at a time so you can see which technique helped.
+Appliquez un changement à la fois afin de voir quelle technique a aidé.
 
-### Pass less context to the model
+### Passez moins de contexte au modèle
 
-The cheapest token is the one you never send.
+Le token le moins cher est celui que vous n'envoyez jamais.
 
-- Replace raw issue or PR dumps with a deterministic summary step.
-- Pass only the fields the agent needs.
-- Limit history windows when a full backlog is unnecessary.
+- Remplacez les dumps bruts d'issues ou de PR par une étape de résumé déterministe.
+- Ne passez que les champs dont l'agent a besoin.
+- Limitez les fenêtres d'historique lorsqu'un backlog complet n'est pas nécessaire.
 
-### Make the brief more specific
+### Rendez Le Brief Plus Spécifique
 
-Vague prompts often cost more because the agent explores, retries, or writes too much.
+Les prompts vagues coûtent souvent plus cher parce que l'agent explore davantage, recommence ou écrit trop.
 
-- State the exact output shape you want.
-- Tell the agent what not to do.
-- Remove duplicate instructions and long examples once the pattern is clear.
+- Indiquez la forme exacte de sortie voulue.
+- Dites à l'agent ce qu'il ne doit pas faire.
+- Retirez les instructions en double et les longs exemples une fois le pattern compris.
 
-### Reduce unnecessary runs
+### Réduisez Les Runs Inutiles
 
-If the workflow does not need to run, the cheapest run is zero AIC.
+Si le workflow n'a pas besoin de s'exécuter, le run le moins cher est celui à zéro AIC.
 
-- Lower the schedule frequency.
-- Add `if:` conditions around setup steps so you only call the agent when new data exists.
-- Use [`workflow_dispatch`](https://github.github.com/gh-aw/reference/triggers/#dispatch-triggers-workflowdispatch) for occasional manual analysis instead of a frequent [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule).
+- Réduisez la fréquence du schedule.
+- Ajoutez des conditions `if:` autour des étapes de préparation afin de n'appeler l'agent que lorsque de nouvelles données existent.
+- Utilisez [`workflow_dispatch`](https://github.github.com/gh-aw/reference/triggers/#dispatch-triggers-workflowdispatch) pour une analyse manuelle occasionnelle plutôt qu'un [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule) fréquent.
 
-### Avoid re-processing unchanged work
+### Évitez De Retraiter Un Travail Inchangé
 
-Repeated work is repeated cost.
+Un travail répété est un coût répété.
 
-- Use [cache-memory or repo-memory](20-persistent-memory.md) to remember what was already handled.
-- Store identifiers, timestamps, or hashes so the agent can skip items it has already seen.
-- Combine memory with a deterministic pre-filter for the biggest savings.
+- Utilisez [cache-memory or repo-memory](20-persistent-memory.md) pour mémoriser ce qui a déjà été traité.
+- Stockez des identifiants, timestamps ou hashes afin que l'agent puisse ignorer les éléments déjà vus.
+- Combinez la mémoire avec un préfiltrage déterministe pour obtenir les gains les plus importants.
 
-### Keep tool usage narrow
+### Gardez Un Usage Des Outils Très Ciblé
 
-Extra tool calls can increase cost indirectly by extending the turn and adding more reasoning.
+Des appels d'outils supplémentaires peuvent accroître indirectement le coût en allongeant le tour et en ajoutant du raisonnement.
 
-- Expose only the tools the workflow needs.
-- Prefer one targeted [MCP](https://github.github.com/gh-aw/reference/mcp-gateway/) query over several broad ones.
-- When possible, fetch structured data in a deterministic step and let the agent interpret it.
+- N'exposez que les outils dont le workflow a besoin.
+- Préférez une requête [MCP](https://github.github.com/gh-aw/reference/mcp-gateway/) ciblée à plusieurs requêtes larges.
+- Quand c'est possible, récupérez des données structurées dans une étape déterministe et laissez l'agent les interpréter.
 
-### Compare quality before choosing a more expensive setup
+### Comparez La Qualité Avant De Choisir Une Configuration Plus Chère
 
-Higher cost is only justified when it improves the outcome enough to matter.
+Un coût plus élevé n'est justifié que s'il améliore suffisamment le résultat pour que cela compte.
 
-- Compare prompt variants with [A/B experiments](23-ab-experiments.md).
-- If your organisation supports multiple models, compare a lower-cost option against your current workflow before standardising on the more expensive one.
+- Comparez des variantes de prompt avec des [A/B experiments](23-ab-experiments.md).
+- Si votre organisation prend en charge plusieurs modèles, comparez une option moins coûteuse à votre workflow actuel avant de standardiser l'option plus chère.
 
-## Add hard guardrails
+## Ajoutez Des Garde-Fous Stricts
 
-After you reduce cost, keep it reduced:
+Après avoir réduit le coût, gardez-le bas :
 
-- Use [`max-ai-credits`](https://github.github.com/gh-aw/reference/triggers/#ai-credits-guardrail-max-ai-credits) to cap a single run.
-- Use [`max-daily-ai-credits`](https://github.github.com/gh-aw/reference/triggers/#daily-per-workflow-ai-credits-guardrail-max-daily-ai-credits) to cap 24-hour usage.
-- Use [`timeout-minutes`](https://github.github.com/gh-aw/reference/frontmatter/) to stop unusually long runs.
-- Use [gh aw forecast](side-quest-26-01-forecast-costs.md) to size the guardrails from real history instead of guessing.
+- Utilisez [`max-ai-credits`](https://github.github.com/gh-aw/reference/triggers/#ai-credits-guardrail-max-ai-credits) pour plafonner un run unique.
+- Utilisez [`max-daily-ai-credits`](https://github.github.com/gh-aw/reference/triggers/#daily-per-workflow-ai-credits-guardrail-max-daily-ai-credits) pour plafonner l'usage sur 24 heures.
+- Utilisez [`timeout-minutes`](https://github.github.com/gh-aw/reference/frontmatter/) pour arrêter les runs anormalement longs.
+- Utilisez [gh aw forecast](side-quest-26-01-forecast-costs.md) pour dimensionner les garde-fous à partir d'un historique réel plutôt qu'au doigt mouillé.
 
-> See [Cost Management](https://github.github.com/gh-aw/reference/cost-management/) for the full list of monitoring commands and guardrail options.
+> Consultez [Cost Management](https://github.github.com/gh-aw/reference/cost-management/) pour la liste complète des commandes de supervision et des options de garde-fous.
 
-## Try it yourself
+## Essayez Vous-Même
 
-### Run one optimization cycle
+### Exécutez Un Cycle D'optimisation
 
-1. Pick your PR reviewer workflow (or another workflow) and copy the average AIC from your last five runs.
-2. Choose one technique from this page.
-3. Make exactly one change to your workflow.
-4. Compile your workflow:
+1. Choisissez votre workflow de revue de PR, ou un autre workflow, et relevez l'AIC moyen des cinq derniers runs.
+2. Choisissez une technique sur cette page.
+3. Faites exactement une modification à votre workflow.
+4. Compilez votre workflow :
 
 ```bash
 gh aw compile
 ```
 
-1. Run the workflow at least two more times.
-2. Compare the new average AIC with your baseline.
-3. Keep the change only if quality still meets your bar.
+1. Exécutez le workflow au moins deux fois de plus.
+2. Comparez la nouvelle moyenne d'AIC à votre référence.
+3. Ne gardez la modification que si la qualité reste au niveau attendu.
 
-Use this quick notes table:
+Utilisez ce tableau de notes rapide :
 
-| Baseline average AIC | Change you made | New average AIC | Quality stayed acceptable? |
-|---|---|---|---|
-| | | | |
+| Moyenne AIC de référence | Changement effectué | Nouvelle moyenne AIC | La qualité reste acceptable ? |
+| ------------------------ | ------------------- | -------------------- | ----------------------------- |
+|                          |                     |                      |                               |
 
-### Ask an agent to suggest the next optimization
+### Demandez À Un Agent De Proposer La Prochaine Optimisation
 
-Open your AI agent in your practice repository and send:
+Ouvrez votre agent IA dans votre dépôt d'entraînement et envoyez :
 
 ```prompt
 /agentic-workflows Review my workflow brief and this audit summary.
@@ -148,18 +149,20 @@ Identify the single change most likely to reduce AIC without hurting output qual
 Explain why that change is the best next step, then apply it and run gh aw compile.
 ```
 
-Paste the relevant excerpt from your `gh aw audit --parse` output below the prompt.
+Collez sous le prompt l'extrait pertinent de votre sortie `gh aw audit --parse`.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You collected a five-run AIC baseline for one workflow
-- [ ] You audited at least one unusually expensive run
-- [ ] You identified whether your biggest cost driver was context size, run frequency, repeated work, or tool usage
-- [ ] You applied exactly one optimization technique and re-ran the workflow
-- [ ] You compared the new AIC average with your baseline
-- [ ] You added or confirmed `max-ai-credits`, `max-daily-ai-credits`, or `timeout-minutes`
-- [ ] You can name the next optimization you would test if cost is still too high
+- [ ] Vous avez collecté une référence AIC sur cinq runs pour un workflow
+- [ ] Vous avez audité au moins un run inhabituellement coûteux
+- [ ] Vous avez identifié si votre principal facteur de coût était la taille du contexte, la fréquence d'exécution, le travail répété ou l'usage des outils
+- [ ] Vous avez appliqué exactement une technique d'optimisation puis relancé le workflow
+- [ ] Vous avez comparé la nouvelle moyenne d'AIC à votre référence
+- [ ] Vous avez ajouté ou confirmé `max-ai-credits`, `max-daily-ai-credits` ou `timeout-minutes`
+- [ ] Vous pouvez nommer la prochaine optimisation que vous testeriez si le coût reste trop élevé
 
 <!-- journey: all -->
-Return to [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
+
+Revenez à [Créer votre premier workflow événementiel : PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
+
 <!-- /journey -->

@@ -1,74 +1,77 @@
 <!-- page-journey: all -->
 <!-- page-adventure: core -->
-# How Agentic Workflows Stay Safe
 
-## :clipboard: Before You Start
+# Comment les Agentic Workflows restent sûrs
 
-- You've read [What Are Agentic Workflows?](05-agentic-workflows-intro.md)
+## :clipboard: Avant de commencer
 
-Letting an AI agent act on your repository on a [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule) only works if it can't do damage. Agentic workflows enforce two trust boundaries so you can run agents in automation with confidence.
+- Vous avez lu [Qu’est-ce qu’un Agentic Workflow ?](05-agentic-workflows-intro.md)
+
+Autoriser un agent IA à agir sur votre dépôt selon un [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule) ne fonctionne que s’il ne peut pas causer de dégâts. Les agentic workflows imposent deux frontières de confiance afin que vous puissiez exécuter des agents en automatisation avec confiance.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/05-agent-run-log-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/05-agent-run-log-light.svg">
-  <img alt="Animated GitHub Actions run showing four security jobs: activation validates the agent is authorized to run, agent runs with sandbox, firewall, and integrity filter enabled, detection scans for malicious code, and safe-outputs applies changes within guardrails" src="images/05-agent-run-log-light.svg">
+  <img alt="Exécution GitHub Actions animée montrant quatre jobs de sécurité : activation valide que l’agent est autorisé à s’exécuter, agent s’exécute avec sandbox, firewall et filtre d’intégrité activés, detection recherche du code malveillant, et safe-outputs applique les changements dans les garde-fous" src="images/05-agent-run-log-light.svg">
 </picture>
 
-## Safe by design: sandbox + guardrailed outputs
+## Sûr par conception : sandbox + sorties protégées par garde-fous
 
-- **A [sandbox](https://github.github.com/gh-aw/reference/sandbox/) around the agent.** The agent runs isolated inside the [Agent Workflow Firewall](https://github.github.com/gh-aw/reference/sandbox/), with **read-only** access to your repo and [network egress](https://github.github.com/gh-aw/reference/network/) limited to the domains you allow. Even if a [prompt injection](https://github.github.com/gh-aw/reference/threat-detection/) or a compromised tool tries to reach out or exfiltrate data, the firewall blocks anything outside the allowlist.
-- **A guardrailed [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) system for writes.** The agent never holds write permissions. Instead, it emits a *structured request* — "create this issue," "post this comment" — and a separate, permission-scoped job validates and executes it, applying per-operation limits (max counts, label and title constraints, allowed repos). That separation gives you least privilege, defense against prompt injection, and a full audit trail of every action.
+- **Une [sandbox](https://github.github.com/gh-aw/reference/sandbox/) autour de l’agent.** L’agent s’exécute de manière isolée dans l’[Agent Workflow Firewall](https://github.github.com/gh-aw/reference/sandbox/), avec un accès **read-only** à votre dépôt et une [sortie réseau](https://github.github.com/gh-aw/reference/network/) limitée aux domaines que vous autorisez. Même si une [prompt injection](https://github.github.com/gh-aw/reference/threat-detection/) ou un outil compromis tente de contacter un service externe ou d’exfiltrer des données, le firewall bloque tout ce qui n’est pas dans l’allowlist.
+- **Un système de [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) protégé par des garde-fous pour les écritures.** L’agent ne détient jamais les permissions d’écriture. À la place, il émet une _structured request_, par exemple « créer cette issue » ou « publier ce commentaire », puis un job séparé, limité par permissions, la valide et l’exécute en appliquant des limites par opération : nombre maximal, contraintes sur les labels et le titre, dépôts autorisés. Cette séparation vous donne le principe du moindre privilège, une défense contre la prompt injection et une piste d’audit complète de chaque action.
 
-The security jobs in the run log above map to these boundaries: **activation** checks the agent is authorized to run, the **agent** runs sandboxed behind the firewall, **detection** scans for malicious behavior, and **safe-outputs** applies changes within the guardrails.
+Les jobs de sécurité du journal d’exécution ci-dessus correspondent à ces frontières : **activation** vérifie que l’agent est autorisé à s’exécuter, **agent** s’exécute dans une sandbox derrière le firewall, **detection** recherche des comportements malveillants, et **safe-outputs** applique les changements dans les garde-fous.
 
-<details>
-<summary>Why can't the agent just write to the repo directly?</summary>
+<details open>
+<summary>Pourquoi l’agent ne peut-il pas écrire directement dans le dépôt ?</summary>
 
-Direct write access would make every prompt injection a potential supply-chain attack. By keeping the agent read-only and routing all changes through the safe-output system, a malicious instruction the agent picks up from issue text or a fetched page can, at worst, produce a *request* that the guardrails then reject or cap — it can never silently push code, leak secrets, or open unlimited pull requests.
+Un accès direct en écriture ferait de chaque prompt injection une attaque potentielle de la supply chain. En gardant l’agent en read-only et en faisant passer tous les changements par le système de safe-output, une instruction malveillante récupérée depuis le texte d’une issue ou une page chargée peut, au pire, produire une _request_ que les garde-fous rejettent ou limitent. Elle ne peut jamais pousser du code discrètement, divulguer des secrets ou ouvrir un nombre illimité de pull requests.
 
 </details>
 
-The diagram below shows how the two layers work together in a single workflow run.
+Le schéma ci-dessous montre comment les deux couches travaillent ensemble au sein d’une même exécution de workflow.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/05b-security-layers-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/05b-security-layers-light.svg">
-  <img alt="Two-layer security model: a schedule trigger starts an agentic workflow; the agent runs inside a sandbox with a firewall limiting network egress; it emits a structured output request; a separate permission-scoped safe-outputs job validates and applies changes to the repository" src="images/05b-security-layers-light.svg">
+  <img alt="Modèle de sécurité à deux couches : un trigger schedule démarre un agentic workflow ; l’agent s’exécute dans une sandbox avec un firewall qui limite la network egress ; il émet une structured output request ; un job safe-outputs séparé et limité par permissions valide et applique les changements au dépôt" src="images/05b-security-layers-light.svg">
 </picture>
 
-## Try it: sandbox or safe-output?
+## Essayez : sandbox ou safe-output ?
 
-For each scenario below, decide whether the **sandbox** or the **safe-output system** is the primary defence. Make your decision before revealing the answer.
+Pour chacun des scénarios ci-dessous, décidez si la **sandbox** ou le **safe-output system** constitue la défense principale. Prenez votre décision avant d’afficher la réponse.
 
-**Scenario A:** A prompt injected into an issue comment instructs the agent to push to a protected branch.
+**Scénario A :** A prompt injected into an issue comment instructs the agent to push to a protected branch.
 
-- [ ] I've made my decision for Scenario A
+- [ ] J’ai pris ma décision pour le scénario A
 
 <details>
-<summary>Reveal Scenario A answer</summary>
+<summary>Afficher la réponse du scénario A</summary>
 
-**Safe-output system.** The agent holds no write permissions. Even if the injected instruction causes the agent to produce a write request, the separate permission-scoped job validates it against the guardrails and rejects any operation outside the allowed set.
+**Safe-output system.** L’agent ne possède aucune permission d’écriture. Même si l’instruction injectée amène l’agent à produire une demande d’écriture, le job séparé, limité par permissions, la valide par rapport aux garde-fous et rejette toute opération en dehors du cadre autorisé.
 
 </details>
 
-**Scenario B:** A page the agent fetches during a run tries to send your repository secrets to an external server.
+**Scénario B :** A page the agent fetches during a run tries to send your repository secrets to an external server.
 
-- [ ] I've made my decision for Scenario B
+- [ ] J’ai pris ma décision pour le scénario B
 
 <details>
-<summary>Reveal Scenario B answer</summary>
+<summary>Afficher la réponse du scénario B</summary>
 
-**Sandbox / Agent Workflow Firewall.** Outbound network traffic is limited to the domain allowlist. Any request to an unlisted domain is blocked at the firewall before it leaves the runner — the exfiltration attempt never reaches the external server.
+**Sandbox / Agent Workflow Firewall.** Le trafic réseau sortant est limité à la liste autorisée de domaines. Toute requête vers un domaine non listé est bloquée par le firewall avant de quitter le runner ; la tentative d’exfiltration n’atteint jamais le serveur externe.
 
 </details>
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I can describe what the sandbox does and why it matters for automation safety
-- [ ] I can explain how the safe-output system prevents the agent from writing to the repo directly
-- [ ] I can identify whether the sandbox or the safe-output system is the primary defence for a given scenario
-- [ ] I can explain how the two-layer model makes agentic workflows safe to run on a schedule
+- [ ] Je peux décrire ce que fait la sandbox et pourquoi elle est importante pour la sécurité de l’automatisation
+- [ ] Je peux expliquer comment le système safe-output empêche l’agent d’écrire directement dans le dépôt
+- [ ] Je peux identifier si la sandbox ou le système safe-output constitue la défense principale pour un scénario donné
+- [ ] Je peux expliquer comment le modèle à deux couches rend les agentic workflows sûrs à exécuter selon un schedule
 
 <!-- journey: all -->
-**Next:** [Practice: Recognize Agentic Workflows](05c-agentic-workflows-practice.md)
+
+**Étape suivante :** [Exercice : reconnaître les Agentic Workflows](05c-agentic-workflows-practice.md)
+
 <!-- /journey -->

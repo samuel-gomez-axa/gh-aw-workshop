@@ -1,114 +1,115 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: The Two-File Structure
 
-> _Optional: work through this side quest after [What Are Agentic Workflows?](05-agentic-workflows-intro.md) to understand how `.md` source files and `.lock.yml` [lock files](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) relate, and to check your vocabulary._
+# Side Quest : La structure à deux fichiers
 
-## :clipboard: Before You Start
+> _Facultatif : faites cette side quest après [Que sont les agentic workflows ?](05-agentic-workflows-intro.md) pour comprendre la relation entre les fichiers source `.md` et les [lock files](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) `.lock.yml`, et pour vérifier votre vocabulaire._
 
-- You've read [What Are Agentic Workflows?](05-agentic-workflows-intro.md)
+## :clipboard: Avant de commencer
 
-## The two files
+- Vous avez lu [Que sont les agentic workflows ?](05-agentic-workflows-intro.md)
 
-An [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) has two files that live in `.github/workflows/`:
+## Les deux fichiers
 
-| File | What it is | Who writes it |
-|---|---|---|
-| `.md` source | Your task brief plus [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) | You |
-| `.lock.yml` | Compiled YAML that GitHub Actions runs | `gh aw compile` |
+Un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) comporte deux fichiers placés dans `.github/workflows/` :
 
-**Never edit `.lock.yml` by hand** — regenerate it with `gh aw compile` after every `.md` change.
+| Fichier      | Ce que c’est                                                                                       | Qui l’écrit     |
+| ------------ | -------------------------------------------------------------------------------------------------- | --------------- |
+| `.md` source | Votre brief de tâche plus le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) | Vous            |
+| `.lock.yml`  | Le YAML compilé qu’exécute GitHub Actions                                                          | `gh aw compile` |
 
-The diagram below shows how they relate:
+**Ne modifiez jamais `.lock.yml` à la main** ; régénérez-le avec `gh aw compile` après chaque changement du fichier `.md`.
+
+Le diagramme ci-dessous montre leur relation :
 
 <picture>
    <source media="(prefers-color-scheme: dark)" srcset="images/05b-two-file-structure-dark.svg">
    <source media="(prefers-color-scheme: light)" srcset="images/05b-two-file-structure-light.svg">
-   <img alt="Diagram showing how an agentic workflow .md source file is compiled by gh aw compile into a .lock.yml file that GitHub Actions runs" src="images/05b-two-file-structure-light.svg">
+  <img alt="Diagramme montrant comment un fichier source d’agentic workflow .md est compilé par gh aw compile en un fichier .lock.yml exécuté par GitHub Actions" src="images/05b-two-file-structure-light.svg">
 </picture>
 
-## Read a sample `.md` source file
+## Lire un exemple de fichier source `.md`
 
-Here is a complete `.md` source file:
+Voici un fichier source `.md` complet :
 
 ```markdown
 ---
 on:
-  schedule: daily
+    schedule: daily
 permissions:
-  issues: read
+    issues: read
 ---
 
 Review all open issues, summarize the key themes, and post a short digest as a new issue.
 ```
 
-Look at the sample and answer: which part is the **task brief**, and which part tells GitHub Actions **when to run**?
+Regardez l’exemple et répondez : quelle partie correspond au **task brief**, et quelle partie indique à GitHub Actions **quand s’exécuter** ?
 
 <details>
-<summary>Check your answer</summary>
+<summary>Vérifier votre réponse</summary>
 
-- **Task brief:** the paragraph after the `---` closing fence — the plain-English instruction for the agent.
-- **When to run:** the `on:` block in the frontmatter — here `schedule: daily`.
+- **Task brief :** le paragraphe après le délimiteur fermant `---`, c’est-à-dire l’instruction en anglais courant destinée à l’agent.
+- **When to run :** le bloc `on:` du frontmatter, ici `schedule: daily`.
 
-The frontmatter is Actions YAML. The body below it is your agent prompt.
+Le frontmatter est du YAML Actions. Le corps situé en dessous correspond à votre prompt d’agent.
 
 </details>
 
 > [!NOTE]
-> `schedule: daily` is fuzzy shorthand. `gh aw compile` converts it into a standard Actions cron expression — you never write raw cron syntax in an agentic workflow `.md` file.
+> `schedule: daily` est un raccourci souple. `gh aw compile` le convertit en expression cron standard Actions ; vous n’écrivez jamais directement une syntaxe cron brute dans un fichier `.md` d’agentic workflow.
 
-## What `gh aw compile` generates
+## Ce que génère `gh aw compile`
 
-After you run `gh aw compile`, the tool creates a `.lock.yml`:
+Après avoir exécuté `gh aw compile`, l’outil crée un `.lock.yml` :
 
 ```yaml
 # Auto-generated by gh aw compile. Do not edit by hand.
 name: Review open issues
 on:
-  schedule:
-    - cron: "0 8 * * *"
-  workflow_dispatch:
+    schedule:
+        - cron: '0 8 * * *'
+    workflow_dispatch:
 permissions:
-  issues: read
+    issues: read
 ```
 
-**Try it:** Run `gh aw compile` in your Codespace terminal and open the generated `.lock.yml`. Find the `cron:` value and compare it to `schedule: daily` in your `.md` source.
+**Essayez :** exécutez `gh aw compile` dans le terminal de votre Codespace et ouvrez le `.lock.yml` généré. Trouvez la valeur `cron:` et comparez-la à `schedule: daily` dans votre source `.md`.
 
-## Check your vocabulary
+## Vérifiez votre vocabulaire
 
-Before you reveal the answers below, write a one-sentence definition for each term:
+Avant de révéler les réponses ci-dessous, écrivez une définition en une phrase pour chaque terme :
 
 - Lock file
 - Engine
 - `workflow_dispatch`
 
 <details>
-<summary>Check your answers</summary>
+<summary>Vérifier vos réponses</summary>
 
-| Term | Plain-language meaning |
-|---|---|
-| [Lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) | The compiled YAML that GitHub Actions actually runs — never edit it by hand |
-| [Engine](https://github.github.com/gh-aw/reference/engines/) | The AI model provider (for example, GitHub Copilot) used by the workflow |
-| `workflow_dispatch` | A manual trigger — you start the run by clicking a button in the Actions tab |
+| Terme                                                                                       | Signification en langage simple                                                                 |
+| ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| [Lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) | Le YAML compilé que GitHub Actions exécute réellement ; ne le modifiez jamais à la main         |
+| [Engine](https://github.github.com/gh-aw/reference/engines/)                                | Le fournisseur de modèle d’IA (par exemple GitHub Copilot) utilisé par le workflow              |
+| `workflow_dispatch`                                                                         | Un déclencheur manuel ; vous lancez l’exécution en cliquant sur un bouton dans l’onglet Actions |
 
 </details>
 
-## How the agent posts output
+## Comment l’agent publie sa sortie
 
-An agent always operates **read-only**. Any writes — posting a comment, creating an issue — go through [safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/) and guardrails.
+Un agent opère toujours en **read-only**. Toute écriture, comme publier un commentaire ou créer une issue, passe par les [safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/) et leurs garde-fous.
 
-**Try it:** Open the `.lock.yml` you compiled earlier. Find the step or job that handles the agent's output. Notice how the write is separated from the agent's read-only work.
+**Essayez :** ouvrez le `.lock.yml` que vous avez compilé plus tôt. Trouvez le step ou le job qui gère la sortie de l’agent. Notez comment l’écriture est séparée du travail en read-only de l’agent.
 
 > [!TIP]
-> If you'd like more practice distinguishing agentic from standard workflows, return to [Side Quest: Classify Agentic vs. Standard Workflows](side-quest-05-02-aw-deep-dive.md).
+> Si vous voulez davantage d’entraînement pour distinguer agentic workflows et workflows standard, revenez à [Side Quest : Classer les agentic workflows et les workflows standards](side-quest-05-02-aw-deep-dive.md).
 
 ---
 
-Return to the main adventure: [What Are Agentic Workflows?](05-agentic-workflows-intro.md).
+Revenez à l’aventure principale : [Que sont les agentic workflows ?](05-agentic-workflows-intro.md).
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can point to the task brief and the trigger in a sample `.md` file
-- [ ] You can describe the difference between the `.md` source and the compiled `.lock.yml`
-- [ ] You can define: lock file, engine, and `workflow_dispatch`
-- [ ] You know that agents are read-only and writes go through [safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/)
+- [ ] Vous savez repérer le task brief et le trigger dans un exemple de fichier `.md`
+- [ ] Vous savez décrire la différence entre le source `.md` et le `.lock.yml` compilé
+- [ ] Vous savez définir : lock file, engine et `workflow_dispatch`
+- [ ] Vous savez que les agents sont en read-only et que les écritures passent par les [safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/)

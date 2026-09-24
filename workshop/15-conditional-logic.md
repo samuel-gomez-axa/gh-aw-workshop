@@ -1,38 +1,40 @@
 <!-- page-journey: all -->
 <!-- page-adventure: advanced -->
-# Make Your Workflow Smarter with Conditional Logic
 
-> _A workflow that always runs is useful — a workflow that only runs when it matters is elegant._
+# Rendez votre workflow plus malin avec une logique conditionnelle
 
-## :dart: What You'll Do
+> _Un workflow qui s'exécute en permanence est utile ; un workflow qui ne s'exécute que quand c'est pertinent est plus élégant._
 
-Add a conditional check to your daily-status workflow so it only posts a summary when there have been recent commits. You'll learn how to use shell commands to gather context, expose that context as step outputs, and wire it into an `if:` condition that short-circuits the agent job entirely on quiet days.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Ajoutez une vérification conditionnelle à votre workflow daily-status afin qu'il ne publie un résumé que lorsqu'il y a eu des commits récents. Vous allez apprendre à utiliser des commandes shell pour recueillir du contexte, exposer ce contexte comme sorties d'étape, puis le relier à une condition `if:` qui court-circuite complètement le job de l'agent les jours calmes.
 
-- You have a working daily-status workflow from [Build: Daily Repo Status Workflow](07-your-first-workflow.md).
-- You understand how to edit and re-run a workflow from [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
+## :clipboard: Avant de commencer
 
-## Steps
+- Vous disposez d'un workflow daily-status fonctionnel issu de [Build: Daily Repo Status Workflow](07-your-first-workflow.md).
+- Vous savez modifier et relancer un workflow grâce à [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
 
-### Understand the problem
+## Étapes
 
-Your daily-status workflow currently runs every weekday regardless of repository activity, which means it can produce empty or near-empty summaries like "No activity to report" on quiet days. Over time these hollow reports erode confidence in the tool because readers learn to ignore them. Conditional logic solves this by inspecting repository state in a [deterministic](https://github.github.com/gh-aw/patterns/deterministic-ops/) shell step before any AI processing begins, then skipping the agent job entirely when the precondition is not met.
+### Comprendre le problème
 
-The approach breaks into three parts:
-1. Run a shell command to count commits from the last 24 hours and write the result to `$GITHUB_OUTPUT`.
-2. Reference that output using the `steps` context expression `${{ steps.recent.outputs.commit_count }}`.
-3. Add a top-level `if:` key in the workflow [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) that skips the agent job when the count evaluates to zero.
+Votre workflow daily-status s'exécute actuellement chaque jour ouvrable, quelle que soit l'activité du dépôt, ce qui signifie qu'il peut produire des résumés vides ou presque vides comme "No activity to report" les jours calmes. Avec le temps, ces rapports creux diminuent la confiance dans l'outil, car les lecteurs apprennent à les ignorer. La logique conditionnelle règle ce problème en inspectant l'état du dépôt dans une étape shell [deterministic](https://github.github.com/gh-aw/patterns/deterministic-ops/) avant que tout traitement IA ne commence, puis en sautant entièrement le job de l'agent lorsque la précondition n'est pas satisfaite.
+
+L'approche se décompose en trois parties :
+
+1. Exécuter une commande shell pour compter les commits des 24 dernières heures et écrire le résultat dans `$GITHUB_OUTPUT`.
+2. Référencer cette sortie avec l'expression de contexte `steps` `${{ steps.recent.outputs.commit_count }}`.
+3. Ajouter une clé `if:` de premier niveau dans le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) du workflow afin d'ignorer le job de l'agent lorsque le compteur vaut zéro.
 
 <picture>
    <source media="(prefers-color-scheme: dark)" srcset="images/15-conditional-flow-dark.svg">
    <source media="(prefers-color-scheme: light)" srcset="images/15-conditional-flow-light.svg">
-   <img alt="Conditional logic flow: shell step writes commit count to GITHUB_OUTPUT, the if condition evaluates it, then either skips or runs the agent job" src="images/15-conditional-flow-light.svg">
+  <img alt="Flux de logique conditionnelle : une étape shell écrit le nombre de commits dans GITHUB_OUTPUT, la condition if l'évalue, puis ignore ou exécute le job de l'agent" src="images/15-conditional-flow-light.svg">
 </picture>
 
-### Add a commit-count step
+### Ajouter une étape de comptage des commits
 
-In your Copilot CLI session in the terminal, paste:
+Dans votre session Copilot CLI dans le terminal, collez :
 
 ```prompt
 /agentic-workflows update .github/workflows/daily-status.md to add a shell step
@@ -40,54 +42,55 @@ that counts commits from the last 24 hours and writes the result to $GITHUB_OUTP
 as `commit_count`, with step id `recent`.
 ```
 
-The skill adds this step to the frontmatter `steps:` block and recompiles the lock file.
+La skill ajoute cette étape au bloc `steps:` du frontmatter puis recompile le lock file.
 
-<details>
+<details open>
 <summary>:pencil2: Manual edit path</summary>
 
-Open your daily-status workflow file (e.g., `.github/workflows/daily-status.md`) and add the following block inside the YAML frontmatter under `steps:`:
+Ouvrez votre fichier de workflow daily-status, par exemple `.github/workflows/daily-status.md`, et ajoutez le bloc suivant dans le frontmatter YAML sous `steps:` :
 
 ```markdown .github/workflows/daily-status.md
 ---
 steps:
-  - name: Count recent commits
-    id: recent
-    run: |
-      COUNT=$(git log --oneline --since="24 hours ago" | wc -l | tr -d ' ')
-      echo "commit_count=$COUNT" >> $GITHUB_OUTPUT
+    - name: Count recent commits
+      id: recent
+      run: |
+          COUNT=$(git log --oneline --since="24 hours ago" | wc -l | tr -d ' ')
+          echo "commit_count=$COUNT" >> $GITHUB_OUTPUT
 ---
 ```
 
-After adding it, run `gh aw compile` to regenerate the lock file.
+Après l'avoir ajouté, lancez `gh aw compile` pour régénérer le lock file.
 
 </details>
 
-Here is the step structure the skill will add:
+Voici la structure d'étape que la skill ajoutera :
 
 ```markdown .github/workflows/daily-status.md
 ---
 steps:
-  - name: Count recent commits
-    id: recent
-    run: |
-      COUNT=$(git log --oneline --since="24 hours ago" | wc -l | tr -d ' ')
-      echo "commit_count=$COUNT" >> $GITHUB_OUTPUT
+    - name: Count recent commits
+      id: recent
+      run: |
+          COUNT=$(git log --oneline --since="24 hours ago" | wc -l | tr -d ' ')
+          echo "commit_count=$COUNT" >> $GITHUB_OUTPUT
 ---
 ```
 
-This shell command uses `git log` with a `--since` time filter to list only commits from the last 24 hours, pipes the output through `wc -l` to count the lines, strips surrounding whitespace with `tr -d ' '`, and writes the final integer to `$GITHUB_OUTPUT` — a special GitHub Actions file that shares values between steps using `key=value` notation. The `id: recent` field is essential: it creates a named slot in the `steps` context so the value can be referenced as `steps.recent.outputs.commit_count` in later steps or in the top-level `if:` condition.
+Cette commande shell utilise `git log` avec un filtre temporel `--since` pour ne lister que les commits des 24 dernières heures, passe la sortie à `wc -l` pour compter les lignes, supprime les espaces superflus avec `tr -d ' '`, puis écrit l'entier final dans `$GITHUB_OUTPUT`, un fichier spécial de GitHub Actions qui partage des valeurs entre étapes au format `key=value`. Le champ `id: recent` est essentiel : il crée un emplacement nommé dans le contexte `steps`, ce qui permet de référencer la valeur comme `steps.recent.outputs.commit_count` dans des étapes ultérieures ou dans la condition `if:` de premier niveau.
 
 > [!NOTE]
-> <details>
-> <summary>`$GITHUB_OUTPUT` makes step outputs available to later steps as `steps.<id>.outputs.key`.</summary>
 >
-> For a deeper explanation of how the `steps` context works alongside other context objects (`github`, `env`, `runner`), how to use built-in expression functions like `contains()` and `toJSON()`, and how to chain conditions with `&&` and `||`, see [Side Quest: GitHub Actions Expressions and Contexts](side-quest-15-01-expressions-and-contexts.md).
+> <details>
+> <summary>`$GITHUB_OUTPUT` rend les sorties d'étape disponibles pour les étapes suivantes sous la forme `steps.<id>.outputs.key`.</summary>
+>
+> Pour une explication plus détaillée de la façon dont le contexte `steps` fonctionne avec d'autres objets de contexte (`github`, `env`, `runner`), de l'utilisation des fonctions d'expression intégrées comme `contains()` et `toJSON()`, et de la façon d'enchaîner des conditions avec `&&` et `||`, consultez [Side Quest: GitHub Actions Expressions and Contexts](side-quest-15-01-expressions-and-contexts.md).
 >
 > </details>
 
-### Add a top-level condition in frontmatter
+### Ajouter une condition de premier niveau dans le frontmatter
 
-In the same frontmatter block, add a top-level `if:` key at the same indentation level as `on:` and `steps:`:
+Dans ce même bloc de frontmatter, ajoutez une clé `if:` au niveau supérieur, avec la même indentation que `on:` et `steps:` :
 
 ```markdown .github/workflows/daily-status.md
 ---
@@ -95,16 +98,16 @@ if: steps.recent.outputs.commit_count != '0'
 ---
 ```
 
-This condition is embedded into the generated lock file during [compilation](https://github.github.com/gh-aw/reference/compilation-process/); at runtime, GitHub Actions evaluates it and skips the agent job entirely whenever `commit_count` evaluates to `'0'`. You can also reference the count inside your prompt text to give the model concrete context — for example: `"Summarise the last ${{ steps.recent.outputs.commit_count }} commits"` anchors the analysis to the actual number of changes rather than leaving the model to guess the scope.
+Cette condition est intégrée dans le lock file généré pendant la [compilation](https://github.github.com/gh-aw/reference/compilation-process/) ; à l'exécution, GitHub Actions l'évalue et saute entièrement le job de l'agent dès que `commit_count` vaut `'0'`. Vous pouvez aussi référencer ce compte dans le texte de votre prompt pour donner au modèle un contexte concret ; par exemple, `"Summarise the last ${{ steps.recent.outputs.commit_count }} commits"` ancre l'analyse sur le nombre réel de changements, au lieu de laisser le modèle deviner le périmètre.
 
-### Go further: chain conditions for a weekend skip
+### Aller plus loin : enchaîner des conditions pour ignorer le week-end
 
-Now that the commit-count condition is in place, you can extend the workflow to also skip on weekends. This exercise reinforces how to combine multiple conditions in a single `if:` expression.
+Maintenant que la condition basée sur le nombre de commits est en place, vous pouvez étendre le workflow pour qu'il saute aussi les week-ends. Cet exercice renforce la manière de combiner plusieurs conditions dans une même expression `if:`.
 
 > [!TIP]
-> See [Side Quest: Chaining Conditions — Run an Agent Only When Security Findings Exist](side-quest-15-02-chaining-conditions.md) for a hands-on walkthrough: add a Dependabot alert-count step and chain it with a branch check so the agent only runs when there are real findings to act on.
+> Consultez [Side Quest: Chaining Conditions — Run an Agent Only When Security Findings Exist](side-quest-15-02-chaining-conditions.md) pour un exercice guidé : ajoutez une étape qui compte les alertes Dependabot et combinez-la avec une vérification de branche afin que l'agent ne s'exécute que lorsqu'il y a de vrais constats à traiter.
 
-### Commit and push your conditional logic
+### Committer et pousser votre logique conditionnelle
 
 ```bash
 git add .
@@ -114,12 +117,14 @@ git push
 
 ## :white_check_mark: Checkpoint
 
-- [ ] Your workflow has a `count recent commits` step with `id: recent`
-- [ ] Your workflow frontmatter includes `if: steps.recent.outputs.commit_count != '0'`
-- [ ] Both `.github/workflows/daily-status.md` and `.github/workflows/daily-status.lock.yml` are compiled, committed, and pushed
-- [ ] You triggered the workflow manually and confirmed the conditional behaviour in the run log
-- [ ] The workflow still posts a summary on days with commits
+- [ ] Votre workflow contient une étape `count recent commits` avec `id: recent`
+- [ ] Le frontmatter de votre workflow inclut `if: steps.recent.outputs.commit_count != '0'`
+- [ ] Les deux fichiers `.github/workflows/daily-status.md` et `.github/workflows/daily-status.lock.yml` sont compilés, committés et poussés
+- [ ] Vous avez déclenché le workflow manuellement et confirmé le comportement conditionnel dans le journal d'exécution
+- [ ] Le workflow publie toujours un résumé les jours où il y a des commits
 
 <!-- journey: all -->
-**Next:** [Connect a Live Data Source to Your Workflow](16-connect-data-source.md)
+
+**Suite :** [Connectez une source de donnees en direct a votre workflow](16-connect-data-source.md)
+
 <!-- /journey -->

@@ -1,85 +1,86 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Frontmatter Deep Dive — Part B
 
-> _Optional continuation of [Part A](side-quest-11-01-frontmatter-deep-dive.md): covers tools, safe-outputs, the closing fence, and the agent body. Return to the main path when done._
+# Quête Annexe : Exploration Approfondie Du Frontmatter — Partie B
 
-## :clipboard: Before You Start
+> _Suite facultative de [Part A](side-quest-11-01-frontmatter-deep-dive.md) : couvre `tools`, `safe-outputs`, la fence de fermeture et le corps de l'agent. Revenez au parcours principal lorsque vous avez terminé._
 
-You have completed [Part A](side-quest-11-01-frontmatter-deep-dive.md) and your draft file already includes `emoji`, `on:`, and `permissions:`.
+## :clipboard: Avant De Commencer
+
+Vous avez terminé [Part A](side-quest-11-01-frontmatter-deep-dive.md) et votre brouillon contient déjà `emoji`, `on:` et `permissions:`.
 
 ---
 
 ## `tools:`
 
-**:mag: Predict:** To let the agent call GitHub APIs securely and stay within the permissions you declared, what configuration would you add? Write your answer before reading on.
+**:mag: Prédisez :** Pour permettre à l'agent d'appeler les API GitHub en toute sécurité et de rester dans les permissions que vous avez déclarées, quelle configuration ajouteriez-vous ? Écrivez votre réponse avant de poursuivre.
 
 ```markdown
 ---
 tools:
-  github:
-    mode: gh-proxy
-    toolsets: [default]
+    github:
+        mode: gh-proxy
+        toolsets: [default]
 ---
 ```
 
-**What this section does:** Declares which external tool servers the agent may call during its run.
+**Ce que fait cette section :** Elle déclare quels serveurs d'outils externes l'agent peut appeler pendant son run.
 
-| Field | Purpose |
-|-------|---------|
-| `tools:` | Declares every tool server the agent is allowed to call. At least one entry is required for an agent that reads GitHub data. |
-| `github:` | Connects the agent to the [GitHub MCP server](https://github.github.com/gh-aw/reference/tools/) so it can query issues, pull requests, commits, and workflow runs. |
-| `mode: gh-proxy` | Routes every GitHub API call through a proxy that enforces the `permissions:` you declared, blocking any call you have not pre-approved. |
-| `toolsets: [default]` | Activates the standard GitHub toolset covering issues, pull requests, commits, and Actions runs. |
+| Champ                 | Rôle                                                                                                                                                                                    |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tools:`              | Déclare chaque serveur d'outils que l'agent est autorisé à appeler. Au moins une entrée est requise pour un agent qui lit des données GitHub.                                           |
+| `github:`             | Connecte l'agent au [GitHub MCP server](https://github.github.com/gh-aw/reference/tools/) afin qu'il puisse interroger les issues, les pull requests, les commits et les workflow runs. |
+| `mode: gh-proxy`      | Fait passer chaque appel à l'API GitHub par un proxy qui applique les `permissions:` déclarées, en bloquant tout appel non préapprouvé.                                                 |
+| `toolsets: [default]` | Active le toolset GitHub standard couvrant les issues, les pull requests, les commits et les runs Actions.                                                                              |
 
-**:pencil2: Try it:** Add the `tools:` block to your draft file. Double-check that `mode` and `toolsets` are indented under `github:`.
+**:pencil2: Essayez :** Ajoutez le bloc `tools:` à votre brouillon. Vérifiez bien que `mode` et `toolsets` sont indentés sous `github:`.
 
 ---
 
 ## `safe-outputs:`
 
-**:mag: Predict:** You want the agent to post exactly one comment per run and nothing else. What would you write under `safe-outputs`?
+**:mag: Prédisez :** Vous voulez que l'agent publie exactement un commentaire par run et rien d'autre. Qu'écririez-vous sous `safe-outputs` ?
 
 ```markdown
 ---
 safe-outputs:
-  add-comment:
-    max: 1
+    add-comment:
+        max: 1
 ---
 ```
 
-**What this section does:** Lists every write action the agent is allowed to perform. Any write operation not listed here is blocked at runtime, regardless of what the agent body requests.
+**Ce que fait cette section :** Elle liste chaque action d'écriture que l'agent est autorisé à effectuer. Toute opération d'écriture non listée ici est bloquée à l'exécution, quel que soit ce que demande le body de l'agent.
 
-| Field | Purpose |
-|-------|---------|
-| `safe-outputs:` | Declares every write operation the agent may perform. Any write not listed here is silently blocked. |
-| `add-comment:` | Permits the agent to post a comment on an issue or pull request. |
-| `max: 1` | Caps the operation at one comment per run. A second attempt is silently dropped. |
+| Champ           | Rôle                                                                                                                       |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `safe-outputs:` | Déclare chaque opération d'écriture que l'agent peut effectuer. Toute écriture non listée ici est bloquée silencieusement. |
+| `add-comment:`  | Autorise l'agent à publier un commentaire sur une issue ou une pull request.                                               |
+| `max: 1`        | Limite l'opération à un commentaire par run. Une seconde tentative est ignorée silencieusement.                            |
 
 > [!IMPORTANT]
-> Without `safe-outputs`, the agent cannot write anything — even if you ask it to in the body. The YAML frontmatter is the source of truth for write access, not the prose instructions.
+> Sans `safe-outputs`, l'agent ne peut rien écrire, même si vous le lui demandez dans le body. Le YAML frontmatter est la source de vérité pour l'accès en écriture, pas les instructions en prose.
 
-**:pencil2: Try it:** Add `safe-outputs` to your draft. Verify that `max: 1` is indented under `add-comment:`.
+**:pencil2: Essayez :** Ajoutez `safe-outputs` à votre brouillon. Vérifiez que `max: 1` est bien indenté sous `add-comment:`.
 
 ---
 
-## Closing fence
+## Fence De Fermeture
 
-**:mag: Predict:** How does the file parser know where the YAML configuration ends and the agent's instructions begin?
+**:mag: Prédisez :** Comment l'analyseur de fichier sait-il où la configuration YAML se termine et où commencent les instructions de l'agent ?
 
 ```markdown
 ---
 ```
 
-**What this section does:** Closes the [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) block. Everything below this line is the Markdown body — the agent's plain-English [task brief](https://github.github.com/gh-aw/reference/markdown/).
+**Ce que fait cette section :** Elle ferme le bloc [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/). Tout ce qui se trouve sous cette ligne constitue le corps Markdown, c'est-à-dire le [brief de tâche](https://github.github.com/gh-aw/reference/markdown/) de l'agent en anglais courant.
 
-**:pencil2: Try it:** Add the closing `---` to your draft. Confirm the file now has exactly two `---` fences.
+**:pencil2: Essayez :** Ajoutez le `---` de fermeture à votre brouillon. Confirmez que le fichier comporte maintenant exactement deux fences `---`.
 
 ---
 
-## The Markdown body
+## Le Markdown Body
 
-**:mag: Predict:** The agent must collect four data points from the repository. What four things would you list?
+**:mag: Prédisez :** L'agent doit collecter quatre points de données du dépôt. Quelles quatre choses listeriez-vous ?
 
 ```markdown
 # Daily Repo Status Report
@@ -89,6 +90,7 @@ You are an AI assistant that monitors this repository and posts a concise daily 
 ## Your Task
 
 Collect and summarize:
+
 1. **Open pull requests** — count, and flag any open longer than 7 days
 2. **Open issues** — total count, how many are labeled "bug"
 3. **CI status** — result of the most recent workflow run on the default branch
@@ -101,30 +103,30 @@ Collect and summarize:
 - If no open issue exists, create one titled "Daily Status Reports" and post the first comment there.
 ```
 
-**What this section does:** This is the plain-English brief the AI agent reads at runtime — a job description telling it what to collect and how to respond.
+**Ce que fait cette section :** Il s'agit du brief en anglais courant que l'agent IA lit à l'exécution, une sorte de fiche de poste qui lui dit quoi collecter et comment répondre.
 
-Three conventions keep a task brief reliable:
+Trois conventions rendent un brief de tâche fiable :
 
-- **A title and role statement** anchor the agent's purpose at the very top of the body.
-- **A numbered task list** helps the agent work through each data point in a predictable order.
-- **A guidelines block** handles edge cases — such as "already posted today" — so the agent does not have to guess.
+- **Un titre et une phrase de rôle** ancrent l'objectif de l'agent tout en haut du body.
+- **Une liste de tâches numérotée** aide l'agent à traiter chaque point de données dans un ordre prévisible.
+- **Un bloc de guidelines** gère les cas particuliers, comme "already posted today", afin que l'agent n'ait pas à deviner.
 
-**:pencil2: Try it:** Add the body below the closing `---` in your draft file, then run `gh aw compile` to check for errors.
+**:pencil2: Essayez :** Ajoutez le body sous le `---` de fermeture dans votre brouillon, puis lancez `gh aw compile` pour vérifier l'absence d'erreurs.
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can explain what `mode: gh-proxy` does and why it matters for security
-- [ ] You understand that `safe-outputs` is the only source of write access — not the body text
-- [ ] Your draft file has two `---` fences with the agent body below the second
-- [ ] The agent body contains a title, a numbered task list, and a guidelines block
-- [ ] The file compiles without errors
+- [ ] Vous pouvez expliquer ce que fait `mode: gh-proxy` et pourquoi c'est important pour la sécurité
+- [ ] Vous comprenez que `safe-outputs` est l'unique source d'accès en écriture, pas le texte du body
+- [ ] Votre brouillon contient deux fences `---`, avec le body de l'agent sous la seconde
+- [ ] Le body de l'agent contient un titre, une liste de tâches numérotée et un bloc de guidelines
+- [ ] Le fichier compile sans erreur
 
 ---
 
 <!-- journey: all -->
-Return to [Build — Daily Repo Status Workflow](07-your-first-workflow.md).
+
+Revenez à [Créer — Daily Repo Status Workflow](07-your-first-workflow.md).
+
 <!-- /journey -->
-
-

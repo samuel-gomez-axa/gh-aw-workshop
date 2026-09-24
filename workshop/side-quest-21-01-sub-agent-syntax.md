@@ -1,116 +1,120 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Sub-Agent Syntax Reference
 
-> _Optional: use this short repair exercise if you want one clean sub-agent pattern before you return to [Step 21](21-inline-sub-agents.md)._
+# Quête annexe : référence de syntaxe des sub-agents
 
-## :dart: What You'll Do
+> _Facultatif : utilisez ce court exercice de correction si vous voulez disposer d’un modèle de sub-agent propre avant de revenir à [l’étape 21](21-inline-sub-agents.md)._
 
-Repair one broken [sub-agent](https://github.github.com/gh-aw/reference/inline-sub-agents/) block, then reuse the same pattern in your own workflow. By the end, you'll have one valid block that compiles cleanly and is easy to extend later.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Réparez un bloc [sub-agent](https://github.github.com/gh-aw/reference/inline-sub-agents/) cassé, puis réutilisez le même modèle dans votre propre workflow. À la fin, vous aurez un bloc valide, qui compile proprement et sera facile à étendre plus tard.
 
-- You are starting or have started [Split Complex Workflows with Inline Sub-Agents](21-inline-sub-agents.md).
-- You know how to compile a workflow from [Side Quest: Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md).
+## :clipboard: Avant de commencer
+
+- Vous commencez, ou avez déjà commencé, [Découper les workflows complexes avec des sub-agents inline](21-inline-sub-agents.md).
+- Vous savez compiler un workflow grâce à [Quête annexe : utiliser `gh aw compile` pour détecter tôt les erreurs](side-quest-07-01-compile-workflow.md).
 
 ---
 
-## Start with one broken block
+## Commencez par un bloc cassé
 
-Copy this snippet into a scratch file or read it closely before you fix it:
+Copiez cet extrait dans un fichier brouillon, ou lisez-le attentivement avant de le corriger :
 
 ```markdown
 Write a daily issue digest.
 
 ## agent: `Issue Summarizer`
-<!-- BROKEN: contains spaces and uppercase letters -->
----
+
+## <!-- BROKEN: contains spaces and uppercase letters -->
+
 description: Summarizes one issue in one sentence
 model: small
 engine: openai
+
 ---
 
 Read one issue and return exactly one sentence.
 
 ## How to use this workflow
+
 <!-- BROKEN: this heading appears after the sub-agent and ends the block -->
 
 Run it from GitHub Actions.
 ```
 
-This block has three problems:
+Ce bloc a trois problèmes :
 
-- the agent name is invalid
-- the `engine` [frontmatter field](https://github.github.com/gh-aw/reference/frontmatter/) does not belong in a sub-agent
-- the block is in the wrong place
+- le nom de l’agent est invalide
+- le champ `engine` du [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) n’a pas sa place dans un sub-agent
+- le bloc est au mauvais endroit
 
-Your job is to fix those three problems in order.
+Votre travail consiste à corriger ces trois problèmes dans cet ordre.
 
 ---
 
-## Fix the heading first
+## Corrigez d’abord le titre
 
-Use this pattern for the heading:
+Utilisez ce modèle pour le titre :
 
 ```markdown
 ## agent: `name`
 ```
 
-A valid name:
+Un nom valide :
 
-- starts with a letter
-- stays lowercase
-- uses only letters, digits, hyphens, or underscores
+- commence par une lettre
+- reste en minuscules
+- n’utilise que des lettres, des chiffres, des tirets ou des underscores
 
-**Action:** Change `` `Issue Summarizer` `` to a valid name before you continue.
+**Action :** Remplacez `` `Issue Summarizer` `` par un nom valide avant de continuer.
 
-Quick check:
+Vérification rapide :
 
-- [ ] My name starts with a letter
-- [ ] My name is lowercase
-- [ ] My name has no spaces
+- [ ] Mon nom commence par une lettre
+- [ ] Mon nom est en minuscules
+- [ ] Mon nom ne contient pas d’espaces
 
 ---
 
-## Keep only the sub-agent fields
+## Gardez uniquement les champs du sub-agent
 
-Inside a sub-agent block, keep the frontmatter small:
+Dans un bloc de sub-agent, gardez un frontmatter minimal :
 
-- `description` explains the sub-agent's job
-- `model` is optional if you want to override the parent model
+- `description` explique le rôle du sub-agent
+- `model` est optionnel si vous voulez surcharger le modèle parent
 
-Any fields other than `description` and `model` are stripped from sub-agent frontmatter at runtime with a warning.
-For a repeated worker task like "read one issue and return one sentence," `model: small` is a good default.
+Tout champ autre que `description` et `model` est retiré du frontmatter du sub-agent à l’exécution avec un avertissement.
+Pour une tâche répétée de worker, comme "read one issue and return one sentence," `model: small` constitue un bon choix par défaut.
 
-**Action:** Remove the unsupported field from the broken block.
+**Action :** Supprimez le champ non pris en charge du bloc cassé.
 
 > [!TIP]
-> If the worker needs the same reasoning depth as the parent, you can omit `model` and let it inherit the parent model.
+> Si le worker a besoin du même niveau de raisonnement que le parent, vous pouvez omettre `model` et le laisser hériter du modèle parent.
 
-Quick check:
+Vérification rapide :
 
-- [ ] I kept `description`
-- [ ] I kept or intentionally removed `model`
-- [ ] I removed unsupported fields such as `engine`
-
----
-
-## Move the block to the bottom
-
-Sub-agent blocks belong at the bottom of the file so your main workflow content does not get cut off early. The sub-agent block ends when the parser reaches the next `##` heading, so any content after that heading is not part of the sub-agent.
-
-**Action:** Move the sub-agent block so `## How to use this workflow` stays part of the main workflow, not part of the sub-agent.
-
-Quick check:
-
-- [ ] All main workflow sections come first
-- [ ] The sub-agent block is the last `##` section in the file
+- [ ] J’ai conservé `description`
+- [ ] J’ai conservé ou retiré volontairement `model`
+- [ ] J’ai retiré les champs non pris en charge comme `engine`
 
 ---
 
-## Compare with one clean version
+## Déplacez le bloc à la fin
 
-After your edits, your snippet should look like this:
+Les blocs de sub-agent doivent se trouver en bas du fichier afin que le contenu principal du workflow ne soit pas tronqué trop tôt. Le bloc de sub-agent se termine lorsque l’analyseur atteint le titre `##` suivant ; tout contenu après ce titre ne fait donc pas partie du sub-agent.
+
+**Action :** Déplacez le bloc de sub-agent de sorte que `## How to use this workflow` reste dans le workflow principal, et non dans le sub-agent.
+
+Vérification rapide :
+
+- [ ] Toutes les sections principales du workflow viennent en premier
+- [ ] Le bloc de sub-agent est la dernière section `##` du fichier
+
+---
+
+## Comparez avec une version propre
+
+Après vos modifications, votre extrait devrait ressembler à ceci :
 
 ```markdown
 Write a daily issue digest.
@@ -120,48 +124,52 @@ Write a daily issue digest.
 Run it from GitHub Actions.
 
 ## agent: `issue-summarizer`
+
 ---
+
 description: Summarizes one issue in one sentence
 model: small
+
 ---
 
 Read one issue and return exactly one sentence.
 ```
 
-If your version follows the same pattern, you are ready to reuse it in your own workflow.
+Si votre version suit le même modèle, vous êtes prêt à la réutiliser dans votre propre workflow.
 
 ---
 
-## Try the pattern in your workflow
+## Essayez ce modèle dans votre workflow
 
-Open your Step 21 workflow and do one real edit:
+Ouvrez votre workflow de l’étape 21 et effectuez une vraie modification :
 
-1. Add or repair one sub-agent heading at the bottom of the file.
-2. Keep only `description` and, if needed, `model` in the sub-agent frontmatter.
-3. From the top-level folder of your practice repository, run:
+1. Ajoutez ou corrigez un titre de sub-agent en bas du fichier.
+2. Ne gardez que `description` et, si nécessaire, `model` dans le frontmatter du sub-agent.
+3. Depuis le dossier racine de votre dépôt d’exercice, exécutez :
 
 ```bash
 gh aw compile
 ```
 
 > [!TIP]
-> For faster feedback while editing, run `gh aw compile --watch` in a second terminal; the [CLI reference](https://github.github.com/gh-aw/setup/cli/#compile) lists this option.
+> Pour un retour plus rapide pendant l’édition, exécutez `gh aw compile --watch` dans un second terminal ; la [CLI reference](https://github.github.com/gh-aw/setup/cli/#compile) documente cette option.
 
-When the compile finishes, check that you do **not** see warnings about stripped sub-agent fields such as `engine` or `tools`.
+Quand la compilation est terminée, vérifiez que vous ne voyez **pas** d’avertissements concernant des champs de sub-agent retirés, comme `engine` ou `tools`.
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I fixed one invalid sub-agent name
-- [ ] I kept only supported sub-agent frontmatter fields
-- [ ] I placed the sub-agent block at the bottom of the file
-- [ ] `gh aw compile` finished after I applied the same pattern to my own workflow
-- [ ] I did not see warnings about stripped sub-agent fields in that run
+- [ ] J’ai corrigé un nom de sub-agent invalide
+- [ ] Je n’ai conservé que les champs de frontmatter de sub-agent pris en charge
+- [ ] J’ai placé le bloc de sub-agent en bas du fichier
+- [ ] `gh aw compile` s'est termine apres que j'ai applique le meme modele a mon propre workflow
+- [ ] Je n’ai vu aucun avertissement concernant des champs de sub-agent retirés pendant cette exécution
 
 ---
 
 <!-- journey: all -->
-Return to [Split Complex Workflows with Inline Sub-Agents](21-inline-sub-agents.md).
-<!-- /journey -->
 
+Retour à [Découper les workflows complexes avec des sub-agents inline](21-inline-sub-agents.md).
+
+<!-- /journey -->

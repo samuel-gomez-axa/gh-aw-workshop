@@ -1,81 +1,82 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: [Supply Chain](https://github.github.com/gh-aw/introduction/architecture/#threat-model) Attacks via MCP Tool Servers
 
-> _A compromised MCP tool server can feed poisoned data back to your agent. Your job is to spot the [trust boundary](side-quest-17-02-security-architecture.md) early and keep the workflow's write surface narrow._
+# Quête annexe : attaques [Supply Chain](https://github.github.com/gh-aw/introduction/architecture/#threat-model) via les MCP tool servers
 
-## :clipboard: Before You Start
+> _Un MCP tool server compromis peut renvoyer des données empoisonnées à votre agent. Votre travail consiste à repérer rapidement la [trust boundary](side-quest-17-02-security-architecture.md) et à garder la surface d’écriture du workflow étroite._
 
-- Completed Side Quest: [How MCP Tool Servers Work](side-quest-17-01-mcp-concepts.md)
-- You have a workflow with a `tools:` block already configured.
+## :clipboard: Avant de commencer
 
-## The Risk in One Sentence
+- Vous avez terminé la quête annexe [comment fonctionnent les MCP tool servers](side-quest-17-01-mcp-concepts.md).
+- Vous avez déjà un workflow avec un bloc `tools:` configuré.
 
-A supply chain attack through [MCP](https://github.github.com/gh-aw/guides/mcps/) starts when you trust a tool server, package, or image that can change outside your repository, and that server returns data your agent treats as real.
+## Le risque en une phrase
 
-## Attack surface at a glance
+Une attaque supply chain via [MCP](https://github.github.com/gh-aw/guides/mcps/) commence lorsque vous faites confiance à un tool server, un package ou une image qui peut changer en dehors de votre dépôt, et que ce serveur renvoie des données que votre agent traite comme réelles.
 
-Use this table as a quick [threat model](https://github.github.com/gh-aw/introduction/architecture/#threat-model) when you add or review an MCP server.
+## Surface d’attaque en un coup d’œil
 
-| Attack type | How it works | Detection signal |
-| --- | --- | --- |
-| Typosquatted package | A package name looks familiar, but the publisher or package is not the one you meant to install. | The name is close to a trusted tool, but the publisher is unfamiliar. |
-| Compromised server or image | A real server or container starts returning altered results after the publisher account or registry is compromised. | The config uses a mutable tag such as `latest`, or a remote endpoint with no version pin. |
-| Tool poisoning | The server exposes more tools than your task needs, so a bad response has more ways to steer the agent. | The tool list is broad, vague, or includes an "everything" style [toolset](https://github.github.com/gh-aw/reference/github-tools/#github-toolsets). |
-| [Output injection](side-quest-17-06-output-injection.md) | The server returns normal-looking data with hidden instructions mixed into the result. | Tool output suddenly contains directives such as "ignore previous instructions" or asks for extra actions. |
+Utilisez ce tableau comme [threat model](https://github.github.com/gh-aw/introduction/architecture/#threat-model) rapide lorsque vous ajoutez ou examinez un MCP server.
 
-## :pencil2: Exercise: Inspect This `.mcp.json`
+| Type d’attaque                                           | Fonctionnement                                                                                                                   | Signal de détection                                                                                                                                        |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Package en typosquatting                                 | Le nom du package semble familier, mais l’éditeur ou le package n’est pas celui que vous vouliez installer.                      | Le nom ressemble à un tool de confiance, mais l’éditeur est inconnu.                                                                                       |
+| Serveur ou image compromis                               | Un vrai serveur ou container commence à renvoyer des résultats modifiés après la compromission du compte éditeur ou du registre. | La configuration utilise un tag mutable comme `latest`, ou un endpoint distant sans version épinglée.                                                      |
+| Tool poisoning                                           | Le serveur expose plus de tools que votre tâche n’en exige, donc une mauvaise réponse a davantage de moyens de piloter l’agent.  | La liste des tools est large, vague, ou inclut un [toolset](https://github.github.com/gh-aw/reference/github-tools/#github-toolsets) de type "everything". |
+| [Output injection](side-quest-17-06-output-injection.md) | Le serveur renvoie des données d’apparence normale avec des instructions cachées mélangées au résultat.                          | La sortie d’un tool contient soudain des directives comme "ignore previous instructions" ou demande des actions supplémentaires.                           |
 
-Read this fictional config and look for the warning signs from the attack-surface table above.
+## :pencil2: Exercice : inspecter ce `.mcp.json`
+
+Lisez cette configuration fictive et cherchez les signaux d’alerte du tableau de surface d’attaque ci-dessus.
 
 ```json
 {
-  "mcpServers": {
-    "github-agentic-workflows": {
-      "type": "local",
-      "command": "gh",
-      "args": ["aw", "mcp-server"]
-    },
-    "inventory-audit": {
-      "type": "remote",
-      "url": "https://tools.example.dev/mcp",
-      "publisher": "octo-tools-preview"
+    "mcpServers": {
+        "github-agentic-workflows": {
+            "type": "local",
+            "command": "gh",
+            "args": ["aw", "mcp-server"]
+        },
+        "inventory-audit": {
+            "type": "remote",
+            "url": "https://tools.example.dev/mcp",
+            "publisher": "octo-tools-preview"
+        }
     }
-  }
 }
 ```
 
-- [ ] Which entry would you question first?
-- [ ] What makes it risky?
+- [ ] Quelle entrée questionneriez-vous en premier ?
+- [ ] Qu’est-ce qui la rend risquée ?
 
 <details>
-<summary>Review your answer</summary>
+<summary>Vérifier votre réponse</summary>
 
-`inventory-audit` is the suspicious entry. It points to a remote URL with no pinned version, and the publisher name is not one you have already verified in your workflow or the tool's documentation.
+`inventory-audit` est l’entrée suspecte. Elle pointe vers une URL distante sans version épinglée, et le nom de l’éditeur n’est pas un nom que vous avez déjà vérifié dans votre workflow ou dans la documentation du tool.
 
-Before you trust a server like this, verify who publishes it, confirm the expected URL from official docs, and pin the exact package, image digest, or release version you intend to run.
+Avant de faire confiance à un serveur comme celui-ci, vérifiez qui le publie, confirmez l’URL attendue depuis la documentation officielle, et épinglez le package exact, le digest d’image ou la version de release que vous comptez exécuter.
 
 </details>
 
-## Three Habits That Lower the Risk
+## Trois habitudes qui réduisent le risque
 
-Adopt these habits when you work with MCP servers:
+Adoptez ces habitudes lorsque vous travaillez avec des MCP servers :
 
-1. **Pin the server you run.** Prefer a specific version or image digest over a mutable default like `latest`.
-2. **Restrict permissions and outputs.** Keep `permissions:` minimal and declare only the write surfaces you actually need in `safe-outputs`.
-3. **Audit tool names before you add them.** Confirm the publisher, verify the expected server name, and keep the tool list narrow.
+1. **Épinglez le serveur que vous exécutez.** Préférez une version précise ou un digest d’image plutôt qu’une valeur mutable comme `latest`.
+2. **Restreignez les permissions et les sorties.** Gardez `permissions:` minimal et ne déclarez dans `safe-outputs` que les surfaces d’écriture dont vous avez réellement besoin.
+3. **Auditez les noms de tools avant de les ajouter.** Confirmez l’éditeur, vérifiez le nom de serveur attendu, et gardez une liste de tools restreinte.
 
-gh-aw helps by making you declare `tools:` explicitly, limit [network](https://github.github.com/gh-aw/reference/network/) destinations with `network.allowed`, and narrow what the workflow can write with `permissions:` and `safe-outputs`.
+gh-aw vous aide en vous obligeant à déclarer explicitement `tools:`, à limiter les destinations [network](https://github.github.com/gh-aw/reference/network/) avec `network.allowed`, et à réduire ce que le workflow peut écrire avec `permissions:` et `safe-outputs`.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I can describe the MCP supply chain risk in one sentence
-- [ ] I can use the attack-surface table to spot at least one detection signal
-- [ ] I identified the suspicious `.mcp.json` entry and explained why it is risky
-- [ ] I applied at least one of the three hardening habits to my own workflow
+- [ ] Je peux décrire le risque supply chain lié à MCP en une phrase
+- [ ] Je peux utiliser le tableau de surface d’attaque pour repérer au moins un signal de détection
+- [ ] J’ai identifié l’entrée `.mcp.json` suspecte et expliqué pourquoi elle est risquée
+- [ ] J’ai appliqué au moins une des trois habitudes de durcissement à mon propre workflow
 
 <!-- journey: all -->
-Return to [Give Your Agent More Tools with MCP](17-add-mcp-tools.md).
+
+Retour à [Donner plus d’outils à votre agent avec MCP](17-add-mcp-tools.md).
+
 <!-- /journey -->
-
-

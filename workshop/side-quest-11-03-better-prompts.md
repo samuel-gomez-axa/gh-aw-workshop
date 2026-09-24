@@ -1,32 +1,33 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Write Better AI Task Briefs
 
-> _Optional: work through this guide if you want to get more useful, consistent output from your [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) — then return to [Step 11](07-your-first-workflow.md) or [Step 9](09-agentic-editing.md)._
+# Quête Annexe : Rédiger De Meilleurs Briefs De Tâche IA
 
-## :dart: What You'll Do
+> _Facultatif : parcourez ce guide si vous voulez obtenir une sortie plus utile et plus régulière de vos [agentic workflows](https://github.github.com/gh-aw/introduction/overview/), puis revenez à [Step 11](07-your-first-workflow.md) ou [Step 9](09-agentic-editing.md)._
 
-Learn five practical techniques for writing AI task briefs that produce clearer, more actionable workflow output. By the end you'll have an improved task brief for your daily status workflow — one that gives the AI better context, tighter constraints, and a predictable output format.
+## :dart: Ce Que Vous Allez Faire
 
-## :clipboard: Before You Start
+Découvrez cinq techniques pratiques pour rédiger des briefs de tâche IA qui produisent une sortie de workflow plus claire et plus exploitable. À la fin, vous aurez un brief de tâche amélioré pour votre workflow de statut quotidien, avec un meilleur contexte, des contraintes plus précises et un format de sortie prévisible.
 
-- You've written your first workflow task brief in [Step 11](07-your-first-workflow.md).
-- You've run the workflow at least once in [Step 9](09-agentic-editing.md) and seen its output.
+## :clipboard: Avant De Commencer
+
+- Vous avez rédigé votre premier brief de tâche de workflow dans [Step 11](07-your-first-workflow.md).
+- Vous avez exécuté le workflow au moins une fois dans [Step 9](09-agentic-editing.md) et vu sa sortie.
 
 ---
 
-## What Is a Task Brief?
+## Qu'est-Ce Qu'un Brief De Tâche ?
 
-The **task brief** is the Markdown body of your workflow file — everything below the closing `---` of the [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/). It's the natural-language instruction the AI agent reads before it acts.
+Le **brief de tâche** est le corps Markdown de votre fichier de workflow : tout ce qui se trouve sous le `---` de fermeture du [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/). C'est l'instruction en langage naturel que l'agent IA lit avant d'agir.
 
-Unlike a chat message, the task brief runs unattended. The AI can't ask clarifying questions, so everything it needs must be in the brief itself.
+Contrairement à un message de chat, le brief de tâche s'exécute sans supervision. L'IA ne peut pas poser de questions de clarification, donc tout ce dont elle a besoin doit se trouver dans le brief lui-même.
 
 > [!TIP]
-> Starting from a blank page is the hardest part. The [gh-aw wizard](https://githubnext.github.io/gh-aw-wizard/) generates a first-draft prompt for a new workflow, which you can then refine with the techniques below.
+> Commencer à partir d'une page blanche est la partie la plus difficile. Le [gh-aw wizard](https://githubnext.github.io/gh-aw-wizard/) génère un prompt de premier brouillon pour un nouveau workflow, que vous pouvez ensuite affiner avec les techniques ci-dessous.
 
 ---
 
-## State the Goal, Not Just the Action
+## Énoncez L'objectif, Pas Seulement L'action
 
 :x: Vague:
 
@@ -34,20 +35,20 @@ Unlike a chat message, the task brief runs unattended. The AI can't ask clarifyi
 Summarise the repository activity.
 ```
 
-:white_check_mark: Goal-oriented:
+:white_check_mark: Orienté objectif :
 
 ```
 Produce a concise daily summary that helps a developer answer: "What changed
 yesterday, and is there anything I need to act on today?"
 ```
 
-Framing the _purpose_ helps the AI decide what to include and what to skip.
+Formuler le _but_ aide l'IA à décider quoi inclure et quoi laisser de côté.
 
 ---
 
-## Give the Output a Shape
+## Donnez Une Forme À La Sortie
 
-Tell the AI exactly what format you want. Include section headings, list styles, or even a skeleton example.
+Indiquez précisément à l'IA le format que vous voulez. Incluez des titres de section, des styles de liste ou même un exemple de squelette.
 
 ```
 Format your summary as follows:
@@ -64,26 +65,26 @@ Format your summary as follows:
 - Highlight anything that looks urgent or blocked.
 ```
 
-When the format is explicit, the output is predictable and easier to skim.
+Quand le format est explicite, la sortie est prévisible et plus facile à parcourir.
 
 ---
 
-## Set Scope and Constraints
+## Définissez Le Périmètre Et Les Contraintes
 
-If you don't constrain the AI, it may go broad. Be specific:
+Si vous ne cadrez pas l'IA, elle peut partir trop large. Soyez précis :
 
-- **Time window**: "Focus on activity from the last 24 hours only."
-- **Depth**: "Keep each section to three bullet points maximum."
-- **Tone**: "Write in plain English, not jargon. Assume the reader is a developer, not a manager."
-- **What to omit**: "Skip merge commits and bot commits."
+- **Fenêtre temporelle** : "Focus on activity from the last 24 hours only."
+- **Niveau de détail** : "Keep each section to three bullet points maximum."
+- **Ton** : "Write in plain English, not jargon. Assume the reader is a developer, not a manager."
+- **À omettre** : "Skip merge commits and bot commits."
 
-Short constraints pay dividends over hundreds of automated runs.
+De courtes contraintes rapportent gros sur des centaines de runs automatisés.
 
 ---
 
-## Reference Step Outputs Explicitly
+## Référencez Les Sorties D'étape Explicitement
 
-When your workflow fetches data in earlier steps (see [Step 16](16-connect-data-source.md)), point the AI at that data by name:
+Lorsque votre workflow récupère des données dans des étapes précédentes, voir [Step 16](16-connect-data-source.md), pointez l'IA vers ces données par leur nom :
 
 ```
 Use `${{ steps.recent.outputs.commit_log }}` as the source of commit activity.
@@ -91,26 +92,26 @@ Use `${{ steps.issues.outputs.open_issues }}` as the source of open issues.
 Do not invent data — if a variable is empty, say so.
 ```
 
-The last line — "do not invent data" — is especially important. Without it, AI models sometimes hallucinate plausible-sounding commits or issues.
+La dernière ligne, "do not invent data", est particulièrement importante. Sans elle, les modèles d'IA hallucinent parfois des commits ou des issues qui semblent plausibles.
 
 ---
 
-## Add a "Done Means" Statement
+## Ajoutez Une Phrase De Fin Attendue
 
-Close every task brief with a single sentence that defines success:
+Terminez chaque brief de tâche par une phrase qui définit la réussite :
 
 ```
 You are done when you have posted one Markdown comment to the Actions run
 summary that covers all three sections above and is under 300 words.
 ```
 
-This acts as a stop condition. It reduces unnecessary tool calls and keeps the run fast.
+Cela sert de condition d'arrêt. Cela réduit les appels d'outils inutiles et garde le run rapide.
 
 ---
 
-## Putting It Together
+## Assembler Le Tout
 
-Here is a before-and-after comparison of a daily status task brief:
+Voici une comparaison avant/après d'un brief de tâche de statut quotidien :
 
 **Before:**
 
@@ -146,20 +147,21 @@ posted to the Actions run summary.
 ```
 
 > [!TIP]
-> Small changes to the task brief can have large effects on output quality. Treat it like code — version it, test it, iterate.
+> De petits changements dans le brief de tâche peuvent avoir de grands effets sur la qualité de sortie. Traitez-le comme du code : versionnez-le, testez-le, itérez.
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can name three techniques for improving a task brief
-- [ ] You have updated your daily status workflow with at least one improvement from this guide
-- [ ] You understand why "do not invent data" matters when referencing step outputs
-- [ ] Your updated workflow still compiles and runs without errors
+- [ ] Vous pouvez citer trois techniques pour améliorer un brief de tâche
+- [ ] Vous avez mis à jour votre workflow de statut quotidien avec au moins une amélioration issue de ce guide
+- [ ] Vous comprenez pourquoi "do not invent data" est important lorsqu'on référence des sorties d'étape
+- [ ] Votre workflow mis à jour compile toujours et s'exécute sans erreur
 
 ---
 
 <!-- journey: all -->
-Return to [Build Your Daily Repo Status Workflow](07-your-first-workflow.md) or continue to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
-<!-- /journey -->
 
+Revenez à [Créer votre workflow Daily Repo Status](07-your-first-workflow.md) ou continuez vers [Affiner, tester et améliorer votre workflow](09-agentic-editing.md).
+
+<!-- /journey -->

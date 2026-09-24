@@ -1,88 +1,89 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: How the `agentic-workflows` Skill Dispatcher Works
 
-> _One skill, three jobs — knowing which trigger phrase to use saves you from writing prompts from scratch every time._
+# Quête Annexe : Comprendre Le Dispatcher De La Skill `agentic-workflows`
 
-## :dart: What You'll Do
+> _Une skill, trois usages : savoir quelle trigger phrase utiliser vous évite de réécrire des prompts depuis zéro à chaque fois._
 
-Learn how the `agentic-workflows` Copilot skill routes your plain-English request to the right editing, debugging, or optimizing prompt, and practice choosing the right trigger phrase for a given situation.
+## :dart: Ce Que Vous Allez Faire
 
-## :clipboard: Before You Start
+Découvrez comment la skill Copilot `agentic-workflows` achemine votre demande en anglais courant vers le bon prompt d'édition, de débogage ou d'optimisation, et entraînez-vous à choisir la bonne trigger phrase selon la situation.
 
-- You have `.github/skills/agentic-workflows/` in your practice repository (created during [Step 7](07-your-first-workflow.md)).
-- You can open Copilot CLI with `gh copilot` in your Codespace terminal.
+## :clipboard: Avant De Commencer
 
-## Steps
+- Vous avez `.github/skills/agentic-workflows/` dans votre dépôt d'entraînement, créé pendant [Step 7](07-your-first-workflow.md).
+- Vous pouvez ouvrir Copilot CLI avec `gh copilot` dans le terminal de votre Codespace.
 
-### Understand the dispatcher model
+## Étapes
 
-The `agentic-workflows` skill acts as a dispatcher: when you describe a workflow task in plain English and mention the skill by name, it routes your request to the right editing, debugging, or optimizing prompt and makes changes directly in your repository.
+### Comprendre Le Modèle De Dispatcher
 
-You invoke it in Copilot CLI in your Codespace terminal:
+La skill `agentic-workflows` agit comme un dispatcher : lorsque vous décrivez une tâche de workflow en anglais courant et mentionnez la skill par son nom, elle dirige votre demande vers le bon prompt d'édition, de débogage ou d'optimisation et effectue les changements directement dans votre dépôt.
+
+Vous l'appelez dans Copilot CLI depuis le terminal de votre Codespace :
 
 ```bash
 gh copilot
 ```
 
-Then send:
+Envoyez ensuite :
 
 ```prompt
 /agentic-workflows [your request here]
 ```
 
-### Learn the three task types
+### Découvrir Les Trois Types De Tâches
 
-The skill recognizes three core task types for day-to-day workflow maintenance:
+La skill reconnaît trois types de tâches principaux pour la maintenance quotidienne des workflows :
 
-| Task type | When to use it | Example trigger phrase |
-|-----------|---------------|------------------------|
-| **Edit** | Improve the agent brief or [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) | "update the workflow to …" |
-| **Debug** | Investigate unexpected output or a failed run | "debug the workflow — it ran but …" |
-| **Optimize** | Reduce token usage or tighten [permissions](https://github.github.com/gh-aw/reference/permissions/) | "optimize the workflow to reduce [AI Credit](https://github.github.com/gh-aw/reference/cost-management/) cost" |
+| Type de tâche | Quand l'utiliser                                                                                                 | Exemple de trigger phrase                                                                                      |
+| ------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| **Edit**      | Améliorer le brief de l'agent ou le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)        | "update the workflow to …"                                                                                     |
+| **Debug**     | Examiner une sortie inattendue ou un run en échec                                                                | "debug the workflow — it ran but …"                                                                            |
+| **Optimize**  | Réduire l'usage de tokens ou resserrer les [permissions](https://github.github.com/gh-aw/reference/permissions/) | "optimize the workflow to reduce [AI Credit](https://github.github.com/gh-aw/reference/cost-management/) cost" |
 
-If you are working locally or in a Codespace without a Copilot session, you can still make each type of change manually — open the workflow file, make the targeted edit, then run `gh aw compile` before committing.
+Si vous travaillez en local ou dans un Codespace sans session Copilot, vous pouvez quand même effectuer chacun de ces changements manuellement : ouvrez le fichier de workflow, faites l'édition ciblée, puis lancez `gh aw compile` avant de valider.
 
-### Practice matching a request to a task type
+### S'entraîner À Associer Une Demande À Un Type De Tâche
 
-For each scenario below, decide which task type (Edit, Debug, or Optimize) fits best before revealing the answer.
+Pour chaque scénario ci-dessous, décidez quel type de tâche, Edit, Debug ou Optimize, convient le mieux avant d'afficher la réponse.
 
-**Scenario A:** Your workflow's daily comment is too generic and you want it to explain *why* something matters, not just *what* happened.
+**Scénario A :** Le commentaire quotidien de votre workflow est trop générique et vous voulez qu'il explique _pourquoi_ quelque chose compte, pas seulement _ce_ qui s'est passé.
 
 <details>
-<summary>Reveal answer</summary>
+<summary>Afficher la réponse</summary>
 
-**Edit.** You're improving the task brief's content, not fixing a failure or reducing cost.
+**Edit.** Vous améliorez le contenu du brief de tâche, vous ne corrigez pas un échec et vous ne réduisez pas un coût.
 
 </details>
 
-**Scenario B:** Your last run finished green, but no comment or issue appeared anywhere in the repository.
+**Scénario B :** Votre dernier run s'est terminé en vert, mais aucun commentaire ni aucune issue n'est apparu dans le dépôt.
 
 <details>
-<summary>Reveal answer</summary>
+<summary>Afficher la réponse</summary>
 
-**Debug.** Something went wrong between "the agent decided to write" and "the write actually happened" — that's an investigation, not a content edit.
+**Debug.** Quelque chose s'est mal passé entre "the agent decided to write" et "the write actually happened" : c'est une investigation, pas une édition de contenu.
 
 </details>
 
-**Scenario C:** Your workflow works correctly, but you noticed it consumes more AI Credits than you'd like on a workflow that runs daily.
+**Scénario C :** Votre workflow fonctionne correctement, mais vous avez remarqué qu'il consomme plus d'AI Credits que vous ne le souhaiteriez pour un workflow quotidien.
 
 <details>
-<summary>Reveal answer</summary>
+<summary>Afficher la réponse</summary>
 
-**Optimize.** The behavior is correct; you're tuning for lower token cost.
+**Optimize.** Le comportement est correct ; vous l'ajustez pour réduire le coût en tokens.
 
 </details>
 
-### Try writing your own trigger phrase
+### Essayez D'écrire Votre Propre Trigger Phrase
 
-Pick one real observation about your own workflow (from a recent run) and write a one-sentence trigger phrase using the task-type table above. Send it to the skill in Copilot CLI and review the diff it proposes before accepting.
+Choisissez une observation réelle à propos de votre propre workflow, à partir d'un run récent, et rédigez une trigger phrase en une phrase à l'aide du tableau ci-dessus. Envoyez-la à la skill dans Copilot CLI et examinez le diff proposé avant de l'accepter.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can explain what the `agentic-workflows` skill dispatcher does in one sentence
-- [ ] You can name the three task types and one trigger phrase for each
-- [ ] You correctly matched all three practice scenarios to a task type
-- [ ] You sent one real request to the skill and reviewed its proposed diff
+- [ ] Vous pouvez expliquer en une phrase ce que fait le dispatcher de la skill `agentic-workflows`
+- [ ] Vous pouvez nommer les trois types de tâches et une trigger phrase pour chacun
+- [ ] Vous avez correctement associé les trois scénarios d'entraînement à un type de tâche
+- [ ] Vous avez envoyé une demande réelle à la skill et examiné le diff qu'elle propose
 
-**Return to the main adventure:** [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)
+**Retour à l'aventure principale :** [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)

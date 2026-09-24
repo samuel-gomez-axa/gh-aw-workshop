@@ -1,50 +1,53 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Configure GitHub Copilot Authentication
 
-> _Optional: work through this guide when you need to configure Copilot [authentication](https://github.github.com/gh-aw/reference/auth/) for an [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-is-an-agentic-workflow), then return to your main path._
+# Side Quest : Configurer l’authentification GitHub Copilot
 
-## :clipboard: Before You Start
+> _Facultatif : suivez ce guide lorsque vous devez configurer l’[authentication](https://github.github.com/gh-aw/reference/auth/) de Copilot pour un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-is-an-agentic-workflow), puis revenez à votre parcours principal._
 
-- You have completed [Install the gh-aw CLI Extension](06-install-gh-aw.md).
-- You have access to your repository's settings (needed if you choose Method 2).
+## :clipboard: Avant de commencer
 
-## Why [authentication](https://github.github.com/gh-aw/reference/auth/) matters
+- Vous avez terminé [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md).
+- Vous avez accès aux paramètres de votre dépôt (nécessaire si vous choisissez Method 2).
 
-[Agentic workflows](https://github.github.com/gh-aw/introduction/overview/) call the GitHub Copilot API at runtime to run AI reasoning steps. Without a valid credential, every call returns `401 Unauthorized` and the workflow fails immediately. Configuring authentication once, before you run a workflow, ensures your agent can reach Copilot reliably on every future run.
+## Pourquoi l’[authentication](https://github.github.com/gh-aw/reference/auth/) est importante
 
-If you are using a terminal, prefer the guided `gh-aw` setup flows where possible:
+[Agentic workflows](https://github.github.com/gh-aw/introduction/overview/) appellent l’API GitHub Copilot à l’exécution pour lancer des étapes de raisonnement IA. Sans identifiant valide, chaque appel renvoie `401 Unauthorized` et le workflow échoue immédiatement. Configurer l’authentication une seule fois, avant d’exécuter un workflow, garantit que votre agent peut joindre Copilot de manière fiable à chaque exécution future.
 
-- [`gh aw secrets bootstrap --engine copilot`](https://github.github.com/gh-aw/setup/cli/#secrets) after you choose personal billing
+Si vous utilisez un terminal, privilégiez si possible les parcours guidés de configuration `gh-aw` :
+
+- [`gh aw secrets bootstrap --engine copilot`](https://github.github.com/gh-aw/setup/cli/#secrets) après avoir choisi la facturation personnelle
 - `gh aw add-wizard ...` when you are installing a curated workflow and want setup prompts inline
 
-Use the manual guides below when you need or prefer the step-by-step browser procedure.
+Utilisez les guides manuels ci-dessous lorsque vous avez besoin, ou préférez, la procédure détaillée dans le navigateur.
 
-## Choose your method
+## Choisissez votre méthode
 
-Choose the method that fits your situation:
+Choisissez la méthode adaptée à votre situation :
 
-| Method | Best for | Guide |
-|---|---|---|
-| **Copilot requests permission** (recommended) | Organizations with centralized Copilot billing enabled for Actions | [Method 1 →](side-quest-06-03a-copilot-requests-permission.md) |
-| **`COPILOT_GITHUB_TOKEN` secret** | Personal billing, or organizations without centralized Copilot billing | [Method 2 →](side-quest-06-03b-copilot-github-token.md) |
-| **[`COPILOT_GITHUB_TOKEN`](https://github.github.com/gh-aw/reference/auth/#copilotgithubtoken) secret (UI-only)** | Same as Method 2, but using only GitHub web UI steps | [Method 2 (UI-only) →](side-quest-06-03c-copilot-github-token-ui-only.md) |
+| Méthode                                                                                                           | Idéal pour                                                                            | Guide                                                                      |
+| ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| **Permission de requêtes Copilot** (recommandé)                                                                   | Les organisations avec facturation Copilot centralisée activée pour Actions           | [Méthode 1 →](side-quest-06-03a-copilot-requests-permission.md)            |
+| **Secret `COPILOT_GITHUB_TOKEN`**                                                                                 | La facturation personnelle, ou les organisations sans facturation Copilot centralisée | [Méthode 2 →](side-quest-06-03b-copilot-github-token.md)                   |
+| **Secret [`COPILOT_GITHUB_TOKEN`](https://github.github.com/gh-aw/reference/auth/#copilotgithubtoken) (UI-only)** | Identique à la méthode 2, mais en utilisant uniquement l’interface web GitHub         | [Méthode 2 (UI-only) →](side-quest-06-03c-copilot-github-token-ui-only.md) |
 
-If you are unsure, check who owns your practice repository first:
+Si vous avez un doute, vérifiez d’abord à qui appartient votre dépôt d’exercice :
 
-- Organization with centralized Copilot billing → use **Method 1**
-- Personal repository or organization without centralized billing → use **Method 2**
+- Organisation avec facturation Copilot centralisée → utilisez **Méthode 1**
+- Dépôt personnel ou organisation sans facturation centralisée → utilisez **Méthode 2**
 
 > [!IMPORTANT]
-> Choose one method. When [`copilot-requests: write`](https://github.github.com/gh-aw/reference/permissions/#special-permission-copilot-requests-write) is present, `COPILOT_GITHUB_TOKEN` is ignored for inference. Remove the permission and recompile when switching to personal billing.
+> Choisissez une seule méthode. Lorsque [`copilot-requests: write`](https://github.github.com/gh-aw/reference/permissions/#special-permission-copilot-requests-write) est présent, `COPILOT_GITHUB_TOKEN` est ignoré pour l’inférence. Supprimez cette permission et recompilez lors du passage à la facturation personnelle.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I have identified which authentication method fits my situation.
-- [ ] I have completed either Method 1 or Method 2 (followed the linked guide to the end).
-- [ ] My workflow source and compiled [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) use only the selected method.
-- [ ] I have returned to my main workshop path.
+- [ ] J’ai identifié la méthode d’authentication adaptée à ma situation.
+- [ ] J’ai terminé soit Method 1 soit Method 2 (en suivant le guide lié jusqu’au bout).
+- [ ] Mon workflow source et son [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) compilé utilisent uniquement la méthode choisie.
+- [ ] Je suis revenu à mon parcours principal de l’atelier.
 
 <!-- journey: all -->
-**Return to:** [Install the gh-aw CLI Extension](06-install-gh-aw.md) | [Write Your First Agentic Workflow](07-your-first-workflow.md)
+
+**Retour :** [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md) | [Écrire votre premier agentic workflow](07-your-first-workflow.md)
+
 <!-- /journey -->

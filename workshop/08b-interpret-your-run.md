@@ -1,26 +1,27 @@
 <!-- page-journey: all -->
 <!-- page-adventure: core -->
-# Interpret Your First Run
 
-_Your first run is more useful when you can explain what the agent did and why._
+# Interpréter votre première exécution
 
-## :dart: What You'll Do
+_Votre première exécution est plus utile lorsque vous pouvez expliquer ce que l’agent a fait et pourquoi._
 
-You'll read the live log from Step 8, find the workflow's output, and learn three quick checks for common run problems.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Vous allez lire le journal en direct de l’étape 8, trouver la sortie du workflow et apprendre trois vérifications rapides pour les problèmes d’exécution les plus fréquents.
 
-- Completed [Run and Watch Your Workflow](08-run-your-workflow.md)
-- Your **Daily Report Status** workflow has at least one completed run
+## :clipboard: Avant de commencer
 
-## Read the live log
+- Vous avez terminé [Lancer et observer votre workflow](08-run-your-workflow.md)
+- Votre workflow **Daily Report Status** a au moins une exécution terminée
 
-Open the completed **Daily Report Status** run from the **Actions** tab and click the job name. The log usually moves through a simple pattern: the agent thinks, calls a [tool](https://github.github.com/gh-aw/reference/tools/), receives a result, and finishes.
+## Lisez le journal en direct
+
+Ouvrez l’exécution terminée de **Daily Report Status** depuis l’onglet **Actions**, puis cliquez sur le nom du job. Le journal suit généralement un schéma simple : l’agent réfléchit, appelle un [tool](https://github.github.com/gh-aw/reference/tools/), reçoit un résultat, puis termine.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/08b-agent-loop-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/08b-agent-loop-light.svg">
-  <img alt="Agent execution loop: Planning leads to a Tool Call, which returns a Result; the agent loops back or ends with Done" src="images/08b-agent-loop-light.svg">
+  <img alt="Boucle d’exécution de l’agent : Planning mène à un Tool Call, qui renvoie un Result ; l’agent repart dans la boucle ou termine avec Done" src="images/08b-agent-loop-light.svg">
 </picture>
 
 ```text
@@ -32,40 +33,40 @@ Open the completed **Daily Report Status** run from the **Actions** tab and clic
 ✅ Done
 ```
 
-The important question is not "Can I read every line?" It is "Can I tell where the agent decided, where it acted, and whether it finished?" Find the first `Tool call` in your own run and fill in the template below:
+La question importante n’est pas « Puis-je lire chaque ligne ? », mais « Puis-je dire où l’agent a décidé, où il a agi et s’il a terminé ? ». Trouvez le premier `Tool call` dans votre propre exécution, puis remplissez le modèle ci-dessous :
 
 ```text
-First Tool call I saw:         [tool name, e.g. github.list_issues]
-What it was trying to do:      [one sentence description]
+Premier Tool call observé :    [nom de l’outil, par ex. github.list_issues]
+Ce qu’il essayait de faire :   [description en une phrase]
 ```
 
-## Check the output
+## Vérifiez la sortie
 
-After the run finishes, scroll to the **Summary** section on the run page. This gives you the short version of what the agent believes it did, including the [safe-output action](https://github.github.com/gh-aw/reference/safe-outputs/) it used.
+Une fois l’exécution terminée, faites défiler jusqu’à la section **Summary** de la page d’exécution. Vous y trouverez la version courte de ce que l’agent pense avoir fait, y compris l’[action safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) qu’il a utilisée.
 
-Then verify the real output in your repository. For **Daily Report Status**, that usually means opening the issue the agent touched and confirming the comment or new issue is actually there. The GitHub change is the ground truth behind the [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) record.
+Vérifiez ensuite la sortie réelle dans votre dépôt. Pour **Daily Report Status**, cela signifie généralement ouvrir l’issue touchée par l’agent et confirmer que le commentaire ou la nouvelle issue est bien présent. Le changement sur GitHub reste la source de vérité derrière l’enregistrement [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/08-run-summary-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/08-run-summary-light.svg">
-  <img alt="Workflow run summary panel" src="images/08-run-summary-light.svg">
+  <img alt="Panneau Summary de l’exécution du workflow" src="images/08-run-summary-light.svg">
 </picture>
 
-## Check common error patterns first
+## Vérifiez d’abord les motifs d’erreur fréquents
 
-If your run does not look right, work through these three checks in order before changing anything in the workflow.
+Si votre exécution ne semble pas correcte, passez par ces trois vérifications dans l’ordre avant de modifier quoi que ce soit dans le workflow.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/08b-error-checks-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/08b-error-checks-light.svg">
-  <img alt="Three quick checks for a failed workflow run: check if the workflow appears in Actions, then if the log shows useful action, then if anything changed in GitHub" src="images/08b-error-checks-light.svg">
+  <img alt="Trois vérifications rapides pour une exécution de workflow en échec : vérifier si le workflow apparaît dans Actions, puis si le journal montre une action utile, puis si quelque chose a changé sur GitHub" src="images/08b-error-checks-light.svg">
 </picture>
 
-- **The workflow never appears in Actions** — confirm the workflow file is committed on `main`, then refresh. If you use the terminal path, run `gh aw compile` to catch [compile](https://github.github.com/gh-aw/reference/compilation-process/) errors.
-- **The log shows lots of thinking but no useful action** — your instructions may be too vague. Keep the run open, then refine the workflow body in a later step.
-- **The run finishes but nothing changed in GitHub** — make sure your repository has an open issue and that the workflow had permission to write.
+- **Le workflow n’apparaît jamais dans Actions** : confirmez que le fichier de workflow est bien commité sur `main`, puis actualisez. Si vous utilisez le chemin terminal, exécutez `gh aw compile` pour détecter les erreurs de [compile](https://github.github.com/gh-aw/reference/compilation-process/).
+- **Le journal montre beaucoup de réflexion mais aucune action utile** : vos instructions sont peut-être trop vagues. Laissez l’exécution ouverte, puis affinez le corps du workflow à l’étape suivante.
+- **L’exécution se termine mais rien n’a changé sur GitHub** : assurez-vous que votre dépôt contient une issue ouverte et que le workflow disposait des permissions d’écriture nécessaires.
 
-Knowing what a failed run looks like helps you spot permission issues at a glance, before you spend time re-reading the brief:
+Savoir reconnaître l’apparence d’une exécution en échec vous aide à repérer immédiatement les problèmes de permissions, avant de perdre du temps à relire le brief :
 
 ```text
 🤔 Planning...  Searching for open issues
@@ -74,28 +75,29 @@ Knowing what a failed run looks like helps you spot permission issues at a glanc
 ❌ Failed
 ```
 
-If these checks do not resolve the issue, the [Side Quest: Diagnosing Common Agent Output Patterns](side-quest-09-01-debug-output.md) covers additional cases.
+Si ces vérifications ne résolvent pas le problème, la [Side Quest: Diagnosing Common Agent Output Patterns](side-quest-09-01-debug-output.md) couvre des cas supplémentaires.
 
-## Reflect
+## Prenez du recul
 
-Before you mark the checkpoint, take two minutes to apply what you just read to your own run.
+Avant de cocher le checkpoint, prenez deux minutes pour appliquer ce que vous venez de lire à votre propre exécution.
 
-**Practice prompt 1 — trace the decision:** Find the first `Tool call` in your run log and answer: what question was the agent trying to answer at that moment, and what information did it get back?
+**Exercice 1 — retracez la décision :** trouvez le premier `Tool call` dans le journal d’exécution et répondez à cette question : quelle question l’agent essayait-il de résoudre à ce moment-là, et quelle information a-t-il reçue en retour ?
 
-**Practice prompt 2 — judge the outcome:** Compare the run summary to the actual GitHub change (the comment or issue). Did the agent do what you expected? Write one sentence saying what matched and, if anything, what was different.
+**Exercice 2 — évaluez le résultat :** comparez le résumé d’exécution au changement réel sur GitHub, c’est-à-dire le commentaire ou l’issue. L’agent a-t-il fait ce que vous attendiez ? Écrivez une phrase indiquant ce qui correspondait et, s’il y a lieu, ce qui était différent.
 
-Put your answers in a scratch file, your editor, or wherever you keep notes. You will refer back to this comparison when you refine the workflow in the next step.
+Mettez vos réponses dans un fichier brouillon, dans votre éditeur ou à l’endroit où vous gardez vos notes. Vous reviendrez à cette comparaison lorsque vous affinerez le workflow à l’étape suivante.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I opened the run summary and found the safe-output note
-- [ ] I verified the real GitHub output that the workflow created
-- [ ] I traced the first tool call and noted what the agent was trying to do
-- [ ] I compared the run summary to the actual GitHub change and noted the result
-- [ ] I know the first check to make if a run is missing, confused, or finished without writing anything
-- [ ] I can identify whether a run failed due to a permission error, a vague brief, or a missing output
+- [ ] J’ai ouvert le résumé d’exécution et trouvé la note safe-output
+- [ ] J’ai vérifié la sortie réelle sur GitHub créée par le workflow
+- [ ] J’ai retracé le premier appel d’outil et noté ce que l’agent essayait de faire
+- [ ] J’ai comparé le résumé d’exécution au changement réel sur GitHub et noté le résultat
+- [ ] Je connais la première vérification à faire si une exécution est absente, confuse ou terminée sans rien écrire
+- [ ] Je peux identifier si une exécution a échoué à cause d’une erreur de permission, d’un brief trop vague ou d’une sortie manquante
 
 <!-- journey: all -->
-**Next:** [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)
-<!-- /journey -->
 
+**Étape suivante :** [Affiner, tester et améliorer votre workflow](09-agentic-editing.md)
+
+<!-- /journey -->

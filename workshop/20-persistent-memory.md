@@ -17,47 +17,47 @@
 </research-metadata>
 -->
 
-# Make Your Workflow Remember Across Runs
+# Faites en sorte que votre workflow se souvienne d'une execution a l'autre
 
-> _A workflow that forgets everything after each run will repeat itself. Give it memory and it can act only on what's new._
+> _Un workflow qui oublie tout après chaque exécution finira par se répéter. Donnez-lui une mémoire et il pourra n'agir que sur ce qui est nouveau._
 
-## :dart: What You'll Do
+## :dart: Ce que vous allez faire
 
-You'll add [persistent memory](https://github.github.com/gh-aw/patterns/memory-ops/) to your agentic workflow so it can carry state between runs. By the end of this step, your workflow will remember what it has already reported on and skip duplicates — so your team never gets the same alert twice.
+Vous allez ajouter une [persistent memory](https://github.github.com/gh-aw/patterns/memory-ops/) à votre workflow agentique afin qu'il conserve un état d'une exécution à l'autre. À la fin de cette étape, votre workflow se souviendra de ce qu'il a déjà signalé et ignorera les doublons, afin que votre équipe ne reçoive jamais deux fois la même alerte.
 
-## :clipboard: Before You Start
+## :clipboard: Avant de commencer
 
-- You have a working agentic workflow from the build steps ([Step 7](07-your-first-workflow.md) or equivalent).
-- You are comfortable editing YAML [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) from [Give Your Agent More Tools with MCP](17-add-mcp-tools.md).
-- You understand how `safe-outputs` controls write access (see [Side Quest: Frontmatter Deep Dive — Part B](side-quest-11-08-frontmatter-tools-outputs.md) if you need a refresher).
+- Vous disposez d'un workflow agentique fonctionnel issu des étapes de création ([Step 7](07-your-first-workflow.md) ou équivalent).
+- Vous êtes à l'aise pour modifier le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) YAML depuis [Give Your Agent More Tools with MCP](17-add-mcp-tools.md).
+- Vous comprenez comment `safe-outputs` contrôle les droits d'écriture (voir [Side Quest: Frontmatter Deep Dive — Part B](side-quest-11-08-frontmatter-tools-outputs.md) si vous avez besoin d'un rappel).
 
-## Why Memory Matters
+## Pourquoi la memoire compte
 
-Every workflow run you have built so far starts with a blank slate. That is fine for a daily summary, but it causes problems the moment you want to:
+Jusqu'ici, chaque exécution de workflow que vous avez construite commence sur une page blanche. C'est acceptable pour un résumé quotidien, mais cela devient un problème dès que vous voulez :
 
-The diagram below shows how `cache-memory` makes deduplication possible across runs.
+Le schéma ci-dessous montre comment `cache-memory` rend la déduplication possible d'une exécution à l'autre.
 
 <picture>
    <source media="(prefers-color-scheme: dark)" srcset="images/20-cache-memory-loop-dark.svg">
    <source media="(prefers-color-scheme: light)" srcset="images/20-cache-memory-loop-light.svg">
-   <img alt="Cache-memory deduplication loop: on each workflow run, the agent reads the memory slot, filters out already-seen issues, reports only new ones, then writes updated issue IDs back to cache." src="images/20-cache-memory-loop-light.svg">
+  <img alt="Boucle de deduplication cache-memory : à chaque exécution, l'agent lit l'emplacement mémoire, filtre les issues déjà vues, ne signale que les nouvelles, puis réécrit les identifiants d'issue mis à jour dans le cache." src="images/20-cache-memory-loop-light.svg">
 </picture>
 
-- **Deduplicate alerts** — alert only on _new_ open issues, not the same ones every morning.
-- **Compare against a baseline** — "did the number of failing tests increase since yesterday?"
-- **Scan incrementally** — skip pull requests you have already reviewed.
+- **Dedupliquer les alertes** - alerter uniquement sur les nouvelles issues ouvertes, pas sur les mêmes tous les matins.
+- **Comparer à une référence** - "did the number of failing tests increase since yesterday?"
+- **Scanner de façon incrémentale** - ignorer les pull requests que vous avez déjà examinées.
 
-This step uses `cache-memory`; see [Side Quest: Choosing Between Cache Memory and Repo Memory](side-quest-20-01-memory-patterns.md) for a full comparison.
+Cette étape utilise `cache-memory` ; consultez [Side Quest: Choosing Between Cache Memory and Repo Memory](side-quest-20-01-memory-patterns.md) pour une comparaison complète.
 
-## Steps
+## Etapes
 
-### Choose the right memory tool
+### Choisir le bon outil de memoire
 
-For this deduplication use case, `cache-memory` is the right choice.
+Pour ce cas d'usage de déduplication, `cache-memory` est le bon choix.
 
-### Add `cache-memory` to your frontmatter
+### Ajouter `cache-memory` a votre frontmatter
 
-In your Codespace terminal, run `gh copilot` and send this prompt:
+Dans votre terminal Codespace, lancez `gh copilot` puis envoyez ce prompt :
 
 ```prompt
 /agentic-workflows update .github/workflows/daily-status.md to add `cache-memory`
@@ -65,45 +65,45 @@ under the `tools:` key in the frontmatter, with key `daily-status-seen-issues` a
 ttl `7d`, and update the task brief to read and write that memory slot for deduplication.
 ```
 
-The skill adds the frontmatter block and updates the brief. Review the diff before committing.
+La skill ajoute le bloc de frontmatter et met à jour le brief. Examinez le diff avant de commit.
 
-<details>
-<summary>:pencil2: Manual editing path</summary>
+<details open>
+<summary>:pencil2: Parcours d'édition manuelle</summary>
 
-Open your workflow file at `.github/workflows/daily-status.md`. Add `cache-memory` inside the `tools:` block in the frontmatter with the content shown below, then run `gh aw compile`.
+Ouvrez votre fichier de workflow dans `.github/workflows/daily-status.md`. Ajoutez `cache-memory` dans le bloc `tools:` du frontmatter avec le contenu ci-dessous, puis lancez `gh aw compile`.
 
 </details>
 
-Here is the frontmatter structure the skill will use:
+Voici la structure de frontmatter que la skill utilisera :
 
 ```markdown .github/workflows/daily-status.md
 ---
 name: Daily Status Report
 on:
-  schedule: daily
-  workflow_dispatch: {}
+    schedule: daily
+    workflow_dispatch: {}
 permissions:
-  contents: read
-  issues: write
+    contents: read
+    issues: write
 tools:
-  cache-memory:
-    key: daily-status-seen-issues
-    ttl: 7d
+    cache-memory:
+        key: daily-status-seen-issues
+        ttl: 7d
 ---
 ```
 
-What each field does:
+Role de chaque champ :
 
-| Field | Purpose |
-|-------|---------|
-| `tools:` | Parent key that enables tool integrations for this workflow. Memory primitives are nested under this key. |
-| `cache-memory:` | Tells `gh-aw` to back this memory slot with the GitHub Actions cache. Nested under `tools:`. |
-| `key:` | A unique name for this memory slot. Prefix it with your workflow name to avoid collisions if you have multiple workflows in the same repository. |
-| `ttl: 7d` | How long to keep cached data without a refresh. After 7 days of no runs the cache expires and the agent starts fresh. |
+| Champ           | Role                                                                                                                                               |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tools:`        | Clé parente qui active les intégrations d'outils pour ce workflow. Les primitives de mémoire sont imbriquées sous cette clé.                       |
+| `cache-memory:` | Indique à `gh-aw` d'adosser cet emplacement mémoire au cache GitHub Actions. Imbriqué sous `tools:`.                                               |
+| `key:`          | Nom unique pour cet emplacement mémoire. Préfixez-le avec le nom du workflow pour éviter les collisions si plusieurs workflows partagent le dépôt. |
+| `ttl: 7d`       | Durée de conservation des données en cache sans rafraîchissement. Après 7 jours sans exécution, le cache expire et l'agent repart de zéro.         |
 
-### Update your task brief to use the memory
+### Mettre a jour votre brief de tache pour utiliser la memoire
 
-Below the frontmatter, tell the agent how to use its memory. The agent reads and writes the memory slot by name:
+Sous le frontmatter, indiquez à l'agent comment utiliser sa mémoire. L'agent lit et écrit l'emplacement mémoire par son nom :
 
 ```markdown .github/workflows/daily-status.md
 You monitor this repository for newly opened issues and post a daily digest.
@@ -120,15 +120,15 @@ have already reported on. On each run:
 ```
 
 > [!TIP]
-> Be explicit in the brief about _reading_ and _writing_ the memory. The agent will not automatically persist anything unless you ask it to in the task brief.
+> Soyez explicite dans le brief sur la lecture et l'écriture de la mémoire. L'agent ne persistera rien automatiquement tant que vous ne le lui demandez pas dans le brief de tâche.
 
-### [Compile](https://github.github.com/gh-aw/reference/compilation-process/), validate, and push
+### [Compiler](https://github.github.com/gh-aw/reference/compilation-process/), valider et pousser
 
-The `/agentic-workflows` skill recompiles the lock file automatically. If you edited manually, run `gh aw compile` first to confirm the memory block is valid.
+La skill `/agentic-workflows` recompile automatiquement le lock file. Si vous avez édité manuellement, lancez d'abord `gh aw compile` pour confirmer que le bloc mémoire est valide.
 
-Common mistakes include putting `cache-memory:` at the top level instead of nesting it under `tools:`, and omitting the `key:` field for `cache-memory`.
+Parmi les erreurs fréquentes : placer `cache-memory:` au niveau racine au lieu de l'imbriquer sous `tools:`, ou omettre le champ `key:` pour `cache-memory`.
 
-Push your workflow update:
+Poussez la mise a jour de votre workflow :
 
 ```bash
 git add .
@@ -136,34 +136,35 @@ git commit -m "feat: add cache-memory deduplication to daily-status"
 git push
 ```
 
-1. Trigger a manual run in **Actions → Daily Status Report → Run workflow**.
-2. Open the run log and confirm it contains `cache-memory: loaded 0 items`. This confirms the cache starts empty and initializes correctly.
+1. Déclenchez une exécution manuelle dans **Actions → Daily Status Report → Run workflow**.
+2. Ouvrez le journal d'exécution et vérifiez qu'il contient `cache-memory: loaded 0 items`. Cela confirme que le cache démarre vide et s'initialise correctement.
 
-### Trigger a second run and confirm memory reuse
+### Declencher une deuxieme execution et confirmer la reutilisation de la memoire
 
-1. Trigger the workflow a second time with no new issues.
-2. Open the second run log and find `cache-memory: loaded N items`.
-3. Confirm `N` matches the number of issues processed in the first run.
+1. Déclenchez le workflow une deuxième fois sans nouvelle issue.
+2. Ouvrez le journal de cette deuxième exécution et trouvez `cache-memory: loaded N items`.
+3. Vérifiez que `N` correspond au nombre d'issues traitées lors de la première exécution.
 
-### Test deduplication with a new issue
+### Tester la deduplication avec une nouvelle issue
 
-1. Open a new issue in your practice repository.
-2. Trigger the workflow again.
-3. Confirm the run reports only the new issue.
+1. Ouvrez une nouvelle issue dans votre dépôt d'exercice.
+2. Déclenchez à nouveau le workflow.
+3. Vérifiez que l'exécution ne signale que cette nouvelle issue.
 
 > [!TIP]
-> Open the run log for the second run and look for a line where the agent reads its memory. The stored issue numbers it filters against appear there — that's your workflow remembering across runs.
+> Ouvrez le journal de la deuxième exécution et cherchez la ligne où l'agent lit sa mémoire. Les numéros d'issues enregistrés sur lesquels il filtre y apparaissent ; c'est ainsi que votre workflow se souvient d'une exécution à l'autre.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] Your workflow frontmatter has `cache-memory:` nested under `tools:`
-- [ ] Your task brief explicitly tells the agent to read and write the named memory slot
-- [ ] The compiled lock file was updated and committed alongside the workflow source
-- [ ] The first manual run log includes `cache-memory: loaded 0 items`
-- [ ] The second run log includes `cache-memory: loaded N items`, and `N` matches the number of items from the first run
-- [ ] After opening a new issue and running again, only the new issue is reported
+- [ ] Le frontmatter de votre workflow contient `cache-memory:` imbriqué sous `tools:`
+- [ ] Votre brief de tâche indique explicitement à l'agent de lire et d'écrire dans l'emplacement mémoire nommé
+- [ ] Le lock file compilé a été mis à jour et committé en même temps que la source du workflow
+- [ ] Le journal de la première exécution manuelle inclut `cache-memory: loaded 0 items`
+- [ ] Le journal de la deuxième exécution inclut `cache-memory: loaded N items`, et `N` correspond au nombre d'éléments de la première exécution
+- [ ] Après avoir ouvert une nouvelle issue et relancé le workflow, seule la nouvelle issue est signalée
 
 <!-- journey: all -->
-**Next:** [Split Complex Workflows with Inline Sub-Agents](21-inline-sub-agents.md)
-<!-- /journey -->
 
+**Suite :** [Decoupez les workflows complexes avec des Inline Sub-Agents](21-inline-sub-agents.md)
+
+<!-- /journey -->

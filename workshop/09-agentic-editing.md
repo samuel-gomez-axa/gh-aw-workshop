@@ -1,65 +1,67 @@
 <!-- page-journey: all -->
 <!-- page-adventure: core -->
-# Refine, Test, and Improve Your Workflow
 
-_The fastest path to a better workflow is a tight loop: describe what you want, review the diff, test, and compare the result._
+# Affiner, tester et améliorer votre workflow
 
-## :dart: What You'll Do
+_Le chemin le plus rapide vers un meilleur workflow consiste à boucler serré : décrire ce que vous voulez, relire le diff, tester et comparer le résultat._
 
-You'll use the `agentic-workflows` Copilot skill — installed in your practice repository during Step 7 — to edit, debug, and optimize `daily-report-status.md`, then trigger a fresh run and compare the output against the previous one.
+## :dart: Ce que vous allez faire
 
-By the end of this step, your workflow will produce more useful output, and you'll have a repeatable iteration loop you can use any time the workflow output is vague, incorrect, or missing something important.
+Vous allez utiliser le skill Copilot `agentic-workflows`, installé dans votre dépôt d’entraînement à l’étape 7, pour modifier, déboguer et optimiser `daily-report-status.md`, puis déclencher une nouvelle exécution et comparer la sortie à la précédente.
 
-## :clipboard: Before You Start
+À la fin de cette étape, votre workflow produira une sortie plus utile et vous disposerez d’une boucle d’itération reproductible que vous pourrez réutiliser chaque fois que la sortie du workflow sera vague, incorrecte ou incomplète.
 
-- Completed [Interpret Your First Run](08b-interpret-your-run.md)
-- Your `daily-report-status` workflow has at least one completed run
-- `.github/skills/agentic-workflows/` exists in your practice repository (created during Step 7)
+## :clipboard: Avant de commencer
 
-## What is the agentic-workflows skill?
+- Vous avez terminé [Interpréter votre première exécution](08b-interpret-your-run.md)
+- Votre workflow `daily-report-status` a au moins une exécution terminée
+- `.github/skills/agentic-workflows/` existe dans votre dépôt d’entraînement, créé à l’étape 7
 
-The `agentic-workflows` skill is a Copilot skill installed in your practice repository. It acts as a dispatcher: when you describe a workflow task in plain English and mention the skill by name, it routes your request to the right editing, debugging, or optimizing prompt and makes changes directly in your repository.
+## Qu’est-ce que le skill agentic-workflows ?
 
-You invoke it in Copilot CLI in your Codespace terminal:
+Le skill `agentic-workflows` est un skill Copilot installé dans votre dépôt d’entraînement. Il agit comme un répartiteur : lorsque vous décrivez une tâche de workflow en langage clair et mentionnez le skill par son nom, il achemine votre demande vers le bon prompt d’édition, de débogage ou d’optimisation et effectue directement les changements dans votre dépôt.
+
+Vous l’invoquez dans Copilot CLI depuis le terminal de votre Codespace :
 
 ```bash
 gh copilot
 ```
 
-Then send:
+Puis envoyez :
 
 ```prompt
 /agentic-workflows [your request here]
 ```
 
-The skill recognizes three core task types — **Edit**, **Debug**, and **Optimize** — and routes your request to the matching prompt. If you are working locally or in a Codespace without a Copilot session, the terminal path in each section below shows the equivalent manual change.
+Le skill reconnaît trois grands types de tâche, **Edit**, **Debug** et **Optimize**, puis achemine votre demande vers le prompt correspondant. Si vous travaillez en local ou dans un Codespace sans session Copilot, le chemin terminal indiqué dans chaque section ci-dessous montre l’équivalent manuel.
 
 > [!TIP]
-> <details>
-> <summary><b>Optional Side Quest:</b> Want the full task-type table with example trigger phrases, plus practice scenarios for matching a request to the right task type?</summary>
 >
-> Work through [Side Quest: How the `agentic-workflows` Skill Dispatcher Works](side-quest-10-03-skill-dispatcher.md), then come back here.
+> <details>
+> <summary><b>Quête annexe facultative :</b> Vous voulez le tableau complet des types de tâche avec des expressions de déclenchement en exemple, ainsi que des scénarios d’entraînement pour associer une demande au bon type de tâche ?</summary>
+>
+> Suivez [Side Quest: How the `agentic-workflows` Skill Dispatcher Works](side-quest-10-03-skill-dispatcher.md), puis revenez ici.
 >
 > </details>
 
-## Start With One Concrete Observation
+## Commencez par une observation concrète
 
-Open the latest run in the **Actions** tab and look for one thing you want to improve.
+Ouvrez la dernière exécution dans l’onglet **Actions** et repérez un seul point que vous souhaitez améliorer.
 
-Good examples:
+Bons exemples :
 
-- The summary is too generic.
-- An important detail is missing.
-- The tone feels too stiff.
-- The formatting is inconsistent.
+- Le résumé est trop générique.
+- Un détail important manque.
+- Le ton semble trop rigide.
+- La mise en forme est incohérente.
 
-Pick only one problem for this round. Small, isolated changes make it much easier to tell what actually improved the result.
+Choisissez un seul problème pour cette itération. De petits changements isolés rendent bien plus facile l’identification de ce qui améliore réellement le résultat.
 
-## Edit: improve the workflow brief
+## Edit : améliorez le workflow brief
 
-After reviewing the run output, you may have noticed the agent's comment was generic. You'll now make the brief more specific so the agent explains _why_ the most-reacted issue matters, not just which one it is.
+Après avoir examiné la sortie de l’exécution, vous avez peut-être remarqué que le commentaire de l’agent était générique. Vous allez maintenant rendre le brief plus spécifique afin que l’agent explique _pourquoi_ l’issue qui suscite le plus de réactions compte, et pas seulement laquelle c’est.
 
-In your Codespace terminal, run `gh copilot` and paste:
+Dans le terminal de votre Codespace, exécutez `gh copilot`, puis collez :
 
 ```prompt
 /agentic-workflows update .github/workflows/daily-report-status.md
@@ -67,19 +69,19 @@ so that the agent adds one sentence explaining why resolving the most-reacted is
 would benefit the team. Keep the existing [safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) constraint (at most one comment).
 ```
 
-The skill loads the update prompt, makes the targeted change to the Markdown body, recompiles the workflow, and shows you the diff. Review the updated Markdown body and confirm the new instruction is clear and specific before committing.
+Le skill charge le prompt de mise à jour, effectue la modification ciblée dans le corps Markdown, recompile le workflow, puis vous montre le diff. Examinez le corps Markdown mis à jour et confirmez que la nouvelle instruction est claire et précise avant de commiter.
 
-<details>
-<summary>:desktop_computer: Terminal path</summary>
+<details open>
+<summary>:desktop_computer: Chemin terminal</summary>
 
-Open `.github/workflows/daily-report-status.md` and add one sentence to the Markdown body, such as:
+Ouvrez `.github/workflows/daily-report-status.md` et ajoutez une phrase au corps Markdown, par exemple :
 
 ```text
 After identifying the most-reacted issue, write one sentence explaining why resolving it
 would benefit the team, based on the issue title and description.
 ```
 
-Recompile and push:
+Recompilez puis poussez :
 
 ```bash
 gh aw compile
@@ -90,11 +92,11 @@ git push
 
 </details>
 
-## Debug: investigate unexpected output
+## Debug : enquêtez sur une sortie inattendue
 
-If your run from Step 8 finished but the output was empty, vague, or missing entirely, use the skill to diagnose the most likely cause and propose a fix.
+Si l’exécution de l’étape 8 s’est terminée mais que la sortie était vide, vague ou entièrement absente, utilisez le skill pour diagnostiquer la cause la plus probable et proposer une correction.
 
-In your Codespace terminal, run `gh copilot`, then paste this prompt, replacing the bracketed text with what you actually observed:
+Dans le terminal de votre Codespace, exécutez `gh copilot`, puis collez ce prompt en remplaçant le texte entre crochets par ce que vous avez réellement observé :
 
 ```prompt
 /agentic-workflows debug .github/workflows/daily-report-status.md.
@@ -103,45 +105,45 @@ summary blank" or "finished without posting anything"].
 Suggest the most likely cause and propose one change to the workflow brief to fix it.
 ```
 
-The skill reads the workflow file, identifies likely causes — such as a vague brief, a missing fallback instruction, or an over-broad safe-output surface — and proposes a targeted, minimal fix.
+Le skill lit le fichier de workflow, identifie des causes probables comme un brief trop vague, une instruction de repli manquante ou une surface safe-output trop large, puis propose une correction ciblée et minimale.
 
-<details>
-<summary>:desktop_computer: Terminal path</summary>
+<details open>
+<summary>:desktop_computer: Chemin terminal</summary>
 
-Open the run log from the **Actions** tab and find the first `Tool call` the agent made. Then open `.github/workflows/daily-report-status.md` and add one fallback instruction to the Markdown body, such as:
+Ouvrez le journal d’exécution depuis l’onglet **Actions** et trouvez le premier `Tool call` effectué par l’agent. Ouvrez ensuite `.github/workflows/daily-report-status.md` et ajoutez une instruction de repli dans le corps Markdown, par exemple :
 
 ```text
 If no open issues have 👍 reactions, post a comment on the most recently updated
 open issue instead.
 ```
 
-Recompile and push the change.
+Recompilez puis poussez la modification.
 
 </details>
 
-## Optimize: reduce token usage
+## Optimize : réduisez l’usage de tokens
 
-Once the workflow produces correct output, you can reduce how much [AI Credit](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) it uses per run. This matters especially for workflows that run on a [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule).
+Une fois que le workflow produit une sortie correcte, vous pouvez réduire la quantité d’[AI Credit](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) consommée à chaque exécution. C’est particulièrement important pour les workflows qui s’exécutent selon un [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule).
 
-In your Codespace terminal, run `gh copilot`, then paste:
+Dans le terminal de votre Codespace, exécutez `gh copilot`, puis collez :
 
 ```prompt
 /agentic-workflows optimize .github/workflows/daily-report-status.md
 to reduce token usage. Apply only changes that do not change the workflow's outcome.
 ```
 
-The skill applies techniques such as removing redundant instructions, consolidating repeated constraints, and trimming unused safe-output declarations.
+Le skill applique des techniques telles que la suppression d’instructions redondantes, la consolidation de contraintes répétées et l’élimination de déclarations safe-output inutilisées.
 
-<details>
-<summary>:desktop_computer: Terminal path</summary>
+<details open>
+<summary>:desktop_computer: Chemin terminal</summary>
 
-Review the Markdown body of your workflow and remove any sentences that repeat the same constraint or restate something already enforced by frontmatter (for example, "post only one comment" if `safe-outputs` already limits you to one comment). Recompile after each removal so you can verify nothing breaks.
+Examinez le corps Markdown de votre workflow et retirez toute phrase qui répète la même contrainte ou reformule quelque chose déjà imposé par le frontmatter, par exemple « publier un seul commentaire » si `safe-outputs` vous limite déjà à un commentaire. Recompilez après chaque suppression pour vérifier que rien ne casse.
 
 </details>
 
-## Commit Both Workflow Files
+## Commitez les deux fichiers du workflow
 
-Commit both the source workflow and the recompiled lock file:
+Commitez à la fois le workflow source et le lock file recompilé :
 
 ```bash
 git add .
@@ -149,30 +151,32 @@ git commit -m "refine daily-report-status workflow output"
 git push
 ```
 
-If your workflow uses a different filename, stage that `.md` file and its matching `.lock.yml` file instead.
+Si votre workflow utilise un autre nom de fichier, indexez ce fichier `.md` et son fichier `.lock.yml` correspondant à la place.
 
-## Trigger a Fresh Run and Compare
+## Déclenchez une nouvelle exécution et comparez
 
-Use [**workflow_dispatch**](https://github.github.com/gh-aw/reference/triggers/) from the **Actions** tab to trigger a new run. Then compare the latest result with the previous one.
+Utilisez [**workflow_dispatch**](https://github.github.com/gh-aw/reference/triggers/) depuis l’onglet **Actions** pour déclencher une nouvelle exécution. Comparez ensuite le dernier résultat au précédent.
 
-Ask yourself:
+Posez-vous les questions suivantes :
 
-- Did the new run reflect the change you made?
-- Is the output more useful than before?
-- Did you improve the original problem without creating a new one?
+- Est-ce que la nouvelle exécution reflète bien le changement apporté ?
+- La sortie est-elle plus utile qu’avant ?
+- Avez-vous amélioré le problème d’origine sans en créer un nouveau ?
 
-If yes, keep the change. If not, revert the change and try a different adjustment.
+Si oui, gardez la modification. Sinon, annulez-la et essayez un autre ajustement.
 
-If you want a stricter review loop, score each run for accuracy, completeness, and tone before you decide what to change next.
+Si vous voulez une boucle de revue plus stricte, notez chaque exécution sur l’exactitude, l’exhaustivité et le ton avant de décider du changement suivant.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I identified one specific problem from a real workflow run
-- [ ] I used the `/agentic-workflows` skill (or made a manual edit) to address it
-- [ ] The compiled lock file was updated and committed alongside the workflow source
-- [ ] Both `daily-report-status.md` and `daily-report-status.lock.yml` are committed and pushed
-- [ ] I compared the new run with the previous run and decided what to change next
+- [ ] J’ai identifié un problème précis à partir d’une exécution réelle du workflow
+- [ ] J’ai utilisé le skill `/agentic-workflows`, ou fait une modification manuelle, pour le traiter
+- [ ] Le lock file compilé a été mis à jour et commité avec la source du workflow
+- [ ] `daily-report-status.md` et `daily-report-status.lock.yml` sont tous les deux commités et poussés
+- [ ] J’ai comparé la nouvelle exécution à la précédente et décidé de la suite des changements
 
 <!-- journey: all -->
-**Next:** [What's Next? Keep Exploring](14-next-steps.md)
+
+**Étape suivante :** [Et ensuite ? Continuez à explorer](14-next-steps.md)
+
 <!-- /journey -->

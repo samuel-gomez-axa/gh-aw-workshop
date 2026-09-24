@@ -1,119 +1,123 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Configure an Anthropic API Key
 
-> _Optional: work through this guide when you want to use [Claude](side-quest-01-02-environment-reference.md#claude) (Anthropic's model family) as the AI engine for your [agentic workflow](https://github.github.com/gh-aw/introduction/overview/), then return to your main path._
+# Quête Annexe : Configurer Une Clé API Anthropic
 
-By default, [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) run on the [GitHub Copilot engine](https://github.github.com/gh-aw/reference/engines/). If you prefer to use **[Claude](https://github.github.com/gh-aw/reference/auth/#claude)**, you'll need an Anthropic API key stored as a repository secret and a one-line change to your [workflow frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
+> _Facultatif : parcourez ce guide lorsque vous voulez utiliser [Claude](side-quest-01-02-environment-reference.md#claude), la famille de modèles d'Anthropic, comme moteur IA de votre [agentic workflow](https://github.github.com/gh-aw/introduction/overview/), puis revenez à votre parcours principal._
 
-## :clipboard: Before You Start
+Par défaut, les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) s'exécutent sur le [GitHub Copilot engine](https://github.github.com/gh-aw/reference/engines/). Si vous préférez utiliser **[Claude](https://github.github.com/gh-aw/reference/auth/#claude)**, vous aurez besoin d'une clé API Anthropic stockée comme secret de dépôt et d'une modification d'une ligne dans le [workflow frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
 
-- You have an Anthropic account at [console.anthropic.com](https://console.anthropic.com/).
-- You have a practice repository with at least one agentic workflow `.md` file.
+## :clipboard: Avant De Commencer
 
----
-
-## What you'll set up
-
-| Item | Value |
-|---|---|
-| Repository secret name | `ANTHROPIC_API_KEY` |
-| Frontmatter engine field | `engine: claude` |
-| Anthropic API domain | `api.anthropic.com` |
+- Vous avez un compte Anthropic sur [console.anthropic.com](https://console.anthropic.com/).
+- Vous avez un dépôt d'entraînement avec au moins un fichier `.md` d'agentic workflow.
 
 ---
 
-## Get an Anthropic API key
+## Ce Que Vous Allez Configurer
 
-1. Go to [console.anthropic.com](https://console.anthropic.com/) and sign in (or create an account).
-2. Click **Create Key**, give it a name (for example `gh-aw-workshop`), and click **Create Key**.
-3. Copy the key value — it starts with `sk-ant-`.
+| Élément                       | Valeur              |
+| ----------------------------- | ------------------- |
+| Nom du secret de dépôt        | `ANTHROPIC_API_KEY` |
+| Champ `engine` du frontmatter | `engine: claude`    |
+| Domaine de l'API Anthropic    | `api.anthropic.com` |
+
+---
+
+## Obtenez Une Clé API Anthropic
+
+1. Allez sur [console.anthropic.com](https://console.anthropic.com/) et connectez-vous, ou créez un compte.
+2. Cliquez sur **Create Key**, donnez-lui un nom, par exemple `gh-aw-workshop`, puis cliquez sur **Create Key**.
+3. Copiez la valeur de la clé : elle commence par `sk-ant-`.
 
 > [!IMPORTANT]
-> <details><summary>Key is shown only once — save it before closing this tab</summary>
 >
-> Anthropic shows the full key value **only once**. Copy it to your clipboard before you close the dialog or navigate away. If you miss this window, you must delete the key and generate a new one.
+> <details open><summary>La clé n'est affichée qu'une seule fois : enregistrez-la avant de fermer cet onglet</summary>
 >
-> Paste the key into GitHub Secrets (the next section) **before** closing the Anthropic console tab.
+> Anthropic n'affiche la valeur complète de la clé **qu'une seule fois**. Copiez-la dans votre presse-papiers avant de fermer la boîte de dialogue ou de quitter la page. Si vous manquez cette occasion, vous devrez supprimer la clé et en générer une nouvelle.
+>
+> Collez la clé dans GitHub Secrets, section suivante, **avant** de fermer l'onglet de la console Anthropic.
 >
 > </details>
 
 <!-- -->
 
 > [!NOTE]
-> Anthropic API usage is billed per token. Review the [Anthropic pricing page](https://www.anthropic.com/pricing) and set a usage limit before running workflows to avoid surprise charges.
+> L'utilisation de l'API Anthropic est facturée au token. Consultez la [page de tarification Anthropic](https://www.anthropic.com/pricing) et définissez une limite d'usage avant d'exécuter des workflows pour éviter les coûts inattendus.
 
 ---
 
-## Store the key as a repository secret
+## Stockez La Clé Comme Secret De Dépôt
 
-Open your repository in a **new tab** so you keep the Anthropic console tab open until the secret is saved.
+Ouvrez votre dépôt dans un **nouvel onglet** afin de garder l'onglet de la console Anthropic ouvert jusqu'à l'enregistrement du secret.
 
-1. Open your repository on GitHub.
-2. Click **Settings** → **Secrets and variables** → **Actions**.
-3. Click **New repository secret**.
-4. Set the name to `ANTHROPIC_API_KEY` and paste the key value. Check there is no extra whitespace at the start or end.
-5. Click **Add secret**.
-6. Confirm the secret appears in the list as `ANTHROPIC_API_KEY`.
+1. Ouvrez votre dépôt sur GitHub.
+2. Cliquez sur **Settings** → **Secrets and variables** → **Actions**.
+3. Cliquez sur **New repository secret**.
+4. Définissez le nom `ANTHROPIC_API_KEY` et collez la valeur de la clé. Vérifiez qu'il n'y a pas d'espace en trop au début ou à la fin.
+5. Cliquez sur **Add secret**.
+6. Confirmez que le secret apparaît dans la liste sous le nom `ANTHROPIC_API_KEY`.
 
 > [!TIP]
-> Secret names must use only uppercase letters, digits, and underscores. `ANTHROPIC_API_KEY` is the exact name the `claude` engine looks for — do not rename it or add hyphens.
+> Les noms de secrets ne doivent utiliser que des lettres majuscules, des chiffres et des underscores. `ANTHROPIC_API_KEY` est le nom exact attendu par le moteur `claude` : ne le renommez pas et n'ajoutez pas de tirets.
 
-<details>
-<summary>Common mistakes with this secret</summary>
+<details open>
+<summary>Erreurs courantes avec ce secret</summary>
 
-- **Wrong name**: any variation (`anthropic_api_key`, `ANTHROPIC-API-KEY`, `CLAUDE_API_KEY`) will cause a silent auth failure. The name must be exactly `ANTHROPIC_API_KEY`.
-- **Copied with extra whitespace**: pasting from some tools adds a leading space. Delete and re-create the secret if you are unsure.
-- **Closed the Anthropic tab before saving**: you cannot retrieve the key again. Delete the key at [console.anthropic.com](https://console.anthropic.com/) and generate a new one.
-- **Network allow-list missing**: the `claude` engine needs outbound access to `api.anthropic.com`. Make sure it is in your `network.allowed` list (shown in the frontmatter example below).
+- **Mauvais nom** : toute variation (`anthropic_api_key`, `ANTHROPIC-API-KEY`, `CLAUDE_API_KEY`) provoquera un échec d'authentification silencieux. Le nom doit être exactement `ANTHROPIC_API_KEY`.
+- **Copiée avec des espaces en trop** : un collage depuis certains outils ajoute un espace au début. Supprimez et recréez le secret si vous avez un doute.
+- **Onglet Anthropic fermé avant l'enregistrement** : vous ne pouvez plus récupérer la clé. Supprimez-la sur [console.anthropic.com](https://console.anthropic.com/) et générez-en une nouvelle.
+- **Allow-list réseau absente** : le moteur `claude` a besoin d'un accès sortant à `api.anthropic.com`. Vérifiez qu'il figure bien dans votre liste `network.allowed` montrée dans l'exemple de frontmatter ci-dessous.
 
 </details>
 
 ---
 
-## Update your workflow frontmatter
+## Mettez À Jour Le Frontmatter De Votre Workflow
 
-Open your workflow `.md` file and update the frontmatter:
+Ouvrez le fichier `.md` de votre workflow et mettez à jour son frontmatter :
 
 ```markdown
 ---
 name: My Workflow
 on:
-  workflow_dispatch:
+    workflow_dispatch:
 permissions:
-  contents: read        # keep only the scopes your workflow needs
-engine: claude          # switch from the default Copilot engine to Claude
+    contents: read # keep only the scopes your workflow needs
+engine: claude # switch from the default Copilot engine to Claude
 network:
-  allowed:
-    - defaults
-    - api.anthropic.com # required so the workflow can reach Anthropic
+    allowed:
+        - defaults
+        - api.anthropic.com # required so the workflow can reach Anthropic
 ---
 ```
 
-If you previously added `copilot-requests: write` for the Copilot engine, you can remove it when switching to `claude`.
+Si vous avez précédemment ajouté `copilot-requests: write` pour le moteur Copilot, vous pouvez le retirer lors du passage à `claude`.
 
 ---
 
-## Compile your workflow
+## Compilez Votre Workflow
 
-After updating your frontmatter, compile the workflow to regenerate the lock file:
+Après avoir mis à jour votre frontmatter, compilez le workflow pour régénérer le lock file :
 
 ```bash
 gh aw compile
 ```
 
-You should see output confirming the file compiled without errors.
+Vous devriez voir une sortie confirmant que le fichier a compilé sans erreur.
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You have an Anthropic account and have generated an API key
-- [ ] `ANTHROPIC_API_KEY` is stored as a repository secret
-- [ ] Your workflow frontmatter has `engine: claude`
-- [ ] `gh aw compile` completes without errors
-- [ ] (If using network isolation) `api.anthropic.com` is in the `network.allowed` list
+- [ ] Vous avez un compte Anthropic et généré une clé API
+- [ ] `ANTHROPIC_API_KEY` est stocké comme secret de dépôt
+- [ ] Le frontmatter de votre workflow contient `engine: claude`
+- [ ] `gh aw compile` se termine sans erreur
+- [ ] Si vous utilisez l'isolation réseau, `api.anthropic.com` figure dans la liste `network.allowed`
 
 <!-- journey: all -->
-**Return to:** [Write Your First Agentic Workflow](07-your-first-workflow.md)
+
+**Retour à :** [Écrire votre premier Agentic Workflow](07-your-first-workflow.md)
+
 <!-- /journey -->

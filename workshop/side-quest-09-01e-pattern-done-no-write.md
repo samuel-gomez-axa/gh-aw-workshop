@@ -1,30 +1,31 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest 09-01e: Pattern — "Done" but Nothing Written
 
-## :dart: What You'll Do
+# Side Quest 09-01e : Motif — « Done » mais rien n’est écrit
 
-You will diagnose successful runs that produce no write output and tighten instructions so expected writes happen reliably.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Vous allez diagnostiquer des exécutions réussies qui ne produisent aucune écriture et resserrer les instructions pour que les écritures attendues se produisent de manière fiable.
 
-- Complete [Side Quest: Diagnosing Common Agent Output Patterns](side-quest-09-01-debug-output.md)
+## :clipboard: Avant de commencer
 
-A run can finish with `:white_check_mark: [done]` and still create no comment or issue. That outcome is often correct: your condition may not have been met. The challenge is determining whether the skip was intentional or caused by ambiguous logic.
+- Terminez [Side Quest : Diagnostiquer les motifs courants de sortie d’agent](side-quest-09-01-debug-output.md)
 
-Start with three checks:
+Une exécution peut se terminer avec `:white_check_mark: [done]` sans créer de commentaire ni d’issue. Ce résultat est souvent correct : votre condition n’a peut-être pas été remplie. Le défi consiste à déterminer si ce saut était intentionnel ou causé par une logique ambiguë.
 
-1. Confirm whether your condition was actually true at runtime.
-2. Confirm a matching write action exists in [`safe-outputs:`](https://github.github.com/gh-aw/reference/safe-outputs/).
-3. Confirm your instructions define what to do when no condition matches.
+Commencez par trois vérifications :
 
-To avoid silent no-write outcomes, include explicit fallback behavior such as: "If no incidents are found, post one status comment saying no action is required." This still gives users a visible status indicator and proves the workflow ran.
+1. Vérifiez si votre condition était réellement vraie à l’exécution.
+2. Vérifiez qu’une action d’écriture correspondante existe dans [`safe-outputs:`](https://github.github.com/gh-aw/reference/safe-outputs/).
+3. Vérifiez que vos instructions définissent quoi faire lorsqu’aucune condition ne correspond.
 
-If you are unsure how to phrase conditions, ask the `agentic-workflows` skill to rewrite the conditional language, or iterate with `gh aw compile --watch`.
+Pour éviter des absences d’écriture silencieuses, incluez un comportement de repli explicite tel que : "If no incidents are found, post one status comment saying no action is required." Cela fournit tout de même aux utilisateurs un indicateur d’état visible et prouve que le workflow a bien tourné.
 
-## Hands-On Exercise
+Si vous ne savez pas comment formuler les conditions, demandez au skill `agentic-workflows` de réécrire le langage conditionnel, ou itérez avec `gh aw compile --watch`.
 
-Identify the pattern before opening the answer.
+## Exercice pratique
+
+Identifiez le motif avant d’ouvrir la réponse.
 
 ```text
 🤔 [plan] Repository checks passed; no escalation criteria met
@@ -35,19 +36,19 @@ Reviewed signals and took no action.
 ```
 
 <details>
-<summary>Show answer</summary>
+<summary>Afficher la réponse</summary>
 
-Pattern: **Summary says "done" but nothing was written**. Clarify write conditions and add a fallback write rule when you need visible output every run.
+Motif : **le résumé indique "done" mais rien n’a été écrit**. Clarifiez les conditions d’écriture et ajoutez une règle d’écriture de repli lorsque vous avez besoin d’une sortie visible à chaque exécution.
 
 </details>
 
 <!-- journey: all -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] I can explain why a successful run might skip writing
-- [ ] I can verify whether write conditions were truly met
-- [ ] I can check that `safe-outputs:` includes the needed write action
-- [ ] I can add a fallback output rule for no-action scenarios
+- [ ] Je peux expliquer pourquoi une exécution réussie peut ne pas écrire
+- [ ] Je peux vérifier si les conditions d’écriture ont réellement été remplies
+- [ ] Je peux vérifier que `safe-outputs:` inclut bien l’action d’écriture nécessaire
+- [ ] Je peux ajouter une règle de sortie de repli pour les scénarios sans action
 
 <!-- /journey -->
-

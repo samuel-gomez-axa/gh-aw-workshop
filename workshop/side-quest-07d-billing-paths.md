@@ -1,41 +1,41 @@
-# Side Quest: Copilot Billing Paths
+# Side Quest : Parcours de facturation Copilot
 
-Choose exactly one [billing](https://github.github.com/gh-aw/reference/billing/) path for your first workflow, configure it, and commit the updated [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml).
+Choisissez exactement un parcours de [billing](https://github.github.com/gh-aw/reference/billing/) pour votre premier workflow, configurez-le et validez le [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) mis à jour.
 
-## Quick reference
+## Référence rapide
 
-| Situation | Path | Key setting |
-|---|---|---|
-| Organization provides centralized Copilot billing for Actions | **Organization centralized billing** | Keep `copilot-requests: write`; no secret needed |
-| Personal repo, or org does not provide centralized billing | **Personal billing** | Remove `copilot-requests: write`; add `COPILOT_GITHUB_TOKEN` secret |
+| Situation                                                               | Parcours                                      | Réglage clé                                                                    |
+| ----------------------------------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------ |
+| L’organisation fournit une facturation Copilot centralisée pour Actions | **Facturation centralisée de l’organisation** | Conservez `copilot-requests: write` ; aucun secret nécessaire                  |
+| Dépôt personnel, ou organisation sans facturation centralisée           | **Facturation personnelle**                   | Supprimez `copilot-requests: write` ; ajoutez le secret `COPILOT_GITHUB_TOKEN` |
 
-If you are not sure which applies, ask: "Is centralized Copilot billing for GitHub Actions enabled for this repository?" If the answer is "no" or "I don't know," follow **Personal billing**.
+Si vous ne savez pas lequel s’applique, demandez : « Is centralized Copilot billing for GitHub Actions enabled for this repository? » Si la réponse est « no » ou « I don't know », suivez **la facturation personnelle**.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/07d-billing-path-decision-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/07d-billing-path-decision-light.svg">
-  <img alt="Decision flow for choosing Copilot billing path: organization centralized billing or personal billing" src="images/07d-billing-path-decision-light.svg">
+  <img alt="Flux de décision pour choisir un parcours de facturation Copilot : organization centralized billing ou personal billing" src="images/07d-billing-path-decision-light.svg">
 </picture>
 
-## Path A: Organization centralized billing
+## Parcours A : facturation centralisée de l’organisation
 
-Use this path when the organization that owns the repository has centralized Copilot billing enabled for GitHub Actions.
+Utilisez ce parcours lorsque l’organisation propriétaire du dépôt a activé la facturation Copilot centralisée pour GitHub Actions.
 
-1. Ask your org admin to confirm centralized billing is enabled.
-2. Open `daily-report-status.md` and confirm the `permissions:` block includes `copilot-requests: write`:
+1. Demandez à l’administrateur de votre organisation de confirmer que la facturation centralisée est activée.
+2. Ouvrez `daily-report-status.md` et vérifiez que le bloc `permissions:` inclut `copilot-requests: write` :
 
 ```markdown
 ---
 permissions:
-  contents: read
-  copilot-requests: write
+    contents: read
+    copilot-requests: write
 ---
 ```
 
-   This line is already present in the Step 7 template. Do not remove it.
+Cette ligne est déjà présente dans le template de Step 7. Ne la supprimez pas.
 
-1. No repository secret is needed.
-1. Recompile and commit:
+1. Aucun secret de dépôt n’est nécessaire.
+1. Recompilez et validez :
 
 ```bash
 gh aw compile
@@ -43,20 +43,20 @@ git add .
 git commit -m "chore: confirm lock file is current" && git push
 ```
 
-If you see `401 Unauthorized` in the run log, see [Method 1: Copilot Requests Permission](side-quest-06-03a-copilot-requests-permission.md).
+Si vous voyez `401 Unauthorized` dans le journal d’exécution, consultez [Méthode 1 : Permission de requêtes Copilot](side-quest-06-03a-copilot-requests-permission.md).
 
-## Path B: Personal billing
+## Parcours B : facturation personnelle
 
-Use this path for a personal repository, or when the owning organization does not provide centralized Copilot billing.
+Utilisez ce parcours pour un dépôt personnel, ou lorsque l’organisation propriétaire ne fournit pas de facturation Copilot centralisée.
 
 > [!IMPORTANT]
-> When `copilot-requests: write` is present, the workflow ignores `COPILOT_GITHUB_TOKEN`. Remove that [permission](https://github.github.com/gh-aw/reference/permissions/#special-permission-copilot-requests-write) line before adding the secret.
+> Lorsque `copilot-requests: write` est présent, le workflow ignore `COPILOT_GITHUB_TOKEN`. Supprimez cette ligne de [permission](https://github.github.com/gh-aw/reference/permissions/#special-permission-copilot-requests-write) avant d’ajouter le secret.
 
-1. Open `daily-report-status.md` and remove `copilot-requests: write`.
-2. Generate a fine-grained PAT with **Copilot requests: Read-only** at [github.com/settings/tokens](https://github.com/settings/tokens).
-3. In your repository go to **Settings** → **Secrets and variables** → **Actions**.
-4. Add a repository secret named `COPILOT_GITHUB_TOKEN` and paste the PAT.
-5. Recompile and commit:
+1. Ouvrez `daily-report-status.md` et supprimez `copilot-requests: write`.
+2. Générez un fine-grained PAT avec **Copilot requests: Read-only** sur [github.com/settings/tokens](https://github.com/settings/tokens).
+3. Dans votre dépôt, ouvrez **Settings** → **Secrets and variables** → **Actions**.
+4. Ajoutez un secret de dépôt nommé `COPILOT_GITHUB_TOKEN` puis collez le PAT.
+5. Recompilez et validez :
 
 ```bash
 gh aw compile
@@ -64,21 +64,22 @@ git add .
 git commit -m "chore: configure personal billing path" && git push
 ```
 
-For a browser-only walkthrough, see [Method 2 (UI-only): COPILOT_GITHUB_TOKEN](side-quest-06-03c-copilot-github-token-ui-only.md). For terminal setup, see [Method 2: COPILOT_GITHUB_TOKEN secret](side-quest-06-03b-copilot-github-token.md).
+Pour un pas-à-pas navigateur uniquement, consultez [Méthode 2 (UI-only) : COPILOT_GITHUB_TOKEN](side-quest-06-03c-copilot-github-token-ui-only.md). Pour la configuration en terminal, consultez [Méthode 2 : secret COPILOT_GITHUB_TOKEN](side-quest-06-03b-copilot-github-token.md).
 
-## Confirm [engine](https://github.github.com/gh-aw/reference/engines/)
+## Confirmer l’[engine](https://github.github.com/gh-aw/reference/engines/)
 
-Open `daily-report-status.md` and verify there is no `engine:` line. The workflow defaults to GitHub Copilot — no Anthropic or OpenAI key is needed for this first run.
+Ouvrez `daily-report-status.md` et vérifiez qu’il n’y a pas de ligne `engine:`. Le workflow utilise GitHub Copilot par défaut ; aucune clé Anthropic ou OpenAI n’est nécessaire pour cette première exécution.
 
-To switch engines later, see:
+Pour changer d’engine plus tard, consultez :
+
 - [Side Quest: Configure an Anthropic API Key](side-quest-11-06-anthropic-key.md)
 - [Side Quest: Configure an OpenAI API Key](side-quest-11-07-openai-key.md)
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I chose a billing path and completed all configuration steps
-- [ ] `daily-report-status.md` reflects the chosen method
-- [ ] `daily-report-status.lock.yml` is recompiled and committed to `main`
-- [ ] I am ready to return to [Confirm Model Access](07d-confirm-model-access.md)
+- [ ] J’ai choisi un parcours de facturation et terminé toutes les étapes de configuration
+- [ ] `daily-report-status.md` reflète la méthode choisie
+- [ ] `daily-report-status.lock.yml` est recompilé et validé sur `main`
+- [ ] Je suis prêt à revenir à [Confirm Model Access](07d-confirm-model-access.md)
 
-**Return to:** [Confirm Model Access](07d-confirm-model-access.md)
+**Retour :** [Confirmer l’accès au modèle](07d-confirm-model-access.md)

@@ -12,54 +12,54 @@
 </research-metadata>
 -->
 
-# Teach Your Agent Domain Knowledge with Skills
+# Apprenez à votre agent des connaissances métier avec les skills
 
-> _Write your domain conventions once in a `SKILL.md`, and every workflow that needs them can reuse it._
+> _Écrivez vos conventions de domaine une seule fois dans un `SKILL.md`, et chaque workflow qui en a besoin pourra les réutiliser._
 
-## :dart: What You'll Do
+## :dart: Ce que vous allez faire
 
-You'll write a local `SKILL.md` that encodes a repeatable domain convention — a naming rule, a review checklist, or a data format — and reference it from a workflow so the agent applies that knowledge without you repeating it in every brief. By the end of this step, you'll know when to let the agent discover skills itself (hint) versus when to paste in only the exact fragment it needs (fusion).
+Vous allez rédiger un `SKILL.md` local qui encode une convention de domaine reproductible, règle de nommage, checklist de revue ou format de données, puis le référencer depuis un workflow afin que l'agent applique cette connaissance sans que vous ayez à la répéter dans chaque brief. À la fin de cette étape, vous saurez quand laisser l'agent découvrir lui-même les skills, stratégie hint, et quand ne lui fournir que le fragment exact dont il a besoin, stratégie fusion.
 
-## :clipboard: Before You Start
+## :clipboard: Avant de commencer
 
-- You completed [Orchestrate Multiple Agentic Workflows](28-orchestrate-workflows.md).
-- You have at least one working agentic workflow you can edit and recompile.
-- You can compile workflows with `gh aw compile` from [Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md).
+- Vous avez terminé [Orchestrate Multiple Agentic Workflows](28-orchestrate-workflows.md).
+- Vous disposez d'au moins un workflow agentique fonctionnel que vous pouvez modifier puis recompiler.
+- Vous savez compiler des workflows avec `gh aw compile` grâce à [Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md).
 
-## Understand skills
+## Comprendre les skills
 
-A **skill** is a domain-specific knowledge file — `SKILL.md` — stored under `skills/` or `.github/skills/<name>/SKILL.md`. Unlike a one-off prompt tweak, a skill is written once and reused across any workflow that needs the same convention: an issue-labeling rule, a code review checklist, a data schema, or a house style guide.
+Une **skill** est un fichier de connaissance spécifique à un domaine, `SKILL.md`, stocké sous `skills/` ou `.github/skills/<name>/SKILL.md`. Contrairement à un ajustement ponctuel de prompt, une skill est écrite une fois puis réutilisée par tous les workflows qui ont besoin de la même convention : règle de labellisation d'issues, checklist de revue de code, schéma de données ou guide de style interne.
 
-Your repository already has skills in `.github/skills/` that power its own tooling. Look at one:
+Votre dépôt contient déjà des skills dans `.github/skills/` qui alimentent son propre outillage. Regardez-en une :
 
 ```bash
 cat .github/skills/agentic-workflows/SKILL.md
 ```
 
-Notice the shape: YAML frontmatter with `name` and `description`, followed by plain-language guidance the agent reads and applies.
+Remarquez la structure : un frontmatter YAML avec `name` et `description`, suivi de consignes en langage naturel que l'agent lit puis applique.
 
-> :thinking: **Predict:** Think of one convention you keep re-explaining to your agent across workflows — a commit message format, a labeling rule, a checklist. That's a skill candidate.
+> :thinking: **Predict:** Pensez à une convention que vous réexpliquez sans cesse à votre agent d'un workflow à l'autre, format de message de commit, règle de labellisation, checklist. C'est une bonne candidate pour une skill.
 
-## Steps
+## Étapes
 
-### Install external skills with the frontmatter `skills:` key
+### Installer des skills externes avec la clé `skills:` du frontmatter
 
-To pull in a skill maintained elsewhere, add the top-level `skills:` array to your workflow frontmatter. The compiler installs it in the activation job before the agent runs — no manual `gh skill install` step needed:
+Pour utiliser une skill maintenue ailleurs, ajoutez le tableau `skills:` au niveau racine du frontmatter de votre workflow. Le compilateur l'installe dans le job d'activation avant l'exécution de l'agent, sans étape manuelle `gh skill install` :
 
 ```yaml
 skills:
-  # Local development path, installed with --from-local
-  - .github/skills/my-skill
+    # Local development path, installed with --from-local
+    - .github/skills/my-skill
 
-  # External skill pinned to a commit SHA
-  - owner/repo/skills/some-skill@801dca688564c529fa84f247f64472520d9ebe28
+    # External skill pinned to a commit SHA
+    - owner/repo/skills/some-skill@801dca688564c529fa84f247f64472520d9ebe28
 ```
 
-External references must be pinned to a full 40-character commit SHA (or an unpinned `owner/repo@` ref, which the compiler warns about). Local paths like `.github/skills/my-skill` are for skills you author and maintain in this repository.
+Les références externes doivent être épinglées à un commit SHA complet sur 40 caractères, ou à une référence non épinglée `owner/repo@`, auquel cas le compilateur émet un avertissement. Les chemins locaux comme `.github/skills/my-skill` sont destinés aux skills que vous rédigez et maintenez dans ce dépôt.
 
-### Write a local [SKILL.md](https://github.github.com/gh-aw/reference/custom-agent-for-aw/)
+### Rédiger un [SKILL.md](https://github.github.com/gh-aw/reference/custom-agent-for-aw/) local
 
-Pick one narrow convention from your own repository — for example, "how to classify an issue" or "what fields a status report must include." In your AI agent, run:
+Choisissez une convention étroite issue de votre propre dépôt, par exemple "comment classifier une issue" ou "quels champs un rapport d'état doit contenir". Dans votre agent IA, lancez :
 
 ```prompt
 /agentic-workflows create a skill at .github/skills/issue-triage/SKILL.md that
@@ -67,10 +67,10 @@ classifies incoming issues as bug, feature, or question, and lists the three
 pieces of information a good bug report must include.
 ```
 
-<details>
+<details open>
 <summary>:desktop_computer: Terminal path — write the SKILL.md directly</summary>
 
-Create `.github/skills/issue-triage/SKILL.md`:
+Créez `.github/skills/issue-triage/SKILL.md` :
 
 ```markdown .github/skills/issue-triage/SKILL.md
 ---
@@ -93,40 +93,42 @@ If any of these are missing, note which ones in your response.
 
 </details>
 
-### Choose a strategy: hint or fusion
+### Choisir une strategie : hint ou fusion
 
-Once a skill exists, decide how your workflow prompt should point to it. There are three strategies:
+Une fois la skill créée, décidez comment le prompt de votre workflow doit y faire référence. Il existe trois stratégies :
 
-- **Hint** — let the agent discover and self-select relevant `SKILL.md` files at runtime. Best for broad or growing skill sets when you have a generous context budget.
-- **Fusion** — reference only the exact skill fragment the agent needs with a `<!-- gh-skill-fusion: path#anchor -->` comment. Best when the task is narrow and well-defined and you want to keep the prompt compact.
-- **Inline** — embed the skill fragment directly in the workflow file under a `## skill: \`name\`` heading. Best when the skill is small and specific to a single workflow.
+- **Hint** - laissez l'agent découvrir et sélectionner lui-même les fichiers `SKILL.md` pertinents à l'exécution. C'est le meilleur choix pour des ensembles de skills larges ou en croissance lorsque vous disposez d'un budget de contexte généreux.
+- **Fusion** - ne référencez que le fragment exact de skill dont l'agent a besoin via un commentaire `<!-- gh-skill-fusion: path#anchor -->`. C'est idéal lorsque la tâche est étroite et bien définie et que vous voulez garder un prompt compact.
+- **Inline** - intégrez directement le fragment de skill dans le fichier de workflow sous un titre `## skill: \`name\``. C'est le meilleur choix lorsque la skill est petite et spécifique à un seul workflow.
 
 <picture>
    <source media="(prefers-color-scheme: dark)" srcset="images/29-skill-injection-strategies-dark.svg">
    <source media="(prefers-color-scheme: light)" srcset="images/29-skill-injection-strategies-light.svg">
-   <img alt="Diagram showing a SKILL.md file feeding three injection strategies -- hint, fusion, and inline -- each flowing into the workflow prompt the agent reads." src="images/29-skill-injection-strategies-light.svg">
+  <img alt="Schéma montrant un fichier SKILL.md alimentant trois stratégies d'injection, hint, fusion et inline, qui convergent chacune vers le prompt de workflow lu par l'agent." src="images/29-skill-injection-strategies-light.svg">
 </picture>
 
-> :bulb: **Optional Side Quest:** For the full decision table, code examples for each strategy, and a hands-on practice exercise, see [Skill Injection Strategies — Hint, Fusion, and Inline](side-quest-29-01-skill-injection-strategies.md).
+> :bulb: **Side quest facultative :** Pour le tableau de décision complet, des exemples de code pour chaque stratégie et un exercice pratique, consultez [Skill Injection Strategies — Hint, Fusion, and Inline](side-quest-29-01-skill-injection-strategies.md).
 
-### Wire the skill into a workflow and validate
+### Brancher la skill dans un workflow et valider
 
-Add your chosen strategy to a real workflow brief, then compile to confirm the skill installs and the frontmatter is valid:
+Ajoutez la stratégie choisie à un vrai brief de workflow, puis compilez pour confirmer que la skill s'installe correctement et que le frontmatter est valide :
 
 ```bash
 gh aw compile
 ```
 
-Check the compiled `.lock.yml` for the activation step that installs your skill, and confirm no compile warnings mention an unpinned or missing skill reference.
+Vérifiez dans le `.lock.yml` compilé l'étape d'activation qui installe votre skill, puis confirmez qu'aucun avertissement de compilation ne mentionne une référence de skill manquante ou non épinglée.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You located an existing `SKILL.md` in this repository and identified its `name` and `description`
-- [ ] You wrote a local `SKILL.md` encoding one concrete domain convention
-- [ ] You can explain the difference between the hint and fusion strategies, and when to use each
-- [ ] You referenced your skill from a workflow (via `skills:`, a hint instruction, or a fusion comment)
-- [ ] `gh aw compile` succeeded with no unpinned-skill warnings
+- [ ] Vous avez trouvé un `SKILL.md` existant dans ce dépôt et identifié son `name` et sa `description`
+- [ ] Vous avez rédigé un `SKILL.md` local qui encode une convention métier concrète
+- [ ] Vous pouvez expliquer la différence entre les stratégies hint et fusion, ainsi que le bon moment pour utiliser chacune
+- [ ] Vous avez référencé votre skill depuis un workflow, via `skills:`, une instruction hint ou un commentaire de fusion
+- [ ] `gh aw compile` a réussi sans avertissement de skill non épinglée
 
 <!-- journey: all -->
-Want to choose another branch from the workshop hub? Return to [What's Next? Keep Exploring](14-next-steps.md).
+
+Vous voulez choisir une autre branche depuis le hub de l'atelier ? Revenez à [Et maintenant ? Continuez à explorer](14-next-steps.md).
+
 <!-- /journey -->

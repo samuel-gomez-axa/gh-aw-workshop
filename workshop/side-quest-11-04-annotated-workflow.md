@@ -1,36 +1,37 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Explore and Adapt an Annotated Workflow
 
-> _Optional: work through this guide to understand the design choices in `daily-status.md` and adapt them in your own copy — then return to [Build: Daily Repo Status Workflow](07-your-first-workflow.md)._
+# Quête Annexe : Explorer Et Adapter Un Workflow Annoté
 
-## :clipboard: Before You Start
+> _Facultatif : parcourez ce guide pour comprendre les choix de conception dans `daily-status.md` et les adapter dans votre propre copie, puis revenez à [Créer : Daily Repo Status Workflow](07-your-first-workflow.md)._
 
-- You have completed [Step 11](07-your-first-workflow.md) and `.github/workflows/daily-status.md` exists in your repository.
-- Open `daily-status.md` in your editor — you'll make small edits as you work through this guide.
+## :clipboard: Avant De Commencer
 
-## :dart: What You'll Do
+- Vous avez terminé [Step 11](07-your-first-workflow.md) et `.github/workflows/daily-status.md` existe dans votre dépôt.
+- Ouvrez `daily-status.md` dans votre éditeur : vous ferez de petites modifications au fil de ce guide.
 
-Understand the four design decisions that make `daily-status.md` safe and predictable, then modify your own copy to confirm what each decision controls.
+## :dart: Ce Que Vous Allez Faire
 
----
-
-## Four Design Decisions
-
-| Decision | What it controls |
-|---------|-----------------|
-| Narrow `permissions` | Only the scopes the workflow actually needs — limits blast radius |
-| `gh-proxy` in `tools` | Enforces [permissions](https://github.github.com/gh-aw/reference/permissions/) at the [network](https://github.github.com/gh-aw/reference/network/) level |
-| `max: 1` in `safe-outputs` | Caps writes to exactly one comment per run |
-| Fixed output template | Same format every run — easy to scan and [audit](https://github.github.com/gh-aw/reference/audit/) |
+Comprenez les quatre décisions de conception qui rendent `daily-status.md` sûr et prévisible, puis modifiez votre propre copie pour vérifier ce que chacune contrôle.
 
 ---
 
-## The Annotated Workflow
+## Quatre Décisions De Conception
 
-Read each `#` comment — it explains _why_ that line exists, not just _what_ it does:
+| Décision                     | Ce qu'elle contrôle                                                                                                                                        |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Permissions minimales        | Uniquement les scopes réellement nécessaires au workflow : limite le rayon d'impact                                                                        |
+| `gh-proxy` dans `tools`      | Applique les [permissions](https://github.github.com/gh-aw/reference/permissions/) au niveau [network](https://github.github.com/gh-aw/reference/network/) |
+| `max: 1` dans `safe-outputs` | Limite les écritures à exactement un commentaire par run                                                                                                   |
+| Modèle de sortie fixe        | Même format à chaque run : facile à lire et à [audit](https://github.github.com/gh-aw/reference/audit/)                                                    |
 
-````markdown
+---
+
+## Le Workflow Annoté
+
+Lisez chaque commentaire `#` : il explique _pourquoi_ cette ligne existe, pas seulement _ce_ qu'elle fait :
+
+```markdown
 ---
 emoji: :bar_chart:
 description: Post a daily repository status summary as a GitHub issue comment.
@@ -61,48 +62,48 @@ safe-outputs:
   add-comment:
     max: 1
 ---
-````
+```
 
 ---
 
-## :pencil2: Your Turn — Metadata
+## :pencil2: À Vous De Jouer — Metadata
 
-1. In your `daily-status.md`, note your current `emoji:` value, then change it (e.g. from `:bar_chart:` to `:mag:`).
-2. Run `gh aw list`. Does the new emoji appear next to the workflow name?
-3. Update `description:` text and run `gh aw list` again to confirm it reflects the change.
-4. Restore the original `emoji:` and `description:` values when you're done.
+1. Dans votre `daily-status.md`, notez la valeur actuelle de `emoji:`, puis modifiez-la, par exemple de `:bar_chart:` à `:mag:`.
+2. Exécutez `gh aw list`. Le nouvel emoji apparaît-il à côté du nom du workflow ?
+3. Mettez à jour le texte de `description:` puis exécutez `gh aw list` à nouveau pour confirmer que le changement est pris en compte.
+4. Restaurez les valeurs d'origine de `emoji:` et `description:` lorsque vous avez terminé.
 
-## :pencil2: Your Turn — [Safe-Outputs](https://github.github.com/gh-aw/reference/safe-outputs/)
+## :pencil2: À Vous De Jouer — [Safe-Outputs](https://github.github.com/gh-aw/reference/safe-outputs/)
 
-1. In your `daily-status.md`, comment out the entire [safe-outputs](https://github.github.com/gh-aw/reference/safe-outputs/) block.
-2. Run `gh aw compile --validate`.
-3. Read the error message — what write capability does the agent lose?
-4. Uncomment the block and recompile to confirm the error is gone.
+1. Dans votre `daily-status.md`, commentez l'intégralité du bloc [safe-outputs](https://github.github.com/gh-aw/reference/safe-outputs/).
+2. Exécutez `gh aw compile --validate`.
+3. Lisez le message d'erreur : quelle capacité d'écriture l'agent perd-il ?
+4. Décommentez le bloc et recompilez pour confirmer que l'erreur a disparu.
 
 ---
 
-## Pattern Summary
+## Résumé Du Pattern
 
-| Pattern | The problem it solves |
-|---------|----------------------|
-| Narrow `permissions` | Limits blast radius if the model misbehaves |
-| `gh-proxy` in `tools` | Prevents the agent from exceeding declared scopes |
-| `max: 1` in `safe-outputs` | One auditable write action per run, no more |
-| Fixed output template | Predictable, diff-able daily reports |
+| Pattern                      | Le problème qu'il résout                              |
+| ---------------------------- | ----------------------------------------------------- |
+| Permissions minimales        | Limite le rayon d'impact si le modèle se comporte mal |
+| `gh-proxy` dans `tools`      | Empêche l'agent de dépasser les scopes déclarés       |
+| `max: 1` dans `safe-outputs` | Une action d'écriture auditable par run, pas plus     |
+| Modèle de sortie fixe        | Rapports quotidiens prévisibles et faciles à comparer |
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I changed `emoji:`, ran `gh aw list`, and saw the update reflected
-- [ ] I removed `safe-outputs:`, observed the [compile error](https://github.github.com/gh-aw/reference/compilation-process/), then restored it and confirmed the error was gone
-- [ ] I can explain why `issues: write` is absent from `permissions` and what provides write access instead
-- [ ] I can explain what `max: 1` prevents the agent from doing
+- [ ] J'ai modifié `emoji:`, exécuté `gh aw list` et vu la mise à jour prise en compte
+- [ ] J'ai supprimé `safe-outputs:`, observé l'[erreur de compilation](https://github.github.com/gh-aw/reference/compilation-process/), puis je l'ai restauré et confirmé que l'erreur avait disparu
+- [ ] Je peux expliquer pourquoi `issues: write` est absent de `permissions` et ce qui fournit l'accès en écriture à la place
+- [ ] Je peux expliquer ce que `max: 1` empêche l'agent de faire
 
 ---
 
 <!-- journey: all -->
-Return to [Build: Daily Repo Status Workflow](07-your-first-workflow.md).
+
+Revenez à [Créer : Daily Repo Status Workflow](07-your-first-workflow.md).
+
 <!-- /journey -->
-
-

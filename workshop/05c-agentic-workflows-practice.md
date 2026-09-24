@@ -1,49 +1,50 @@
 <!-- page-journey: all -->
 <!-- page-adventure: core -->
-# Practice: Recognize Agentic Workflows
 
-## :clipboard: Before You Start
+# Exercice : reconnaître les Agentic Workflows
 
-- You've read [What Are Agentic Workflows?](05-agentic-workflows-intro.md)
+## :clipboard: Avant de commencer
 
-These exercises help you apply what you just learned — deciding when to use an agentic workflow and drafting your first task brief.
+- Vous avez lu [Qu’est-ce qu’un Agentic Workflow ?](05-agentic-workflows-intro.md)
 
-## Try it: agentic or standard?
+Ces exercices vous aident à appliquer ce que vous venez d’apprendre : décider quand utiliser un agentic workflow et rédiger votre premier task brief.
 
-For each task below, decide whether it calls for an **agentic workflow** or a **standard Actions workflow**, then reveal the answer.
+## Essayez : agentic ou standard ?
 
-**Task A:** Run lint and unit tests on every pull request, fail if any check exits non-zero.
+Pour chaque tâche ci-dessous, décidez s’il faut un **agentic workflow** ou un **standard Actions workflow**, puis affichez la réponse.
 
-- [ ] I've made my decision for Task A
+**Tâche A :** Run lint and unit tests on every pull request, fail if any check exits non-zero.
+
+- [ ] J’ai pris ma décision pour la tâche A
 
 <details>
-<summary>Reveal Task A answer</summary>
+<summary>Afficher la réponse de la tâche A</summary>
 
-**Standard Actions workflow.** Every run follows the same fixed steps: run lint, run tests, report the exit code. No judgment is required.
+**Standard Actions workflow.** Chaque exécution suit les mêmes étapes fixes : exécuter le lint, lancer les tests, puis rapporter le code de sortie. Aucun jugement n’est nécessaire.
 
 </details>
 
-**Task B:** Each morning, read all open issues, decide which ones look most urgent, and post a short triage summary.
+**Tâche B :** Each morning, read all open issues, decide which ones look most urgent, and post a short triage summary.
 
-- [ ] I've made my decision for Task B
+- [ ] J’ai pris ma décision pour la tâche B
 
 <details>
-<summary>Reveal Task B answer</summary>
+<summary>Afficher la réponse de la tâche B</summary>
 
-**Agentic workflow.** The agent reads live issue data, applies judgment to assess urgency, and composes a summary that differs every run based on what it finds.
+**Agentic workflow.** L’agent lit les données d’issues en direct, exerce un jugement pour évaluer l’urgence et compose un résumé différent à chaque exécution selon ce qu’il trouve.
 
 </details>
 
 > [!TIP]
-> Want to go deeper? [Side Quest: Agentic Workflows Deep Dive](side-quest-05-02-aw-deep-dive.md) covers more exercises, example output, the two-file structure, and concept checks.
+> Vous voulez aller plus loin ? [Side Quest: Agentic Workflows Deep Dive](side-quest-05-02-aw-deep-dive.md) couvre davantage d’exercices, des exemples de sortie, la structure à deux fichiers et des vérifications de concepts.
 
-## Try it: write a one-sentence task brief
+## Essayez : rédigez un task brief d’une phrase
 
-Pick any routine task you do today that involves reading some data and writing a summary — a daily standup note, a weekly inbox digest, or a triage of support tickets. Write a one-sentence task brief for an agent to do it automatically.
+Choisissez une tâche routinière que vous faites aujourd’hui et qui consiste à lire des données puis à rédiger un résumé, par exemple une note de standup quotidienne, un digest hebdomadaire de boîte de réception ou un tri de tickets de support. Rédigez un task brief d’une phrase pour qu’un agent l’exécute automatiquement.
 
-Your brief should answer all three of these: *what data should the agent read (data source), what should it post when it's done (output format), and when or how often should it run (cadence)?*
+Votre brief doit répondre à ces trois points : _quelles données l’agent doit-il lire, c’est-à-dire la source de données ; que doit-il publier une fois terminé, c’est-à-dire le format de sortie ; et quand ou à quelle fréquence doit-il s’exécuter, c’est-à-dire la cadence ?_
 
-Example:
+Exemple :
 
 ```
 Each Monday morning, read all pull requests opened in the past week,
@@ -51,20 +52,22 @@ identify the three with the most review comments, and post a summary
 as an issue with the title "Weekly PR Digest".
 ```
 
-- [ ] I've drafted a task brief for a real routine task
-- [ ] My brief specifies what data the agent should read (data source)
-- [ ] My brief specifies what the agent should post when done (output format)
-- [ ] My brief specifies when or how often the agent should run (cadence)
+- [ ] J’ai rédigé un task brief pour une vraie tâche routinière
+- [ ] Mon brief précise quelles données l’agent doit lire (source de données)
+- [ ] Mon brief précise ce que l’agent doit publier une fois terminé (format de sortie)
+- [ ] Mon brief précise quand ou à quelle fréquence l’agent doit s’exécuter (cadence)
 
 > [!TIP]
-> Struggling to think of a task? Browse the [gh-aw issue-ops pattern](https://github.github.com/gh-aw/patterns/issue-ops/) for inspiration. You will write a real version of your brief in Step 7. **Still unsure?** Pause here and work through [Side Quest: Agentic Workflows Deep Dive](side-quest-05-02-aw-deep-dive.md). It gives you more classification practice, a vocabulary check, and a sample `.md` / `.lock.yml` pair before you continue to Step 6. **Have an idea but not the words?** The [gh-aw wizard](https://githubnext.github.io/gh-aw-wizard/) turns a few answers about your idea into a generator prompt you can paste into your AI agent later.
+> Vous avez du mal à trouver une tâche ? Parcourez le [gh-aw issue-ops pattern](https://github.github.com/gh-aw/patterns/issue-ops/) pour vous inspirer. Vous rédigerez une vraie version de votre brief à l’étape 7. **Toujours hésitant ?** Faites une pause ici et suivez [Side Quest: Agentic Workflows Deep Dive](side-quest-05-02-aw-deep-dive.md). Vous y trouverez davantage de pratique de classification, une vérification du vocabulaire et un exemple de paire `.md` / `.lock.yml` avant de continuer vers l’étape 6. **Vous avez une idée mais pas encore les mots ?** Le [gh-aw wizard](https://githubnext.github.io/gh-aw-wizard/) transforme quelques réponses sur votre idée en un prompt de génération que vous pourrez ensuite coller dans votre agent IA.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I can decide whether a task calls for an agentic or a standard Actions workflow
-- [ ] I have drafted a task brief that covers all three criteria: data source, output format, and cadence
-- [ ] I can describe the three parts of an agentic workflow: [trigger](https://github.github.com/gh-aw/reference/triggers/) → agent → safe output
+- [ ] Je peux décider si une tâche nécessite un agentic workflow ou un standard Actions workflow
+- [ ] J’ai rédigé un task brief qui couvre les trois critères : source de données, format de sortie et cadence
+- [ ] Je peux décrire les trois parties d’un agentic workflow : [trigger](https://github.github.com/gh-aw/reference/triggers/) → agent → safe output
 
 <!-- journey: all -->
-**Next:** [Install the gh-aw CLI Extension](06-install-gh-aw.md)
+
+**Étape suivante :** [Installer l’extension CLI gh-aw](06-install-gh-aw.md)
+
 <!-- /journey -->

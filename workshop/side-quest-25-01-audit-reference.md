@@ -1,78 +1,79 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Audit Reference — Artifacts, Firewall Logs, and Report Contents
 
-> _A detailed companion to [Audit and Monitor Your Agentic Workflows](25-audit-and-observability.md). Use this side quest when you want to understand the full contents of an audit report or dig into individual artifact files._
+# Quête annexe : référence d’audit — artifacts, logs firewall et contenu du rapport
 
-## :clipboard: Before You Start
+> _Complément détaillé de [Auditez et surveillez vos agentic workflows](25-audit-and-observability.md). Utilisez cette quête annexe si vous voulez comprendre l’intégralité d’un rapport d’audit ou examiner des fichiers artifact individuels._
 
-- You completed [Audit and Monitor Your Agentic Workflows](25-audit-and-observability.md) and have at least one workflow run ID to work with.
-- `gh aw` is installed and authenticated (see [Install the gh-aw CLI Extension](06-install-gh-aw.md)).
+## :clipboard: Avant de commencer
 
-## [gh aw audit](https://github.github.com/gh-aw/reference/audit/#gh-aw-audit) report anatomy
+- Vous avez terminé [Auditez et surveillez vos agentic workflows](25-audit-and-observability.md) et disposez d’au moins un ID d’exécution de workflow sur lequel travailler.
+- `gh aw` est installé et authentifié, voir [Installer l’extension CLI gh-aw](06-install-gh-aw.md).
 
-`gh aw audit` generates a Markdown report that covers:
+## Anatomie du rapport [gh aw audit](https://github.github.com/gh-aw/reference/audit/#gh-aw-audit)
 
-- **Run metadata** — workflow name, trigger, engine, and model
-- **Agent AIC** — total [AI Credits](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) consumed by the agent turn
-- **Threat-detection AIC (⌖ AIC)** — credits consumed by the [firewall](https://github.github.com/gh-aw/reference/sandbox/#awf-agent-workflow-firewall)'s threat-detection model, reported separately from agent inference
-- **[MCP tool calls](https://github.github.com/gh-aw/guides/mcps/)** — each tool the agent invoked, with any errors
-- **Threat detection verdict** — whether prompt injection, secret leak, or malicious patch was detected
-- **[Safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/)** — every safe-output declaration the agent emitted
+`gh aw audit` génère un rapport Markdown qui couvre :
 
-## Artifact files explained
+- **Métadonnées d’exécution** : nom du workflow, trigger, engine et modèle
+- **Agent AIC** : total des [AI Credits](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) consommés par le tour de l’agent
+- **Threat-detection AIC (⌖ AIC)** : crédits consommés par le modèle de détection de menaces du [firewall](https://github.github.com/gh-aw/reference/sandbox/#awf-agent-workflow-firewall), rapportés séparément de l’inférence de l’agent
+- **[MCP tool calls](https://github.github.com/gh-aw/guides/mcps/)** : chaque tool invoqué par l’agent, avec les erreurs éventuelles
+- **Verdict de détection de menaces** : indique si une prompt injection, une fuite de secret ou un patch malveillant a été détecté
+- **[Safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/)** : chaque declaration de safe-output emise par l'agent
+
+## Fichiers artifact expliqués
 
 ### [Agent artifact](https://github.github.com/gh-aw/reference/artifacts/)
 
-The `agent` artifact — downloaded by both `gh aw logs --artifacts all` and `gh aw audit` — contains the full record of what the agent did.
+L’artifact `agent`, téléchargé à la fois par `gh aw logs --artifacts all` et par `gh aw audit`, contient l’enregistrement complet de ce qu’a fait l’agent.
 
-| File | What it tells you |
-|---|---|
-| `safeoutputs.jsonl` | Every safe-output declaration the agent emitted |
-| `mcp-logs/` | One log file per MCP server, listing every tool call and result |
-| `sandbox/firewall/audit/` | Domain-level network access log (raw data) |
-| `agent_usage.json` | Token usage for the agent turn |
+| Fichier                   | Ce qu’il vous apprend                                                             |
+| ------------------------- | --------------------------------------------------------------------------------- |
+| `safeoutputs.jsonl`       | Chaque déclaration de safe-output émise par l’agent                               |
+| `mcp-logs/`               | Un fichier de log par MCP server, listant chaque appel de tool et chaque resultat |
+| `sandbox/firewall/audit/` | Journal d’accès réseau au niveau des domaines, en données brutes                  |
+| `agent_usage.json`        | Utilisation des tokens pour le tour de l'agent                                    |
 
-### Readable log files
+### Fichiers de log lisibles
 
-Run `gh aw audit <run-id> --parse` to generate readable files alongside the raw artifacts. These files are created only when you use `--parse`:
+Exécutez `gh aw audit <run-id> --parse` pour générer des fichiers lisibles à côté des artifacts bruts. Ces fichiers ne sont créés que lorsque vous utilisez `--parse` :
 
-- `log.md` — the full agent conversation formatted as Markdown
-- `firewall.md` — a formatted summary of outbound network access (allowed and blocked domains)
+- `log.md` : la conversation complète de l’agent, formatée en Markdown
+- `firewall.md` : un résumé formaté des accès réseau sortants, domaines autorisés et bloqués
 
-Use `firewall.md` to quickly identify blocked domains. For raw domain-level records, look inside `sandbox/firewall/audit/` in the agent artifact.
+Utilisez `firewall.md` pour identifier rapidement les domaines bloqués. Pour les enregistrements bruts au niveau des domaines, regardez dans `sandbox/firewall/audit/` à l’intérieur de l’artifact agent.
 
-## AIC billing details
+## Détails de facturation AIC
 
-[AIC](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) (AI Credits) is the billing unit for agentic workflow inference and is derived from token consumption. Exact billing figures appear in your GitHub billing dashboard.
+[AIC](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic), pour AI Credits, est l’unité de facturation de l’inférence des agentic workflows et dérive de la consommation de tokens. Les chiffres exacts de facturation apparaissent dans votre tableau de bord de facturation GitHub.
 
-The **⌖ AIC** column in `gh aw logs` output shows credits consumed by the threat-detection model separately from the main agent turn. Both contribute to your organisation's total AIC usage.
+La colonne **⌖ AIC** dans la sortie de `gh aw logs` montre les crédits consommés par le modèle de détection de menaces, séparément du tour principal de l’agent. Les deux contribuent à l’usage total d’AIC de votre organisation.
 
-## Adding a blocked domain to [network.allowed](https://github.github.com/gh-aw/reference/network/#configuration)
+## Ajouter un domaine bloqué à [network.allowed](https://github.github.com/gh-aw/reference/network/#configuration)
 
-If the firewall blocked a domain your workflow needs, add it to `network.allowed` in your workflow frontmatter and recompile:
+Si le firewall a bloqué un domaine dont votre workflow a besoin, ajoutez-le à `network.allowed` dans le frontmatter de votre workflow puis recompilez :
 
 ```markdown
 ---
 network:
-  allowed:
-    - api.example.com
+    allowed:
+        - api.example.com
 ---
 ```
 
-Share the allowed-domains list from a successful run with your enterprise security team as a ready-made firewall allowlist.
+Partagez avec votre équipe sécurité enterprise la liste `allowed-domains` issue d’une exécution réussie comme allowlist firewall prête à l’emploi.
 
-## Try it yourself
+## Essayez vous-même
 
-### Run an audit on a recent run
+### Lancer un audit sur une exécution récente
 
-Open the **Actions** tab in your repository, click a completed workflow run, and copy the run ID from the URL (the number after `/runs/`). Then run:
+Ouvrez l’onglet **Actions** de votre dépôt, cliquez sur une exécution de workflow terminée et copiez l’ID d’exécution depuis l’URL, c’est le nombre après `/runs/`. Exécutez ensuite :
 
 ```bash
 gh aw audit <run-id> --parse
 ```
 
-Sample output:
+Exemple de sortie :
 
 ```text
 ## Audit Report
@@ -90,43 +91,45 @@ Sample output:
 | Threat verdict | none |
 ```
 
-1. Find a run ID from the Actions tab.
-2. Confirm the report shows the workflow name, trigger, and model.
-3. Check that the ⌖ AIC figure appears separately from Agent AIC.
-4. Note the threat verdict (typically `none`).
+1. Trouvez un ID d’exécution dans l’onglet Actions.
+2. Confirmez que le rapport affiche le nom du workflow, le trigger et le modèle.
+3. Vérifiez que la valeur ⌖ AIC apparaît séparément de Agent AIC.
+4. Notez le verdict de menace, typiquement `none`.
 
-### Explore MCP tool calls
+### Explorer les appels MCP tool
 
-Download the artifacts for a run, then open the `mcp-logs/` directory. Each file corresponds to one MCP server and lists every tool call the agent made.
+Téléchargez les artifacts d’une exécution, puis ouvrez le dossier `mcp-logs/`. Chaque fichier correspond à un MCP server et liste chaque appel de tool effectué par l’agent.
 
 ```bash
 gh aw logs <your-workflow-id> --artifacts all
 ```
 
-Browse the log files in `.github/aw/logs/<run-id>/mcp-logs/`.
+Parcourez les fichiers de log dans `.github/aw/logs/<run-id>/mcp-logs/`.
 
-1. Find the `mcp-logs/` directory in the downloaded artifacts.
-2. Identify at least one tool call and note the tool name.
-3. Write one sentence describing what the agent was trying to accomplish.
-4. Check `agent_usage.json` for the total token count.
+1. Trouvez le dossier `mcp-logs/` dans les artifacts telecharges.
+2. Identifiez au moins un appel de tool et notez le nom du tool.
+3. Écrivez une phrase décrivant ce que l’agent essayait d’accomplir.
+4. Verifiez le nombre total de tokens dans `agent_usage.json`.
 
-### Inspect the firewall records
+### Inspecter les enregistrements du firewall
 
-The raw domain-level network access logs live in `sandbox/firewall/audit/` inside the agent artifact. Scan them to confirm your workflow only contacted expected domains.
+Les logs bruts d’accès réseau au niveau des domaines se trouvent dans `sandbox/firewall/audit/` à l’intérieur de l’artifact agent. Parcourez-les pour confirmer que votre workflow n’a contacté que des domaines attendus.
 
-1. Open `sandbox/firewall/audit/` in the downloaded artifacts.
-2. Identify at least one domain the workflow accessed.
-3. If any domains were blocked, add them to `network.allowed` in the workflow frontmatter.
+1. Ouvrez `sandbox/firewall/audit/` dans les artifacts telecharges.
+2. Identifiez au moins un domaine auquel le workflow a accédé.
+3. Si certains domaines ont été bloqués, ajoutez-les à `network.allowed` dans le frontmatter du workflow.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can identify each file inside the agent artifact and what it contains
-- [ ] You understand what ⌖ AIC represents and how it differs from agent AIC
-- [ ] You can find blocked domains in the firewall audit records and add them to `network.allowed`
-- [ ] You know what the threat detection verdict checks for
-- [ ] You ran `gh aw audit` on a real run and reviewed the generated report
-- [ ] You explored `mcp-logs/` to identify tool calls from a completed run
+- [ ] Vous pouvez identifier chaque fichier dans l’artifact agent et expliquer ce qu’il contient
+- [ ] Vous comprenez ce que représente ⌖ AIC et en quoi il diffère de Agent AIC
+- [ ] Vous pouvez trouver des domaines bloqués dans les journaux d’audit du firewall et les ajouter à `network.allowed`
+- [ ] Vous savez ce que verifie le verdict de detection de menaces
+- [ ] Vous avez exécuté `gh aw audit` sur une vraie exécution et examiné le rapport généré
+- [ ] Vous avez exploré `mcp-logs/` pour identifier des appels de tools depuis une exécution terminée
 
 <!-- journey: all -->
-Return to [Audit and Monitor Your Agentic Workflows](25-audit-and-observability.md).
+
+Retour à [Auditez et surveillez vos agentic workflows](25-audit-and-observability.md).
+
 <!-- /journey -->

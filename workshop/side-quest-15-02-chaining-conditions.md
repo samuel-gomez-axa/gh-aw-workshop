@@ -1,29 +1,30 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Chaining Conditions — Run an Agent Only When Security Findings Exist
 
-> _The cheapest agent invocation is the one you skip. Use a deterministic step to decide whether your repository state is worth an agent's attention._
+# Quête Annexe : Chaîner Les Conditions — Exécuter Un Agent Seulement Lorsqu'il Existe Des Alertes De Sécurité
 
-## :dart: What You'll Do
+> _L'invocation d'agent la moins chère est celle que vous évitez. Utilisez une étape déterministe pour décider si l'état de votre dépôt mérite l'attention d'un agent._
 
-Add a security scanning step to your workflow that counts open Dependabot vulnerability alerts, then wire the result into an `if:` condition so the agent only runs when there are actual findings. You will chain that check with a branch condition using `&&` and update the agent brief to reference the alert count directly.
+## :dart: Ce Que Vous Allez Faire
 
-## :clipboard: Before You Start
+Ajoutez à votre workflow une étape de security scanning qui compte les alertes de vulnérabilité Dependabot ouvertes, puis branchez le résultat sur une condition `if:` afin que l'agent ne s'exécute que lorsqu'il y a de vrais résultats. Vous chaînerez cette vérification avec une condition de branche via `&&` et mettrez à jour le brief de l'agent pour référencer directement le nombre d'alertes.
 
-- You have completed [Make Your Workflow Smarter with Conditional Logic](15-conditional-logic.md).
-- Your workflow already has a top-level `if:` condition gating the agent job.
+## :clipboard: Avant De Commencer
 
-## Steps
+- Vous avez terminé [Make Your Workflow Smarter with Conditional Logic](15-conditional-logic.md).
+- Votre workflow possède déjà une condition `if:` de niveau supérieur qui contrôle l'exécution du job d'agent.
 
-### Understand why this pattern matters
+## Étapes
 
-Running an agent every time a schedule fires is expensive, even when there is nothing to report. This side quest solves that by front-loading a fast, [deterministic](https://github.github.com/gh-aw/patterns/deterministic-ops/) check: a shell step calls the GitHub API to count open Dependabot alerts, then the `if:` expression evaluates the count before the agent job starts. If no alerts are open, the job is skipped entirely — zero AI credits spent.
+### Comprendre Pourquoi Ce Pattern Compte
 
-The same skeleton applies to any tool that can write a count or boolean to `$GITHUB_OUTPUT`: code scanning alerts, secret scan findings, lint error totals, or failing test counts.
+Exécuter un agent chaque fois qu'un schedule se déclenche coûte cher, même lorsqu'il n'y a rien à signaler. Cette quête annexe résout ce problème en plaçant en amont une vérification [deterministic](https://github.github.com/gh-aw/patterns/deterministic-ops/) rapide : une étape shell appelle l'API GitHub pour compter les alertes Dependabot ouvertes, puis l'expression `if:` évalue ce nombre avant le démarrage du job d'agent. Si aucune alerte n'est ouverte, le job est entièrement ignoré, donc zéro AI Credits dépensé.
 
-### Add a security-alert count step
+Le même squelette s'applique à tout outil capable d'écrire un nombre ou un booléen dans `$GITHUB_OUTPUT` : alertes de code scanning, résultats de secret scanning, total d'erreurs de lint ou nombre de tests en échec.
 
-In the GitHub Copilot **Chat** or **Agents** tab, paste:
+### Ajouter Une Étape De Comptage Des Alertes De Sécurité
+
+Dans l'onglet **Chat** ou **Agents** de GitHub Copilot, collez :
 
 ```prompt
 /agentic-workflows update .github/workflows/daily-status.md to add a shell step
@@ -31,30 +32,30 @@ that counts open Dependabot alerts using the GitHub API and writes the result to
 $GITHUB_OUTPUT as `alert_count` with step id `alerts`. Add `security-events: read`
 to the workflow permissions and update the if condition to run the agent only when
 alert_count is not zero and the ref is the default branch.
+> _L'invocation d'agent la moins chère est celle que vous évitez. Utilisez une étape déterministe pour décider si l'état de votre dépôt mérite l'attention d'un agent._
 ```
 
-The skill adds the step, updates the permissions block and the `if:` condition, then recompiles the lock file.
+La skill ajoute l'étape, met à jour le bloc de permissions et la condition `if:`, puis recompile le lock file.
 
-<details>
-<summary>:desktop_computer: Terminal path</summary>
+<details open>
+<summary>:desktop_computer: Parcours terminal</summary>
 
-1. Add `security-events: read` to the `permissions:` block in your [workflow frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
+1. Ajoutez `security-events: read` au bloc `permissions:` dans votre [workflow frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
 
-2. Add the following step inside the `steps:` block:
+2. Ajoutez l'étape suivante à l'intérieur du bloc `steps:` :
 
 ```markdown
 - name: Count open security alerts
   id: alerts
   env:
-    GH_TOKEN: ${{ github.token }}
+  GH_TOKEN: ${{ github.token }}
   run: |
     COUNT=$(gh api repos/${{ github.repository }}/dependabot/alerts \
       --jq '[.[] | select(.state == "open")] | length' 2>/dev/null || echo 0)
     echo "alert_count=$COUNT" >> $GITHUB_OUTPUT
 ```
 
-   The step publishes the count as `steps.alerts.outputs.alert_count`.
-3. Update the top-level `if:` to combine both conditions:
+L'étape publie le nombre sous la forme `steps.alerts.outputs.alert_count`. 3. Mettez à jour le `if:` de niveau supérieur pour combiner les deux conditions :
 
 ```markdown
 ---
@@ -62,21 +63,20 @@ if: steps.alerts.outputs.alert_count != '0' && github.ref == 'refs/heads/main'
 ---
 ```
 
-   Both conditions must be true for the agent to run.
-4. Run `gh aw compile` to regenerate the lock file.
+Les deux conditions doivent être vraies pour que l'agent s'exécute. 4. Exécutez `gh aw compile` pour régénérer le lock file.
 
 </details>
 
-### Why chain with a branch check
+### Pourquoi Le Chaîner Avec Une Vérification De Branche
 
-Dependabot alert counts are repository-wide. Running the agent on every branch would create duplicate summaries on the same data. Adding `github.ref == 'refs/heads/main'` gates the run to a single canonical location while still allowing a manual [`workflow_dispatch`](https://github.github.com/gh-aw/reference/triggers/#dispatch-triggers-workflowdispatch) to override from the Actions tab regardless of the current branch.
+Les nombres d'alertes Dependabot s'appliquent à l'ensemble du dépôt. Exécuter l'agent sur chaque branche créerait des résumés en double à partir des mêmes données. L'ajout de `github.ref == 'refs/heads/main'` limite l'exécution à un emplacement canonique unique tout en permettant à un [`workflow_dispatch`](https://github.github.com/gh-aw/reference/triggers/#dispatch-triggers-workflowdispatch) manuel de passer outre depuis l'onglet Actions, quelle que soit la branche courante.
 
 > [!NOTE]
-> Values from `$GITHUB_OUTPUT` are always strings. Compare them against quoted literals — `steps.alerts.outputs.alert_count != '0'` — not unquoted values.
+> Les valeurs issues de `$GITHUB_OUTPUT` sont toujours des chaînes. Comparez-les à des littéraux entre guillemets, `steps.alerts.outputs.alert_count != '0'`, et non à des valeurs non citées.
 
-### Update the agent brief
+### Mettre À Jour Le Brief De L'agent
 
-Reference the alert count output directly in your brief so the model knows the scope of work before it calls any tools:
+Référencez directement dans votre brief la sortie du nombre d'alertes afin que le modèle connaisse le périmètre de travail avant d'appeler le moindre outil :
 
 ```text
 There are ${{ steps.alerts.outputs.alert_count }} open Dependabot security alerts in this
@@ -85,19 +85,19 @@ and post a concise triage summary as a comment on the latest open issue labelled
 `security-triage`. If no such issue exists, create one.
 ```
 
-Embedding the count anchors the agent to a concrete number instead of asking it to rediscover a value that the deterministic step already fetched, which reduces unnecessary tool calls and trims AIC usage.
+Intégrer ce nombre ancre l'agent sur une valeur concrète au lieu de lui demander de redécouvrir une donnée déjà récupérée par l'étape déterministe, ce qui réduit les appels d'outils inutiles et diminue l'usage d'AIC.
 
-### Verify the conditional behaviour
+### Vérifier Le Comportement Conditionnel
 
-After compiling and pushing, trigger a manual `workflow_dispatch` run from the Actions tab:
+Après compilation et push, déclenchez un run manuel `workflow_dispatch` depuis l'onglet Actions :
 
-- **With open alerts on the default branch**: the agent job completes and posts the security summary.
-- **With no open alerts, or on a non-default branch**: the job appears as **skipped** with a grey icon.
+- **Avec des alertes ouvertes sur la branche par défaut** : le job d'agent se termine et publie le résumé de sécurité.
+- **Sans alertes ouvertes, ou sur une branche autre que la branche par défaut** : le job apparaît comme **skipped** avec une icône grise.
 
 > [!NOTE]
-> The `if:` condition takes effect only after you compile and push both the `.md` source and the updated `.lock.yml` file. The `/agentic-workflows` skill handles compilation automatically.
+> La condition `if:` ne prend effet qu'après compilation et push à la fois de la source `.md` et du fichier `.lock.yml` mis à jour. La skill `/agentic-workflows` gère automatiquement la compilation.
 
-### Commit and push your changes
+### Valider Et Pousser Vos Modifications
 
 ```bash
 git add .
@@ -107,13 +107,15 @@ git push
 
 ## :white_check_mark: Checkpoint
 
-- [ ] Your workflow has a `count open security alerts` step with `id: alerts`
-- [ ] The `permissions:` block includes `security-events: read`
-- [ ] Your top-level `if:` chains the alert-count check and the branch check with `&&`
-- [ ] Both `.github/workflows/daily-status.md` and `.github/workflows/daily-status.lock.yml` are compiled, committed, and pushed
-- [ ] You triggered the workflow manually and confirmed it skips when there are no open alerts
-- [ ] You can explain why embedding the alert count in the brief reduces unnecessary agent tool calls
+- [ ] Votre workflow contient une étape `count open security alerts` avec `id: alerts`
+- [ ] Le bloc `permissions:` inclut `security-events: read`
+- [ ] Votre `if:` de niveau supérieur chaîne la vérification du nombre d'alertes et la vérification de branche avec `&&`
+- [ ] `.github/workflows/daily-status.md` et `.github/workflows/daily-status.lock.yml` sont tous deux compilés, validés et poussés
+- [ ] Vous avez déclenché le workflow manuellement et confirmé qu'il est ignoré lorsqu'il n'y a pas d'alertes ouvertes
+- [ ] Vous pouvez expliquer pourquoi intégrer le nombre d'alertes dans le brief réduit les appels d'outils inutiles de l'agent
 
 <!-- journey: all -->
-Return to [Make Your Workflow Smarter with Conditional Logic](15-conditional-logic.md).
+
+Revenez à [Make Your Workflow Smarter with Conditional Logic](15-conditional-logic.md).
+
 <!-- /journey -->

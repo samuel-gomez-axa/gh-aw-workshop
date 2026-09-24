@@ -1,29 +1,30 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Project Future AI Credit Costs with `gh aw forecast`
 
-> _A deeper companion to [Manage Costs and AI Credit Budgets](26-manage-costs-and-budgets.md). Use this side quest when you want a full walkthrough of `gh aw forecast` — what the output means, how to tune projections, and how to translate the P90 figure into a practical `max-daily-ai-credits` value._
+# Quête annexe : projeter les futurs coûts d’AI Credits avec `gh aw forecast`
 
-## What [`gh aw forecast`](https://github.github.com/gh-aw/setup/cli/#forecast) does
+> _Complément plus approfondi de [Gérez les coûts et les budgets d’AI Credits](26-manage-costs-and-budgets.md). Utilisez cette quête annexe si vous voulez un guide complet de `gh aw forecast`, ce que sa sortie signifie, comment ajuster les projections et comment traduire la valeur P90 en un `max-daily-ai-credits` concret._
+
+## Ce que fait [`gh aw forecast`](https://github.github.com/gh-aw/setup/cli/#forecast)
 
 > [!NOTE]
-> `gh aw forecast` is currently experimental. Its flags and output format may change in future releases.
+> `gh aw forecast` est actuellement experimental. Ses flags et son format de sortie peuvent changer dans de futures releases.
 
-`gh aw forecast` looks at your actual run history and runs a Monte Carlo simulation to project future [AIC](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) consumption. It accounts for:
+`gh aw forecast` examine votre historique réel d’exécutions et lance une simulation Monte Carlo pour projeter la consommation future d’[AIC](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic). Il tient compte de :
 
-- Run frequency (how often the workflow [triggers](https://github.github.com/gh-aw/reference/triggers/))
-- Per-run usage (how many AIC each run consumed)
-- Success rate (failed runs still consume some tokens)
+- la fréquence d’exécution, c’est-à-dire la fréquence des [triggers](https://github.github.com/gh-aw/reference/triggers/) du workflow ;
+- l’usage par exécution, soit combien d’AIC chaque exécution a consommé ;
+- le taux de succès, car même les exécutions échouées consomment une partie des tokens.
 
-The result is a probability distribution, not a single number. You get a **P10**, **P50**, and **P90** figure for the projection period.
+Le résultat est une distribution de probabilité, pas un nombre unique. Vous obtenez des valeurs **P10**, **P50** et **P90** pour la période de projection.
 
-## Run a basic forecast
+## Lancer une prévision de base
 
 ```bash
 gh aw forecast daily-status
 ```
 
-Sample output:
+Exemple de sortie :
 
 ```
 Workflow: daily-status
@@ -34,74 +35,74 @@ Runs:     ~30 projected
   32 AIC  47 AIC  68 AIC
 ```
 
-- **P10** — only a 10 % chance actual spend falls below this. Optimistic scenario.
-- **P50** — the median projection. Half of simulated outcomes land above this, half below.
-- **P90** — only a 10 % chance actual spend exceeds this. Conservative upper bound.
+- **P10** : seulement 10 % de chances que la dépense réelle tombe en dessous. C’est le scénario optimiste.
+- **P50** : la projection médiane. La moitié des résultats simulés est au-dessus, l’autre moitié en dessous.
+- **P90** : seulement 10 % de chances que la dépense réelle dépasse cette valeur. C’est une borne haute prudente.
 
-Use the **P90** figure when requesting a spending limit from your administrator or setting `max-daily-ai-credits`.
+Utilisez la valeur **P90** lorsque vous demandez une limite de dépense à votre administrateur ou lorsque vous réglez `max-daily-ai-credits`.
 
-## Use `--period week` for shorter projections
+## Utiliser `--period week` pour des projections plus courtes
 
-If you run your workflow less than daily, a monthly projection might feel abstract. Switch to weekly:
+Si votre workflow s’exécute moins d’une fois par jour, une projection mensuelle peut sembler trop abstraite. Passez à un horizon hebdomadaire :
 
 ```bash
 gh aw forecast daily-status --period week
 ```
 
-The output covers 7 days of projected spend. Useful for workflows that run a few times a week and where you want a near-term estimate.
+La sortie couvre 7 jours de dépense projetée. C’est utile pour des workflows qui s’exécutent quelques fois par semaine et pour lesquels vous voulez une estimation à court terme.
 
-## Use `--days 7` to limit history after a task-brief change
+## Utiliser `--days 7` pour limiter l’historique après un changement de task brief
 
-`gh aw forecast` samples from all available run history by default. If you recently changed your task brief or added [MCP tools](https://github.github.com/gh-aw/guides/mcps/), older runs may have very different costs and will skew the projection.
+Par défaut, `gh aw forecast` échantillonne tout l’historique d’exécution disponible. Si vous avez récemment modifié votre task brief ou ajouté des [MCP tools](https://github.github.com/gh-aw/guides/mcps/), les anciennes exécutions peuvent avoir des coûts très différents et fausser la projection.
 
-Limit the history window to the last 7 days:
+Limitez la fenêtre d’historique aux 7 derniers jours :
 
 ```bash
 gh aw forecast daily-status --days 7
 ```
 
 > [!TIP]
-> Wait until you have at least 5–7 runs after a change before running a forecast. Fewer samples mean wider confidence intervals.
+> Attendez d’avoir au moins 5 à 7 exécutions après un changement avant de lancer une prévision. Moins d’échantillons signifient des intervalles de confiance plus larges.
 
-## Forecast all workflows at once
+## Prévoir tous les workflows en une seule fois
 
-Run `gh aw forecast` with no workflow name to project costs for every workflow in the repository:
+Exécutez `gh aw forecast` sans nom de workflow pour projeter les coûts de tous les workflows du dépôt :
 
 ```bash
 gh aw forecast
 ```
 
-The output shows one row per workflow so you can spot which workflows drive the most spend.
+La sortie affiche une ligne par workflow, ce qui vous permet de repérer lesquels entraînent la plus forte dépense.
 
-## Translate the P90 into `max-daily-ai-credits`
+## Traduire la valeur P90 en `max-daily-ai-credits`
 
-The `max-daily-ai-credits` field caps how many [AIC](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) a workflow can consume across the last 24 hours for the triggering user. To pick a value that allows normal operation but blocks runaway spend:
+Le champ `max-daily-ai-credits` plafonne le nombre d’[AIC](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic) qu’un workflow peut consommer sur les 24 dernières heures pour l’utilisateur déclencheur. Pour choisir une valeur qui autorise un fonctionnement normal tout en bloquant une dépense runaway :
 
-1. Note the **P90 monthly** figure from `gh aw forecast`.
-2. Divide by 30 to get the P90 daily figure.
-3. Multiply by 1.5 as a safety margin.
+1. Relevez la valeur **P90 mensuelle** issue de `gh aw forecast`.
+2. Divisez-la par 30 pour obtenir la valeur P90 quotidienne.
+3. Multipliez-la par 1.5 comme marge de sécurité.
 
-**Worked example:**
+**Exemple calculé :**
 
-| Metric | Value |
-|---|---|
-| P90 monthly | 10000 AIC |
-| P90 daily (÷ 30) | 333 AIC |
-| Safety margin (× 1.5) | 500 AIC |
-| Rounded `max-daily-ai-credits` | **500** |
+| Métrique                       | Valeur    |
+| ------------------------------ | --------- |
+| P90 mensuelle                  | 10000 AIC |
+| P90 quotidienne (÷ 30)         | 333 AIC   |
+| Marge de sécurité (× 1.5)      | 500 AIC   |
+| `max-daily-ai-credits` arrondi | **500**   |
 
-Add that value to your workflow frontmatter:
+Ajoutez ensuite cette valeur au frontmatter de votre workflow :
 
 ```markdown
 ---
 name: Daily Status Report
 on:
-  schedule: daily on weekdays
+    schedule: daily on weekdays
 max-daily-ai-credits: 500
 ---
 ```
 
-Recompile after editing:
+Recompilez après modification :
 
 ```bash
 gh aw compile
@@ -109,11 +110,13 @@ gh aw compile
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You ran `gh aw forecast` and read the P10/P50/P90 output
-- [ ] You used `--period week` to get a shorter projection
-- [ ] You used `--days 7` to limit history after a recent workflow change
-- [ ] You derived a `max-daily-ai-credits` value from the P90 figure and added it to your workflow
+- [ ] Vous avez exécuté `gh aw forecast` et lu la sortie P10/P50/P90
+- [ ] Vous avez utilise `--period week` pour obtenir une projection plus courte
+- [ ] Vous avez utilisé `--days 7` pour limiter l’historique après une modification récente du workflow
+- [ ] Vous avez dérivé une valeur `max-daily-ai-credits` à partir de la valeur P90 et l’avez ajoutée à votre workflow
 
 <!-- journey: all -->
-Return to [Manage Costs and AI Credit Budgets](26-manage-costs-and-budgets.md).
+
+Retour à [Gérez les coûts et les budgets d’AI Credits](26-manage-costs-and-budgets.md).
+
 <!-- /journey -->

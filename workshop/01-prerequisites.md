@@ -2,32 +2,34 @@
 <!-- page-adventure: core -->
 <!-- learning:false -->
 
-# Before we start
+# Avant de commencer
 
-Before you dive in, confirm you have the accounts and tool access this workshop needs.
+Avant de vous lancer, vérifiez que vous disposez bien des comptes et de l’accès aux outils nécessaires pour cet atelier.
 
-## Confirm account access
+## Confirmez l’accès à votre compte
 
-Sign in at [github.com](https://github.com). If you do not have an account yet, use the **Sign up** option there first.
+Connectez-vous sur [github.com](https://github.com). Si vous n’avez pas encore de compte, utilisez d’abord l’option **Sign up**.
 
-## Prepare your environment
+## Préparez votre environnement
 
-This workshop runs in a **GitHub Codespace** — a cloud-hosted terminal with no local installs required. You will set one up in the next step.
+Cet atelier se déroule dans un **GitHub Codespace**, un terminal hébergé dans le cloud qui ne nécessite aucune installation locale. Vous allez en configurer un à l’étape suivante.
 
-Already comfortable managing Git and the GitHub CLI on your machine? You can take the optional [Local Terminal Setup side quest](side-quest-02-01-local-terminal.md), then rejoin the main workshop.
+Vous êtes déjà à l’aise pour gérer Git et GitHub CLI sur votre machine ? Vous pouvez suivre la quête annexe facultative [Configurer votre terminal local](side-quest-02-01-local-terminal.md), puis revenir à l’atelier principal.
 
-## Verify [AI engine](https://github.github.com/gh-aw/reference/engines/) access
+## Vérifiez l’accès au [AI engine](https://github.github.com/gh-aw/reference/engines/)
 
-Open [github.com/settings/copilot](https://github.com/settings/copilot) and confirm both show:
+Ouvrez [github.com/settings/copilot](https://github.com/settings/copilot) et vérifiez que les deux éléments suivants apparaissent :
 
 - **Copilot CLI is enabled**
-- Some **Models are available**
+- Des **models** sont disponibles
 
-This workshop uses GitHub Copilot end-to-end, so you do not need to configure any external provider API keys.
+Cet atelier utilise GitHub Copilot de bout en bout ; vous n’avez donc pas besoin de configurer de clés API de fournisseurs externes.
 
 > [!TIP]
-> [Agentic Workflows](https://github.github.com/gh-aw/introduction/overview/) supports multiple agent and model providers (for example, [Anthropic](https://github.github.com/gh-aw/reference/engines/#available-coding-agents) Claude Code, OpenAI Codex, and Google Gemini), but this workshop uses GitHub Copilot so you can stay focused on workflow concepts.
+> [Agentic Workflows](https://github.github.com/gh-aw/introduction/overview/) prend en charge plusieurs fournisseurs d’agents et de modèles, par exemple [Anthropic](https://github.github.com/gh-aw/reference/engines/#available-coding-agents) Claude Code, OpenAI Codex et Google Gemini, mais cet atelier utilise GitHub Copilot afin que vous puissiez rester concentré sur les concepts de workflow.
 
 <!-- journey: all -->
-**Next:** Open [Set Up a Codespace](02a-setup-codespace.md).
+
+**Étape suivante :** ouvrez [Configurer un Codespace](02a-setup-codespace.md).
+
 <!-- /journey -->

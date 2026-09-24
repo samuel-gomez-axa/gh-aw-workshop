@@ -1,61 +1,64 @@
 <!-- page-journey: all -->
 <!-- page-adventure: core -->
-# Confirm Model Access
 
-## :clipboard: Before You Start
+# Confirmer l’accès au modèle
 
-This step has two entry points:
+## :clipboard: Avant de commencer
 
-- **Arriving from step 07 (error recovery):** Workflow files do not need to exist yet — fix model access first, then return to [Write Your First Agentic Workflow](07-your-first-workflow.md).
-- **Arriving as the next step after step 07 (normal flow):** `daily-report-status.md` and `daily-report-status.lock.yml` are committed to your practice repository.
+Cette étape a deux points d’entrée :
 
-## :dart: What You'll Do
+- **Arrivée depuis l’étape 07, en récupération d’erreur :** les fichiers de workflow n’ont pas encore besoin d’exister. Corrigez d’abord l’accès au modèle, puis revenez à [Write Your First Agentic Workflow](07-your-first-workflow.md).
+- **Arrivée comme étape suivante après l’étape 07, dans le flux normal :** `daily-report-status.md` et `daily-report-status.lock.yml` sont commités dans votre dépôt d’entraînement.
 
-You'll run a one-sentence test prompt, confirm Copilot is reachable, choose your [billing](https://github.github.com/gh-aw/reference/billing/) path, and configure the workflow before continuing to [Step 8](08-run-your-workflow.md).
+## :dart: Ce que vous allez faire
 
-## Verify model access
+Vous allez exécuter un prompt de test d’une phrase, confirmer que Copilot est joignable, choisir votre mode de [billing](https://github.github.com/gh-aw/reference/billing/) et configurer le workflow avant de continuer vers [l’étape 8](08-run-your-workflow.md).
 
-1. In the terminal already open in your Codespace, run:
+## Vérifiez l’accès au modèle
+
+1. Dans le terminal déjà ouvert dans votre Codespace, exécutez :
 
 ```bash
 gh copilot
 ```
 
-1. Send this prompt:
+1. Envoyez ce prompt :
 
 ```prompt
 /agentic-workflows what trigger does a scheduled workflow use?
 ```
 
-1. Any reply confirms the model and skill are accessible. Continue to **Choose a billing path**.
+1. Toute réponse confirme que le modèle et le skill sont accessibles. Continuez vers **Choisissez un mode de facturation**.
 
 > [!IMPORTANT]
-> If you see an error instead of a reply, check [github.com/settings/copilot](https://github.com/settings/copilot) to confirm Copilot is enabled. If the problem persists, see [Side Quest: Configure GitHub Copilot for Agentic Workflows](side-quest-06-03-copilot-token.md), then return here.
+> Si vous voyez une erreur au lieu d’une réponse, vérifiez sur [github.com/settings/copilot](https://github.com/settings/copilot) que Copilot est activé. Si le problème persiste, consultez [Side Quest: Configure GitHub Copilot for Agentic Workflows](side-quest-06-03-copilot-token.md), puis revenez ici.
 
-If you arrived from the step 07 access check and the test prompt succeeded, return to [Write Your First Agentic Workflow](07-your-first-workflow.md) now.
+Si vous arrivez du contrôle d’accès de l’étape 07 et que le prompt de test a réussi, retournez maintenant à [Write Your First Agentic Workflow](07-your-first-workflow.md).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/07d-preflight-troubleshoot-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/07d-preflight-troubleshoot-light.svg">
-  <img alt="Pre-flight troubleshooting decision tree: send a test prompt, then follow YES or NO branches to either continue the workshop or fix model access" src="images/07d-preflight-troubleshoot-light.svg">
+  <img alt="Arbre de décision de dépannage avant départ : envoyez un prompt de test, puis suivez les branches YES ou NO pour soit continuer l’atelier, soit corriger l’accès au modèle" src="images/07d-preflight-troubleshoot-light.svg">
 </picture>
 
-## Choose a billing path
+## Choisissez un mode de facturation
 
 > [!NOTE]
-> For golden-ticket workshops, billing is pre-provisioned by your org. Use the **Organization centralized billing** path unless your instructor says otherwise.
+> Pour les ateliers golden-ticket, la facturation est préconfigurée par votre organisation. Utilisez le chemin **Organization centralized billing**, sauf indication contraire de votre formateur.
 
-Follow the full setup steps in [Side Quest: Copilot Billing Paths](side-quest-07d-billing-paths.md), then return here once your workflow file and [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) are committed.
+Suivez toutes les étapes de configuration dans [Side Quest: Copilot Billing Paths](side-quest-07d-billing-paths.md), puis revenez ici une fois votre fichier de workflow et votre [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) commités.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I sent the test prompt in Copilot CLI and received a reply
-- [ ] I confirmed no access errors appeared
-- [ ] I chose a billing path and completed all configuration steps
-- [ ] My source file and compiled lock file reflect the chosen method
-- [ ] Both files are committed to `main`
-- [ ] I am ready for [Run and Watch Your Workflow](08-run-your-workflow.md)
+- [ ] J’ai envoyé le prompt de test dans Copilot CLI et reçu une réponse
+- [ ] J’ai confirmé qu’aucune erreur d’accès n’est apparue
+- [ ] J’ai choisi un mode de facturation et terminé toutes les étapes de configuration
+- [ ] Mon fichier source et mon lock file compilé reflètent la méthode choisie
+- [ ] Les deux fichiers sont commités vers `main`
+- [ ] Je suis prêt pour [Lancer et observer votre workflow](08-run-your-workflow.md)
 
 <!-- journey: all -->
-**Next:** [Run and Watch Your Workflow](08-run-your-workflow.md)
+
+**Étape suivante :** [Lancer et observer votre workflow](08-run-your-workflow.md)
+
 <!-- /journey -->

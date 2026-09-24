@@ -1,42 +1,43 @@
 <!-- page-journey: local -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Set Up Your Local Terminal
 
-> _Optional: use your own machine instead of the recommended Codespace, then rejoin the core workshop._
+# Side Quest : Configurer votre terminal local
 
-## :test_tube: 5-question terminal self-assessment
+> _Facultatif : utilisez votre propre machine au lieu du Codespace recommandé, puis revenez au parcours principal de l’atelier._
 
-Check each statement:
+## :test_tube: Auto-évaluation terminal en 5 questions
 
-- [ ] I have opened a terminal before.
-- [ ] I can tell which folder I am in and change folders in a terminal.
-- [ ] I can copy, paste, and run multi-line commands.
-- [ ] I know how to read command output and spot errors.
-- [ ] I feel comfortable troubleshooting local install or proxy issues.
+Vérifiez chaque affirmation :
 
-If any answer is No, switch to [Set Up a Codespace](02a-setup-codespace.md) for a faster setup with no local installs.
+- [ ] J’ai déjà ouvert un terminal.
+- [ ] Je sais dans quel dossier je me trouve et je sais changer de dossier dans un terminal.
+- [ ] Je sais copier, coller et exécuter des commandes sur plusieurs lignes.
+- [ ] Je sais lire la sortie d’une commande et repérer les erreurs.
+- [ ] Je suis à l’aise pour dépanner des problèmes d’installation locale ou de proxy.
 
-_Working locally means you'll use the tools and shell you already know — let's get them ready in a few quick steps._
+Si l’une des réponses est non, basculez vers [Configurer un Codespace](02a-setup-codespace.md) pour une installation plus rapide sans dépendances locales.
 
-## :dart: What You'll Do
+_Travailler en local signifie que vous utiliserez les outils et le shell que vous connaissez déjà ; préparons-les en quelques étapes rapides._
 
-You'll install Git and the `gh` CLI on your own machine and authenticate with GitHub. By the end you'll be ready to create your practice repository and continue to the core workshop steps.
+## :dart: Ce que vous allez faire
+
+Vous allez installer Git et le CLI `gh` sur votre propre machine, puis vous authentifier auprès de GitHub. À la fin, vous serez prêt à créer votre dépôt d’exercice et à poursuivre les étapes principales de l’atelier.
 
 <picture>
    <source media="(prefers-color-scheme: dark)" srcset="images/02-local-setup-flow-dark.svg">
    <source media="(prefers-color-scheme: light)" srcset="images/02-local-setup-flow-light.svg">
-   <img alt="Local setup flow: four sequential steps — Verify Git, Install gh CLI, Authenticate, Clone Repo" src="images/02-local-setup-flow-light.svg">
+   <img alt="Flux d’installation locale : quatre étapes successives — Verify Git, Install gh CLI, Authenticate, Clone Repo" src="images/02-local-setup-flow-light.svg">
 </picture>
 
-## :clipboard: Before You Start
+## :clipboard: Avant de commencer
 
-- You've completed [What You Need Before We Start](01-prerequisites.md)
-- You have a free GitHub account and are signed in
-- You have a terminal application open (Terminal on macOS, Windows Terminal or Git Bash on Windows, any terminal on Linux)
+- Vous avez terminé [Ce qu’il vous faut avant de commencer](01-prerequisites.md)
+- Vous avez un compte GitHub gratuit et vous êtes connecté
+- Vous avez une application de terminal ouverte (Terminal sur macOS, Windows Terminal ou Git Bash sur Windows, n’importe quel terminal sur Linux)
 
-## Steps
+## Étapes
 
-### Verify Git
+### Vérifier Git
 
 ```bash
 git --version
@@ -45,16 +46,16 @@ git --version
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/02b-terminal-success-01-git-version-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/02b-terminal-success-01-git-version-light.svg">
-  <img alt="Example success output after running `git --version`" src="images/02b-terminal-success-01-git-version-light.svg">
+  <img alt="Exemple de sortie réussie après avoir exécuté `git --version`" src="images/02b-terminal-success-01-git-version-light.svg">
 </picture>
 
-_What success looks like:_ a line like `git version 2.x.x`.
+_Ce à quoi ressemble la réussite :_ une ligne comme `git version 2.x.x`.
 
-You should see `git version 2.x.x` or higher. If you see an error, download Git from [git-scm.com](https://git-scm.com) and re-run the check.
+Vous devriez voir `git version 2.x.x` ou une version supérieure. Si vous voyez une erreur, téléchargez Git depuis [git-scm.com](https://git-scm.com) puis relancez la vérification.
 
-### Install the GitHub CLI
+### Installer GitHub CLI
 
-GitHub CLI is GitHub's official command-line tool, and you run it with the `gh` command. Check whether it's already installed:
+GitHub CLI est l’outil en ligne de commande officiel de GitHub, et vous l’exécutez avec la commande `gh`. Vérifiez s’il est déjà installé :
 
 ```bash
 gh --version
@@ -63,12 +64,12 @@ gh --version
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/02b-terminal-success-07-gh-version-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/02b-terminal-success-07-gh-version-light.svg">
-  <img alt="Example success output after running `gh --version`" src="images/02b-terminal-success-07-gh-version-light.svg">
+  <img alt="Exemple de sortie réussie après avoir exécuté `gh --version`" src="images/02b-terminal-success-07-gh-version-light.svg">
 </picture>
 
-_What success looks like:_ version details for `gh` are printed.
+_Ce à quoi ressemble la réussite :_ les informations de version de `gh` s’affichent.
 
-If the command works, continue to the [authentication](https://github.github.com/gh-aw/reference/auth/) section. If it does not, run the quick install command for [macOS](#macos-quick-install), [Windows](#windows-quick-install), or [Linux](#linux-quick-install).
+Si la commande fonctionne, passez à la section sur l’[authentication](https://github.github.com/gh-aw/reference/auth/). Sinon, exécutez la commande d’installation rapide pour [macOS](#macos-quick-install), [Windows](#windows-quick-install) ou [Linux](#linux-quick-install).
 
 #### macOS quick install
 
@@ -76,10 +77,10 @@ If the command works, continue to the [authentication](https://github.github.com
 brew install gh
 ```
 
-<details>
-<summary>Don't have Homebrew?</summary>
+<details open>
+<summary>Vous n’avez pas Homebrew ?</summary>
 
-If Homebrew is missing or blocked, use the macOS installer from [cli.github.com](https://cli.github.com). If Git was not found during [Verify Git](#verify-git), install it from [git-scm.com](https://git-scm.com) before continuing.
+Si Homebrew est absent ou bloqué, utilisez l’installateur macOS depuis [cli.github.com](https://cli.github.com). Si Git n’a pas été trouvé pendant [Vérifier Git](#vérifier-git), installez-le depuis [git-scm.com](https://git-scm.com) avant de continuer.
 
 </details>
 
@@ -89,11 +90,11 @@ If Homebrew is missing or blocked, use the macOS installer from [cli.github.com]
 winget install --id GitHub.cli
 ```
 
-<details>
-<summary>Don't have winget?</summary>
+<details open>
+<summary>Vous n’avez pas winget ?</summary>
 
-- If `winget` is unavailable, use the Windows installer from [cli.github.com](https://cli.github.com).
-- If Git was not found during [Verify Git](#verify-git), install Git for Windows from [git-scm.com](https://git-scm.com).
+- Si `winget` n’est pas disponible, utilisez l’installateur Windows depuis [cli.github.com](https://cli.github.com).
+- Si Git n’a pas été trouvé pendant [Vérifier Git](#vérifier-git), installez Git for Windows depuis [git-scm.com](https://git-scm.com).
 
 </details>
 
@@ -103,20 +104,20 @@ winget install --id GitHub.cli
 sudo apt update && sudo apt install gh -y
 ```
 
-<details>
-<summary>Using a different package manager?</summary>
+<details open>
+<summary>Vous utilisez un autre gestionnaire de paquets ?</summary>
 
-- The quick install above is for Debian and Ubuntu.
-- For Fedora, Arch, or other package managers, use the Linux instructions at [cli.github.com](https://cli.github.com).
-- If Git was not found during [Verify Git](#verify-git), install it with your distro package manager before continuing.
+- L’installation rapide ci-dessus est prévue pour Debian et Ubuntu.
+- Pour Fedora, Arch ou d’autres gestionnaires de paquets, utilisez les instructions Linux sur [cli.github.com](https://cli.github.com).
+- Si Git n’a pas été trouvé pendant [Vérifier Git](#vérifier-git), installez-le avec le gestionnaire de paquets de votre distribution avant de continuer.
 
 </details>
 
-Run `gh --version` again after installing to confirm it worked.
+Exécutez `gh --version` de nouveau après l’installation pour confirmer que tout fonctionne.
 
-If you're on GHES, GHEC, behind SSO, or behind a proxy, complete [Side Quest: Enterprise Setup Considerations](side-quest-enterprise-setup.md). If any install step is blocked by proxy, permissions, or host-specific setup issues, use [Side Quest: Install gh-aw Troubleshooting](side-quest-06-01-install-troubleshooting.md).
+Si vous êtes sur GHES, GHEC, derrière SSO ou derrière un proxy, terminez [Side Quest: Enterprise Setup Considerations](side-quest-enterprise-setup.md). Si une étape d’installation est bloquée par un proxy, des permissions ou des problèmes propres à l’hôte, utilisez [Side Quest: Install gh-aw Troubleshooting](side-quest-06-01-install-troubleshooting.md).
 
-### Authenticate the `gh` CLI
+### Authentifier le CLI `gh`
 
 ```bash
 gh auth login
@@ -125,25 +126,25 @@ gh auth login
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/02b-terminal-success-11-gh-auth-login-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/02b-terminal-success-11-gh-auth-login-light.svg">
-  <img alt="Example prompt flow after running `gh auth login`" src="images/02b-terminal-success-11-gh-auth-login-light.svg">
+  <img alt="Exemple de séquence d’invites après avoir exécuté `gh auth login`" src="images/02b-terminal-success-11-gh-auth-login-light.svg">
 </picture>
 
-_What success looks like:_ interactive prompts complete and login succeeds.
+_Ce à quoi ressemble la réussite :_ les invites interactives se terminent et la connexion réussit.
 
-Choose GitHub.com and then Login with a web browser. A one-time code will appear in your terminal — copy it, open the URL shown, and paste the code when prompted.
+Choisissez GitHub.com puis Login with a web browser. Un code à usage unique apparaîtra dans votre terminal ; copiez-le, ouvrez l’URL affichée, puis collez le code lorsqu’il vous sera demandé.
 
 > [!IMPORTANT]
-> Never share the one-time code or your authentication token with anyone. If you accidentally commit a token, revoke it immediately in **Settings → Developer settings → Personal access tokens**.
+> Ne partagez jamais le code à usage unique ni votre token d’authentification avec qui que ce soit. Si vous validez accidentellement un token, révoquez-le immédiatement dans **Settings → Developer settings → Personal access tokens**.
 
-### New repository
+### Nouveau dépôt
 
-1. Create your own public repository at [github.com/new](https://github.com/new):
-   - Name it `my-agentic-workflows`.
-   - Check **Add a README file**.
-   - Click **Create repository**.
-2. Clone the repository to your local machine:
+1. Créez votre propre dépôt public sur [github.com/new](https://github.com/new) :
+    - Nommez-le `my-agentic-workflows`.
+    - Cochez **Add a README file**.
+    - Cliquez sur **Create repository**.
+2. Clonez le dépôt sur votre machine locale :
 
-### Clone repository
+### Cloner le dépôt
 
 ```bash
 gh repo clone my-agentic-workflows
@@ -152,10 +153,12 @@ cd my-agentic-workflows
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I have cloned the `my-agentic-workflows` repository to my local machine
-- [ ] I have navigated into the `my-agentic-workflows` directory in my terminal
-- [ ] `gh --version` returns version 2.40.0 or newer
+- [ ] J’ai cloné le dépôt `my-agentic-workflows` sur ma machine locale
+- [ ] Je suis entré dans le répertoire `my-agentic-workflows` dans mon terminal
+- [ ] `gh --version` renvoie la version 2.40.0 ou plus récente
 
 <!-- journey: local -->
-**Next:** [GitHub Actions Intro](04-github-actions-intro.md)
+
+**Suite :** [Introduction à GitHub Actions](04-github-actions-intro.md)
+
 <!-- /journey -->

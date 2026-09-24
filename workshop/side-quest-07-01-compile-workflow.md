@@ -1,72 +1,73 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Using `gh aw compile` to Catch Errors Early
 
-> _Optional: take this detour if you want a deeper walkthrough of `gh aw compile`, then return to [Step 7](07-your-first-workflow.md) or [Step 9](09-agentic-editing.md)._
+# Side Quest : Utiliser `gh aw compile` pour détecter les erreurs tôt
 
-## :dart: What You'll Do
+> _Facultatif : faites ce détour si vous voulez une présentation plus approfondie de `gh aw compile`, puis revenez à [l’étape 7](07-your-first-workflow.md) ou [l’étape 9](09-agentic-editing.md)._
 
-You'll use `gh aw compile` as a fast feedback loop while you edit workflow files. By the end, you'll know when to use `--no-emit` for dry-run checks, when to use `--validate` for targeted troubleshooting, when to keep `--watch` running, and how to fix the most common compile errors.
+## :dart: Ce que vous allez faire
 
-## What `gh aw compile` does
+Vous utiliserez `gh aw compile` comme boucle de retour rapide pendant que vous modifiez des fichiers de workflow. À la fin, vous saurez quand utiliser `--no-emit` pour des vérifications à blanc, quand utiliser `--validate` pour un dépannage ciblé, quand laisser `--watch` actif et comment corriger les erreurs de compilation les plus courantes.
 
-`gh aw compile` checks your workflow source file, validates the [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) and Markdown body structure, and generates the compiled [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) GitHub Actions runs. It catches formatting and schema mistakes before you commit or trigger a workflow.
+## Ce que fait `gh aw compile`
 
-Run it any time you edit a workflow file:
+`gh aw compile` vérifie votre fichier source de workflow, valide le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) et la structure du corps Markdown, puis génère le [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) compilé qu’exécute GitHub Actions. Il détecte les erreurs de format et de schéma avant que vous validiez ou déclenchiez un workflow.
+
+Exécutez-le chaque fois que vous modifiez un fichier de workflow :
 
 ```bash
 gh aw compile
 ```
 
-If it succeeds, you should see a green success message and an updated `.lock.yml` file beside your source file.
+En cas de succès, vous devriez voir un message de réussite en vert et un fichier `.lock.yml` mis à jour à côté de votre fichier source.
 
 > [!NOTE]
-> `gh aw compile` checks file structure, not whether the agent's reasoning or final output is good. You still test the workflow separately after it compiles cleanly.
+> `gh aw compile` vérifie la structure du fichier, pas la qualité du raisonnement de l’agent ni de sa sortie finale. Vous devez quand même tester le workflow séparément après une compilation propre.
 
-## Use `--no-emit` for quick structure checks
+## Utiliser `--no-emit` pour des vérifications rapides de structure
 
-When you only want a yes/no answer without generating a [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml), use `--no-emit`:
+Quand vous voulez seulement une réponse oui/non sans générer de [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml), utilisez `--no-emit` :
 
 ```bash
 gh aw compile --no-emit
 ```
 
-This is useful after each small edit because it confirms the file structure without writing or overwriting the generated [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) every time.
+Cela est utile après chaque petite modification, car la structure du fichier est confirmée sans écrire ni écraser le [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) généré à chaque fois.
 
-## Troubleshoot with `--validate`
+## Dépanner avec `--validate`
 
-Use plain `gh aw compile` for normal workflow edits. If you need targeted troubleshooting or an explicit schema/deprecation audit, add `--validate`:
+Utilisez simplement `gh aw compile` pour les modifications normales de workflow. Si vous avez besoin d’un dépannage ciblé ou d’un audit explicite de schéma/dépréciation, ajoutez `--validate` :
 
 ```bash
 gh aw compile --validate
 ```
 
-This enables GitHub Actions workflow schema validation, container image validation, and action SHA validation. It is more thorough than a plain compile but also slower, so reserve it for those focused checks instead of routine compile loops.
+Cela active la validation du schéma des workflows GitHub Actions, la validation des images de conteneur et la validation des SHA d’actions. C’est plus complet qu’une compilation simple, mais aussi plus lent ; réservez-le donc à ces contrôles ciblés plutôt qu’aux boucles de compilation routinières.
 
-## Use `--watch` while you iterate
+## Utiliser `--watch` pendant vos itérations
 
-If you're still editing by hand, keep the compiler running:
+Si vous modifiez encore à la main, laissez le compilateur tourner :
 
 ```bash
 gh aw compile --watch
 ```
 
-Each save triggers another compile, so you get immediate feedback instead of discovering YAML mistakes later.
+Chaque sauvegarde déclenche une nouvelle compilation ; vous obtenez donc un retour immédiat au lieu de découvrir plus tard des erreurs YAML.
 
 > [!TIP]
-> For the fastest feedback loop, keep `--watch` running in one terminal while you edit in another.
+> Pour la boucle de retour la plus rapide, laissez `--watch` tourner dans un terminal pendant que vous modifiez dans un autre.
 
-## How to read a compile error
+## Comment lire une erreur de compilation
 
-When `gh aw compile` fails, start with the first line number it reports. YAML errors are often caused by the line above or below the reported line, especially when indentation is off.
+Lorsque `gh aw compile` échoue, commencez par le premier numéro de ligne signalé. Les erreurs YAML sont souvent causées par la ligne au-dessus ou au-dessous de la ligne indiquée, surtout quand l’indentation est incorrecte.
 
-The examples below show `gh-aw` source files before [compilation](https://github.github.com/gh-aw/reference/compilation-process/), so values like `schedule: daily` and `schedule: daily on weekdays` are valid shorthand here. The error is the indentation, not the schedule value itself.
+Les exemples ci-dessous montrent des fichiers source `gh-aw` avant [compilation](https://github.github.com/gh-aw/reference/compilation-process/) ; des valeurs comme `schedule: daily` et `schedule: daily on weekdays` y sont donc des raccourcis valides. L’erreur vient de l’indentation, pas de la valeur de schedule elle-même.
 
 ```markdown
 ---
 # ❌ Broken — "workflow_dispatch" is not nested under "on:"
 on:
-  schedule: daily
+    schedule: daily
 workflow_dispatch: {}
 ---
 ```
@@ -75,8 +76,8 @@ workflow_dispatch: {}
 ---
 # ✅ Fixed
 on:
-  schedule: daily
-  workflow_dispatch: {}
+    schedule: daily
+    workflow_dispatch: {}
 ---
 ```
 
@@ -93,31 +94,32 @@ schedule: daily on weekdays
 ---
 # ✅ Fixed
 on:
-  schedule: daily on weekdays
-  workflow_dispatch: {}
+    schedule: daily on weekdays
+    workflow_dispatch: {}
 ---
 ```
 
-## Quick fixes for common compile errors
+## Corrections rapides pour les erreurs de compilation courantes
 
-| If you see this kind of error | Usually means | Check this first |
-|-------------------------------|---------------|------------------|
-| YAML parse error or `did not find expected key` | A key is indented at the wrong level | Make sure nested keys under `on:`, [`permissions:`](https://github.github.com/gh-aw/reference/permissions/), `tools:`, or `safe-outputs:` are indented two more spaces than their parent |
-| `found character that cannot start any token` | You pasted a tab character or stray YAML punctuation | Replace tabs with spaces and check for accidental special characters in unquoted values |
-| `unexpected end of stream` or [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)/document errors | The frontmatter fences are incomplete | Confirm the file has both the opening `---` and the closing `---` for the [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) |
-| A section that worked before suddenly fails after one edit | The newest edit changed nearby YAML structure | Re-check the last block you touched before reading the rest of the file |
+| Si vous voyez ce type d’erreur                                                                                          | Cela signifie généralement                                      | Vérifiez d’abord ceci                                                                                                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Erreur de parsing YAML ou `did not find expected key`                                                                   | Une clé est indentée au mauvais niveau                          | Assurez-vous que les clés imbriquées sous `on:`, [`permissions:`](https://github.github.com/gh-aw/reference/permissions/), `tools:` ou `safe-outputs:` sont indentées de deux espaces de plus que leur parent |
+| `found character that cannot start any token`                                                                           | Vous avez collé une tabulation ou une ponctuation YAML parasite | Remplacez les tabulations par des espaces et vérifiez l’absence de caractères spéciaux accidentels dans les valeurs non quotées                                                                               |
+| `unexpected end of stream` ou erreurs de [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)/document | Les délimiteurs du frontmatter sont incomplets                  | Vérifiez que le fichier contient bien le `---` d’ouverture et le `---` de fermeture du [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)                                                  |
+| Une section qui fonctionnait auparavant échoue soudainement après une modification                                      | La dernière modification a changé une structure YAML voisine    | Revérifiez le dernier bloc que vous avez touché avant de lire le reste du fichier                                                                                                                             |
 
 <!-- journey: terminal -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] I know what `gh aw compile` checks before a workflow runs
-- [ ] I can use `--no-emit` for quick structure checks without generating a lock file
-- [ ] I can use `--watch` for live feedback while I edit
-- [ ] I can spot indentation mistakes in a compile error example
-- [ ] I know the first places to check when compilation fails
+- [ ] Je sais ce que `gh aw compile` vérifie avant l’exécution d’un workflow
+- [ ] Je peux utiliser `--no-emit` pour des vérifications rapides de structure sans générer de lock file
+- [ ] Je peux utiliser `--watch` pour obtenir un retour en direct pendant mes modifications
+- [ ] Je sais repérer des erreurs d’indentation dans un exemple d’erreur de compilation
+- [ ] Je connais les premiers endroits à vérifier quand la compilation échoue
 
 ---
 
-**Return to:** [Step 7 — Your First Workflow](07-your-first-workflow.md) | [Step 9 — Agentic Editing](09-agentic-editing.md)
+**Retour :** [Étape 7 — Votre premier workflow](07-your-first-workflow.md) | [Étape 9 — Édition agentique](09-agentic-editing.md)
 
 <!-- /journey -->

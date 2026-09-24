@@ -1,72 +1,75 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Method 1 — Copilot Requests Permission
 
-> _Optional: use this method when the organization that owns your practice repository has centralized Copilot billing enabled for GitHub Actions. Otherwise, use [Method PAT](side-quest-06-03b-copilot-github-token.md)._
+# Side Quest : Méthode 1 — Permission de requêtes Copilot
 
-## :clipboard: Before You Start
+> _Facultatif : utilisez cette méthode lorsque l’organisation propriétaire de votre dépôt d’exercice a activé la facturation Copilot centralisée pour GitHub Actions. Sinon, utilisez [la méthode PAT](side-quest-06-03b-copilot-github-token.md)._
 
-- An organization owns your practice repository.
-- An organization administrator confirmed centralized Copilot billing is enabled for GitHub Actions.
-- You completed [Side Quest: Configure GitHub Copilot Authentication](side-quest-06-03-copilot-token.md) and confirmed Method 1 applies to your repository.
-- Your practice repository was created during [Codespace setup](02a-setup-codespace.md) or the optional [Local Terminal side quest](side-quest-02-01-local-terminal.md).
+## :clipboard: Avant de commencer
 
-This is the simplest way to give your [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) Copilot API access when the organization can bill Copilot requests through the workflow run token. GitHub Actions already issues every run a short-lived token — you just need to grant it the [`copilot-requests: write`](https://github.github.com/gh-aw/reference/permissions/#special-permission-copilot-requests-write) permission.
+- Une organisation possède votre dépôt d’exercice.
+- Un administrateur de l’organisation a confirmé que la facturation Copilot centralisée est activée pour GitHub Actions.
+- Vous avez terminé [Side Quest : Configurer l’authentification GitHub Copilot](side-quest-06-03-copilot-token.md) et confirmé que la méthode 1 s’applique à votre dépôt.
+- Votre dépôt d’exercice a été créé pendant [la configuration du Codespace](02a-setup-codespace.md) ou dans la [side quest facultative du terminal local](side-quest-02-01-local-terminal.md).
 
-It does **not** cover personal repositories or organizations without centralized billing. In those cases, use `COPILOT_GITHUB_TOKEN` with [Method 2](side-quest-06-03b-copilot-github-token.md).
+C’est la manière la plus simple de donner à votre [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) l’accès à l’API Copilot lorsque l’organisation peut facturer les requêtes Copilot via le token d’exécution du workflow. GitHub Actions émet déjà un token de courte durée à chaque exécution ; vous devez simplement lui accorder la permission [`copilot-requests: write`](https://github.github.com/gh-aw/reference/permissions/#special-permission-copilot-requests-write).
 
-## Confirm this method matches your repository
+Cela ne couvre **pas** les dépôts personnels ni les organisations sans facturation centralisée. Dans ces cas, utilisez `COPILOT_GITHUB_TOKEN` avec [la méthode 2](side-quest-06-03b-copilot-github-token.md).
 
-If you have not confirmed the billing setting yet, ask your organization administrator before you choose this method.
+## Vérifiez que cette méthode correspond à votre dépôt
 
-- Continue with Method 1 if an organization owns the repository and its administrator confirmed centralized Copilot billing is enabled.
-- Stop here and switch to [Method PAT](side-quest-06-03b-copilot-github-token.md) for a personal repository or an organization without centralized billing.
+Si vous n’avez pas encore confirmé le réglage de facturation, demandez à l’administrateur de votre organisation avant de choisir cette méthode.
 
-## Add the permission to your workflow
+- Continuez avec la méthode 1 si une organisation possède le dépôt et que son administrateur a confirmé l’activation de la facturation Copilot centralisée.
+- Arrêtez-vous ici et basculez vers [la méthode PAT](side-quest-06-03b-copilot-github-token.md) pour un dépôt personnel ou une organisation sans facturation centralisée.
 
-Open your workflow `.md` file and add `copilot-requests: write` under the `permissions` block in the [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/):
+## Ajoutez la permission à votre workflow
+
+Ouvrez votre fichier de workflow `.md` et ajoutez `copilot-requests: write` sous le bloc `permissions` dans le [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) :
 
 ```markdown
 ---
 name: my-workflow
 on:
-  workflow_dispatch:
+    workflow_dispatch:
 permissions:
-  contents: read
-  copilot-requests: write   # grants Copilot API access — no secret needed
+    contents: read
+    copilot-requests: write # grants Copilot API access — no secret needed
 ---
 ```
 
-That single line is the only workflow [authentication](https://github.github.com/gh-aw/reference/auth/) change required for repositories that can use Method 1. Recompile and commit the [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) after changing the source workflow.
+Cette seule ligne est la seule modification d’[authentication](https://github.github.com/gh-aw/reference/auth/) du workflow requise pour les dépôts pouvant utiliser Method 1. Recompilez et validez le [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) après avoir modifié le workflow source.
 
-## Troubleshooting
+## Dépannage
 
-<details>
-<summary>Common failures and fixes</summary>
+<details open>
+<summary>Pannes courantes et corrections</summary>
 
-| Failure | What you see | Fix |
-|---|---|---|
-| Organization does not have centralized Copilot billing | `401 Unauthorized` or repeated Copilot auth failures even though `copilot-requests: write` is present | Switch to [Method 2](side-quest-06-03b-copilot-github-token.md) |
-| `copilot-requests: write` missing from [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) | `401 Unauthorized` in the run log | Add `copilot-requests: write` under `permissions` in your workflow `.md` file |
-| No active Copilot subscription | `403 Forbidden` or "Copilot not available" | Visit [github.com/settings/copilot](https://github.com/settings/copilot) and confirm a plan is listed |
-| Org policy blocks Copilot access | `403 Forbidden` | Ask your GitHub org admin to enable Copilot model access for your account |
+| Panne                                                                                                     | Ce que vous voyez                                                                                 | Correction                                                                                                       |
+| --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| L’organisation n’a pas de facturation Copilot centralisée                                                 | `401 Unauthorized` ou échecs d’auth Copilot répétés même si `copilot-requests: write` est présent | Basculez vers [la méthode 2](side-quest-06-03b-copilot-github-token.md)                                          |
+| `copilot-requests: write` absent du [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) | `401 Unauthorized` dans le journal d’exécution                                                    | Ajoutez `copilot-requests: write` sous `permissions` dans votre fichier de workflow `.md`                        |
+| Aucun abonnement Copilot actif                                                                            | `403 Forbidden` ou "Copilot not available"                                                        | Ouvrez [github.com/settings/copilot](https://github.com/settings/copilot) et vérifiez qu’un plan est listé       |
+| Une politique d’organisation bloque l’accès à Copilot                                                     | `403 Forbidden`                                                                                   | Demandez à l’administrateur GitHub de votre organisation d’activer l’accès aux modèles Copilot pour votre compte |
 
-Work through these checks in order if the run still fails:
+Suivez ces vérifications dans l’ordre si l’exécution échoue encore :
 
-1. Confirm the owning organization has centralized Copilot billing. If it does not, switch to [Method 2](side-quest-06-03b-copilot-github-token.md).
-2. Open your workflow `.md` file and confirm `copilot-requests: write` is present under `permissions`.
-3. Verify the Copilot access that backs this repository is active.
-4. If you are in an enterprise-managed organization, confirm the org Copilot policy allows [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) — see [Side Quest: Enterprise Setup Considerations](side-quest-enterprise-setup.md).
+1. Vérifiez que l’organisation propriétaire a une facturation Copilot centralisée. Sinon, basculez vers [la méthode 2](side-quest-06-03b-copilot-github-token.md).
+2. Ouvrez votre fichier de workflow `.md` et vérifiez que `copilot-requests: write` est présent sous `permissions`.
+3. Vérifiez que l’accès Copilot associé à ce dépôt est actif.
+4. Si vous êtes dans une organisation gérée en environnement enterprise, vérifiez que la politique Copilot de l’organisation autorise les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) ; voir [Side Quest: Enterprise Setup Considerations](side-quest-enterprise-setup.md).
 
 </details>
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I confirmed the owning organization has centralized Copilot billing enabled
-- [ ] `copilot-requests: write` is present under `permissions` in your workflow frontmatter
-- [ ] I recompiled and committed the matching [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml)
-- [ ] You did not need to create any repository secret
+- [ ] J’ai confirmé que l’organisation propriétaire a activé la facturation Copilot centralisée
+- [ ] `copilot-requests: write` est présent sous `permissions` dans le frontmatter de mon workflow
+- [ ] J’ai recompilé et validé le [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) correspondant
+- [ ] Je n’ai pas eu besoin de créer de secret de dépôt
 
 <!-- journey: all -->
-**Return to:** [Install the gh-aw CLI Extension](06-install-gh-aw.md) | [Write Your First Agentic Workflow](07-your-first-workflow.md) | [Back to auth overview](side-quest-06-03-copilot-token.md)
+
+**Retour :** [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md) | [Écrire votre premier agentic workflow](07-your-first-workflow.md) | [Retour à la vue d’ensemble de l’authentification](side-quest-06-03-copilot-token.md)
+
 <!-- /journey -->

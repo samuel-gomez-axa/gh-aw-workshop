@@ -1,59 +1,60 @@
 <!-- page-journey: terminal -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Terminal Basics
 
-> _Optional: complete this quick primer if you're new to the terminal, then return to Step 1._
+# Side Quest : Bases du terminal
 
-## :clipboard: Before You Start
+> _Facultatif : suivez cette courte introduction si vous débutez avec le terminal, puis revenez à Step 1._
 
-- A computer running macOS, Windows, or Linux with internet access
+## :clipboard: Avant de commencer
 
----
-
-## How to open a terminal
-
-**macOS:** Press **Command ⌘ + Space**, type **Terminal**, and press **Enter**. You'll see a prompt like `yourname@MacBook ~ %`.
-
-**Windows:** Press **Win**, type **Terminal**, and press **Enter**. You'll see a prompt like `C:\Users\yourname>`.
-
-**Linux:** Press **Ctrl + Alt + T**, or right-click the desktop and choose **Open Terminal**. You'll see a prompt like `yourname@machine:~$`.
-
-The **prompt** is a short line of text ending in `$`, `%`, or `>`. When you see it, the terminal is ready for your **command**. Whatever the terminal prints back is the **output**.
+- Un ordinateur sous macOS, Windows ou Linux avec un accès à Internet
 
 ---
 
-## Practice 1: Confirm your terminal works
+## Comment ouvrir un terminal
 
-Type this command and press **Enter**:
+**macOS:** Appuyez sur **Command ⌘ + Space**, tapez **Terminal**, puis appuyez sur **Enter**. Vous verrez une invite comme `yourname@MacBook ~ %`.
+
+**Windows:** Appuyez sur **Win**, tapez **Terminal**, puis appuyez sur **Enter**. Vous verrez une invite comme `C:\Users\yourname>`.
+
+**Linux:** Appuyez sur **Ctrl + Alt + T**, ou faites un clic droit sur le bureau et choisissez **Ouvrir un terminal**. Vous verrez une invite comme `yourname@machine:~$`.
+
+L’**invite** est une courte ligne de texte qui se termine par `$`, `%` ou `>`. Quand vous la voyez, le terminal est prêt à recevoir votre **commande**. Tout ce que le terminal affiche en retour correspond à la **sortie**.
+
+---
+
+## Exercice 1 : vérifier que votre terminal fonctionne
+
+Tapez cette commande et appuyez sur **Enter** :
 
 ```bash
 echo "hello, terminal!"
 ```
 
-You should see `hello, terminal!` printed as output. If you do, your terminal is working. :white_check_mark:
+Vous devriez voir `hello, terminal!` s’afficher en sortie. Si c’est le cas, votre terminal fonctionne. :white_check_mark:
 
 ---
 
-## Practice 2: See where you are
+## Exercice 2 : voir où vous êtes
 
-Your terminal always has a **current directory** — the folder it is "standing" in. Run:
+Votre terminal a toujours un **répertoire courant** : le dossier dans lequel il se trouve. Exécutez :
 
 ```bash
 pwd
 ls
 ```
 
-- `pwd` prints your current directory path (for example `/Users/alice`).
-- `ls` lists the files and folders inside it.
+- `pwd` affiche le chemin de votre répertoire courant (par exemple `/Users/alice`).
+- `ls` liste les fichiers et dossiers qu’il contient.
 
 > [!TIP]
-> On Windows Command Prompt, use `cd` (no argument) instead of `pwd`, and `dir` instead of `ls`.
+> Dans Windows Command Prompt, utilisez `cd` (sans argument) à la place de `pwd`, et `dir` à la place de `ls`.
 
 ---
 
-## Practice 3: Navigate folders
+## Exercice 3 : naviguer entre les dossiers
 
-To move into a folder and then back out, run each command one at a time:
+Pour entrer dans un dossier puis revenir en arrière, exécutez chaque commande séparément :
 
 ```bash
 cd Documents
@@ -63,26 +64,26 @@ cd Documents
 cd ..
 ```
 
-- `cd <folder>` moves into that folder.
-- `cd ..` moves back to the parent folder.
+- `cd <folder>` entre dans ce dossier.
+- `cd ..` revient au dossier parent.
 
 ---
 
-## Practice 4: Create and remove a folder
+## Exercice 4 : créer puis supprimer un dossier
 
-Create a new folder:
+Créez un nouveau dossier :
 
 ```bash
 mkdir test-dir
 ```
 
-Then step inside it:
+Entrez ensuite dedans :
 
 ```bash
 cd test-dir
 ```
 
-Then step back out and remove it:
+Revenez ensuite au dossier précédent et supprimez-le :
 
 ```bash
 cd ..
@@ -90,22 +91,22 @@ rm -r test-dir
 ```
 
 > [!TIP]
-> `mkdir` works the same on all platforms. On Windows Command Prompt, use `rmdir /s test-dir` instead of `rm -r test-dir`.
+> `mkdir` fonctionne de la même manière sur toutes les plateformes. Dans Windows Command Prompt, utilisez `rmdir /s test-dir` à la place de `rm -r test-dir`.
 
 ---
 
 <!-- journey: terminal -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] You opened a terminal and saw a prompt (`$`, `%`, or `>`)
-- [ ] You ran `echo "hello, terminal!"` and saw the message printed
-- [ ] You ran `pwd` and `ls` and saw your current directory and its contents
-- [ ] You moved into a folder with `cd` and back out with `cd ..`
-- [ ] You created a folder with `mkdir` and removed it with `rm -r`
+- [ ] Vous avez ouvert un terminal et vu une invite (`$`, `%` ou `>`)
+- [ ] Vous avez exécuté `echo "hello, terminal!"` et vu le message s’afficher
+- [ ] Vous avez exécuté `pwd` et `ls` et vu votre répertoire courant et son contenu
+- [ ] Vous êtes entré dans un dossier avec `cd` puis revenu avec `cd ..`
+- [ ] Vous avez créé un dossier avec `mkdir` puis l’avez supprimé avec `rm -r`
 
 ---
 
-When you're done here, return to [What You Need Before We Start](01-prerequisites.md).
+Quand vous avez terminé ici, revenez à [Ce qu’il vous faut avant de commencer](01-prerequisites.md).
 
 <!-- /journey -->
-

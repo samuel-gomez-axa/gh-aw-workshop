@@ -1,24 +1,25 @@
 <!-- page-journey: all -->
 <!-- page-adventure: advanced -->
-# Build a Research-Driven Next Training Node
 
-> _Strong workshop content comes from real product signals, not guesses._
+# Construire le prochain noeud de formation pilote par la recherche
 
-## :dart: What You'll Do
+> _Un bon contenu d'atelier vient de signaux produit réels, pas d'hypothèses._
 
-In this step, turn `github/gh-aw` research into a concrete training plan update: review current gh-aw documentation signals, identify one meaningful learner gap, and draft a workshop node proposal ready to implement. By the end, you have a repeatable method for deciding what to teach next with confidence.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Dans cette étape, vous allez transformer la recherche sur `github/gh-aw` en une mise à jour concrète du plan de formation : examiner les signaux actuels de la documentation gh-aw, identifier un manque pertinent pour les apprenants et rédiger une proposition de nœud d'atelier prête à être mise en œuvre. À la fin, vous disposerez d'une méthode reproductible pour décider avec assurance quoi enseigner ensuite.
 
-- You completed [Share and Reuse Your Agentic Workflows](18-share-and-reuse.md).
-- You can open `workshop/README.md` and identify where new nodes belong in the curriculum table.
-- You can run `gh aw compile` for workflow validation from earlier steps.
+## :clipboard: Avant de commencer
 
-## Steps
+- Vous avez terminé [Share and Reuse Your Agentic Workflows](18-share-and-reuse.md).
+- Vous savez ouvrir `workshop/README.md` et identifier où de nouveaux nœuds doivent s'insérer dans le tableau du cursus.
+- Vous savez lancer `gh aw compile` pour valider un workflow, comme dans les étapes précédentes.
 
-### Review current gh-aw signals
+## Etapes
 
-Start by collecting the most current signal from the source repository and its docs references:
+### Examiner les signaux gh-aw actuels
+
+Commencez par collecter le signal le plus actuel depuis le depot source et ses references documentaires :
 
 ```bash
 for url in \
@@ -31,23 +32,23 @@ for url in \
 done
 ```
 
-This gives you a compact index of what the gh-aw project currently emphasizes for model and documentation consumption.
+Cela vous donne un index compact de ce que le projet gh-aw met actuellement en avant pour la consommation par les modèles et la documentation.
 
-### Pick one high-value learner gap
+### Choisir un manque a fort impact pour les apprenants
 
-Read your existing workshop path and ask one practical question: _what can a learner do now that they could not do before this new node exists?_ Keep your answer narrow. Good gaps are concrete, such as "how to validate workflow constraints before opening a PR" or "how to select [safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/) for automation."
+Relisez votre parcours d'atelier actuel et posez-vous une question pratique : _qu'est-ce qu'un apprenant peut faire maintenant qu'il ne pouvait pas faire avant l'existence de ce nouveau nœud ?_ Gardez une réponse resserrée. Les bons manques sont concrets, par exemple "comment valider les contraintes d'un workflow avant d'ouvrir une PR" ou "comment choisir des [safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/) pour une automatisation".
 
-### Draft a node proposal with clear scope
+### Rediger une proposition de noeud avec un perimetre clair
 
-Write a one-paragraph node scope and list the exact [artifacts](https://github.github.com/gh-aw/reference/artifacts/) it should change:
+Redigez en un paragraphe le perimetre du noeud, puis listez les [artifacts](https://github.github.com/gh-aw/reference/artifacts/) précis qu'il doit modifier :
 
-- one new `workshop/<step>-<slug>.md` file
-- one curriculum row in `workshop/README.md`
-- optional wording refresh in `workshop/00-welcome.md` when total step count changes
+- un nouveau fichier `workshop/<step>-<slug>.md`
+- une nouvelle ligne dans le tableau du cursus de `workshop/README.md`
+- une mise à jour facultative de la formulation dans `workshop/00-welcome.md` si le nombre total d'étapes change
 
-### Capture research metadata in XML comments
+### Conserver les métadonnées de recherche dans des commentaires XML
 
-Add XML comments to preserve reasoning without interrupting learner flow:
+Ajoutez des commentaires XML pour conserver le raisonnement sans interrompre la lecture des apprenants :
 
 ```markdown workshop/28-safe-outputs-selection.md
 <!--
@@ -62,11 +63,11 @@ Add XML comments to preserve reasoning without interrupting learner flow:
 -->
 ```
 
-Keep the comment concise and traceable to real sources you used.
+Gardez ce commentaire concis et rattachable aux vraies sources que vous avez utilisées.
 
-### Validate before opening a pull request
+### Valider avant d'ouvrir une pull request
 
-Run markdown lint and [compile](https://github.github.com/gh-aw/reference/compilation-process/) checks so your proposal is production-ready:
+Lancez les vérifications markdown lint et [compile](https://github.github.com/gh-aw/reference/compilation-process/) afin que votre proposition soit prête pour la production :
 
 ```bash
 npx --yes markdownlint-cli2 "workshop/**/*.md"
@@ -75,16 +76,17 @@ gh aw compile
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You reviewed current gh-aw direction signals from `LLMs.txt`
-- [ ] You identified one concrete learner gap for a new training node
-- [ ] You drafted a bounded node scope tied to specific repository files
-- [ ] You captured supporting rationale in XML comments
-- [ ] You ran lint and compile validation before preparing a PR
+- [ ] Vous avez examiné les signaux d'orientation gh-aw actuels à partir de `LLMs.txt`
+- [ ] Vous avez identifié un manque concret à combler pour un nouveau nœud de formation
+- [ ] Vous avez rédigé un périmètre de nœud borné, rattaché à des fichiers précis du dépôt
+- [ ] Vous avez consigné la justification dans des commentaires XML
+- [ ] Vous avez lancé les validations lint et compile avant de préparer une PR
 
 <!-- journey: all -->
-**Next:** [Make Your Workflow Remember Across Runs](20-persistent-memory.md)
-<!-- /journey -->
 
+**Suite :** [Faites en sorte que votre workflow se souvienne d'une execution a l'autre](20-persistent-memory.md)
+
+<!-- /journey -->
 
 <!--
 <research-node-metadata>

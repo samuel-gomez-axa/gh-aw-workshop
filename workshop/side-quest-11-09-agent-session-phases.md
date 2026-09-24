@@ -1,75 +1,75 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
 
-# Side Quest: Agent Session Phases Explained
+# Quête Annexe : Comprendre Les Phases D'une Session D'agent
 
-> _Optional: take this detour for a full breakdown of what happens inside the agent session, then return to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)._
+> _Facultatif : faites ce détour pour obtenir une vue détaillée de ce qui se passe dans la session d'agent, puis revenez à [Affiner, tester et améliorer votre workflow](09-agentic-editing.md)._
 
-## :clipboard: Before You Start
+## :clipboard: Avant De Commencer
 
-- You have an active or recently completed GitHub Copilot agent session.
-- You have [`gh aw` installed and authenticated](06-install-gh-aw.md) — completed in Step 6.
-- You understand the purpose of [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) from [What Are Agentic Workflows?](05-agentic-workflows-intro.md).
+- Vous avez une session d'agent GitHub Copilot active ou récemment terminée.
+- Vous avez [`gh aw` installé et authentifié](06-install-gh-aw.md), terminé à Step 6.
+- Vous comprenez l'objectif des [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) à partir de [Que sont les Agentic Workflows ?](05-agentic-workflows-intro.md).
 
-## :dart: What You'll Learn
+## :dart: Ce Que Vous Allez Apprendre
 
-You'll learn what each phase of the agent session does, what to look for in the activity feed, and how to steer the session if it takes the wrong direction.
+Vous allez apprendre ce que fait chaque phase de la session d'agent, ce qu'il faut regarder dans le flux d'activité et comment réorienter la session si elle part dans la mauvaise direction.
 
-## The Five Phases
+## Les Cinq Phases
 
-After you submit the scenario prompt, the session shows a live activity feed. The agent works through five phases:
+Après l'envoi du prompt de scénario, la session affiche un flux d'activité en direct. L'agent traverse cinq phases :
 
-| Phase          | What you see                                                                                                                                                                                                                                           | What to look for                                                                                                                                          |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Reading**    | The agent fetches the `create.md` reference and reads existing files in your repository                                                                                                                                                                | Confirm the agent fetched the reference guide and found your repository files                                                                             |
-| **Planning**   | The agent decides what [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) keys, [permissions](https://github.github.com/gh-aw/reference/permissions/), and [task brief](https://github.github.com/gh-aw/reference/markdown/) to use | The planning output should reflect your intended scenario                                                                                                 |
-| **Writing**    | The agent creates the workflow `.md` file in `.github/workflows/`                                                                                                                                                                                      | The file should contain a [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) block between `---` fences and a Markdown task brief |
-| **Compiling**  | The agent runs `gh aw compile --validate` and fixes any errors it finds                                                                                                                                                                                | A green success message indicates the `.lock.yml` was generated without errors                                                                            |
-| **Opening PR** | The agent commits both files and opens a pull request                                                                                                                                                                                                  | The pull request should list two changed files: the `.md` source and the `.lock.yml`                                                                      |
+| Phase               | Ce que vous voyez                                                                                                                                                                                                                                                      | Ce qu'il faut vérifier                                                                                                                                  |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Lecture**         | L'agent récupère la référence `create.md` et lit les fichiers existants dans votre dépôt                                                                                                                                                                               | Confirmez que l'agent a bien récupéré le guide de référence et trouvé les fichiers de votre dépôt                                                       |
+| **Planification**   | L'agent décide quelles clés de [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/), quelles [permissions](https://github.github.com/gh-aw/reference/permissions/) et quel [task brief](https://github.github.com/gh-aw/reference/markdown/) utiliser | La sortie de planification doit refléter le scénario voulu                                                                                              |
+| **Rédaction**       | L'agent crée le fichier de workflow `.md` dans `.github/workflows/`                                                                                                                                                                                                    | Le fichier doit contenir un bloc [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) entre des fences `---` et un brief Markdown |
+| **Compilation**     | L'agent exécute `gh aw compile --validate` et corrige les erreurs trouvées                                                                                                                                                                                             | Un message de réussite en vert indique que le `.lock.yml` a été généré sans erreur                                                                      |
+| **Ouverture de PR** | L'agent valide les deux fichiers et ouvre une pull request                                                                                                                                                                                                             | La pull request doit lister deux fichiers modifiés : la source `.md` et le `.lock.yml`                                                                  |
 
-> :thinking: **Predict:** Before you open the activity feed on your next run, guess which phase will take the longest. Then expand the individual steps to check — was it the Planning phase (deciding frontmatter), the Writing phase (generating the file), or the Compiling phase (fixing errors)?
+> :thinking: **Prédisez :** Avant d'ouvrir le flux d'activité lors de votre prochain run, devinez quelle phase prendra le plus de temps. Développez ensuite les étapes individuelles pour vérifier : était-ce la phase Planification, la phase Rédaction ou la phase Compilation ?
 
-## Steering the Session
+## Réorienter La Session
 
-The session typically completes in two to five minutes. If the agent takes the wrong direction, you can steer it with follow-up prompts. For example:
+La session se termine généralement en deux à cinq minutes. Si l'agent prend une mauvaise direction, vous pouvez le réorienter avec des prompts de suivi. Par exemple :
 
-- If the agent is building the wrong scenario: _"Stop — I want Scenario A (daily status report), not Scenario B."_
-- If the agent skips compilation: _"Please compile the workflow with `gh aw compile --validate` before opening the pull request."_
-- If the agent opens a PR before the [lock file](https://github.github.com/gh-aw/reference/workflow-structure/#lock-file-header) is present: _"The lock file is missing. Please run `gh aw compile --validate` and add the generated `.lock.yml` to the pull request."_
+- Si l'agent construit le mauvais scénario : _"Stop — I want Scenario A (daily status report), not Scenario B."_
+- Si l'agent saute la compilation : _"Please compile the workflow with `gh aw compile --validate` before opening the pull request."_
+- Si l'agent ouvre une PR avant la présence du [lock file](https://github.github.com/gh-aw/reference/workflow-structure/#lock-file-header) : _"The lock file is missing. Please run `gh aw compile --validate` and add the generated `.lock.yml` to the pull request."_
 
-## Expanding Activity Feed Steps
+## Développer Les Étapes Du Flux D'activité
 
-Expand individual steps in the activity feed to see exactly what the agent wrote, read, or ran. This is a good way to learn the agentic workflow format without writing it yourself. Look for:
+Développez les étapes individuelles dans le flux d'activité pour voir exactement ce que l'agent a écrit, lu ou exécuté. C'est un bon moyen d'apprendre le format agentic workflow sans l'écrire vous-même. Recherchez :
 
-- The full contents of the `.md` file the agent wrote
-- The `gh aw compile` command it ran and any errors it fixed
-- The commit message and branch name it used
+- Le contenu complet du fichier `.md` que l'agent a écrit
+- La commande `gh aw compile` qu'il a exécutée et les erreurs qu'il a corrigées
+- Le message de commit et le nom de branche qu'il a utilisés
 
-## Advanced: Agent Merge
+## Avancé : Agent Merge
 
-The GitHub Copilot app supports [**agent merge**](https://docs.github.com/en/copilot/how-tos/github-copilot-app/managing-issues-and-pull-requests#merging-a-pull-request): enable it from the pull request view and the agent will fix any blockers and merge after required reviews and checks pass. This is an optional shortcut — you can always merge manually in the browser.
+L'application GitHub Copilot prend en charge [**agent merge**](https://docs.github.com/en/copilot/how-tos/github-copilot-app/managing-issues-and-pull-requests#merging-a-pull-request) : activez-le depuis la vue pull request et l'agent corrigera les blocages éventuels puis fusionnera après validation des revues et checks requis. C'est un raccourci facultatif ; vous pouvez toujours fusionner manuellement dans le navigateur.
 
-## Advanced: Continuous Compilation with `--watch`
+## Avancé : Compilation Continue Avec `--watch`
 
-If you want a live compile feedback loop while editing a workflow by hand, install the `gh-aw` CLI (see [Step 6](06-install-gh-aw.md)) and run:
+Si vous voulez une boucle de retour de compilation en direct pendant l'édition manuelle d'un workflow, installez la CLI `gh-aw`, voir [Step 6](06-install-gh-aw.md), et exécutez :
 
 ```bash
 gh aw compile --watch
 ```
 
-Each save triggers another compile, so you get immediate feedback instead of discovering YAML mistakes later. See [Side Quest: Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md) for a full walkthrough.
+Chaque enregistrement déclenche une nouvelle compilation, ce qui vous donne un retour immédiat au lieu de découvrir les erreurs YAML plus tard. Consultez [Side Quest: Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md) pour un guide complet.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I can name the five phases of an agent session in order
-- [ ] I know what a successful Compiling phase looks like (green success message, `.lock.yml` generated)
-- [ ] I know how to steer the session if it takes the wrong direction
-- [ ] I can expand individual steps in the activity feed to inspect what the agent did
+- [ ] Je peux nommer dans l'ordre les cinq phases d'une session d'agent
+- [ ] Je sais à quoi ressemble une phase Compilation réussie, message de réussite en vert, `.lock.yml` généré
+- [ ] Je sais comment réorienter la session si elle prend une mauvaise direction
+- [ ] Je peux développer les étapes individuelles dans l'activity feed pour inspecter ce que l'agent a fait
 
 ---
 
 <!-- journey: all -->
 
-Return to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
+Revenez à [Affiner, tester et améliorer votre workflow](09-agentic-editing.md).
 
 <!-- /journey -->

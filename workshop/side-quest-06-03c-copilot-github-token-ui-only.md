@@ -1,78 +1,83 @@
 <!-- page-journey: ui -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Method 2 (UI-only) — COPILOT_GITHUB_TOKEN Secret
 
-> _Optional: this is the GitHub UI-friendly variant of Method 2. Use it when you prefer or need to complete personal-[billing](https://github.github.com/gh-aw/reference/billing/) setup without terminal commands._
+# Side Quest : Méthode 2 (UI-only) — Secret COPILOT_GITHUB_TOKEN
 
-This method stores a [fine-grained Personal Access Token](https://github.github.com/gh-aw/reference/auth/#copilot-default) (PAT) as a repository secret named `COPILOT_GITHUB_TOKEN`. The [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) [engine](https://github.github.com/gh-aw/reference/engines/) picks it up automatically.
+> _Facultatif : voici la variante orientée GitHub UI de la méthode 2. Utilisez-la lorsque vous préférez, ou devez, terminer une configuration de [billing](https://github.github.com/gh-aw/reference/billing/) personnelle sans commandes de terminal._
 
-## :clipboard: Before You Start
+Cette méthode stocke un [fine-grained Personal Access Token](https://github.github.com/gh-aw/reference/auth/#copilot-default) (PAT) comme secret de dépôt nommé `COPILOT_GITHUB_TOKEN`. L’[engine](https://github.github.com/gh-aw/reference/engines/) de l’[agentic workflow](https://github.github.com/gh-aw/introduction/overview/) le récupère automatiquement.
 
-- You have a GitHub account with an active Copilot subscription.
-- You have read [Side Quest: Configure GitHub Copilot Authentication](side-quest-06-03-copilot-token.md) and chosen Method 2.
+## :clipboard: Avant de commencer
 
-## :pencil2: Sub-exercise A: Generate the token
+- Vous avez un compte GitHub avec un abonnement Copilot actif.
+- Vous avez lu [Side Quest : Configurer l’authentification GitHub Copilot](side-quest-06-03-copilot-token.md) et choisi la méthode 2.
 
-1. Go to [github.com/settings/tokens](https://github.com/settings/tokens) and click **Generate new token (fine-grained)**.
-2. Name the token (for example, gh-aw-copilot) and set an expiry (90 days is a common default). Set a reminder so you rotate the token before it expires.
-3. Set **Repository access** based on your workshop repository visibility:
-   - For a public repository, choose **Public repositories**.
-   - For a private repository, choose **Only select repositories** and pick your repository.
-4. Under [Permissions](https://github.github.com/gh-aw/reference/permissions/) → **Account permissions**, set Copilot requests to Read-only.
-5. Click **Generate token** and copy the value immediately. GitHub shows it only once.
+## :pencil2: Sous-exercice A : générer le token
+
+1. Ouvrez [github.com/settings/tokens](https://github.com/settings/tokens) et cliquez sur **Generate new token (fine-grained)**.
+2. Donnez un nom au token (par exemple, gh-aw-copilot) et définissez une expiration (90 jours est une valeur par défaut courante). Définissez un rappel pour faire tourner le token avant son expiration.
+3. Définissez **Repository access** en fonction de la visibilité de votre dépôt d’atelier :
+    - Pour un dépôt public, choisissez **Public repositories**.
+    - Pour un dépôt privé, choisissez **Only select repositories** puis sélectionnez votre dépôt.
+4. Sous [Permissions](https://github.github.com/gh-aw/reference/permissions/) → **Account permissions**, réglez Copilot requests sur Read-only.
+5. Cliquez sur **Generate token** et copiez immédiatement la valeur. GitHub ne l’affiche qu’une seule fois.
 
 > [!IMPORTANT]
-> Copy the token before you navigate away or close the tab. If you miss this window, you must generate a new token.
+> Copiez le token avant de changer de page ou de fermer l’onglet. Si vous ratez cette fenêtre, vous devrez générer un nouveau token.
 
-**Verify:** The token value is visible on screen and copied to your clipboard before continuing.
+**Vérifiez :** la valeur du token est visible à l’écran et copiée dans votre presse-papiers avant de continuer.
 
-Quick check:
+Vérification rapide :
 
-- [ ] I can see a newly created PAT in my token list
-- [ ] I copied the token value before leaving the page
-- [ ] I noted the token expiry date
+- [ ] Je peux voir un PAT nouvellement créé dans ma liste de tokens
+- [ ] J’ai copié la valeur du token avant de quitter la page
+- [ ] J’ai noté la date d’expiration du token
 
-## :pencil2: Sub-exercise B: Store the secret
+## :pencil2: Sous-exercice B : enregistrer le secret
 
-Open your repository in a new tab so you keep the token page open until the secret is saved.
+Ouvrez votre dépôt dans un nouvel onglet afin de garder la page du token ouverte jusqu’à l’enregistrement du secret.
 
-1. In your repository, open **Settings** → **Secrets and variables** → **Actions**.
-2. Click **New repository secret**.
-3. Enter the name `COPILOT_GITHUB_TOKEN` (uppercase with underscores).
-4. Paste the token value and verify no extra spaces were added before or after the token string.
-5. Click **Add secret**.
-6. Confirm the secret appears in the list as `COPILOT_GITHUB_TOKEN`.
+1. Dans votre dépôt, ouvrez **Settings** → **Secrets and variables** → **Actions**.
+2. Cliquez sur **New repository secret**.
+3. Saisissez le nom `COPILOT_GITHUB_TOKEN` (majuscules et underscores).
+4. Collez la valeur du token et vérifiez qu’aucun espace supplémentaire n’a été ajouté avant ou après la chaîne du token.
+5. Cliquez sur **Add secret**.
+6. Vérifiez que le secret apparaît dans la liste sous le nom `COPILOT_GITHUB_TOKEN`.
 
-**Verify:** `COPILOT_GITHUB_TOKEN` appears in the Secrets list — then you can safely close the token tab.
+**Vérifiez :** `COPILOT_GITHUB_TOKEN` apparaît dans la liste des Secrets ; vous pouvez alors fermer l’onglet du token sans risque.
 
-Quick check:
+Vérification rapide :
 
-- [ ] The secret name is exactly `COPILOT_GITHUB_TOKEN`
-- [ ] The secret now appears in the repository Actions secrets list
-- [ ] I closed the token tab only after confirming the secret was saved
+- [ ] Le nom du secret est exactement `COPILOT_GITHUB_TOKEN`
+- [ ] Le secret apparaît maintenant dans la liste des secrets Actions du dépôt
+- [ ] Je n’ai fermé l’onglet du token qu’après avoir confirmé l’enregistrement du secret
 
-## Select the token in your workflow
+## Sélectionnez le token dans votre workflow
 
-1. Edit the source workflow and remove `copilot-requests: write`.
-2. Commit the source change.
-3. Ask the **Agentic Workflows** agent to run `gh aw compile` and commit the updated [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml).
+1. Modifiez le workflow source et supprimez `copilot-requests: write`.
+2. Validez le changement du fichier source.
+3. Demandez à l’agent **Agentic Workflows** d’exécuter `gh aw compile` puis de valider le [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) mis à jour.
 
-When `copilot-requests: write` is present, the workflow ignores `COPILOT_GITHUB_TOKEN` for inference.
+Lorsque `copilot-requests: write` est présent, le workflow ignore `COPILOT_GITHUB_TOKEN` pour l’inférence.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You generated a new fine-grained PAT and copied it before leaving the token page
-- [ ] The token has **Copilot requests: Read-only** under **Account permissions**
-- [ ] `COPILOT_GITHUB_TOKEN` exists in **Settings** → **Secrets and variables** → **Actions**
-- [ ] `copilot-requests: write` is not present in the source workflow
-- [ ] The agent recompiled and committed the updated [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml)
-- [ ] You set a reminder to rotate the PAT before the expiry date
-- [ ] You understand when to use Method 1 vs Method 2 (use the [auth overview](side-quest-06-03-copilot-token.md) if needed)
+- [ ] Vous avez généré un nouveau fine-grained PAT et l’avez copié avant de quitter la page du token
+- [ ] Le token a **Copilot requests: Read-only** sous **Account permissions**
+- [ ] `COPILOT_GITHUB_TOKEN` existe dans **Settings** → **Secrets and variables** → **Actions**
+- [ ] `copilot-requests: write` n’est pas présent dans le workflow source
+- [ ] L’agent a recompilé et validé le [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) mis à jour
+- [ ] Vous avez défini un rappel pour faire tourner le PAT avant sa date d’expiration
+- [ ] Vous comprenez quand utiliser la méthode 1 ou la méthode 2 (utilisez la [vue d’ensemble de l’authentification](side-quest-06-03-copilot-token.md) si besoin)
 
 <!-- journey: ui -->
-Need a refresher on when to choose Method 2 or how this fits your auth setup? Go back to [Side Quest: Configure GitHub Copilot Authentication](side-quest-06-03-copilot-token.md).
+
+Besoin d’un rappel sur le moment où choisir la méthode 2 ou sur la manière dont cela s’intègre à votre configuration d’auth ? Revenez à [Side Quest : Configurer l’authentification GitHub Copilot](side-quest-06-03-copilot-token.md).
+
 <!-- /journey -->
 
 <!-- journey: ui -->
-**Return to:** [Install the gh-aw CLI Extension](06-install-gh-aw.md) | [Write Your First Agentic Workflow](07-your-first-workflow.md)
+
+**Retour :** [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md) | [Écrire votre premier agentic workflow](07-your-first-workflow.md)
+
 <!-- /journey -->

@@ -1,39 +1,40 @@
 <!-- page-journey: all -->
 <!-- page-adventure: advanced -->
-# Connect a Live Data Source to Your Workflow
 
-> _Workflows become truly powerful when they act on real, up-to-the-minute data — not just canned prompts._
+# Connectez une source de donnees en direct a votre workflow
 
-## :dart: What You'll Do
+> _Les workflows deviennent vraiment puissants lorsqu'ils agissent sur des donnees reelles et a jour, pas seulement sur des prompts predefinis._
 
-You'll extend your daily-status workflow to fetch open issues from your repository using the [GitHub CLI](side-quest-01-02-environment-reference.md#github-cli-gh), then inject that data into your AI prompt. By the end, your summary will include an overview of outstanding issues alongside the commit activity.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Vous allez etendre votre workflow daily-status pour recuperer les issues ouvertes de votre depot avec le [GitHub CLI](side-quest-01-02-environment-reference.md#github-cli-gh), puis injecter ces donnees dans votre prompt IA. A la fin, votre resume inclura un apercu des issues en attente en plus de l'activite de commit.
 
-- You have installed the `gh-aw` extension in [Install the `gh-aw` CLI Extension](06-install-gh-aw.md).
-- You have a working daily-status workflow from [Build: Daily Repo Status Workflow](07-your-first-workflow.md).
-- You're comfortable running and iterating on workflows from [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
+## :clipboard: Avant de commencer
 
-## Steps
+- Vous avez installe l'extension `gh-aw` dans [Install the `gh-aw` CLI Extension](06-install-gh-aw.md).
+- Vous disposez d'un workflow daily-status fonctionnel issu de [Build: Daily Repo Status Workflow](07-your-first-workflow.md).
+- Vous etes a l'aise pour executer et faire evoluer des workflows a partir de [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
 
-### Understand the data-flow pattern
+## Etapes
 
-[gh-aw workflows](https://github.github.com/gh-aw/introduction/overview/) run inside GitHub Actions, so your workflow can fetch live repository data before the AI writes anything. In this step, use shell steps to collect data and a later prompt section to turn that data into a summary.
+### Comprendre le schema de circulation des donnees
 
-Think of it as a handoff. First, the workflow gathers facts in a predictable way. Then, the prompt reads those saved results and asks the AI to explain what matters.
+[gh-aw workflows](https://github.github.com/gh-aw/introduction/overview/) s'executent dans GitHub Actions, donc votre workflow peut recuperer des donnees de depot en direct avant que l'IA n'ecrive quoi que ce soit. Dans cette etape, vous allez utiliser des etapes shell pour collecter les donnees, puis une section de prompt plus bas pour transformer ces donnees en resume.
+
+Pensez-y comme a un passage de relais. D'abord, le workflow recueille les faits de facon previsible. Ensuite, le prompt lit ces resultats enregistres et demande a l'IA d'expliquer ce qui compte.
 
 <picture>
    <source media="(prefers-color-scheme: dark)" srcset="images/16-step-agent-flow-dark.svg">
    <source media="(prefers-color-scheme: light)" srcset="images/16-step-agent-flow-light.svg">
-   <img alt="Diagram showing how deterministic shell steps fetch live data, pass outputs to the AI prompt via $GITHUB_OUTPUT, and the agent produces a summary report" src="images/16-step-agent-flow-light.svg">
+  <img alt="Schema montrant comment des etapes shell deterministic recuperent des donnees en direct, transmettent leurs sorties au prompt IA via $GITHUB_OUTPUT, puis l'agent produit un rapport de synthese" src="images/16-step-agent-flow-light.svg">
 </picture>
 
 > [!TIP]
-> If step outputs, here-document syntax, or the scripted versus agentic split are new to you, skim [Side Quest: Passing Data Between Steps with $GITHUB_OUTPUT](side-quest-16-01-github-output.md) and [Side Quest: Deterministic vs Agentic Data Ops](side-quest-16-04-deterministic-vs-agentic-data-ops.md).
+> Si les sorties d'etape, la syntaxe here-document ou la distinction entre logique scriptée et logique agentique vous sont nouvelles, parcourez [Side Quest: Passing Data Between Steps with $GITHUB_OUTPUT](side-quest-16-01-github-output.md) et [Side Quest: Deterministic vs Agentic Data Ops](side-quest-16-04-deterministic-vs-agentic-data-ops.md).
 
-### Fetch commit history
+### Recuperer l'historique des commits
 
-In your Copilot CLI session in the terminal, paste:
+Dans votre session Copilot CLI dans le terminal, collez :
 
 ```prompt
 /agentic-workflows update .github/workflows/daily-status.md to add two shell steps
@@ -42,24 +43,24 @@ and (2) all open issues with step id `issues`, and update the AI prompt to injec
 those step outputs into the summary.
 ```
 
-The skill adds both steps and updates the task brief. Review the diff before committing.
+La skill ajoute ces deux etapes et met a jour le brief de la tache. Examinez le diff avant de commit.
 
-<details>
+<details open>
 <summary>:pencil2: Manual edit path</summary>
 
-Open `.github/workflows/daily-status.md` and add two steps to the `steps:` block in the [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
+Ouvrez `.github/workflows/daily-status.md` et ajoutez deux etapes au bloc `steps:` du [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
 
-First, fetch the recent commit log, then fetch open issues (see the YAML reference blocks below). After adding both steps, run `gh aw compile` and push.
+D'abord, recuperez le journal des commits recents, puis les issues ouvertes, en vous appuyant sur les blocs de reference YAML ci-dessous. Apres avoir ajoute les deux etapes, lancez `gh aw compile` puis poussez.
 
 </details>
 
-Here is what the first step looks like — the skill will add this for you:
+Voici a quoi ressemble la premiere etape ; la skill l'ajoutera pour vous :
 
-First, fetch the recent commit log:
+Commencez par recuperer le journal des commits recents :
 
 ```markdown .github/workflows/daily-status.md
 - name: Fetch recent commits
-  id: recent          # step ID — referenced as steps.recent.outputs.…
+  id: recent # step ID — referenced as steps.recent.outputs.…
   run: |
     # Lists commits from the last 24 hours (max 10), format: "<hash> <subject>"
     COMMIT_LOG=$(git log --oneline --since="24 hours ago" --format="%h %s" | head -10)
@@ -69,37 +70,37 @@ First, fetch the recent commit log:
     echo "EOF" >> $GITHUB_OUTPUT
 ```
 
-:thinking: Pause and predict: What will the `commit_log` output contain if no commits were made in the last 24 hours? Form your prediction now and verify it after you trigger a run.
+:thinking: Faites une pause et predisez : que contiendra la sortie `commit_log` si aucun commit n'a ete effectue dans les 24 dernieres heures ? Faites votre prediction maintenant puis verifiez-la apres avoir lance une execution.
 
-### Fetch open issues
+### Recuperer les issues ouvertes
 
-Next, add a step to fetch open issues:
+Ensuite, ajoutez une etape pour recuperer les issues ouvertes :
 
 ```markdown .github/workflows/daily-status.md
 - name: Fetch open issues
-  id: issues          # step ID — referenced as steps.issues.outputs.…
+  id: issues # step ID — referenced as steps.issues.outputs.…
   run: |
     # Fetch the 10 most recent open issues, formatted as "#42 Fix the bug"
     ISSUE_LIST=$(gh issue list --state open --limit 10 \
-      --json number,title \
-      --jq '.[] | "#\(.number) \(.title)"')
+     --json number,title \
+     --jq '.[] | "#\(.number) \(.title)"')
     # Count all open issues
     ISSUE_COUNT=$(gh issue list --state open --json number --jq 'length')
     echo "open_issues<<EOF" >> $GITHUB_OUTPUT
     echo "$ISSUE_LIST" >> $GITHUB_OUTPUT
     echo "EOF" >> $GITHUB_OUTPUT
     echo "open_issues_count=$ISSUE_COUNT" >> $GITHUB_OUTPUT
-  env:
-    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # provided automatically — no setup needed
+    env:
+    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # provided automatically — no setup needed
 ```
 
-:pencil2: Try it: Run `gh issue list --state open --json number --jq 'length'` in your terminal and note the count. After you trigger a workflow run, check whether the workflow reports the same total.
+:pencil2: Essayez : lancez `gh issue list --state open --json number --jq 'length'` dans votre terminal et notez le total. Apres avoir declenche une execution du workflow, verifiez si le workflow signale le meme nombre.
 
-:thinking: Pause and predict: What will the AI receive if the issue list is empty? Will the prompt still produce a useful output?
+:thinking: Faites une pause et predisez : que recevra l'IA si la liste d'issues est vide ? Le prompt produira-t-il quand meme une sortie utile ?
 
-### Inject data into your AI prompt
+### Injecter les donnees dans votre prompt IA
 
-The AI prompt lives in the Markdown body after the frontmatter. Update that section so it uses the step outputs:
+Le prompt IA se trouve dans le corps Markdown apres le frontmatter. Mettez cette section a jour pour qu'elle utilise les sorties d'etape :
 
 ```markdown .github/workflows/daily-status.md
 ---
@@ -118,15 +119,15 @@ Write a concise, friendly update — two short paragraphs.
 Highlight anything that looks urgent in the issue list.
 ```
 
-GitHub resolves the step-output expressions before the AI sees the prompt, so the model receives plain text instead of workflow syntax.
+GitHub resolut les expressions de sortie d'etape avant que l'IA ne voie le prompt ; le modele recoit donc du texte brut au lieu de la syntaxe du workflow.
 
-:thinking: Pause and predict: If the `commit_log` output is empty, does the prompt still make sense to the AI? What one-line change would make the instruction more robust?
+:thinking: Faites une pause et predisez : si la sortie `commit_log` est vide, le prompt reste-t-il comprehensible pour l'IA ? Quelle modification d'une ligne rendrait l'instruction plus robuste ?
 
-:pencil2: Try it: Change `"two short paragraphs"` to `"one bullet list per topic"` and re-run. Notice how the output format shifts.
+:pencil2: Essayez : remplacez `"two short paragraphs"` par `"one bullet list per topic"` puis relancez. Observez comment le format de sortie change.
 
-### [Compile](https://github.github.com/gh-aw/reference/compilation-process/), push, and test
+### [Compiler](https://github.github.com/gh-aw/reference/compilation-process/), pousser et tester
 
-The `/agentic-workflows` skill recompiles the lock file automatically. If you edited the workflow manually, run `gh aw compile` first, then push:
+La skill `/agentic-workflows` recompile automatiquement le lock file. Si vous avez edite le workflow manuellement, lancez d'abord `gh aw compile`, puis poussez :
 
 ```bash
 git add .
@@ -134,49 +135,52 @@ git commit -m "feat: inject open issues into daily summary prompt"
 git push
 ```
 
-Open the **Actions** tab and verify the new steps appear and the AI summary mentions both commits and issues.
+Ouvrez l'onglet **Actions** et verifiez que les nouvelles etapes apparaissent et que le resume de l'IA mentionne a la fois les commits et les issues.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/16-data-source-run-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/16-data-source-run-light.svg">
-  <img alt="Actions run showing the fetch-issues step and updated summary" src="images/16-data-source-run-light.svg">
+  <img alt="Execution Actions montrant l'etape fetch-issues et le resume mis a jour" src="images/16-data-source-run-light.svg">
 </picture>
 
 > [!TIP]
-> If your repository has no open issues, the AI will say so — that's expected. Create a test issue to see the integration in action.
+> Si votre depot n'a aucune issue ouverte, l'IA l'indiquera ; c'est attendu. Creez une issue de test pour voir l'integration en action.
 
-### Try other data sources
+### Essayer d'autres sources de donnees
 
-Once you're comfortable with this pattern, the same technique works for:
+Une fois ce schema bien compris, la meme technique fonctionne aussi pour :
 
-| Data | Command |
-|------|---------|
-| Open pull requests | `gh pr list --state open` |
-| Recent releases | `gh release list --limit 5` |
-| Failed workflow runs | `gh run list --status failure --limit 5` |
-| Repository stats | `gh api repos/:owner/:repo` |
+| Donnees                         | Commande                                 |
+| ------------------------------- | ---------------------------------------- |
+| Pull requests ouvertes          | `gh pr list --state open`                |
+| Releases recentes               | `gh release list --limit 5`              |
+| Executions de workflow en echec | `gh run list --status failure --limit 5` |
+| Statistiques du depot           | `gh api repos/:owner/:repo`              |
 
 ## :white_check_mark: Checkpoint
 
-- [ ] Your workflow has a recent-commits step with `id: recent`
-- [ ] Your workflow has an open-issues step with `id: issues`
-- [ ] Your AI prompt uses both saved outputs
-- [ ] Both `.github/workflows/daily-status.md` and `.github/workflows/daily-status.lock.yml` are compiled, committed, and pushed
-- [ ] A manual run completes and the summary mentions both commits and open issues
-- [ ] You can explain how the workflow passes fetched data into the prompt
-- [ ] You can describe what happens if the recent commit output is empty and how your prompt handles it
+- [ ] Votre workflow contient une etape recent-commits avec `id: recent`
+- [ ] Votre workflow contient une etape open-issues avec `id: issues`
+- [ ] Votre prompt IA utilise les deux sorties enregistrees
+- [ ] Les deux fichiers `.github/workflows/daily-status.md` et `.github/workflows/daily-status.lock.yml` sont compiles, committes et pousses
+- [ ] Une execution manuelle se termine et le resume mentionne a la fois les commits et les issues ouvertes
+- [ ] Vous pouvez expliquer comment le workflow transmet les donnees recuperees au prompt
+- [ ] Vous pouvez decrire ce qui se passe si la sortie recent commit est vide et comment votre prompt le gere
 
 <!-- journey: all -->
-**Next:** [Give Your Agent More Tools with MCP](17-add-mcp-tools.md)
+
+**Suite :** [Donnez plus d'outils a votre agent avec MCP](17-add-mcp-tools.md)
+
 <!-- /journey -->
 
 > [!TIP]
+>
 > <details>
-> <summary>Security reading: token exfiltration and long-lived credential risks</summary>
+> <summary>Lecture securite : exfiltration de token et risques lies aux identifiants longue duree</summary>
 >
-> Now that your workflow reads live repository data, you're exposing a surface that attackers can try to exploit:
+> Maintenant que votre workflow lit des donnees de depot en direct, vous exposez une surface que des attaquants peuvent tenter d'exploiter :
 >
-> - **Token exfiltration**: learn how crafted issue or PR content can attempt to leak your `GITHUB_TOKEN` — and how gh-aw stops it — in [Side Quest: Token and Secret Exfiltration in Agentic Workflows](side-quest-16-03-token-exfiltration.md).
-> - **Long-lived credential risks**: if your workflow ever needs a personal access token (PAT), read [Side Quest: Long-Lived Credential Risks in Agentic Workflows](side-quest-16-05-long-lived-credentials.md) to understand why PATs create a larger attack surface and how [`permissions:`](https://github.github.com/gh-aw/reference/permissions/) minimization and `network.allowed` contain the blast radius.
+> - **Token exfiltration** : apprenez comment un contenu d'issue ou de PR malveillant peut tenter de faire fuiter votre `GITHUB_TOKEN`, et comment gh-aw l'en empeche, dans [Side Quest: Token and Secret Exfiltration in Agentic Workflows](side-quest-16-03-token-exfiltration.md).
+> - **Long-lived credential risks** : si votre workflow a un jour besoin d'un personal access token (PAT), lisez [Side Quest: Long-Lived Credential Risks in Agentic Workflows](side-quest-16-05-long-lived-credentials.md) pour comprendre pourquoi les PAT creent une surface d'attaque plus large et comment la minimisation de [`permissions:`](https://github.github.com/gh-aw/reference/permissions/) et `network.allowed` limitent l'impact.
 >
 > </details>

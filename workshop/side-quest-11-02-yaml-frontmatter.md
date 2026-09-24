@@ -1,16 +1,17 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: YAML [Frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) Pitfalls
 
-> _Optional: work through these common YAML mistakes if you hit a [compile error](https://github.github.com/gh-aw/reference/compilation-process/) in Step 11, then return to the main path._
+# Quête Annexe : Pièges Du [Frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) YAML
 
-YAML is unforgiving. Here are the five errors learners hit most often when building [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/), each with a broken :x: and correct :white_check_mark: example.
+> _Facultatif : parcourez ces erreurs YAML courantes si vous rencontrez une [erreur de compilation](https://github.github.com/gh-aw/reference/compilation-process/) à Step 11, puis revenez au parcours principal._
+
+YAML est peu tolérant. Voici les cinq erreurs que les participants rencontrent le plus souvent lorsqu'ils construisent le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) d'un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/), chacune avec un exemple incorrect :x: et un exemple correct :white_check_mark:.
 
 ---
 
-## Tabs instead of spaces
+## Des Tabulations Au Lieu D'espaces
 
-YAML does not allow tab characters for indentation. Every level of nesting must use **two spaces**.
+YAML n'autorise pas les tabulations pour l'indentation. Chaque niveau d'imbrication doit utiliser **deux espaces**.
 
 ```markdown
 ---
@@ -26,13 +27,13 @@ on:
 ---
 ```
 
-Most editors insert tabs by default for `.md` files. Check your editor's settings and switch indentation to **Spaces** with a size of **2**.
+La plupart des éditeurs insèrent des tabulations par défaut dans les fichiers `.md`. Vérifiez les réglages de votre éditeur et passez l'indentation sur **Spaces** avec une taille de **2**.
 
 ---
 
-## Missing quotes around strings with special characters
+## Guillemets Manquants Autour Des Chaînes Avec Des Caractères Spéciaux
 
-YAML treats certain characters (`:`, `#`, `{`, `}`, `[`, `]`, `,`, `&`, `*`, `?`, `|`, `>`, `!`, `'`, `"`) as syntax when they appear unquoted in values.
+YAML traite certains caractères (`:`, `#`, `{`, `}`, `[`, `]`, `,`, `&`, `*`, `?`, `|`, `>`, `!`, `'`, `"`) comme de la syntaxe lorsqu'ils apparaissent sans guillemets dans des valeurs.
 
 ```markdown
 ---
@@ -46,9 +47,9 @@ description: "Post a report: daily"
 
 ---
 
-## Wrong indentation level for nested keys
+## Mauvais Niveau D'indentation Pour Les Clés Imbriquées
 
-YAML nesting is strictly positional. A key one level deeper must be indented exactly two more spaces than its parent.
+L'imbrication YAML est strictement positionnelle. Une clé placée un niveau plus bas doit être indentée avec exactement deux espaces de plus que sa clé parente.
 
 ```markdown
 ---
@@ -68,9 +69,9 @@ tools:
 
 ---
 
-## Forgetting the closing `---`
+## Oublier Le `---` De Fermeture
 
-The frontmatter must have both an opening and a closing `---` fence. If you omit the closing fence, the entire file is treated as YAML and the agent body is lost.
+Le frontmatter doit avoir à la fois une fence d'ouverture et une fence de fermeture `---`. Si vous omettez la fence de fermeture, l'ensemble du fichier est traité comme du YAML et le body de l'agent est perdu.
 
 ```
 # ❌ Wrong — no closing fence
@@ -99,9 +100,9 @@ You are an AI assistant...
 
 ---
 
-## `copilot-requests: write` not listed under `permissions`
+## `copilot-requests: write` absent de `permissions`
 
-This is the single most common reason a workflow compiles but produces no output. The agent can't make AI calls without this permission.
+C'est la raison la plus fréquente pour laquelle un workflow compile mais ne produit aucune sortie. Sans cette permission, l'agent ne peut pas effectuer d'appels d'IA.
 
 ```markdown
 ---
@@ -122,17 +123,17 @@ permissions:
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can identify all five YAML pitfall patterns
-- [ ] Your `daily-status.md` compiles without errors after checking each section
-- [ ] You understand why `copilot-requests: write` is required
+- [ ] Vous pouvez identifier les cinq pièges YAML présentés ici
+- [ ] Votre `daily-status.md` compile sans erreur après vérification de chaque section
+- [ ] Vous comprenez pourquoi `copilot-requests: write` est requis
 
 > [!TIP]
-> Bookmark this page as a quick reference card whenever you write new [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) frontmatter.
+> Gardez cette page en favori comme fiche de référence rapide chaque fois que vous rédigez un nouveau frontmatter d'[agentic workflow](https://github.github.com/gh-aw/introduction/overview/).
 
 ---
 
 <!-- journey: all -->
-Return to [Build: Daily Repo Status Workflow](07-your-first-workflow.md).
+
+Revenez à [Créer : Daily Repo Status Workflow](07-your-first-workflow.md).
+
 <!-- /journey -->
-
-

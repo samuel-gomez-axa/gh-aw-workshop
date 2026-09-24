@@ -1,43 +1,48 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: [Frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) Deep Dive — Part A
 
-> _Optional: configure each of the opening three frontmatter sections of an [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) file — metadata, triggers, and [permissions](https://github.github.com/gh-aw/reference/permissions/). Work through this before building Step 11, then continue to [Part B: Tools, Outputs, and the Agent Body](side-quest-11-08-frontmatter-tools-outputs.md) or return to the main path._
+# Quête Annexe : Exploration Approfondie Du [Frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) — Partie A
 
-## :clipboard: Before You Start
+> _Facultatif : configurez chacune des trois premières sections du frontmatter d'un fichier [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) : métadonnées, triggers et [permissions](https://github.github.com/gh-aw/reference/permissions/). Parcourez ceci avant de construire Step 11, puis continuez vers [Part B: Tools, Outputs, and the Agent Body](side-quest-11-08-frontmatter-tools-outputs.md) ou revenez au parcours principal._
 
-Open the draft workflow file you started in [Step 11](07-your-first-workflow.md).
+## :clipboard: Avant De Commencer
 
----
-
-An [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) file opens with a YAML **[frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)** block between `---` separators. This block configures when the workflow runs and what it is allowed to do.
+Ouvrez le brouillon de workflow que vous avez commencé dans [Step 11](07-your-first-workflow.md).
 
 ---
 
-## Opening fence and `description`
+Un fichier [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) commence par un bloc YAML **[frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)** entre des séparateurs `---`. Ce bloc configure quand le workflow s'exécute et ce qu'il est autorisé à faire.
 
-**:mag: Predict:** What two things would you write at the top of a workflow file to identify it at a glance — before reading the explanation below?
+---
+
+## Fence D'ouverture Et `description`
+
+**:mag: Prédisez :** Quelles sont les deux choses que vous écririez en haut d'un fichier de workflow pour l'identifier d'un coup d'oeil, avant de lire l'explication ci-dessous ?
 
 ```markdown
 ---
+
 emoji: :bar_chart:
 description: Post a daily repository status summary as a GitHub issue comment.
 ```
 
-**What this section does:** Declares the workflow's metadata.
+**Ce que fait cette section :** Elle déclare les métadonnées du workflow.
 
-| Field | Purpose |
-|-------|---------|
-| `emoji` | Decorative label in the `gh aw` dashboard. Pick any emoji that fits. |
-| `description` | Summary shown in the Actions UI and in `gh aw list`. |
+| Champ         | Rôle                                                                       |
+| ------------- | -------------------------------------------------------------------------- |
+| `emoji`       | Libellé décoratif dans le dashboard `gh aw`. Choisissez l'emoji approprié. |
+| `description` | Résumé affiché dans l'UI Actions et dans `gh aw list`.                     |
 
-**:pencil2: Try it:** Update both fields in your draft, then run `gh aw compile` and confirm no errors appear.
+**:pencil2: Essayez :** Mettez à jour les deux champs dans votre brouillon, puis lancez `gh aw compile` et vérifiez qu'aucune erreur n'apparaît.
 
 ```markdown
 # Your turn
+
 ---
+
 emoji: ???
 description: ???
+
 ---
 ```
 
@@ -45,36 +50,36 @@ description: ???
 
 ## Triggers (`on:`)
 
-**:mag: Predict:** How would you tell GitHub Actions to run the workflow every day _and_ allow manual triggering? Write the two keys before reading on.
+**:mag: Prédisez :** Comment indiqueriez-vous à GitHub Actions d'exécuter le workflow chaque jour _et_ d'autoriser un déclenchement manuel ? Écrivez les deux clés avant de poursuivre.
 
 ```markdown
 ---
 on:
-  schedule: daily
-  workflow_dispatch: {}
+    schedule: daily
+    workflow_dispatch: {}
 ---
 ```
 
-**What this section does:** Declares when the workflow runs.
+**Ce que fait cette section :** Elle déclare quand le workflow s'exécute.
 
-| Field | Purpose |
-|-------|---------|
-| `on:` | Declares all triggers. |
-| `schedule: daily` | Daily run at a compiler-assigned time. See the [triggers reference](https://github.github.com/gh-aw/reference/triggers/) for other intervals. |
-| `workflow_dispatch: {}` | Adds a manual trigger button in the Actions UI. |
+| Champ                   | Rôle                                                                                                                                                                              |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `on:`                   | Déclare tous les triggers.                                                                                                                                                        |
+| `schedule: daily`       | Exécution quotidienne à une heure attribuée par le compilateur. Consultez la [triggers reference](https://github.github.com/gh-aw/reference/triggers/) pour d'autres intervalles. |
+| `workflow_dispatch: {}` | Ajoute un bouton de déclenchement manuel dans l'UI Actions.                                                                                                                       |
 
 > [!TIP]
-> Keep `workflow_dispatch: {}` even after going to production — it lets you re-run the report on demand.
+> Conservez `workflow_dispatch: {}` même après le passage en production : cela vous permet de relancer le rapport à la demande.
 
-**:pencil2: Try it:** Add both trigger keys to your draft and run `gh aw compile`. Then extend the block to also fire on pushes to the main branch:
+**:pencil2: Essayez :** Ajoutez les deux clés de trigger à votre brouillon et lancez `gh aw compile`. Étendez ensuite le bloc pour qu'il se déclenche aussi sur les pushes vers la branche principale :
 
 ```markdown
 ---
 on:
-  schedule: daily
-  push:
-    branches: [main]
-  workflow_dispatch: {}
+    schedule: daily
+    push:
+        branches: [main]
+    workflow_dispatch: {}
 ---
 ```
 
@@ -89,57 +94,57 @@ on:
 ---
 ```
 
-**:white_check_mark: Check:** Run `gh aw compile` — the compiled output should list all three triggers.
+**:white_check_mark: Vérifiez :** Lancez `gh aw compile` ; la sortie compilée doit lister les trois triggers.
 
 ---
 
 ## Permissions
 
-**:mag: Predict:** The agent needs to read issues and post a comment. Which permissions would you list? Write them down before reading the explanation.
+**:mag: Prédisez :** L'agent doit lire des issues et publier un commentaire. Quelles permissions listeriez-vous ? Notez-les avant de lire l'explication.
 
 ```markdown
 ---
 permissions:
-  contents: read
-  copilot-requests: write
-  issues: read
-  pull-requests: read
-  actions: read
+    contents: read
+    copilot-requests: write
+    issues: read
+    pull-requests: read
+    actions: read
 ---
 ```
 
-**What this section does:** Declares the GitHub API scopes this workflow may use — fewer scopes is safer.
+**Ce que fait cette section :** Elle déclare les scopes d'API GitHub que ce workflow peut utiliser ; moins il y en a, mieux c'est pour la sécurité.
 
-| Field | Purpose |
-|-------|---------|
-| `permissions:` | Lists every scope the workflow may use; omitted scopes are denied. |
-| `contents: read` | Read access to repository files and commits. |
-| `copilot-requests: write` | Required by the [Copilot engine](https://github.github.com/gh-aw/reference/engines/). |
-| `issues: read` | Read access to issue data. |
-| `pull-requests: read` | Read access to pull request data. |
-| `actions: read` | Read access to workflow run results. |
+| Champ                     | Rôle                                                                                |
+| ------------------------- | ----------------------------------------------------------------------------------- |
+| `permissions:`            | Liste chaque scope que le workflow peut utiliser ; les scopes omis sont refusés.    |
+| `contents: read`          | Accès en lecture aux fichiers du dépôt et aux commits.                              |
+| `copilot-requests: write` | Requis par le [Copilot engine](https://github.github.com/gh-aw/reference/engines/). |
+| `issues: read`            | Accès en lecture aux données d'issues.                                              |
+| `pull-requests: read`     | Accès en lecture aux données de pull request.                                       |
+| `actions: read`           | Accès en lecture aux résultats d'exécution des workflows.                           |
 
-**:pencil2: Try it:** Add the `permissions:` block to your draft. Then fill in the correct permission value for each scope:
+**:pencil2: Essayez :** Ajoutez le bloc `permissions:` à votre brouillon. Remplissez ensuite la bonne valeur de permission pour chaque scope :
 
 ```markdown
 ---
 # Your turn: fill in the correct value for each scope (read or write)
 permissions:
-  contents: ???
-  copilot-requests: ???
-  issues: ???
-  pull-requests: ???
-  actions: ???
+    contents: ???
+    copilot-requests: ???
+    issues: ???
+    pull-requests: ???
+    actions: ???
 ---
 ```
 
-**:white_check_mark: Check:** Run `gh aw compile` — the compile should complete with no permission errors.
+**:white_check_mark: Vérifiez :** Lancez `gh aw compile` ; la compilation doit se terminer sans erreur de permission.
 
 ---
 
-## Mini-challenge
+## Mini-Défi
 
-Write the `on:` block for schedule + push to main + manual trigger from memory, then validate with `gh aw compile`.
+Écrivez de mémoire le bloc `on:` pour schedule + push sur main + déclenchement manuel, puis validez avec `gh aw compile`.
 
 ```markdown
 ---
@@ -153,34 +158,38 @@ on:
 ```markdown
 ---
 on:
-  schedule: daily
-  push:
-    branches: [main]
-  workflow_dispatch: {}
+    schedule: daily
+    push:
+        branches: [main]
+    workflow_dispatch: {}
 ---
 ```
 
-Run `gh aw compile` and verify all three triggers appear.
+Lancez `gh aw compile` et vérifiez que les trois triggers apparaissent.
+
 </details>
 
-Now combine all three sections into one complete frontmatter block and compile it:
+Assemblez maintenant ces trois sections dans un bloc frontmatter complet et compilez-le :
 
 ```markdown
 # Your turn: combine all three sections
+
 ---
+
 emoji: ???
 description: ???
 on:
-  ???: ???          # daily run
-  push:
-    branches: [???] # target branch
-  ???: {}           # manual trigger
+???: ??? # daily run
+push:
+branches: [???] # target branch
+???: {} # manual trigger
 permissions:
-  contents: ???
-  copilot-requests: ???
-  issues: ???
-  pull-requests: ???
-  actions: ???
+contents: ???
+copilot-requests: ???
+issues: ???
+pull-requests: ???
+actions: ???
+
 ---
 ```
 
@@ -210,21 +219,23 @@ permissions:
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You updated `emoji` and `description` in your draft and `gh aw compile` produced no errors.
-- [ ] You added `schedule: daily` and `workflow_dispatch: {}` triggers; both appear in the compiled output.
-- [ ] You added a push trigger for the main branch and confirmed it compiles correctly.
-- [ ] You can explain why keeping `workflow_dispatch: {}` alongside a schedule trigger is useful.
-- [ ] You added the `permissions:` block with all five entries.
-- [ ] `copilot-requests: write` is present in your permissions block.
-- [ ] You completed the mini-challenge: schedule, push to main, and [workflow_dispatch](https://github.github.com/gh-aw/reference/triggers/#dispatch-triggers-workflowdispatch) triggers all appear in the compiled output.
-- [ ] You can explain what each permission scope in the block allows.
-- [ ] You wrote a complete combined frontmatter block and it compiled without errors.
-- [ ] The `workflow_dispatch: {}` trigger appears as a manual trigger button in your GitHub Actions UI after pushing.
+- [ ] Vous avez mis à jour `emoji` et `description` dans votre brouillon et `gh aw compile` n'a produit aucune erreur.
+- [ ] Vous avez ajouté les triggers `schedule: daily` et `workflow_dispatch: {}` ; ils apparaissent tous les deux dans la sortie compilée.
+- [ ] Vous avez ajouté un trigger de push pour la branche principale et confirmé qu'il compile correctement.
+- [ ] Vous pouvez expliquer pourquoi il est utile de conserver `workflow_dispatch: {}` à côté d'un trigger de schedule.
+- [ ] Vous avez ajouté le bloc `permissions:` avec ses cinq entrées.
+- [ ] `copilot-requests: write` est présent dans votre bloc de permissions.
+- [ ] Vous avez terminé le mini-défi : les triggers schedule, push sur main et [workflow_dispatch](https://github.github.com/gh-aw/reference/triggers/#dispatch-triggers-workflowdispatch) apparaissent tous dans la sortie compilée.
+- [ ] Vous pouvez expliquer ce qu'autorise chaque scope de permission du bloc.
+- [ ] Vous avez rédigé un bloc frontmatter complet combiné et il a compilé sans erreurs.
+- [ ] Le trigger `workflow_dispatch: {}` apparaît comme bouton de déclenchement manuel dans votre UI GitHub Actions après le push.
 
 ---
 
 <!-- journey: all -->
-**Next:** [Part B: Tools, Outputs, and the Agent Body](side-quest-11-08-frontmatter-tools-outputs.md)
 
-**Return to:** [Build — Daily Repo Status Workflow](07-your-first-workflow.md)
+**Suite :** [Part B: Tools, Outputs, and the Agent Body](side-quest-11-08-frontmatter-tools-outputs.md)
+
+**Retour à :** [Build — Daily Repo Status Workflow](07-your-first-workflow.md)
+
 <!-- /journey -->

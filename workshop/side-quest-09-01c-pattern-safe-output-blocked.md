@@ -1,29 +1,30 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest 09-01c: Pattern — [Safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) `limit reached`
 
-## :dart: What You'll Do
+# Side Quest 09-01c : Motif — [Safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) `limit reached`
 
-You will learn how to interpret blocked writes and choose between increasing allowed outputs or constraining agent behavior.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Vous allez apprendre à interpréter des écritures bloquées et à choisir entre augmenter les sorties autorisées ou contraindre le comportement de l’agent.
 
-- Complete [Side Quest: Diagnosing Common Agent Output Patterns](side-quest-09-01-debug-output.md)
+## :clipboard: Avant de commencer
 
-A safe-output error such as `E002: add-comment limit reached — 1 of 1 already used this run` means the agent attempted a write after reaching the configured `max` limit for that output type. The run may still finish successfully, but blocked writes are not executed. Your next step depends on intent:
+- Terminez [Side Quest : Diagnostiquer les motifs courants de sortie d’agent](side-quest-09-01-debug-output.md)
 
-- If multiple writes are expected (for example, one comment per failing service), increase `max`.
-- If only one write should happen, keep `max` low and tighten your guideline to prevent duplicate posts.
+Une erreur safe-output comme `E002: add-comment limit reached — 1 of 1 already used this run` signifie que l’agent a tenté une écriture après avoir atteint la limite `max` configurée pour ce type de sortie. L’exécution peut tout de même se terminer avec succès, mais les écritures bloquées ne sont pas exécutées. La suite dépend de votre intention :
 
-Treat `max` as a safety boundary, not a convenience setting. A low limit reduces accidental spam if instructions are interpreted too broadly.
+- Si plusieurs écritures sont attendues, par exemple un commentaire par service en échec, augmentez `max`.
+- Si une seule écriture doit avoir lieu, gardez `max` bas et resserrez vos consignes pour éviter les publications en double.
 
-When changing behavior, prefer precise workflow guidance like "Post one comment per run. If a comment already exists today, update context in [memory](https://github.github.com/gh-aw/patterns/memory-ops/) and skip writing."
+Traitez `max` comme une limite de sécurité, pas comme un réglage de confort. Une limite basse réduit le spam accidentel si les consignes sont interprétées trop largement.
 
-If you need help with wording, ask the `agentic-workflows` skill or iterate quickly with [`gh aw compile --watch`](https://github.github.com/gh-aw/setup/cli/#compile).
+Lorsque vous changez le comportement, préférez des consignes précises de workflow telles que "Post one comment per run. If a comment already exists today, update context in [memory](https://github.github.com/gh-aw/patterns/memory-ops/) and skip writing."
 
-## Hands-On Exercise
+Si vous avez besoin d’aide sur la formulation, demandez au skill `agentic-workflows` ou itérez rapidement avec [`gh aw compile --watch`](https://github.github.com/gh-aw/setup/cli/#compile).
 
-Identify the pattern before opening the answer.
+## Exercice pratique
+
+Identifiez le motif avant d’ouvrir la réponse.
 
 ```text
 🔧 [tool] github.add_comment → {issue_number: 4, body: "..."}
@@ -33,18 +34,19 @@ Identify the pattern before opening the answer.
 ```
 
 <details>
-<summary>Show answer</summary>
+<summary>Afficher la réponse</summary>
 
-Pattern: **safe-output `limit reached`**. Decide whether the second write is valid (`max` too low) or unintended (guidance too loose).
+Motif : **safe-output `limit reached`**. Déterminez si la deuxième écriture est légitime (`max` trop bas) ou non voulue (consignes trop vagues).
 
 </details>
 
 <!-- journey: all -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] I can explain what `BLOCKED` means in safe-output logs
-- [ ] I can decide when increasing `max` is appropriate
-- [ ] I can add a guideline that prevents duplicate writes
-- [ ] I can keep safe-output limits intentionally small for safety
+- [ ] Je peux expliquer ce que signifie `BLOCKED` dans les journaux safe-output
+- [ ] Je peux décider quand augmenter `max` est approprié
+- [ ] Je peux ajouter une consigne qui évite les écritures dupliquées
+- [ ] Je peux garder volontairement des limites safe-output petites pour des raisons de sécurité
 
 <!-- /journey -->

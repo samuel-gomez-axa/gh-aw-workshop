@@ -1,152 +1,153 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Event-Driven Triggers in Agentic Workflows
 
-> _Optional: use this primer if you want help choosing between [scheduled](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule) and event-driven workflows before you finish [Build — PR Code Reviewer](15-conditional-logic.md), then return to the main adventure._
+# Quête Annexe : Triggers Événementiels Dans Les Agentic Workflows
 
-## :dart: What You'll Do
+> _Facultatif : utilisez cette introduction si vous voulez de l'aide pour choisir entre des workflows [scheduled](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule) et des workflows événementiels avant de terminer [Créer — PR Code Reviewer](15-conditional-logic.md), puis revenez à l'aventure principale._
 
-You'll compare scheduled and event-driven [triggers](https://github.github.com/gh-aw/reference/triggers/), copy four starter trigger blocks, and learn how trigger choice affects `safe-outputs`. By the end you'll know when to reach for `pull_request`, `push`, `issues`, or `schedule`.
+## :dart: Ce Que Vous Allez Faire
 
-## :clipboard: Before You Start
+Vous allez comparer les [triggers](https://github.github.com/gh-aw/reference/triggers/) scheduled et event-driven, copier quatre blocs de triggers de départ et apprendre comment le choix du trigger influence `safe-outputs`. À la fin, vous saurez quand utiliser `pull_request`, `push`, `issues` ou `schedule`.
 
-- You have an existing workflow file from Step 7 or Step 15, such as `.github/workflows/daily-status.md`.
-- You know how to commit and push changes in your chosen path.
+## :clipboard: Avant De Commencer
 
-## Scheduled vs event-driven triggers
+- Vous disposez déjà d'un fichier de workflow venant de Step 7 ou Step 15, comme `.github/workflows/daily-status.md`.
+- Vous savez comment valider et pousser des changements dans le parcours que vous avez choisi.
 
-A **scheduled** workflow runs because the clock says it is time. An **event-driven** workflow runs because something happened in the repository, like a pull request opening or an issue being reopened.
+## Triggers Scheduled Vs Event-Driven
 
-| Trigger style | What starts it | Good fit |
-|---------------|----------------|----------|
-| Scheduled | Time passes | Daily summaries, reminders, audits |
-| Event-driven | A GitHub event happens | PR review, issue triage, post-push follow-up |
+Un workflow **scheduled** s'exécute parce que l'heure prévue est arrivée. Un workflow **event-driven** s'exécute parce qu'un événement s'est produit dans le dépôt, comme l'ouverture d'une pull request ou la réouverture d'une issue.
 
-If you want the workflow to react to a specific repository action, use an event trigger. If you want it to run even when nobody touched the repo, use a [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule).
+| Style de trigger | Ce qui le déclenche            | Bon cas d'usage                             |
+| ---------------- | ------------------------------ | ------------------------------------------- |
+| Planifié         | Le temps passe                 | Résumés quotidiens, rappels, audits         |
+| Événementiel     | Un événement GitHub se produit | Revue de PR, tri d'issues, suivi après push |
 
-## Four common trigger patterns
+Si vous voulez que le workflow réagisse à une action précise dans le dépôt, utilisez un trigger événementiel. Si vous voulez qu'il s'exécute même lorsque personne n'a touché au dépôt, utilisez un [schedule](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule).
+
+## Quatre Patterns De Trigger Courants
 
 ### `pull_request`
 
-Use this when the workflow should react to pull request activity.
+Utilisez-le lorsque le workflow doit réagir à l'activité d'une pull request.
 
 ```markdown
 ---
 on:
-  pull_request: {}
-  workflow_dispatch: {}
+    pull_request: {}
+    workflow_dispatch: {}
 ---
 ```
 
-This is a good fit when you want feedback tied to the current PR, like the PR Code Reviewer in Step 11c.
+C'est un bon choix lorsque vous voulez un retour lié à la PR en cours, comme le PR Code Reviewer in Step 11c.
 
 ### `push`
 
-Use this when the workflow should react as soon as commits land on a branch.
+Utilisez-le lorsque le workflow doit réagir dès que des commits arrivent sur une branche.
 
 ```markdown
 ---
 on:
-  push:
-    branches: [main]
-  workflow_dispatch: {}
+    push:
+        branches: [main]
+    workflow_dispatch: {}
 ---
 ```
 
-This is a good fit when you want to check or summarize changes after code is pushed.
+C'est un bon choix lorsque vous voulez vérifier ou résumer des changements après un push de code.
 
 ### `issues`
 
-Use this when the workflow should react to issue activity.
+Utilisez-le lorsque le workflow doit réagir à l'activité des issues.
 
 ```markdown
 ---
 on:
-  issues:
-    types: [opened, reopened]
-  workflow_dispatch: {}
+    issues:
+        types: [opened, reopened]
+    workflow_dispatch: {}
 ---
 ```
 
-This is a good fit when you want an assistant to triage, label, or reply when someone opens an issue.
+C'est un bon choix lorsque vous voulez qu'un assistant trie, étiquette ou réponde quand quelqu'un ouvre une issue.
 
 ### `schedule`
 
-Use this when the workflow should run on a clock, whether or not anyone touched the repository.
+Utilisez-le lorsque le workflow doit s'exécuter selon l'horloge, que quelqu'un ait modifié le dépôt ou non.
 
 ```markdown
 ---
 on:
-  schedule: daily
-  workflow_dispatch: {}
+    schedule: daily
+    workflow_dispatch: {}
 ---
 ```
 
-This is a good fit for recurring reports like the Daily Repo Status workflow in Step 7.
+C'est un bon choix pour des rapports récurrents comme le workflow Daily Repo Status de Step 7.
 
-## Try It: Swap Your Trigger
+## Essayez : Remplacez Votre Trigger
 
-Open your workflow file, such as `.github/workflows/daily-status.md`, and replace the existing `on:` block with `workflow_dispatch` plus one event trigger from this page.
+Ouvrez votre fichier de workflow, comme `.github/workflows/daily-status.md`, et remplacez le bloc `on:` existant par `workflow_dispatch` plus un event trigger de cette page.
 
-Then:
+Ensuite :
 
-1. Save the workflow file with your updated trigger block.
-2. Run `gh aw compile` to verify the change is valid.
-3. Commit and push the change using your chosen path.
-4. Open the workflow in the GitHub Actions UI, trigger it manually, and confirm it runs.
+1. Enregistrez le fichier de workflow avec votre bloc de trigger mis à jour.
+2. Exécutez `gh aw compile` pour vérifier que la modification est valide.
+3. Validez et poussez la modification selon le parcours que vous avez choisi.
+4. Ouvrez le workflow dans l'UI GitHub Actions, déclenchez-le manuellement et confirmez qu'il s'exécute.
 
-## How trigger choice changes `safe-outputs`
+## Comment Le Choix Du Trigger Modifie `safe-outputs`
 
-The trigger decides **when** the workflow starts. The [safe-outputs](https://github.github.com/gh-aw/reference/safe-outputs/) block decides **where it is allowed to write back**.
+Le trigger décide **quand** le workflow démarre. Le bloc [safe-outputs](https://github.github.com/gh-aw/reference/safe-outputs/) décide **où il a le droit d'écrire en retour**.
 
-| Trigger | Natural thing to reply to | Common `safe-outputs` choice |
-|---------|----------------------------|------------------------------|
-| `pull_request` | The current pull request | `add-comment` |
-| `issues` | The current issue | `add-comment` |
-| `push` | Often no built-in conversation thread | Usually none at first, or `add-comment` if the workflow posts to an issue or PR it finds |
-| `schedule` | Usually a standing issue or report thread | `add-comment` |
+| Trigger        | Cible naturelle de réponse                             | Choix courant de `safe-outputs`                                                                           |
+| -------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| `pull_request` | La pull request en cours                               | `add-comment`                                                                                             |
+| `issues`       | L'issue en cours                                       | `add-comment`                                                                                             |
+| `push`         | Souvent aucun fil de conversation intégré              | Généralement aucun au départ, ou `add-comment` si le workflow publie sur une issue ou une PR qu'il trouve |
+| `schedule`     | Généralement une issue permanente ou un fil de rapport | `add-comment`                                                                                             |
 
 > [!IMPORTANT]
-> The trigger does **not** automatically grant write access. You still need to choose the right `safe-outputs` entry for the place you want the agent to write.
+> Le trigger n'accorde **pas** automatiquement l'accès en écriture. Vous devez quand même choisir la bonne entrée `safe-outputs` pour l'endroit où vous voulez que l'agent écrive.
 
-## Three questions to pick the right trigger
+## Trois Questions Pour Choisir Le Bon Trigger
 
-Ask yourself:
+Posez-vous ces questions :
 
-1. **What exactly should wake this workflow up?**
-2. **Is there already a pull request or issue for the agent to reply to?**
-3. **Should the workflow still run even if nobody changed anything?**
+1. **Qu'est-ce qui doit exactement déclencher ce workflow ?**
+2. **Existe-t-il déjà une pull request ou une issue à laquelle l'agent doit répondre ?**
+3. **Le workflow doit-il quand même s'exécuter si rien n'a changé ?**
 
-Use this rule of thumb:
+Utilisez cette règle pratique :
 
-- If the answer is "a PR changed," start with `pull_request`.
-- If the answer is "a commit landed," start with `push`.
-- If the answer is "an issue changed," start with `issues`.
-- If the answer is "nothing happened, but I still want a report," start with `schedule`.
+- Si la réponse est "a PR changed," commencez par `pull_request`.
+- Si la réponse est "a commit landed," commencez par `push`.
+- Si la réponse est "an issue changed," commencez par `issues`.
+- Si la réponse est "nothing happened, but I still want a report," commencez par `schedule`.
 
-## Concrete example: Step 7 vs Step 15
+## Exemple Concret : Step 7 Vs Step 15
 
-The Daily Repo Status workflow in [Step 7](07-your-first-workflow.md) and the PR Code Reviewer in [Step 15](15-conditional-logic.md) use the same workflow format, but they solve different timing problems.
+Le workflow Daily Repo Status de [Step 7](07-your-first-workflow.md) et le PR Code Reviewer de [Step 15](15-conditional-logic.md) utilisent le même format de workflow, mais résolvent des problèmes de temporalité différents.
 
-| Step | Trigger | Why it fits | Safe output |
-|------|---------|-------------|-------------|
-| 7 Daily Repo Status | `schedule: daily` | You want a report every day, even on quiet days | `add-comment` |
-| 15 PR Code Reviewer | `pull_request: {}` | You want feedback only when a PR changes | `add-comment` |
+| Step                | Trigger            | Pourquoi il convient                                                   | Safe output   |
+| ------------------- | ------------------ | ---------------------------------------------------------------------- | ------------- |
+| 7 Daily Repo Status | `schedule: daily`  | Vous voulez un rapport tous les jours, même lorsqu'il ne se passe rien | `add-comment` |
+| 15 PR Code Reviewer | `pull_request: {}` | Vous voulez un retour uniquement lorsqu'une PR change                  | `add-comment` |
 
-That is the core decision: pick the trigger that matches the moment you care about, then pick the write target that matches the object you want the workflow to answer.
+C'est la décision centrale : choisissez le trigger qui correspond au moment qui vous intéresse, puis choisissez la cible d'écriture qui correspond à l'objet auquel vous voulez que le workflow réponde.
 
 <!-- journey: all -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] I can explain the difference between a scheduled workflow and an event-driven workflow
-- [ ] I know starter trigger blocks for `pull_request`, `push`, `issues`, and `schedule`
-- [ ] I changed my workflow's trigger and confirmed it still compiles with `gh aw compile`
-- [ ] I understand that `safe-outputs` controls write access separately from the trigger
-- [ ] I can explain why both Step 7 and Step 15 use `add-comment` as their `safe-outputs` choice
+- [ ] Je peux expliquer la différence entre un workflow scheduled et un workflow event-driven
+- [ ] Je connais les blocs de trigger de départ pour `pull_request`, `push`, `issues` et `schedule`
+- [ ] J'ai modifié le trigger de mon workflow et confirmé qu'il compile toujours avec `gh aw compile`
+- [ ] Je comprends que `safe-outputs` contrôle l'accès en écriture séparément du trigger
+- [ ] Je peux expliquer pourquoi Step 7 et Step 15 utilisent tous les deux `add-comment` comme choix `safe-outputs`
 
 ---
 
-Return to the main adventure: [Build — PR Code Reviewer](15-conditional-logic.md).
+Retour à l'aventure principale : [Créer — PR Code Reviewer](15-conditional-logic.md).
 
 <!-- /journey -->
-

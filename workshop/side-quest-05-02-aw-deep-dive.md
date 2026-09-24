@@ -1,29 +1,30 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Classify Agentic vs. Standard Workflows
 
-> _Optional: work through this side quest after [What Are Agentic Workflows?](05-agentic-workflows-intro.md) to sharpen the distinction through hands-on classification practice._
+# Side Quest : Classer les agentic workflows et les workflows standards
 
-## :clipboard: Before You Start
+> _Facultatif : faites cette side quest après [Que sont les agentic workflows ?](05-agentic-workflows-intro.md) pour affiner la distinction grâce à un exercice pratique de classification._
 
-- You've read [What Are Agentic Workflows?](05-agentic-workflows-intro.md)
+## :clipboard: Avant de commencer
 
-## The core distinction
+- Vous avez lu [Que sont les agentic workflows ?](05-agentic-workflows-intro.md)
 
-A standard Actions workflow runs the same fixed steps every time — no judgment required. An [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) replaces those fixed steps with a plain-English task brief, and the AI agent decides how to carry it out.
+## La distinction centrale
 
-**Key signal:** if the output could be different each run because the agent is reading context and making decisions, it's agentic.
+Un workflow Actions standard exécute les mêmes étapes fixes à chaque fois ; aucun jugement n’est nécessaire. Un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) remplace ces étapes fixes par un brief de tâche en anglais courant, et l’agent d’IA décide comment l’exécuter.
 
-## Classify Task A
+**Signal clé :** si la sortie peut être différente à chaque exécution parce que l’agent lit le contexte et prend des décisions, alors c’est agentique.
+
+## Classer la tâche A
 
 **Task:** Run unit tests on every pull request, fail if any test exits non-zero, and upload coverage.
 
-Write your classification (agentic or standard) in your notes, then reveal.
+Écrivez votre classification (agentic ou standard) dans vos notes, puis révélez la réponse.
 
 <details>
-<summary>Check Task A answer</summary>
+<summary>Vérifier la réponse de la tâche A</summary>
 
-**Standard Actions workflow.** Every run follows identical fixed steps: start the test job, fail on a non-zero exit code, upload the coverage artifact. No judgment required — the result is the same regardless of what changed in the PR.
+**Workflow Actions standard.** Chaque exécution suit des étapes fixes identiques : démarrer le job de test, échouer sur un code de sortie non nul, téléverser l’artefact de couverture. Aucun jugement n’est nécessaire ; le résultat est le même quelle que soit la modification dans la PR.
 
 ```yaml
 # Example: standard deterministic step
@@ -32,95 +33,97 @@ Write your classification (agentic or standard) in your notes, then reveal.
 
 </details>
 
-## Classify Task B
+## Classer la tâche B
 
 **Task:** Review newly opened issues each morning, group them by theme, flag the urgent ones, and post a short triage summary.
 
-Write your classification, then reveal.
+Écrivez votre classification, puis révélez la réponse.
 
 <details>
-<summary>Check Task B answer</summary>
+<summary>Vérifier la réponse de la tâche B</summary>
 
-**Agentic workflow.** The agent has to inspect live repo context, decide how to group similar issues, and judge what looks urgent — none of that is a fixed rule. The summary will differ every morning based on what issues exist.
+**Agentic workflow.** L’agent doit inspecter le contexte vivant du dépôt, décider comment regrouper les issues similaires et juger ce qui paraît urgent ; rien de tout cela n’est une règle fixe. Le résumé changera chaque matin en fonction des issues présentes.
 
 ```markdown
 <!-- Example task brief for Task B -->
+
 Review all issues opened in the last 24 hours. Group them by theme,
 flag any that look urgent, and post a triage digest as a new issue comment.
 ```
 
 </details>
 
-## Classify Task C
+## Classer la tâche C
 
 **Task:** Each Friday, scan all open issues and pull requests, summarize recent activity by contributor, and post a weekly team progress digest.
 
-Write your classification, then reveal.
+Écrivez votre classification, puis révélez la réponse.
 
 <details>
-<summary>Check Task C answer</summary>
+<summary>Vérifier la réponse de la tâche C</summary>
 
-**Agentic workflow.** The agent reads contributor activity, decides what counts as meaningful progress, and composes a digest that differs every week. The output requires interpretation, not just counting.
+**Agentic workflow.** L’agent lit l’activité des contributeurs, décide de ce qui constitue une progression significative et compose une synthèse différente chaque semaine. La sortie demande de l’interprétation, pas seulement un comptage.
 
 </details>
 
-## Classify Task D — hybrid
+## Classer la tâche D — hybride
 
 **Task:** On every pull request, run ESLint (fail on errors), then have an AI read the diff and post a summary comment.
 
-Write your classification, then reveal.
+Écrivez votre classification, puis révélez la réponse.
 
 <details>
-<summary>Check Task D answer</summary>
+<summary>Vérifier la réponse de la tâche D</summary>
 
-**Agentic (hybrid) workflow.** ESLint is deterministic — same pass/fail result every run. The AI summary requires judgment: reading the diff and deciding how to describe the change.
+**Agentic (hybrid) workflow.** ESLint est déterministe : même résultat succès/échec à chaque exécution. Le résumé produit par l’IA demande un jugement : lire le diff et décider comment décrire le changement.
 
-- The ESLint step: deterministic, same result for the same code
-- The AI summary step: different output each run, based on what changed
+- Le step ESLint : déterministe, même résultat pour le même code
+- Le step de résumé IA : sortie différente à chaque exécution, selon ce qui a changé
 
-A workflow that mixes deterministic and AI steps is still agentic overall.
+Un workflow qui mélange des steps déterministes et IA reste globalement agentique.
 
 ```markdown
 <!-- Hybrid example: deterministic + agentic -->
+
 Run ESLint on the changed files, then read the diff and post a plain-English
 summary of what changed and why it matters.
 ```
 
 </details>
 
-## Your turn
+## À vous de jouer
 
-Write one sentence describing what _your_ agentic workflow should do. Save it in your notes — you'll use this idea in Step 7. Focus on a task that needs judgment, not a test or deploy script.
+Écrivez une phrase décrivant ce que _votre_ agentic workflow devrait faire. Gardez-la dans vos notes ; vous réutiliserez cette idée à Step 7. Concentrez-vous sur une tâche qui demande du jugement, pas sur un script de test ou de déploiement.
 
-## Self-check
+## Auto-vérification
 
-What makes a workflow agentic rather than standard? Write your answer, then reveal.
+Qu’est-ce qui rend un workflow agentique plutôt que standard ? Écrivez votre réponse, puis révélez-la.
 
 <details>
-<summary>Show model answer</summary>
+<summary>Afficher la réponse modèle</summary>
 
-A workflow is agentic when an AI agent makes judgment calls — reading context, deciding what matters, and producing output that differs each run. Standard workflows follow fixed steps.
+Un workflow est agentique lorsqu’un agent d’IA prend des décisions de jugement, lit le contexte, décide de ce qui compte et produit une sortie différente à chaque exécution. Les workflows standards suivent des étapes fixes.
 
-Does your answer include:
+Votre réponse contient-elle :
 
-- AI making judgment calls on live context
-- Output that varies each run
-- Contrast with standard fixed-step workflows
+- le fait qu’une IA prenne des décisions de jugement sur un contexte vivant
+- une sortie qui varie à chaque exécution
+- un contraste avec les workflows standard à étapes fixes
 
 </details>
 
 > [!TIP]
-> Ready to go deeper? [Side Quest: The Two-File Structure](side-quest-05-03-two-file-structure.md) shows how `.md` and `.lock.yml` relate, and walks through key vocabulary.
+> Prêt à aller plus loin ? [Side Quest : La structure à deux fichiers](side-quest-05-03-two-file-structure.md) montre comment `.md` et `.lock.yml` sont liés et passe en revue le vocabulaire clé.
 
 ---
 
-Return to the main adventure: [What Are Agentic Workflows?](05-agentic-workflows-intro.md).
+Revenez à l’aventure principale : [Que sont les agentic workflows ?](05-agentic-workflows-intro.md).
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You classified Task A as a standard workflow and explained why it needs no AI judgment
-- [ ] You classified Task B as an agentic workflow and named the decision the agent makes
-- [ ] You classified Task C as an agentic workflow and described how each Friday run would differ
-- [ ] You classified Task D as a hybrid agentic workflow and identified its deterministic step
-- [ ] You can explain what makes a workflow agentic in one sentence
-- [ ] You've written down your own agentic workflow idea for Step 7
+- [ ] Vous avez classé la tâche A comme un workflow standard et expliqué pourquoi elle ne demande aucun jugement d’IA
+- [ ] Vous avez classé la tâche B comme un agentic workflow et nommé la décision prise par l’agent
+- [ ] Vous avez classé la tâche C comme un agentic workflow et décrit en quoi chaque exécution du vendredi serait différente
+- [ ] Vous avez classé la tâche D comme un agentic workflow hybride et identifié son step déterministe
+- [ ] Vous pouvez expliquer en une phrase ce qui rend un workflow agentique
+- [ ] Vous avez noté votre propre idée d’agentic workflow pour l’étape 7

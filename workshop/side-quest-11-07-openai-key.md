@@ -1,58 +1,59 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Configure an OpenAI API Key
 
-> _Optional: work through this guide when you want to use the `codex` engine (OpenAI-powered) for your agentic workflow, then return to your main path._
+# Quête Annexe : Configurer Une Clé API OpenAI
 
-By default, [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) use the [GitHub Copilot engine](https://github.github.com/gh-aw/reference/engines/). To use **OpenAI models**, store an OpenAI API key as a repository secret and add one [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) line.
+> _Facultatif : parcourez ce guide lorsque vous voulez utiliser le moteur `codex`, propulsé par OpenAI, pour votre agentic workflow, puis revenez à votre parcours principal._
 
-## :clipboard: Before You Start
+Par défaut, les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/) utilisent le [GitHub Copilot engine](https://github.github.com/gh-aw/reference/engines/). Pour utiliser des **modèles OpenAI**, stockez une clé API OpenAI comme secret de dépôt et ajoutez une ligne au [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
 
-- You have completed [Install `gh-aw`](06-install-gh-aw.md) and have a working agentic workflow.
-- You are familiar with [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) `env:` blocks. If frontmatter is new, skim [Side Quest: Frontmatter Deep Dive — Part A](side-quest-11-01-frontmatter-deep-dive.md) before continuing.
-- You have an OpenAI account or access to an OpenAI API key from your organization.
+## :clipboard: Avant De Commencer
+
+- Vous avez terminé [Install `gh-aw`](06-install-gh-aw.md) et disposez d'un agentic workflow fonctionnel.
+- Vous connaissez les blocs `env:` du [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/). Si le frontmatter est nouveau pour vous, parcourez [Side Quest: Frontmatter Deep Dive — Part A](side-quest-11-01-frontmatter-deep-dive.md) avant de continuer.
+- Vous avez un compte OpenAI ou accès à une clé API OpenAI fournie par votre organisation.
 
 > [!NOTE]
-> In `gh-aw`, `codex` is the engine identifier for OpenAI-powered execution. It does not refer to the discontinued [OpenAI Codex](side-quest-01-02-environment-reference.md#openai-codex) model family.
+> Dans `gh-aw`, `codex` est l'identifiant de moteur pour l'exécution propulsée par OpenAI. Il ne fait pas référence à la famille de modèles abandonnée [OpenAI Codex](side-quest-01-02-environment-reference.md#openai-codex).
 
 ---
 
-## What you'll set up
+## Ce Que Vous Allez Configurer
 
-| Item | Value |
-|---|---|
-| Repository secret name | `OPENAI_API_KEY` |
-| Frontmatter engine field | `engine: codex` |
-| OpenAI API domain | `api.openai.com` |
+| Élément                       | Valeur           |
+| ----------------------------- | ---------------- |
+| Nom du secret de dépôt        | `OPENAI_API_KEY` |
+| Champ `engine` du frontmatter | `engine: codex`  |
+| Domaine de l'API OpenAI       | `api.openai.com` |
 
 ---
 
-## Get an OpenAI API key
+## Obtenez Une Clé API OpenAI
 
-1. Go to the OpenAI API keys dashboard at `platform.openai.com/api-keys` and sign in (or create an account).
-2. Click **Create new secret key**, give it a name (for example `gh-aw-workshop`), and click **Create secret key**.
-3. Copy the key value immediately — it starts with `sk-` and OpenAI shows it **only once**.
+1. Rendez-vous sur le tableau de bord des clés API OpenAI à l'adresse `platform.openai.com/api-keys` et connectez-vous, ou créez un compte.
+2. Cliquez sur **Create new secret key**, donnez-lui un nom, par exemple `gh-aw-workshop`, puis cliquez sur **Create secret key**.
+3. Copiez immédiatement la valeur de la clé : elle commence par `sk-` et OpenAI ne l'affiche **qu'une seule fois**.
 
 > [!IMPORTANT]
-> Paste the key into GitHub Secrets (the next section) **before** closing the OpenAI platform tab. If you close it first, you must delete the key and generate a new one.
+> Collez la clé dans GitHub Secrets, section suivante, **avant** de fermer l'onglet de la plateforme OpenAI. Si vous le fermez d'abord, vous devrez supprimer la clé et en générer une nouvelle.
 
-**:pencil2: Verify:** Confirm your new key appears in the list at `platform.openai.com/api-keys` before continuing.
+**:pencil2: Vérifiez :** Confirmez que votre nouvelle clé apparaît dans la liste à `platform.openai.com/api-keys` avant de continuer.
 
 ---
 
-## Store the key as a repository secret
+## Stockez La Clé Comme Secret De Dépôt
 
-Open your repository in a **new tab** so you keep the OpenAI platform tab open.
+Ouvrez votre dépôt dans un **nouvel onglet** afin de garder l'onglet de la plateforme OpenAI ouvert.
 
-1. Click **Settings** → **Secrets and variables** → **Actions**.
-2. Click **New repository secret**.
-3. Set the name to `OPENAI_API_KEY` and paste the key value (no extra whitespace).
-4. Click **Add secret**.
+1. Cliquez sur **Settings** → **Secrets and variables** → **Actions**.
+2. Cliquez sur **New repository secret**.
+3. Définissez le nom `OPENAI_API_KEY` et collez la valeur de la clé, sans espace en trop.
+4. Cliquez sur **Add secret**.
 
 > [!IMPORTANT]
-> The name must be exactly `OPENAI_API_KEY`. Any variation (`openai_api_key`, `OPENAI-API-KEY`) causes a silent authentication failure.
+> Le nom doit être exactement `OPENAI_API_KEY`. Toute variation (`openai_api_key`, `OPENAI-API-KEY`) provoque un échec d'authentification silencieux.
 
-**:pencil2: Verify:** Run this command and confirm `OPENAI_API_KEY` appears in the output:
+**:pencil2: Vérifiez :** Exécutez cette commande et confirmez que `OPENAI_API_KEY` apparaît dans la sortie :
 
 ```bash
 gh secret list
@@ -60,62 +61,62 @@ gh secret list
 
 ---
 
-## Update your workflow frontmatter
+## Mettez À Jour Le Frontmatter De Votre Workflow
 
-Add `engine: codex` and the `network.allowed` entry to your workflow's frontmatter. You can omit `copilot-requests: write` — it is specific to the Copilot engine.
+Ajoutez `engine: codex` et l'entrée `network.allowed` au frontmatter de votre workflow. Vous pouvez omettre `copilot-requests: write`, qui est spécifique au moteur Copilot.
 
 ```markdown
 ---
 name: My Workflow
 on:
-  workflow_dispatch:
+    workflow_dispatch:
 permissions:
-  contents: read
+    contents: read
 engine: codex
 network:
-  allowed:
-    - defaults
-    - api.openai.com
+    allowed:
+        - defaults
+        - api.openai.com
 ---
 ```
 
-**:pencil2: Verify:** Confirm your frontmatter includes `engine: codex` and the secret reference:
+**:pencil2: Vérifiez :** Confirmez que votre frontmatter inclut `engine: codex` et la référence au secret :
 
 ```markdown
 ---
 engine: codex
 env:
-  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
 ---
 ```
 
 ---
 
-## Optional: choose a specific OpenAI model
+## Facultatif : Choisissez Un Modèle OpenAI Précis
 
-To pin a model version, use the extended engine syntax:
+Pour épingler une version de modèle, utilisez la syntaxe étendue du moteur :
 
 ```markdown
 ---
 engine:
-  id: codex
-  model: gpt-4o-mini
+    id: codex
+    model: gpt-4o-mini
 ---
 ```
 
-Leave `model` out to use the engine's current default, which the `gh-aw` team keeps up to date.
+Laissez `model` de côté pour utiliser la valeur par défaut actuelle du moteur, que l'équipe `gh-aw` maintient à jour.
 
 ---
 
-## Validate your workflow
+## Validez Votre Workflow
 
-After updating your frontmatter, validate the workflow to check for errors:
+Après avoir mis à jour votre frontmatter, validez le workflow pour vérifier l'absence d'erreurs :
 
 ```bash
 gh aw compile --validate
 ```
 
-You should see:
+Vous devriez voir :
 
 ```text
 ✔️ <your-workflow>.md — valid
@@ -125,12 +126,14 @@ You should see:
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You have an OpenAI account and have generated an API key
-- [ ] My new key is listed at `platform.openai.com/api-keys`
-- [ ] `OPENAI_API_KEY` is stored as a repository secret (`gh secret list` confirms it)
-- [ ] My workflow frontmatter has `engine: codex` and `api.openai.com` in `network.allowed`
-- [ ] `gh aw compile --validate` reports no errors
+- [ ] Vous avez un compte OpenAI et généré une clé API
+- [ ] Ma nouvelle clé est listée sur `platform.openai.com/api-keys`
+- [ ] `OPENAI_API_KEY` est stocké comme secret de dépôt, `gh secret list` le confirme
+- [ ] Le frontmatter de mon workflow contient `engine: codex` et `api.openai.com` dans `network.allowed`
+- [ ] `gh aw compile --validate` ne signale aucune erreur
 
 <!-- journey: all -->
-**Return to:** [Write Your First Agentic Workflow](07-your-first-workflow.md)
+
+**Retour à :** [Écrire votre premier Agentic Workflow](07-your-first-workflow.md)
+
 <!-- /journey -->

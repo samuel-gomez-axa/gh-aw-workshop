@@ -1,35 +1,37 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Diagnosing Common Agent Output Patterns
 
-> _Optional: use this side quest when a run behaves unexpectedly, then return to [Reading Workflow Output](08b-interpret-your-run.md)._
+# Side Quest : Diagnostiquer les motifs courants de sortie d’agent
 
-## :dart: What You'll Do
+> _Facultatif : utilisez cette side quest lorsqu’une exécution se comporte de façon inattendue, puis revenez à [Reading Workflow Output](08b-interpret-your-run.md)._
 
-You will diagnose five common output patterns one at a time. Each micro-step includes a short explanation, a realistic log snippet, and an identify-before-reveal exercise.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Vous allez diagnostiquer cinq motifs de sortie courants, un par un. Chaque micro-étape comprend une courte explication, un extrait de journal réaliste et un exercice d’identification avant révélation.
 
-- Complete [Reading Workflow Output](08b-interpret-your-run.md)
+## :clipboard: Avant de commencer
 
-## Pattern Lab Index
+- Terminez [Lire la sortie du workflow](08b-interpret-your-run.md)
 
-| Pattern | What you learn | Micro-step |
-|---|---|---|
-| Long `[plan]` chain | How to turn planning loops into concrete [tool](https://github.github.com/gh-aw/reference/tools/) calls | [09-01a](side-quest-09-01a-pattern-long-plan-chain.md) |
-| Empty tool results | How to separate [permission](https://github.github.com/gh-aw/reference/permissions/) issues from filter issues | [09-01b](side-quest-09-01b-pattern-empty-results.md) |
-| [Safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) `limit reached` | How to decide between raising `max` and tightening guidance | [09-01c](side-quest-09-01c-pattern-safe-output-blocked.md) |
-| `permission denied` | How to map failures to [`permissions`](https://github.github.com/gh-aw/reference/permissions/) vs [`safe-outputs`](https://github.github.com/gh-aw/reference/safe-outputs/) | [09-01d](side-quest-09-01d-pattern-permission-denied.md) |
-| "Done" with no write | How to clarify write conditions and fallback behavior | [09-01e](side-quest-09-01e-pattern-done-no-write.md) |
+## Index du labo de motifs
 
-Need a reusable triage flow after the pattern drills? Open the [Debugging Checklist](side-quest-09-01f-debugging-checklist.md).
+| Motif                                                                                  | Ce que vous apprenez                                                                                                                                                                           | Micro-étape                                                |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Longue chaîne `[plan]`                                                                 | Comment transformer des boucles de planification en appels concrets de [tool](https://github.github.com/gh-aw/reference/tools/)                                                                | [09-01a](side-quest-09-01a-pattern-long-plan-chain.md)     |
+| Résultats de tool vides                                                                | Comment distinguer les problèmes de [permission](https://github.github.com/gh-aw/reference/permissions/) des problèmes de filtre                                                               | [09-01b](side-quest-09-01b-pattern-empty-results.md)       |
+| [Safe-output](https://github.github.com/gh-aw/reference/safe-outputs/) `limit reached` | Comment choisir entre augmenter `max` et resserrer les consignes                                                                                                                               | [09-01c](side-quest-09-01c-pattern-safe-output-blocked.md) |
+| `permission denied`                                                                    | Comment faire correspondre les échecs à [`permissions`](https://github.github.com/gh-aw/reference/permissions/) ou à [`safe-outputs`](https://github.github.com/gh-aw/reference/safe-outputs/) | [09-01d](side-quest-09-01d-pattern-permission-denied.md)   |
+| « Done » sans écriture                                                                 | Comment clarifier les conditions d’écriture et le comportement de repli                                                                                                                        | [09-01e](side-quest-09-01e-pattern-done-no-write.md)       |
+
+Besoin d’un flux de triage réutilisable après ces exercices sur les motifs ? Ouvrez la [checklist de débogage](side-quest-09-01f-debugging-checklist.md).
 
 <!-- journey: all -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] I can choose the right micro-step from the pattern table
-- [ ] I can use the exercise format to identify each pattern before checking the answer
-- [ ] I can open the checklist page when I need full run triage
-- [ ] I know to return to [Step 9](08b-interpret-your-run.md) after this side quest
+- [ ] Je peux choisir la bonne micro-étape à partir du tableau des motifs
+- [ ] Je peux utiliser le format d’exercice pour identifier chaque motif avant de vérifier la réponse
+- [ ] Je peux ouvrir la page checklist lorsque j’ai besoin d’un triage complet d’exécution
+- [ ] Je sais qu’il faut revenir à [l’étape 9](08b-interpret-your-run.md) après cette side quest
 
 <!-- /journey -->

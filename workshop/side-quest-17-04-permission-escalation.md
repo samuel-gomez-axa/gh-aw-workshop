@@ -1,151 +1,152 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Permission Escalation in [Agentic Workflows](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows)
 
-> _Optional: work through this security primer to see how an over-scoped workflow can give a misdirected agent more authority than your task needs._
+# Quête annexe : escalade de permissions dans les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows)
 
-## :clipboard: Before You Start
+> _Facultatif : suivez cette introduction a la securite pour voir comment un workflow avec un scope trop large peut donner a un agent mal oriente plus d'autorite que votre tache n'en exige._
 
-You have completed [Give Your Agent More Tools with MCP](17-add-mcp-tools.md) and have a working workflow file that uses `safe-outputs`.
+## :clipboard: Avant de commencer
 
----
-
-## What is permission escalation?
-
-Permission escalation means the agent ends up with **more authority than the task needs**. You might want a read-only summary. But if your workflow leaves broad write paths open, a bad prompt or sloppy inference can turn that summary job into an unexpected repository change.
+Vous avez terminé [Donner plus d’outils à votre agent avec MCP](17-add-mcp-tools.md) et vous avez un fichier de workflow fonctionnel qui utilise `safe-outputs`.
 
 ---
 
-## What it looks like in practice
+## Qu’est-ce que l’escalade de permissions ?
 
-Picture a workflow with one job: read open issues, read recent commits, and write a daily summary.
-
-Now picture that same workflow allowing the agent to open a pull request touching any file. A malicious issue body or a [prompt injection](https://github.github.com/gh-aw/introduction/architecture/#threat-model) could push the agent to edit `README.md` or change workflow files. You never asked for that.
-
-That is the problem. The workflow author requested one level of authority. The configuration exposed a wider one.
+La permission escalation signifie que l’agent se retrouve avec **plus d’autorité que la tâche n’en a besoin**. Vous voulez peut-être un simple résumé en lecture seule. Mais si votre workflow laisse des chemins d’écriture larges ouverts, un mauvais prompt ou un raisonnement approximatif peut transformer cette tâche de résumé en modification inattendue du dépôt.
 
 ---
 
-## Why agentic workflows need tighter scoping than classic CI/CD
+## À quoi cela ressemble en pratique
 
-A classic CI/CD pipeline runs a fixed script. If the script says "run tests," it runs tests. It does not invent extra steps.
+Imaginez un workflow avec un seul job : lire les issues ouvertes, lire les commits récents et rédiger un résumé quotidien.
 
-An [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) is different. You set boundaries up front. But the agent decides at runtime which tools to call and whether to use a write surface. Every extra permission is extra risk. If the task only needs read access, any open write path increases the blast radius of a misdirected agent.
+Imaginez maintenant que ce même workflow autorise l’agent à ouvrir une pull request qui touche n’importe quel fichier. Une description d’issue malveillante ou une [prompt injection](https://github.github.com/gh-aw/introduction/architecture/#threat-model) pourrait pousser l’agent à modifier `README.md` ou des fichiers de workflow. Vous n’avez jamais demandé cela.
 
----
-
-## How gh-aw limits the blast radius
-
-gh-aw gives you three layers of least-privilege control:
-
-| Layer | What it limits |
-|---|---|
-| Minimal `permissions:` | Which GitHub APIs the workflow can call |
-| Narrow `safe-outputs` | Which write operations the agent can perform |
-| `protected-files` in a write-enabled output | Which files need extra review before a change lands |
-
-For the full mental model behind these layers, read [Side Quest: Agentic Workflow Security Architecture (Explain Like You're 5)](side-quest-17-02-security-architecture.md).
+Voilà le problème. L’auteur du workflow a demandé un certain niveau d’autorité. La configuration en a exposé un plus large.
 
 ---
 
-## Read-only pattern
+## Pourquoi les agentic workflows ont besoin d’un cadrage plus strict que la CI/CD classique
 
-If your workflow only needs to observe repository state, keep it read-only:
+Un pipeline CI/CD classique exécute un script fixe. Si le script dit de lancer des tests, il lance des tests. Il n’invente pas d’étapes supplémentaires.
+
+Un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) est différent. Vous fixez des limites en amont. Mais l’agent décide à l’exécution quels tools appeler et s’il doit utiliser une surface d’écriture. Chaque permission supplémentaire augmente le risque. Si la tâche n’a besoin que d’un accès en lecture, tout chemin d’écriture ouvert augmente le blast radius d’un agent mal orienté.
+
+---
+
+## Comment gh-aw limite le blast radius
+
+gh-aw vous donne trois couches de contrôle selon le principe du moindre privilège :
+
+| Couche                                                  | Ce qu’elle limite                                                                      |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `permissions:` minimales                                | Les API GitHub que le workflow peut appeler                                            |
+| `safe-outputs` restreints                               | Les opérations d’écriture que l’agent peut effectuer                                   |
+| `protected-files` dans une sortie autorisant l’écriture | Les fichiers qui exigent une revue supplémentaire avant qu’un changement soit appliqué |
+
+Pour le modèle mental complet derrière ces couches, lisez [Quête annexe : architecture de sécurité des agentic workflows (comme si vous aviez 5 ans)](side-quest-17-02-security-architecture.md).
+
+---
+
+## Modèle en lecture seule
+
+Si votre workflow n'a besoin que d'observer l'etat du depot, gardez-le en lecture seule :
 
 ```markdown
 ---
 permissions:
-  contents: read
-  issues: read
-  pull-requests: read
-  copilot-requests: write
+    contents: read
+    issues: read
+    pull-requests: read
+    copilot-requests: write
 tools:
-  github:
-    mode: gh-proxy
-    toolsets: [default]
+    github:
+        mode: gh-proxy
+        toolsets: [default]
 ---
 ```
 
-With this setup, the agent can read data and generate output. It has no path to create a PR, post a comment, or modify any file.
+Avec cette configuration, l’agent peut lire des données et générer une sortie. Il n’a aucun chemin pour créer une PR, publier un commentaire ou modifier un fichier.
 
-### :hammer_and_wrench: Try it: audit your own workflow
+### :hammer_and_wrench: Essayez : auditez votre propre workflow
 
-Open your workflow file. Check the `permissions:` block and answer these three questions:
+Ouvrez votre fichier de workflow. Vérifiez le bloc `permissions:` et répondez à ces trois questions :
 
-- [ ] Does every permission listed have a clear reason tied to your task?
-- [ ] Are there any `write` permissions that your task does not actually use?
-- [ ] Could you replace any `write` permission with `read` and the workflow would still work?
+- [ ] Chaque permission listée a-t-elle une raison claire liée à votre tâche ?
+- [ ] Existe-t-il des permissions `write` que votre tâche n’utilise pas réellement ?
+- [ ] Pourriez-vous remplacer une permission `write` par `read` tout en gardant un workflow fonctionnel ?
 
-If you answered "yes" to the second or third question, remove or downgrade that permission now.
+Si vous avez répondu oui à la deuxième ou à la troisième question, supprimez ou réduisez cette permission maintenant.
 
 ---
 
-## Write-enabled pattern with protected files
+## Modèle avec écriture autorisée et fichiers protégés
 
-When the agent needs to propose changes, keep the write surface narrow and protect sensitive files:
+Lorsque l'agent doit proposer des changements, gardez la surface d'ecriture etroite et protegez les fichiers sensibles :
 
 ```markdown
 ---
 permissions:
-  contents: read
-  pull-requests: read
-  copilot-requests: write
+    contents: read
+    pull-requests: read
+    copilot-requests: write
 tools:
-  github:
-    mode: gh-proxy
-    toolsets: [default]
+    github:
+        mode: gh-proxy
+        toolsets: [default]
 safe-outputs:
-  create-pull-request:
-    protected-files:
-      policy: request_review
-      exclude:
-        - "README.md"
-        - ".github/workflows/**"
-    allowed-files:
-      - "workshop/*.md"
-      - "workshop/**/*.md"
+    create-pull-request:
+        protected-files:
+            policy: request_review
+            exclude:
+                - 'README.md'
+                - '.github/workflows/**'
+        allowed-files:
+            - 'workshop/*.md'
+            - 'workshop/**/*.md'
 ---
 ```
 
-This does **not** give the agent open-ended write access. It gives the agent one constrained path: propose a pull request, limited to specific files, with extra review if the change reaches protected paths.
+Cela ne donne **pas** à l’agent un accès en écriture ouvert. Cela lui donne un seul chemin contraint : proposer une pull request, limitée à des fichiers précis, avec une revue supplémentaire si le changement atteint des chemins protégés.
 
-That is the key defence. A misdirected agent cannot silently turn a docs task into arbitrary repository mutation.
+C’est la défense clé. Un agent mal orienté ne peut pas transformer silencieusement une tâche documentaire en mutation arbitraire du dépôt.
 
-### :hammer_and_wrench: Try it: add [protected-files](https://github.github.com/gh-aw/reference/safe-outputs-pull-requests/) to your workflow
+### :hammer_and_wrench: Essayez : ajoutez [protected-files](https://github.github.com/gh-aw/reference/safe-outputs-pull-requests/) à votre workflow
 
-1. Open your workflow file and find the `safe-outputs` block.
-2. Add a `protected-files` entry that excludes `.github/workflows/daily-status.md`.
-3. Before you save, predict: what would happen if the agent tried to modify `.github/workflows/daily-status.md`?
+1. Ouvrez votre fichier de workflow et trouvez le bloc `safe-outputs`.
+2. Ajoutez une entrée `protected-files` qui exclut `.github/workflows/daily-status.md`.
+3. Avant d’enregistrer, prédisez ce qui se passerait si l’agent essayait de modifier `.github/workflows/daily-status.md`.
 
-Write your prediction here, then save and run the workflow to check it:
+Écrivez votre prédiction ici, puis enregistrez et lancez le workflow pour la vérifier :
 
-> _My prediction: ..._
+> _Ma prédiction : ..._
 
 ---
 
-## Best practices for workflow authors
+## Bonnes pratiques pour les auteurs de workflow
 
-| Practice | Why it helps |
-|---|---|
-| Start with the smallest `permissions:` block | Removes capability before the agent ever runs |
-| Add `safe-outputs` only when the task needs a write action | Prevents accidental write paths in read-only workflows |
-| Use `allowed-files` to scope writes to one part of the repo | Stops a narrow task from spilling into unrelated files |
-| Add `protected-files` for high-risk paths | Forces human review before sensitive files change |
-| Treat [task brief](https://github.github.com/gh-aw/reference/markdown/) and capability scoping as one design problem | A clear brief helps, but boundaries must hold when the brief is ignored |
+| Pratique                                                                                                                                      | Pourquoi c’est utile                                                            |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Commencer avec le plus petit bloc `permissions:` possible                                                                                     | Supprime des capacités avant même que l’agent ne s’exécute                      |
+| Ajouter `safe-outputs` seulement quand la tâche exige une action d’écriture                                                                   | Évite des chemins d’écriture accidentels dans des workflows en lecture seule    |
+| Utiliser `allowed-files` pour limiter les écritures à une partie du dépôt                                                                     | Empêche qu’une tâche étroite déborde sur des fichiers sans rapport              |
+| Ajouter `protected-files` pour les chemins à haut risque                                                                                      | Force une revue humaine avant toute modification de fichiers sensibles          |
+| Traiter le [task brief](https://github.github.com/gh-aw/reference/markdown/) et le cadrage des capacités comme un seul problème de conception | Un brief clair aide, mais les limites doivent tenir même si le brief est ignoré |
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can explain permission escalation in plain English
-- [ ] You audited your own `permissions:` block against the principle of least privilege
-- [ ] You can describe how `permissions:`, `safe-outputs`, and `protected-files` work together
-- [ ] You added `protected-files` to your workflow and predicted what it would block
+- [ ] Vous pouvez expliquer la permission escalation en langage simple
+- [ ] Vous avez audité votre propre bloc `permissions:` au regard du principe du moindre privilège
+- [ ] Vous pouvez décrire comment `permissions:`, `safe-outputs` et `protected-files` fonctionnent ensemble
+- [ ] Vous avez ajouté `protected-files` à votre workflow et prédit ce que cela bloquerait
 
 ---
 
 <!-- journey: all -->
-Return to [Give Your Agent More Tools with MCP](17-add-mcp-tools.md).
+
+Retour à [Donner plus d’outils à votre agent avec MCP](17-add-mcp-tools.md).
+
 <!-- /journey -->
-
-

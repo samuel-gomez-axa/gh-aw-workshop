@@ -1,98 +1,101 @@
 <!-- page-journey: codespace -->
 <!-- page-adventure: setup -->
-# Set Up a Codespace
 
-## :clipboard: Before You Start
+# Configurer un Codespace
 
-- [ ] You have a GitHub account with access to GitHub Codespaces
-- [ ] Your account can create public repositories (free tier works)
-- [ ] You want a browser-based terminal and do not need to install tools locally
+## :clipboard: Avant de commencer
+
+- [ ] Vous avez un compte GitHub avec accès à GitHub Codespaces
+- [ ] Votre compte peut créer des dépôts publics (le niveau gratuit convient)
+- [ ] Vous voulez un terminal dans le navigateur et n’avez pas besoin d’installer d’outils localement
 
 > [!TIP]
-> Not sure if your plan includes Codespaces? Free GitHub accounts include 60 hours/month. Check your [billing settings](https://github.com/settings/billing/summary) or ask your organization admin.
+> Vous ne savez pas si votre offre inclut Codespaces ? Les comptes GitHub gratuits incluent 60 heures par mois. Vérifiez vos [paramètres de facturation](https://github.com/settings/billing/summary) ou demandez à l’administrateur de votre organisation.
 
-## :dart: What You'll Do
+## :dart: Ce que vous allez faire
 
-You'll launch a GitHub Codespace for this workshop, open the built-in terminal, and land in a ready-to-use environment for the next step.
+Vous allez lancer un GitHub Codespace pour cet atelier, ouvrir le terminal intégré et arriver dans un environnement prêt à l’emploi pour l’étape suivante.
 
-Codespaces is the recommended environment for this workshop and the path used throughout the core steps.
+Codespaces est l’environnement recommandé pour cet atelier et le chemin utilisé tout au long des étapes principales.
 
-## Steps
+## Étapes
 
-These steps take about 5 minutes. If you get stuck on any command, [Side Quest: Terminal Basics](side-quest-01-01-terminal-basics.md) is a 2-minute read.
+Ces étapes prennent environ 5 minutes. Si vous bloquez sur une commande, [Side Quest: Terminal Basics](side-quest-01-01-terminal-basics.md) se lit en 2 minutes.
 
-### New repository
+### Nouveau dépôt
 
-1. Create your own public repository at [github.com/new](https://github.com/new):
-   - Choose yourself as owner.
-   - Visibility **Private**, it's good to learn on our own. We can make it public later if we want to share our work.
-   - Name it `my-agentic-workflows`.
-   - Check **Add a README file**.
-   - Click **Create repository**.
+1. Créez votre propre dépôt public sur [github.com/new](https://github.com/new) :
 
-### Open the Codespace
+- Choisissez-vous comme propriétaire.
+- Choisissez la visibilité **Private** ; il est préférable d’apprendre dans votre coin. Vous pourrez le rendre public plus tard si vous voulez partager votre travail.
+- Nommez-le `my-agentic-workflows`.
+- Cochez **Add a README file**.
+- Cliquez sur **Create repository**.
 
-1. In your new repository, click the green **Code** button.
-2. Click the **Codespaces** tab.
-   - Leave **main** selected as the branch.
-   - Click **Create codespace on main**.
-   - Wait 30–60 seconds for GitHub to prepare the container.
-3. The Codespace opens in a new browser tab showing a VS Code-style editor. Leave this tab open for the rest of the workshop.
+### Ouvrez le Codespace
+
+1. Dans votre nouveau dépôt, cliquez sur le bouton vert **Code**.
+2. Cliquez sur l’onglet **Codespaces**.
+    - Laissez **main** sélectionné comme branche.
+    - Cliquez sur **Create codespace on main**.
+    - Attendez 30 à 60 secondes pendant que GitHub prépare le conteneur.
+3. Le Codespace s’ouvre dans un nouvel onglet du navigateur avec un éditeur de style VS Code. Laissez cet onglet ouvert pour le reste de l’atelier.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/02a-open-codespace-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/02a-open-codespace-light.svg">
-  <img alt="Open Codespace" src="images/02a-open-codespace-light.svg">
+  <img alt="Ouvrir le Codespace" src="images/02a-open-codespace-light.svg">
 </picture>
 
-Codespaces auto-save your work. If you close the tab, open [github.com/codespaces](https://github.com/codespaces) to resume where you left off.
+Codespaces enregistre automatiquement votre travail. Si vous fermez l’onglet, ouvrez [github.com/codespaces](https://github.com/codespaces) pour reprendre là où vous vous êtes arrêté.
 
-<details>
-<summary>Codespace not appearing or taking too long?</summary>
+<details open>
+<summary>Le Codespace n’apparaît pas ou prend trop de temps ?</summary>
 
-- **"Create codespace on main" is greyed out** — your account may not have Codespaces enabled. Check your GitHub plan details or ask your organization admin.
-- **Spinner runs more than 3 minutes** — refresh the browser tab. If still stuck, go to [github.com/codespaces](https://github.com/codespaces), find the pending Codespace, click **⋯ → Delete**, and try again.
-- **"Codespace storage limit reached"** — you may have existing Codespaces using your quota. Visit [github.com/codespaces](https://github.com/codespaces), delete any you no longer need, and retry.
-- **VS Code desktop opens instead of the browser** — see [Side Quest: Install Local](side-quest-06-04-install-local.md) if you prefer that path, or click **Open in Browser** to continue here.
+- **"Create codespace on main" est grisé** : votre compte n’a peut-être pas Codespaces activé. Vérifiez les détails de votre offre GitHub ou demandez à l’administrateur de votre organisation.
+- **L’indicateur de chargement tourne plus de 3 minutes** : actualisez l’onglet du navigateur. Si cela reste bloqué, allez sur [github.com/codespaces](https://github.com/codespaces), trouvez le Codespace en attente, cliquez sur **⋯ → Delete** et réessayez.
+- **"Codespace storage limit reached"** : vous avez peut-être déjà des Codespaces qui utilisent votre quota. Rendez-vous sur [github.com/codespaces](https://github.com/codespaces), supprimez ceux dont vous n’avez plus besoin, puis réessayez.
+- **VS Code desktop s’ouvre au lieu du navigateur** : consultez [Side Quest: Install Local](side-quest-06-04-install-local.md) si vous préférez cette option, ou cliquez sur **Open in Browser** pour continuer ici.
 
 </details>
 
-### Open the Codespace terminal
+### Ouvrez le terminal du Codespace
 
-1. When the Codespace editor loads, open the built-in terminal with **Ctrl+\`** (or **Cmd+Option+\`** on Mac).
-2. Wait for the terminal prompt to appear.
-3. Keep this terminal open. It is already inside your practice repository.
+1. Une fois l’éditeur du Codespace chargé, ouvrez le terminal intégré avec **Ctrl+\`** (ou **Cmd+Option+\`** sur Mac).
+2. Attendez que l’invite du terminal apparaisse.
+3. Gardez ce terminal ouvert. Il se trouve déjà dans votre dépôt d’entraînement.
 
 > [!TIP]
-> If the terminal in your Codespace shows a `$` prompt, the container is ready. If you see a permission error when running `gh auth status`, try `gh auth login` to authenticate.
+> Si le terminal de votre Codespace affiche une invite `$`, le conteneur est prêt. Si vous voyez une erreur de permission en exécutant `gh auth status`, essayez `gh auth login` pour vous authentifier.
 
-<details>
-<summary>First time in a terminal?</summary>
+<details open>
+<summary>Première fois dans un terminal ?</summary>
 
-Type your command after the `$` prompt and press Enter. Output appears below; a new `$` prompt means the command finished. See [Side Quest: Terminal Basics](side-quest-01-01-terminal-basics.md) for more.
+Tapez votre commande après l’invite `$`, puis appuyez sur Entrée. La sortie s’affiche en dessous ; une nouvelle invite `$` signifie que la commande est terminée. Consultez [Side Quest: Terminal Basics](side-quest-01-01-terminal-basics.md) pour plus de détails.
 
 </details>
 
-### Verify your Codespace is ready
+### Vérifiez que votre Codespace est prêt
 
-The diagram below shows your Codespace connection to GitHub.
+Le schéma ci-dessous montre la connexion entre votre Codespace et GitHub.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/02a-codespace-architecture-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/02a-codespace-architecture-light.svg">
-  <img alt="Codespace environment architecture: your browser connects to a cloud container with pre-installed tools, which communicates with GitHub" src="images/02a-codespace-architecture-light.svg">
+  <img alt="Architecture de l’environnement Codespace : votre navigateur se connecte à un conteneur cloud avec des outils préinstallés, qui communique avec GitHub" src="images/02a-codespace-architecture-light.svg">
 </picture>
 
-1. Run these commands in the Codespace terminal:
+1. Exécutez ces commandes dans le terminal du Codespace :
 
 ```bash
 gh --version
 gh auth status
 ```
-1. Confirm `gh --version` shows `gh version 2.40.0` or newer.
-2. Confirm `gh auth status` shows you are logged in to `github.com`.
 
-_What success looks like:_
+1. Vérifiez que `gh --version` affiche `gh version 2.40.0` ou une version plus récente.
+2. Vérifiez que `gh auth status` indique que vous êtes connecté à `github.com`.
+
+_Voici à quoi ressemble une réussite :_
 
 ```text
 gh version 2.40.0 (2024-01-01)
@@ -103,13 +106,15 @@ github.com
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You confirmed your GitHub plan includes Codespaces access (free tier includes 60 hours/month)
-- [ ] The Codespace editor is open in your browser
-- [ ] The built-in terminal is open in your Codespace
-- [ ] `gh --version` returns version 2.40.0 or newer
-- [ ] `gh auth status` confirms you are logged in to `github.com`
-- [ ] The Codespace is attached to your `my-agentic-workflows` practice repository
+- [ ] Vous avez confirmé que votre offre GitHub inclut l’accès à Codespaces (le niveau gratuit inclut 60 heures par mois)
+- [ ] L’éditeur du Codespace est ouvert dans votre navigateur
+- [ ] Le terminal intégré est ouvert dans votre Codespace
+- [ ] `gh --version` renvoie la version 2.40.0 ou une version plus récente
+- [ ] `gh auth status` confirme que vous êtes connecté à `github.com`
+- [ ] Le Codespace est rattaché à votre dépôt d’entraînement `my-agentic-workflows`
 
 <!-- journey: codespace -->
-**Next:** [GitHub Actions Intro](04-github-actions-intro.md)
+
+**Étape suivante :** [Introduction à GitHub Actions](04-github-actions-intro.md)
+
 <!-- /journey -->

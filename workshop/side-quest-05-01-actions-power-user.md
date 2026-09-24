@@ -1,137 +1,140 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Agentic Workflows for GitHub Actions Power Users
 
-> _Optional: read this quick-reference guide if you already know GitHub Actions and want a fast comparison before continuing with [Step 5](05-agentic-workflows-intro.md)._
+# Side Quest : Agentic Workflows pour utilisateurs avancés de GitHub Actions
 
-## :clipboard: Before You Start
+> _Facultatif : lisez ce guide de référence rapide si vous connaissez déjà GitHub Actions et voulez une comparaison rapide avant de continuer avec [Step 5](05-agentic-workflows-intro.md)._
 
-To get the most out of this fast-track guide, you should have already:
+## :clipboard: Avant de commencer
 
-- Completed [GitHub Actions in 5 Minutes](04-github-actions-intro.md) — or have hands-on experience authoring `.github/workflows/*.yml` files.
-- Understood the core Actions concepts: triggers (`on:`), jobs, steps, and runners.
-- Optionally reviewed [What Are Agentic Workflows?](05-agentic-workflows-intro.md) for a beginner-friendly introduction before using this cheat sheet.
+Pour tirer le meilleur parti de ce guide accéléré, vous devriez déjà avoir :
 
-## :dart: What You'll Do
+- Terminé [GitHub Actions en 5 minutes](04-github-actions-intro.md), ou avoir une expérience pratique de rédaction de fichiers `.github/workflows/*.yml`.
+- Compris les concepts centraux d’Actions : triggers (`on:`), jobs, steps et runners.
+- Éventuellement parcouru [Que sont les agentic workflows ?](05-agentic-workflows-intro.md) pour une introduction adaptée aux débutants avant d’utiliser cette fiche mémo.
 
-Review the key shift from classic Actions to agentic workflows, compare concrete code examples, and keep a short list of what stays unchanged. By the end, you'll have a practical adoption lens for platform and DevOps use cases.
+## :dart: Ce que vous allez faire
 
-## The core mental model shift
+Vous allez examiner le changement clé entre des Actions classiques et des agentic workflows, comparer des exemples de code concrets et retenir une courte liste de ce qui ne change pas. À la fin, vous aurez un angle d’adoption pratique pour des cas d’usage platform et DevOps.
 
-You keep the same GitHub Actions foundations — triggers, [permissions](https://github.github.com/gh-aw/reference/permissions/), runners, repo context, and pull-request review flow — and add an agentic layer on top. In practice, this is a smooth transition: [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) stays Actions-compatible, while the Markdown body captures the goal and reasoning instructions for the agent.
+## Le changement central de modèle mental
 
-## Before and After: Classic Actions vs. Agentic Workflows
+Vous conservez les mêmes fondations GitHub Actions, triggers, [permissions](https://github.github.com/gh-aw/reference/permissions/), runners, contexte du dépôt et flux de review de pull request, puis vous ajoutez par-dessus une couche agentique. En pratique, la transition est fluide : le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) reste compatible avec Actions, tandis que le corps Markdown porte l’objectif et les consignes de raisonnement de l’agent.
 
-The biggest shift is replacing imperative shell steps with a plain-language goal. Here is the same "triage an issue" task written both ways.
+## Avant et après : Actions classiques vs agentic workflows
 
-**Classic GitHub Actions** — every decision is hard-coded in shell (simplified for illustration):
+Le changement le plus important consiste à remplacer des étapes shell impératives par un objectif en langage naturel. Voici la même tâche de triage d’issue écrite de deux façons.
+
+**GitHub Actions classiques** — chaque décision est codée en dur dans le shell (version simplifiée pour l’illustration) :
 
 ```yaml
 on: [issues]
 jobs:
-  triage:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Apply bug label
-        run: |
-          # Must hard-code every label check
-          if echo "${{ github.event.issue.body }}" | grep -qi "error\|exception"; then
-            gh issue edit ${{ github.event.issue.number }} --add-label "bug"
-          fi
-          # Real workflows need more checks, error handling, and edge-case branches
+    triage:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Apply bug label
+              run: |
+                  # Must hard-code every label check
+                  if echo "${{ github.event.issue.body }}" | grep -qi "error\|exception"; then
+                    gh issue edit ${{ github.event.issue.number }} --add-label "bug"
+                  fi
+                  # Real workflows need more checks, error handling, and edge-case branches
 ```
 
-**Agentic workflow** — a plain-language goal replaces the shell logic:
+**Agentic workflow** — un objectif en langage naturel remplace la logique shell :
 
 ```markdown
 ---
 on: [issues]
 ---
+
 Read the opened issue body and apply the single most relevant label
 from the repository label list. Do not close or comment on the issue.
 ```
 
-Key differences at a glance:
+Différences clés en un coup d’œil :
 
-| | Classic Actions | Agentic workflows |
-|---|---|---|
-| **Logic** | Hard-coded shell; every branch written by hand | Delegated to agent; handles new cases automatically |
-| **Inputs** | Fixed; fails on unexpected values | Flexible; reasons through ambiguity at runtime |
-| **Output** | Command stdout | Prose summaries, decisions, action recommendations |
-| **Maintenance** | Update the workflow for each new case | Define guardrails once; agent handles variations |
-| **Best for** | Deterministic, reproducible tasks | Triage, summarization, planning, interpretation |
+|                 | Actions classiques                                      | Agentic workflows                                             |
+| --------------- | ------------------------------------------------------- | ------------------------------------------------------------- |
+| **Logique**     | Shell codé en dur ; chaque branche est écrite à la main | Déléguée à l’agent ; gère automatiquement de nouveaux cas     |
+| **Entrées**     | Fixes ; échoue sur les valeurs inattendues              | Flexibles ; raisonne sur l’ambiguïté à l’exécution            |
+| **Sortie**      | stdout de commande                                      | Résumés en prose, décisions, recommandations d’action         |
+| **Maintenance** | Mettre à jour le workflow pour chaque nouveau cas       | Définir les garde-fous une fois ; l’agent gère les variations |
+| **Idéal pour**  | Tâches déterministes et reproductibles                  | Triage, synthèse, planification, interprétation               |
 
-## Superset, not replacement
+## Un sur-ensemble, pas un remplacement
 
-Think of agentic workflows as a superset of Actions:
+Considérez les agentic workflows comme un sur-ensemble d’Actions :
 
-- Frontmatter remains compatible with the Actions model you already know.
-- The Markdown body becomes the runtime prompt and can include [templating](https://github.github.com/gh-aw/reference/templating/) and inline agent features.
-- You can still keep deterministic logic when that is the right tool for the job.
+- Le frontmatter reste compatible avec le modèle Actions que vous connaissez déjà.
+- Le corps Markdown devient le prompt d’exécution et peut inclure du [templating](https://github.github.com/gh-aw/reference/templating/) et des fonctionnalités d’agent inline.
+- Vous pouvez toujours conserver une logique déterministe quand c’est le bon outil pour le besoin.
 
-## Hybrid pattern for real teams
+## Modèle hybride pour les équipes réelles
 
-The diagram below shows the three-stage data flow: deterministic steps fetch and transform data, structured outputs bridge the two worlds, and the agent handles interpretation and communication.
+Le diagramme ci-dessous montre le flux de données en trois étapes : des étapes déterministes récupèrent et transforment les données, des sorties structurées font le lien entre les deux mondes et l’agent gère l’interprétation et la communication.
 
 <picture>
    <source media="(prefers-color-scheme: dark)" srcset="images/sq0501-hybrid-pattern-dark.svg">
    <source media="(prefers-color-scheme: light)" srcset="images/sq0501-hybrid-pattern-light.svg">
-   <img alt="Hybrid pattern diagram showing three stages: deterministic jobs fetch and transform data, structured outputs pass to the workflow body, and the agent handles interpretation and communication" src="images/sq0501-hybrid-pattern-light.svg">
+  <img alt="Diagramme de modèle hybride montrant trois étapes : des jobs déterministes récupèrent et transforment les données, des sorties structurées sont transmises au corps du workflow et l’agent gère l’interprétation et la communication" src="images/sq0501-hybrid-pattern-light.svg">
 </picture>
 
-A practical migration path is hybrid:
+Un chemin de migration pratique est hybride :
 
-1. Keep deterministic jobs or steps for stable data operations (fetch, transform, validate).
-2. Pass structured outputs into the workflow body.
-3. Let the agent handle interpretation, prioritization, and communication.
+1. Gardez des jobs ou steps déterministes pour les opérations de données stables (fetch, transform, validate).
+2. Passez des sorties structurées au corps du workflow.
+3. Laissez l’agent gérer l’interprétation, la priorisation et la communication.
 
-This pattern works well for platform and DevOps teams because you preserve deterministic guardrails while reducing hand-written branching logic for context-heavy decisions.
+Ce modèle fonctionne bien pour les équipes platform et DevOps parce qu’il préserve des garde-fous déterministes tout en réduisant la logique de branchement écrite à la main pour les décisions riches en contexte.
 
-## :hammer_and_wrench: Try it
+## :hammer_and_wrench: Essayez
 
-Open the workflow file you created in Step 4, or find a `run:` step in any `.github/workflows/*.yml` file. Pick one step that handles a decision — checking a label, parsing a PR title, or filtering by file path.
+Ouvrez le fichier de workflow que vous avez créé à l’étape 4, ou trouvez un step `run:` dans n’importe quel fichier `.github/workflows/*.yml`. Choisissez un step qui prend une décision : vérifier un label, analyser un titre de PR ou filtrer par chemin de fichier.
 
-Add a comment above that step with a one-sentence plain-language goal. The step body below is just a stand-in — your real step keeps its existing logic unchanged:
+Ajoutez un commentaire au-dessus de ce step avec un objectif en langage naturel en une phrase. Le corps du step ci-dessous n’est qu’un exemple : votre vrai step conserve sa logique existante sans changement.
 
 ```markdown
 # Goal: suggest up to three relevant labels from the repo label list
+
 - name: Check labels
   run: |
     # ... your existing logic stays here unchanged
 ```
 
-Keep this goal statement handy — you will use it when authoring your first agentic workflow in [Step 7](07-your-first-workflow.md).
+Gardez cet énoncé d’objectif à portée de main : vous l’utiliserez lorsque vous rédigerez votre premier agentic workflow dans [l’étape 7](07-your-first-workflow.md).
 
-## What stays the same
+## Ce qui reste identique
 
-- Workflows still run in GitHub Actions [runners](https://github.github.com/gh-aw/reference/self-hosted-runners/)
-- [Triggers](https://github.github.com/gh-aw/reference/triggers/), permissions, and repository context still matter
-- You still version workflows in git and review them like code
+- Les workflows s’exécutent toujours sur des [runners](https://github.github.com/gh-aw/reference/self-hosted-runners/) GitHub Actions
+- Les [triggers](https://github.github.com/gh-aw/reference/triggers/), les permissions et le contexte du dépôt restent importants
+- Vous continuez à versionner les workflows dans git et à les relire comme du code
 
-The same authoring and review workflow applies everywhere — only the runner configuration differs.
+Le même flux de rédaction et de review s’applique partout ; seule la configuration du runner change.
 
-## Why platform and DevOps teams adopt this model
+## Pourquoi les équipes platform et DevOps adoptent ce modèle
 
-For platform engineers and DevOps teams evaluating adoption, agentic workflows cut the cost of maintaining bespoke scripted automation:
+Pour les ingénieurs platform et les équipes DevOps qui évaluent l’adoption, les agentic workflows réduisent le coût de maintenance d’automatisations scriptées sur mesure :
 
-- Less time updating fragile shell scripts; more time on higher-value work
-- Every definition is a versioned Markdown file reviewed in a pull request
-- Full auditability, change history, and approval gates stay intact
-- Compatible with existing runner fleet investments and compliance requirements
+- Moins de temps passé à mettre à jour des scripts shell fragiles ; plus de temps consacré à des travaux à plus forte valeur
+- Chaque définition est un fichier Markdown versionné relu dans une pull request
+- L’auditabilité complète, l’historique des changements et les gates d’approbation restent intacts
+- Compatible avec les investissements existants dans des flottes de runners et avec les exigences de conformité
 
 <!-- journey: all -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] I can explain the mental model shift from scripted steps to goal-oriented execution
-- [ ] I can identify what changes in agentic workflows and what stays the same from classic Actions
-- [ ] I can explain why agentic workflows are best described as an Actions-compatible superset
-- [ ] I identified one specific `run:` step in an existing workflow that could be replaced with a goal statement
-- [ ] I can describe one scenario where classic Actions is still the right choice
-- [ ] I can explain why this model can reduce automation maintenance overhead for platform teams
+- [ ] Je peux expliquer le changement de modèle mental entre des steps scriptés et une exécution orientée objectif
+- [ ] Je peux identifier ce qui change dans les agentic workflows et ce qui reste identique par rapport aux Actions classiques
+- [ ] Je peux expliquer pourquoi les agentic workflows sont mieux décrits comme un sur-ensemble compatible avec Actions
+- [ ] J’ai identifié un step `run:` précis dans un workflow existant qui pourrait être remplacé par un énoncé d’objectif
+- [ ] Je peux décrire un scénario où Classic Actions reste le bon choix
+- [ ] Je peux expliquer pourquoi ce modèle peut réduire la charge de maintenance d’automatisation pour les équipes platform
 
 ---
 
-Return to the main adventure: [What Are Agentic Workflows?](05-agentic-workflows-intro.md).
+Revenez à l’aventure principale : [Que sont les agentic workflows ?](05-agentic-workflows-intro.md).
 
 <!-- /journey -->
-

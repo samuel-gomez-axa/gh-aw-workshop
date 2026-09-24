@@ -1,78 +1,78 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
 
-# Side Quest: Evaluating and Iterating on Agent Output
+# Quête Annexe : Évaluer Et Itérer Sur La Sortie De L'agent
 
-> _Optional: use this side quest when you want a repeatable way to judge one workflow run, improve one sentence in the workflow brief, and compare the result — then return to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md)._
+> _Facultatif : utilisez cette quête annexe lorsque vous voulez une méthode répétable pour juger un run de workflow, améliorer une phrase du brief du workflow et comparer le résultat, puis revenez à [Affiner, tester et améliorer votre workflow](09-agentic-editing.md)._
 
-## :dart: What You'll Do
+## :dart: Ce Que Vous Allez Faire
 
-Run your workflow once, score the output with a short rubric, change one sentence in the brief, and run it again. By the end, you will have a before/after comparison instead of a vague feeling that the prompt is "better."
+Exécutez votre workflow une fois, évaluez la sortie avec une courte grille, modifiez une phrase du brief, puis relancez-le. À la fin, vous aurez une comparaison avant/après au lieu d'une impression vague que le prompt est "better."
 
-## :clipboard: Before You Start
+## :clipboard: Avant De Commencer
 
-- You have completed [Step 9](09-agentic-editing.md) and already have a workflow run to inspect.
-- Your workflow posts to a [safe output surface](https://github.github.com/gh-aw/reference/safe-outputs/) such as the **Daily Status Reports** issue.
+- Vous avez terminé [Step 9](09-agentic-editing.md) et disposez déjà d'un run de workflow à inspecter.
+- Votre workflow publie sur une [safe output surface](https://github.github.com/gh-aw/reference/safe-outputs/) telle que l'issue **Daily Status Reports**.
 
-## Baseline run
+## Run De Référence
 
-Use the **Actions** tab to trigger your workflow one more time so you have a fresh example to score.
+Utilisez l'onglet **Actions** pour déclencher votre workflow une fois de plus afin d'avoir un exemple récent à évaluer.
 
-If you prefer to collect the latest run files from a terminal, these example `gh` commands pull the newest run ID and download any artifacts it uploaded:
+Si vous préférez récupérer les fichiers du dernier run depuis un terminal, ces commandes `gh` d'exemple récupèrent l'ID du run le plus récent et téléchargent les artifacts qu'il a publiés :
 
 ```bash
 RUN_ID=$(gh run list --workflow "Daily Repo Status" --limit 1 --json databaseId --jq '.[0].databaseId')
 gh run download "$RUN_ID" --dir /tmp/daily-status-run
 ```
 
-If your workflow does not upload an artifact, skip the download and score the latest issue comment directly.
+Si votre workflow ne publie pas d'artifact, ignorez le téléchargement et évaluez directement le dernier commentaire d'issue.
 
-## Score the output with a 3-row rubric
+## Évaluez La Sortie Avec Une Grille En 3 Lignes
 
-Open the latest issue comment or downloaded output and score each row from 0 to 2.
+Ouvrez le dernier commentaire d'issue ou la sortie téléchargée et attribuez une note de 0 à 2 à chaque ligne.
 
-| Dimension    | 2 points                                           | 1 point                                          | 0 points                                       |
-| ------------ | -------------------------------------------------- | ------------------------------------------------ | ---------------------------------------------- |
-| Accuracy     | Every fact matches what you can verify in the repo | One fact is unclear or needs manual checking     | A fact is wrong, missing, or obviously guessed |
-| Completeness | Every field you asked for is present               | One requested field is thin or partially missing | Multiple requested fields are missing          |
-| Tone         | The wording sounds like the voice you asked for    | The wording is usable but generic                | The wording feels robotic or off-brand         |
+| Dimension  | 2 points                                                           | 1 point                                                      | 0 point                                             |
+| ---------- | ------------------------------------------------------------------ | ------------------------------------------------------------ | --------------------------------------------------- |
+| Précision  | Chaque fait correspond à ce que vous pouvez vérifier dans le dépôt | Un fait n'est pas clair ou demande une vérification manuelle | Un fait est faux, manquant ou manifestement inventé |
+| Complétude | Tous les champs demandés sont présents                             | Un champ demandé est mince ou partiellement manquant         | Plusieurs champs demandés sont absents              |
+| Ton        | La formulation correspond à la voix demandée                       | La formulation est exploitable mais générique                | La formulation paraît robotique ou hors ton         |
 
-Record the baseline before you edit anything. For example:
+Notez le score de référence avant de modifier quoi que ce soit. Par exemple :
 
 ```text
 Before: Accuracy 2, Completeness 1, Tone 0
 Lowest score: Tone
 ```
 
-## Make one targeted change
+## Faites Un Changement Ciblé
 
-Pick the lowest-scoring row and modify or add only **one sentence** in your [workflow brief](https://github.github.com/gh-aw/reference/markdown/) to address it.
+Prenez la ligne avec la note la plus basse et modifiez ou ajoutez une seule **phrase** dans votre [workflow brief](https://github.github.com/gh-aw/reference/markdown/) pour y répondre.
 
-| Lowest score | One sentence to modify or add                                                    |
-| ------------ | -------------------------------------------------------------------------------- |
-| Accuracy     | Tell the agent not to invent numbers and to skip anything it cannot verify.      |
-| Completeness | Name the missing field, such as "Include the age of the oldest open PR."         |
-| Tone         | Describe the voice you want, such as "Write in a friendly, conversational tone." |
+| Note la plus basse | Une phrase à modifier ou à ajouter                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------ |
+| Précision          | Dites à l'agent de ne pas inventer de chiffres et d'ignorer ce qu'il ne peut pas vérifier. |
+| Complétude         | Nommez le champ manquant, par exemple "Include the age of the oldest open PR."             |
+| Ton                | Décrivez la voix voulue, par exemple "Write in a friendly, conversational tone."           |
 
-If you use the GitHub Copilot **Agents** tab or the [GitHub Copilot app](side-quest-01-02-environment-reference.md#github-copilot-app), ask for one focused update:
+Si vous utilisez l'onglet **Agents** de GitHub Copilot ou la [GitHub Copilot app](side-quest-01-02-environment-reference.md#github-copilot-app), demandez une mise à jour ciblée :
 
 ```prompt
 Using the agentic-workflows skill, update .github/workflows/daily-status.md
 by changing one sentence in the Markdown body to improve Tone.
 ```
 
-If you are working in a browser-based environment without terminal access, use that agent path instead of the terminal path below.
+Si vous travaillez dans un environnement navigateur sans accès au terminal, utilisez ce parcours agent à la place du parcours terminal ci-dessous.
 
-If you have a terminal open, open `.github/workflows/daily-status.md` and edit the Markdown body directly — no recompilation needed for body-only changes.
+Si vous avez un terminal ouvert, ouvrez `.github/workflows/daily-status.md` et modifiez directement le Markdown body : aucune recompilation n'est nécessaire pour des changements limités au body.
 
 > [!NOTE]
-> `gh aw compile` is only required when you change the **frontmatter** ([triggers](https://github.github.com/gh-aw/reference/triggers/), permissions, or other YAML fields). Editing the Markdown task brief takes effect on the next run without recompiling.
+> `gh aw compile` n'est requis que lorsque vous modifiez le **frontmatter**, [triggers](https://github.github.com/gh-aw/reference/triggers/), permissions ou autres champs YAML. Modifier le brief de tâche Markdown prend effet au run suivant sans recompilation.
 
-## Before and after comparison
+## Comparaison Avant/Après
 
-Trigger the workflow again from **Actions** and score the new output with the same rubric.
+Déclenchez de nouveau le workflow depuis **Actions** et évaluez la nouvelle sortie avec la même grille.
 
-Write your result in a short before/after comparison:
+Consignez votre résultat dans une courte comparaison avant/après :
 
 ```text
 Before: Accuracy 2, Completeness 1, Tone 0
@@ -80,40 +80,40 @@ After: Accuracy 2, Completeness 2, Tone 2
 Changed sentence: "Write in a friendly, conversational tone."
 ```
 
-If the lowest row did not improve, keep the first change in place, pick one different instruction to modify or add, and run the same loop again.
+Si la ligne la plus faible ne s'est pas améliorée, gardez le premier changement, choisissez une autre instruction à modifier ou ajouter et refaites la même boucle.
 
-## Read the run log for errors
+## Lisez Le Journal Du Run Pour Repérer Les Erreurs
 
-<details>
-<summary>Need ideas for what to change or where to look for errors?</summary>
+<details open>
+<summary>Besoin d'idées sur ce qu'il faut modifier ou où chercher les erreurs ?</summary>
 
-Quick problem-to-fix guide:
+Guide rapide problème → correction :
 
-| Problem you see              | One sentence to add or tighten                                          |
-| ---------------------------- | ----------------------------------------------------------------------- |
-| Facts look guessed           | "Use only numbers you can verify from GitHub data or repository files." |
-| A requested field is missing | "Include the age of the oldest open PR if one exists."                  |
-| Tone feels stiff             | "Write in a friendly, conversational tone."                             |
-| The format drifts            | "Follow this exact heading and bullet structure."                       |
-| Duplicate comments appear    | "If you have already posted today, skip."                               |
+| Problème observé                        | Phrase à ajouter ou à resserrer                                         |
+| --------------------------------------- | ----------------------------------------------------------------------- |
+| Les faits semblent devinés              | "Use only numbers you can verify from GitHub data or repository files." |
+| Un champ demandé manque                 | "Include the age of the oldest open PR if one exists."                  |
+| Le ton paraît raide                     | "Write in a friendly, conversational tone."                             |
+| Le format dérive                        | "Follow this exact heading and bullet structure."                       |
+| Des commentaires dupliqués apparaissent | "If you have already posted today, skip."                               |
 
-Quick run-log check:
+Vérification rapide du run log :
 
-- **Compile error** — run `gh aw compile` locally, or ask your Copilot agent to run it and fix the reported line.
-- **Missing permissions** — re-check the [workflow frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) and confirm the safe output surface is declared correctly.
-- **Rate limits or transient failures** — wait a few minutes and re-run.
+- **Compile error** — exécutez `gh aw compile` en local, ou demandez à votre agent Copilot de le faire et de corriger la ligne signalée.
+- **Missing permissions** — revérifiez le [workflow frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) et confirmez que la safe output surface est correctement déclarée.
+- **Rate limits or transient failures** — attendez quelques minutes puis relancez.
 
 </details>
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You triggered a fresh workflow run and captured one real output to review
-- [ ] You recorded a baseline score for accuracy, completeness, and tone
-- [ ] You changed exactly one sentence in the workflow brief to target the lowest score
-- [ ] You triggered a second run and recorded a before/after comparison such as `Before: Accuracy 2, Completeness 1, Tone 0 → After: Accuracy 2, Completeness 2, Tone 2`
+- [ ] Vous avez déclenché un nouveau run de workflow et capturé une sortie réelle à examiner
+- [ ] Vous avez noté un score de référence pour l'accuracy, la completeness et le tone
+- [ ] Vous avez modifié exactement une phrase du workflow brief pour cibler la note la plus basse
+- [ ] Vous avez déclenché un second run et consigné une comparaison avant/après telle que `Before: Accuracy 2, Completeness 1, Tone 0 → After: Accuracy 2, Completeness 2, Tone 2`
 
 <!-- journey: all -->
 
-Return to [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
+Revenez à [Affiner, tester et améliorer votre workflow](09-agentic-editing.md).
 
 <!-- /journey -->

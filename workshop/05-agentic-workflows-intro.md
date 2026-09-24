@@ -1,145 +1,148 @@
 <!-- page-journey: all -->
 <!-- page-adventure: core -->
-# What Are Agentic Workflows?
 
-**Already familiar with both GitHub Actions and AI agent execution environments?**
+# Qu’est-ce qu’un Agentic Workflow ?
 
-Before skipping, confirm you already know both of these:
+**Vous connaissez déjà GitHub Actions et les environnements d’exécution d’agents IA ?**
 
-- You can describe what an Actions workflow [trigger](https://github.github.com/gh-aw/reference/triggers/) does
-- You have worked with AI agent execution environments in a production or CI/CD context
+Avant de passer cette étape, vérifiez que vous savez déjà ceci :
 
-If both apply, [Skip to Install gh-aw](06-install-gh-aw.md).
+- Vous pouvez décrire le rôle d’un [trigger](https://github.github.com/gh-aw/reference/triggers/) dans un workflow Actions
+- Vous avez déjà travaillé avec des environnements d’exécution d’agents IA dans un contexte de production ou de CI/CD
 
-## :clipboard: Before You Start
+Si les deux s’appliquent, [passez à Installer gh-aw](06-install-gh-aw.md).
 
-- You've read [What Are GitHub Actions?](04-github-actions-intro.md)
+## :clipboard: Avant de commencer
 
-An [**Agentic Workflow**](https://github.github.com/gh-aw/introduction/overview/) is a plain-English task brief that an AI agent executes inside GitHub Actions. You write what you want — "summarize open issues and post a daily digest" — and the agent reads your repo, calls tools, and posts the output automatically.
+- Vous avez lu [Qu’est-ce que GitHub Actions ?](04-github-actions-intro.md)
 
-Think of it like a scheduled digest: every morning it reads your inbox and sends you a summary — no keyboard required. The agent always runs in a [sandbox](https://github.github.com/gh-aw/reference/sandbox/) and posts results through guardrailed safe outputs. You will explore security in [How Agentic Workflows Stay Safe](05b-agentic-workflows-security.md).
+Un [**Agentic Workflow**](https://github.github.com/gh-aw/introduction/overview/) est un task brief en langage clair qu’un agent IA exécute dans GitHub Actions. Vous écrivez ce que vous voulez, par exemple « résumer les issues ouvertes et publier un digest quotidien », puis l’agent lit votre dépôt, appelle des outils et publie automatiquement la sortie.
 
-## Three key terms
+Imaginez un digest planifié : chaque matin, il lit votre boîte de réception et vous envoie un résumé, sans clavier. L’agent s’exécute toujours dans une [sandbox](https://github.github.com/gh-aw/reference/sandbox/) et publie les résultats via des safe outputs protégées par des garde-fous. Vous verrez l’aspect sécurité dans [Comment les Agentic Workflows restent sûrs](05b-agentic-workflows-security.md).
 
-| Term | What it means |
-|---|---|
-| [Trigger](https://github.github.com/gh-aw/reference/triggers/) | The event or schedule that starts the workflow |
-| [Task brief](https://github.github.com/gh-aw/reference/markdown/) | The plain-English instructions you write for the agent |
-| [Safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/) | The guardrails that control how the workflow writes back to GitHub |
+## Trois termes clés
 
-The diagram below shows how each term plays a role when the workflow runs.
+| Terme                                                                   | Ce que cela signifie                                                          |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| [Trigger](https://github.github.com/gh-aw/reference/triggers/)          | L’événement ou le planning qui démarre le workflow                            |
+| [Task brief](https://github.github.com/gh-aw/reference/markdown/)       | Les instructions en langage clair que vous écrivez pour l’agent               |
+| [Safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/) | Les garde-fous qui contrôlent la manière dont le workflow réécrit vers GitHub |
+
+Le schéma ci-dessous montre le rôle de chacun de ces termes lors de l’exécution du workflow.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/05-three-terms-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/05-three-terms-light.svg">
-  <img alt="Agentic workflow: three key terms in sequence. A Trigger (schedule or event) starts the workflow. The Task Brief (plain-English instructions) guides the AI agent as it reads repo data and calls tools. Safe Outputs (guardrailed write paths) control how results are posted back to GitHub." src="images/05-three-terms-light.svg">
+  <img alt="Agentic workflow : trois termes clés en séquence. Un Trigger, de type schedule ou événement, démarre le workflow. Le Task Brief, rédigé en langage clair, guide l’agent IA lorsqu’il lit les données du dépôt et appelle des outils. Les Safe Outputs, c’est-à-dire des chemins d’écriture protégés par des garde-fous, contrôlent la manière dont les résultats sont renvoyés vers GitHub." src="images/05-three-terms-light.svg">
 </picture>
 
-For a full glossary, see [Side Quest: Agentic Workflows Deep Dive](side-quest-05-02-aw-deep-dive.md).
+Pour un glossaire complet, consultez [Side Quest: Agentic Workflows Deep Dive](side-quest-05-02-aw-deep-dive.md).
 
-## The two-file structure
+## La structure à deux fichiers
 
-Before studying the diagram, write your prediction: what two files are involved, and which one does GitHub Actions actually run?
+Avant d’étudier le schéma, notez votre prédiction : quels sont les deux fichiers concernés, et lequel est réellement exécuté par GitHub Actions ?
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/05-workflow-lifecycle-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/05-workflow-lifecycle-light.svg">
-  <img alt="Agentic workflow lifecycle: a Markdown file with YAML frontmatter and a task brief is compiled by gh aw compile into a lock.yml file, which GitHub Actions triggers, runs the AI agent that reads repository data and calls tools, and produces a structured output posted back to GitHub" src="images/05-workflow-lifecycle-light.svg">
+  <img alt="Cycle de vie d’un agentic workflow : un fichier Markdown avec YAML frontmatter et un task brief est compilé par gh aw compile en fichier lock.yml ; GitHub Actions le déclenche, exécute l’agent IA qui lit les données du dépôt et appelle des outils, puis produit une sortie structurée renvoyée vers GitHub" src="images/05-workflow-lifecycle-light.svg">
 </picture>
 
-- **`.md` source file** — contains [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) (trigger, permissions, runner) and your plain-English task brief. You author and edit this file.
-- **`.lock.yml` compiled file** — [`gh aw compile`](https://github.github.com/gh-aw/reference/compilation-process/) generates it from the `.md`. GitHub Actions runs this file, not the `.md`. Never edit it by hand.
+- **`.md` source file** : contient le [YAML frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) avec le trigger, les permissions et le runner, ainsi que votre task brief en langage clair. C’est ce fichier que vous rédigez et modifiez.
+- **`.lock.yml` compiled file** : [`gh aw compile`](https://github.github.com/gh-aw/reference/compilation-process/) le génère à partir du `.md`. C’est ce fichier que GitHub Actions exécute, pas le `.md`. Ne le modifiez jamais à la main.
 
-**Activity 1 — identify the parts:** Open any `.lock.yml` file in your repo and find the `on:` key. That is the compiled trigger that came from your [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
+**Activité 1 : identifiez les parties :** ouvrez n’importe quel fichier `.lock.yml` dans votre dépôt et trouvez la clé `on:`. C’est le trigger compilé issu de votre [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/).
 
 ```
 # Example: open .github/workflows/my-workflow.lock.yml
 # Find the "on:" key — that is your compiled trigger.
 ```
 
-Now check your prediction: did you name both files and identify which one Actions runs (`.lock.yml`)?
+Vérifiez maintenant votre prédiction : avez-vous nommé les deux fichiers et identifié celui qu’Actions exécute (`.lock.yml`) ?
 
-## Activity 2 — agentic or standard?
+## Activité 2 : agentic ou standard ?
 
-The diagram below shows how the same schedule trigger leads to two very different outcomes — one driven by static YAML, the other by an AI agent with built-in safety guardrails.
+Le schéma ci-dessous montre comment un même trigger de type schedule peut mener à deux résultats très différents : l’un piloté par un YAML statique, l’autre par un agent IA avec des garde-fous de sécurité intégrés.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/00-actions-vs-agentic-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/00-actions-vs-agentic-light.svg">
-  <img alt="Side-by-side comparison of Classic GitHub Actions YAML versus an Agentic Workflow with safety highlights. Classic: schedule trigger flows through static YAML steps and shell scripts to produce output. Agentic: same trigger flows through a plain-English task brief with safety config (permissions, tools, safe-outputs) into a sandbox-isolated AI agent that applies integrity filtering and zero-secrets constraints, producing output only through declared safe-output surfaces." src="images/00-actions-vs-agentic-light.svg">
+  <img alt="Comparaison côte à côte entre un YAML GitHub Actions classique et un Agentic Workflow avec mise en avant des éléments de sécurité. Côté classique : un trigger schedule passe par des étapes YAML statiques et des scripts shell pour produire une sortie. Côté agentic : le même trigger passe par un task brief en langage clair avec une configuration de sécurité, incluant permissions, tools et safe-outputs, vers un agent IA isolé dans une sandbox qui applique un filtrage d’intégrité et des contraintes sans secrets, ne produisant une sortie que via des surfaces safe-output déclarées." src="images/00-actions-vs-agentic-light.svg">
 </picture>
 
-Read each task and decide before revealing the answer.
+Lisez chaque tâche et décidez avant d’afficher la réponse.
 
-**Task A:** Run lint and unit tests on every pull request, fail if any check exits non-zero.
+**Tâche A :** Run lint and unit tests on every pull request, fail if any check exits non-zero.
 
 <details>
-<summary>Reveal Task A answer</summary>
+<summary>Afficher la réponse de la tâche A</summary>
 
-**Standard Actions workflow.** Every run follows the same fixed steps. No judgment required.
+**Standard Actions workflow.** Chaque exécution suit les mêmes étapes fixes. Aucun jugement n’est nécessaire.
 
 </details>
 
-**Task B:** Each morning, read all open issues, decide which look most urgent, and post a short triage summary.
+**Tâche B :** Each morning, read all open issues, decide which look most urgent, and post a short triage summary.
 
 <details>
-<summary>Reveal Task B answer</summary>
+<summary>Afficher la réponse de la tâche B</summary>
 
-**Agentic workflow.** The agent reads live data, applies judgment, and composes a different summary every run based on what it finds.
+**Agentic workflow.** L’agent lit des données en direct, exerce un jugement et compose un résumé différent à chaque exécution selon ce qu’il trouve.
 
 </details>
 
-## Activity 3 — write a task brief
+## Activité 3 : rédigez un task brief
 
-Write a one- or two-sentence task brief for this goal before revealing the example:
+Rédigez un task brief d’une ou deux phrases pour cet objectif avant d’afficher l’exemple :
 
 > Post a daily issue digest that summarizes newly opened issues and flags anything urgent.
 
 ```
-Write your brief here before revealing the example.
+Rédigez votre brief ici avant d’afficher l’exemple.
 ```
 
 <details>
-<summary>Reveal one possible brief</summary>
+<summary>Afficher un exemple possible de brief</summary>
 
 You are a repository triage assistant. Each day, review issues opened in the last 24 hours, summarize each in one sentence, flag potential blockers, and post one concise digest comment for maintainers.
 
 </details>
 
-Check your brief against these three criteria:
+Vérifiez votre brief à l’aide de ces trois critères :
 
-- Does it include a **time window** (for example, "last 24 hours")?
-- Does it specify the **output format** (single digest comment)?
-- Does it define at least one **priority signal** (for example, blockers)?
+- Inclut-il une **fenêtre temporelle** comme « dernières 24 heures » ?
+- Spécifie-t-il le **format de sortie** comme un unique commentaire de digest ?
+- Définit-il au moins un **signal de priorité** comme des blocages ?
 
-If any answer is no, revise your brief before continuing.
+Si l’une des réponses est non, révisez votre brief avant de continuer.
 
 > [!TIP]
-> Want annotated examples and more exercises? See [Side Quest: Agentic Workflows Deep Dive](side-quest-05-02-aw-deep-dive.md).
+> Vous voulez des exemples annotés et davantage d’exercices ? Consultez [Side Quest: Agentic Workflows Deep Dive](side-quest-05-02-aw-deep-dive.md).
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can describe what an agentic workflow is in one sentence
-- [ ] You can explain one difference between an agentic and a standard Actions workflow
-- [ ] You know the three key terms: trigger, task brief, safe outputs
-- [ ] You know that `gh aw compile` generates `.lock.yml` from the `.md` source
-- [ ] You identified the `on:` key in a compiled `.lock.yml` file
-- [ ] Your task brief includes a time window, output format, and priority signal
+- [ ] Vous pouvez décrire en une phrase ce qu’est un agentic workflow
+- [ ] Vous pouvez expliquer une différence entre un agentic workflow et un workflow Actions standard
+- [ ] Vous connaissez les trois termes clés : trigger, task brief, safe outputs
+- [ ] Vous savez que `gh aw compile` génère `.lock.yml` à partir du fichier source `.md`
+- [ ] Vous avez identifié la clé `on:` dans un fichier compilé `.lock.yml`
+- [ ] Votre task brief inclut une fenêtre temporelle, un format de sortie et un signal de priorité
+
+<details open>
+<summary>Vous hésitez encore ? Essayez ceci avant de continuer</summary>
+
+Est-ce que `gh aw compile` change ce que fait l’agent au moment de l’exécution ? Décidez d’abord.
 
 <details>
-<summary>Still uncertain? Try this before moving on</summary>
+<summary>Afficher la réponse</summary>
 
-Does `gh aw compile` change what the agent does at runtime? Decide first.
-
-<details>
-<summary>Reveal</summary>
-
-No. Compile converts `.md` to `.lock.yml`. Runtime output comes from your task brief and live repo state.
+Non. Compile convertit `.md` en `.lock.yml`. La sortie à l’exécution provient de votre task brief et de l’état en direct du dépôt.
 
 </details>
 
 </details>
 
 <!-- journey: all -->
-**Next:** [How Agentic Workflows Stay Safe](05b-agentic-workflows-security.md)
+
+**Étape suivante :** [Comment les Agentic Workflows restent sûrs](05b-agentic-workflows-security.md)
+
 <!-- /journey -->

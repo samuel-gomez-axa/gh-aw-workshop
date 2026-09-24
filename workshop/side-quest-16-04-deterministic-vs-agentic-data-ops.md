@@ -1,60 +1,62 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: [Deterministic](https://github.github.com/gh-aw/patterns/deterministic-ops/) vs [Agentic](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) Data Ops
 
-> _Optional: use this guide when you are unsure which parts of a data workflow should stay deterministic and which parts should be agentic, then return to [Step 16](16-connect-data-source.md)._
+# Quête annexe : opérations de données [Deterministic](https://github.github.com/gh-aw/patterns/deterministic-ops/) vs [Agentic](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows)
 
-Data workflows work best when you split jobs on purpose. Keep repeatable operations deterministic. Use the agent when you need judgment.
+> _Facultatif : utilisez ce guide si vous ne savez pas quelles parties d’un workflow de données doivent rester déterministes et quelles parties doivent être agentiques, puis revenez à [l’étape 16](16-connect-data-source.md)._
 
-## :clipboard: Before You Start
+Les workflows de données fonctionnent mieux lorsque vous séparez délibérément les tâches. Gardez les opérations répétables déterministes. Utilisez l’agent lorsque vous avez besoin de jugement.
 
-- Complete [Connect a Live Data Source](16-connect-data-source.md) (required)
-- Be familiar with `gh` CLI commands
+## :clipboard: Avant de commencer
 
----
-
-## The decision rule
-
-Use this quick test:
-
-- If you can define exact pass/fail logic in advance, keep it deterministic.
-- If you need to decide which of 40 open issues is most urgent, make it agentic.
-- If you need to explain trend changes to leadership, make it agentic.
-
-You do not need one mode for the whole workflow. Most production workflows are hybrid.
+- Terminez [Connecter une source de données en direct](16-connect-data-source.md) (obligatoire)
+- Soyez familier avec les commandes de la CLI `gh`
 
 ---
 
-## Data-ops examples
+## La règle de décision
 
-| Task | Better fit | Why |
-|---|---|---|
-| Fetch the last 24 hours of commits | Deterministic | Same command, same shape, every run |
-| Count open P1 incidents from issue labels | Deterministic | Exact filter and count logic |
-| Decide which incidents look most urgent to humans | Agentic | Needs contextual judgment |
-| Summarize trend changes for leadership | Agentic | Requires interpretation and audience-aware writing |
-| Validate JSON schema before downstream use | Deterministic | Fixed validation rules |
-| Explain likely causes behind a change spike | Agentic | Hypothesis and narrative reasoning |
+Utilisez ce test rapide :
+
+- Si vous pouvez définir à l’avance une logique exacte de réussite ou d’échec, gardez-la déterministe.
+- Si vous devez décider laquelle de 40 issues ouvertes est la plus urgente, rendez-la agentique.
+- Si vous devez expliquer des changements de tendance à la direction, rendez-la agentique.
+
+Vous n’avez pas besoin d’un seul mode pour tout le workflow. La plupart des workflows de production sont hybrides.
 
 ---
 
-## Hybrid blueprint
+## Exemples d’opérations de données
 
-Follow this structure for repository status, incident triage, and reporting flows:
+| Tâche                                                              | Meilleur choix | Pourquoi                                               |
+| ------------------------------------------------------------------ | -------------- | ------------------------------------------------------ |
+| Récupérer les commits des 24 dernières heures                      | Deterministic  | Même commande, même structure, à chaque exécution      |
+| Compter les incidents P1 ouverts à partir des labels d’issues      | Deterministic  | Logique de filtrage et de comptage exacte              |
+| Décider quels incidents semblent les plus urgents pour des humains | Agentic        | Requiert un jugement contextuel                        |
+| Résumer des changements de tendance pour la direction              | Agentic        | Requiert interprétation et rédaction adaptée au public |
+| Valider un schéma JSON avant usage en aval                         | Deterministic  | Règles de validation fixes                             |
+| Expliquer les causes probables d’un pic de changement              | Agentic        | Raisonnement par hypothèse et narration                |
 
-1. **Deterministic extraction**: run fixed commands (`gh`, `git`, API calls) to collect data.
-2. **Deterministic shaping**: normalize and label outputs (`$GITHUB_OUTPUT`, JSON fields, counts).
-3. **Agentic interpretation**: ask the agent to identify risk, priority, and notable patterns.
-4. **Agentic communication**: ask for role-specific output (engineering digest, leadership summary, on-call handoff).
+---
 
-This keeps your pipeline reliable. It also gives you flexible reasoning where scripts become brittle.
+## Plan hybride
 
-## :hammer_and_wrench: Try it: Label each step D or A
+Suivez cette structure pour des flux de statut de dépôt, de triage d’incidents et de reporting :
 
-Read the workflow snippet. In the comment block, label each step as **D** (deterministic) or **A** (agentic).
+1. **Extraction déterministe** : exécutez des commandes fixes (`gh`, `git`, appels d’API) pour collecter les données.
+2. **Mise en forme déterministe** : normalisez et étiquetez les sorties (`$GITHUB_OUTPUT`, champs JSON, comptages).
+3. **Interprétation agentique** : demandez à l’agent d’identifier les risques, les priorités et les motifs notables.
+4. **Communication agentique** : demandez une sortie adaptée au rôle visé (digest engineering, résumé pour la direction, transmission d’astreinte).
+
+Cela rend votre pipeline fiable. Cela vous donne aussi un raisonnement souple là où les scripts deviennent fragiles.
+
+## :hammer_and_wrench: Essayez : étiquetez chaque étape D ou A
+
+Lisez l’extrait de workflow. Dans le bloc de commentaires, étiquetez chaque étape avec **D** pour deterministic ou **A** pour agentic.
 
 ```markdown
 # Step A: Fetch open issues from the last 24 hours.
+
 gh issue list --state open --search "updated:>=2026-07-13" --json number,title,labels,updatedAt
 
 # Step B: Shape the output into a sorted table with issue number, label count, and last update time.
@@ -62,43 +64,46 @@ gh issue list --state open --search "updated:>=2026-07-13" --json number,title,l
 # Step C: Decide which three issues need maintainer attention today and explain why.
 
 # Your labels:
-# Step A: _
-# Step B: _
-# Step C: _
+
+# Step A: \_
+
+# Step B: \_
+
+# Step C: \_
 ```
 
 <details>
-<summary>Show answer key</summary>
+<summary>Afficher la correction</summary>
 
-- Step A: **D** — fixed command and fixed fields.
-- Step B: **D** — fixed transform and sort rules.
-- Step C: **A** — requires prioritization and explanation.
+- Step A : **D** — commande fixe et champs fixes.
+- Step B : **D** — transformation et règles de tri fixes.
+- Step C : **A** — nécessite priorisation et explication.
 
 </details>
 
 ---
 
-## Common anti-patterns
+## Anti-patterns courants
 
-- Pushing raw noisy logs straight into the prompt without shaping them first
-- Asking the agent to compute exact metrics that shell commands can compute reliably
-- Hard-coding dozens of branching rules for narrative tasks that change every week
-- Using the agent for safety checks that require strict deterministic guarantees
+- Injecter des logs bruts et bruyants directement dans le prompt sans les mettre en forme d’abord
+- Demander à l’agent de calculer des métriques exactes que des commandes shell peuvent calculer de façon fiable
+- Écrire en dur des dizaines de règles de branchement pour des tâches narratives qui changent chaque semaine
+- Utiliser l’agent pour des vérifications de sécurité qui exigent des garanties déterministes strictes
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can explain the difference between deterministic and agentic work in one sentence
-- [ ] You can identify one step in your workflow that should stay deterministic
-- [ ] You can identify one step in your workflow that should become agentic
-- [ ] You can describe a hybrid design for your current data workflow
-- [ ] You know when deterministic validation should remain outside the agent
+- [ ] Vous pouvez expliquer en une phrase la différence entre travail déterministe et travail agentique
+- [ ] Vous pouvez identifier une étape de votre workflow qui doit rester déterministe
+- [ ] Vous pouvez identifier une étape de votre workflow qui doit devenir agentique
+- [ ] Vous pouvez décrire une conception hybride pour votre workflow de données actuel
+- [ ] Vous savez quand une validation deterministe doit rester en dehors de l'agent
 
 ---
 
 <!-- journey: all -->
-Return to [Connect a Live Data Source to Your Workflow](16-connect-data-source.md).
+
+Retour à [Connecter une source de données en direct à votre workflow](16-connect-data-source.md).
+
 <!-- /journey -->
-
-

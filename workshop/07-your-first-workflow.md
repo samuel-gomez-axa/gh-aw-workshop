@@ -1,52 +1,53 @@
 <!-- page-journey: all -->
 <!-- page-adventure: core -->
-# Write Your First Agentic Workflow
 
-_Writing your first workflow is the moment theory becomes practice — let's make something real._
+# Rédiger votre premier Agentic Workflow
 
-## :dart: What You'll Do
+_Rédiger votre premier workflow, c’est le moment où la théorie devient pratique. Construisons quelque chose de réel._
 
-You'll use Copilot to create `.github/workflows/daily-report-status.md` — a scheduled workflow that also supports manual dispatch. You'll configure it with [`permissions`](https://github.github.com/gh-aw/reference/permissions/), [`safe-outputs`](https://github.github.com/gh-aw/reference/safe-outputs/), and a task brief, then compile it to produce `daily-report-status.lock.yml`, the file [GitHub Actions](https://github.github.com/gh-aw/guides/github-actions-primer/) runs.
+## :dart: Ce que vous allez faire
+
+Vous allez utiliser Copilot pour créer `.github/workflows/daily-report-status.md`, un workflow planifié qui prend aussi en charge le déclenchement manuel. Vous le configurerez avec [`permissions`](https://github.github.com/gh-aw/reference/permissions/), [`safe-outputs`](https://github.github.com/gh-aw/reference/safe-outputs/) et un task brief, puis vous le compilerez pour produire `daily-report-status.lock.yml`, le fichier exécuté par [GitHub Actions](https://github.github.com/gh-aw/guides/github-actions-primer/).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/07-compile-flow-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/07-compile-flow-light.svg">
-  <img alt="Diagram showing how you prompt an agent with the agentic-workflows skill to create daily-report-status.md, which is compiled by gh aw compile into daily-report-status.lock.yml, which GitHub Actions then executes" src="images/07-compile-flow-light.svg">
+  <img alt="Schéma montrant comment vous demandez à un agent, avec le skill agentic-workflows, de créer daily-report-status.md, lequel est compilé par gh aw compile en daily-report-status.lock.yml, puis exécuté par GitHub Actions" src="images/07-compile-flow-light.svg">
 </picture>
 
-## :clipboard: Before You Start
+## :clipboard: Avant de commencer
 
-- Completed [Install the gh-aw CLI Extension](06-install-gh-aw.md)
-- The `gh aw` command works in your terminal
-- You already ran `gh aw init` and pushed `.github/skills/agentic-workflows/`
+- Vous avez terminé [Installer l’extension CLI gh-aw](06-install-gh-aw.md)
+- La commande `gh aw` fonctionne dans votre terminal
+- Vous avez déjà exécuté `gh aw init` et poussé `.github/skills/agentic-workflows/`
 
-**Verify Copilot access before you begin.**
+**Vérifiez l’accès à Copilot avant de commencer.**
 
-1. In the terminal that is already open in your Codespace, run:
+1. Dans le terminal déjà ouvert dans votre Codespace, exécutez :
 
 ```bash
 gh copilot
 ```
 
-1. In Copilot CLI, send this prompt:
+1. Dans Copilot CLI, envoyez ce prompt :
 
 ```prompt
 /agentic-workflows what trigger does a scheduled workflow use?
 ```
 
-Confirm you receive a reply. Any response means Copilot CLI and the `agentic-workflows` skill are accessible.
+Vérifiez que vous recevez une réponse. N’importe quelle réponse signifie que Copilot CLI et le skill `agentic-workflows` sont accessibles.
 
 > [!IMPORTANT]
-> If you see an error instead of a reply, do not continue. Fix the access issue first — model-access errors will cause Step 8 to fail. Check [github.com/settings/copilot](https://github.com/settings/copilot), then see [Confirm Model Access](07d-confirm-model-access.md) for detailed troubleshooting.
+> Si vous voyez une erreur au lieu d’une réponse, ne continuez pas. Corrigez d’abord le problème d’accès : les erreurs d’accès au modèle feront échouer l’étape 8. Vérifiez [github.com/settings/copilot](https://github.com/settings/copilot), puis consultez [Confirm Model Access](07d-confirm-model-access.md) pour un dépannage détaillé.
 
-- [ ] I opened Copilot CLI in the terminal and received a reply to the test prompt
+- [ ] J’ai ouvert Copilot CLI dans le terminal et reçu une réponse au prompt de test
 
-## Create your first workflow
+## Créez votre premier workflow
 
 > [!NOTE]
-> Use the **AI agent that runs your agentic workflows** (Copilot, Claude, Codex, or whichever you configured) for all agentic workflow tasks in this workshop. Using the same agent locally gives you behavior that matches production — Copilot Chat (Agent Mode) runs in a different harness and may produce different results.
+> Utilisez pour toutes les tâches de cet atelier l’**AI agent that runs your agentic workflows**, qu’il s’agisse de Copilot, Claude, Codex ou de celui que vous avez configuré. Utiliser localement le même agent vous donne un comportement proche de la production ; Copilot Chat en Agent Mode s’exécute dans un autre environnement et peut produire des résultats différents.
 
-In your AI agent, run this prompt:
+Dans votre agent IA, exécutez ce prompt :
 
 ```prompt
 /agentic-workflows Create a daily-report-status workflow with:
@@ -58,51 +59,51 @@ In your AI agent, run this prompt:
 Compile it after creating it.
 ```
 
-Review the agent's edit, then continue. Prefer this path over hand-editing each line.
+Examinez la modification proposée par l’agent, puis continuez. Préférez cette approche plutôt que d’éditer chaque ligne à la main.
 
 > [!TIP]
-> Not sure how to phrase a prompt for a workflow of your own? The [gh-aw wizard](https://githubnext.github.io/gh-aw-wizard/) asks a few questions and generates a ready-to-paste prompt you can send to your agent.
+> Vous ne savez pas comment formuler un prompt pour votre propre workflow ? Le [gh-aw wizard](https://githubnext.github.io/gh-aw-wizard/) vous pose quelques questions et génère un prompt prêt à coller que vous pourrez envoyer à votre agent.
 
-**What the agent created** — the generated file should look roughly like this:
+**Ce que l’agent a créé** : le fichier généré devrait ressembler approximativement à ceci :
 
 ```markdown .github/workflows/daily-report-status.md
 ---
 name: Daily Report Status
 on:
-  schedule: daily             # compiled to a daily GitHub Actions cron schedule
-  workflow_dispatch: {}       # also allows manual runs
+    schedule: daily # compiled to a daily GitHub Actions cron schedule
+    workflow_dispatch: {} # also allows manual runs
 permissions:
-  contents: read
-  issues: read
-  copilot-requests: write     # required to call the AI model
+    contents: read
+    issues: read
+    copilot-requests: write # required to call the AI model
 safe-outputs:
-  create-issue:               # the only write action the agent may perform
+    create-issue: # the only write action the agent may perform
 ---
 
 Generate an activity report for this repository and post it as a new issue.
 ```
 
-The **[frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)** tells GitHub Actions when to run, what permissions the agent has, and which write action it may use (`create-issue`). The **task brief** below the second `---` is what the AI agent reads and acts on.
+Le **[frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)** indique à GitHub Actions quand exécuter le workflow, quelles permissions l’agent possède et quelle action d’écriture il peut utiliser (`create-issue`). Le **task brief** sous le second `---` est ce que l’agent IA lit et exécute.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/07a-workflow-dispatch-trigger-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/07a-workflow-dispatch-trigger-light.svg">
-  <img alt="How workflow_dispatch works: author the .md file, compile to a lock.yml, push to GitHub, then click Run workflow in the Actions tab to trigger the agent" src="images/07a-workflow-dispatch-trigger-light.svg">
+  <img alt="Fonctionnement de workflow_dispatch : rédiger le fichier .md, le compiler en lock.yml, le pousser vers GitHub, puis cliquer sur Run workflow dans l’onglet Actions pour déclencher l’agent" src="images/07a-workflow-dispatch-trigger-light.svg">
 </picture>
 
-If you hit a compile error, use [Side Quest: Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md).
+Si vous rencontrez une erreur de compilation, utilisez [Side Quest: Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md).
 
-## Validate, then commit and push
+## Validez, puis committez et poussez
 
-Run:
+Exécutez :
 
 ```bash
 gh aw compile
 ```
 
-Optional while editing: `gh aw compile --watch`.
+Pendant l’édition, vous pouvez aussi utiliser `gh aw compile --watch`.
 
-Then commit and push:
+Puis committez et poussez :
 
 ```bash
 git add .
@@ -110,18 +111,20 @@ git commit -m "Add daily-report-status agentic workflow"
 git push
 ```
 
-For follow-up edits, keep using an agent with the `agentic-workflows` skill and avoid manual workflow editing unless you are debugging a specific line-level issue.
+Pour les modifications suivantes, continuez à utiliser un agent avec le skill `agentic-workflows` et évitez l’édition manuelle du workflow, sauf si vous déboguez un problème précis à l’échelle d’une ligne.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] Copilot access was confirmed in Copilot CLI before starting (test prompt received a reply)
-- [ ] `.github/workflows/daily-report-status.md` exists and contains an `on: schedule:` trigger in the [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)
-- [ ] The file includes `permissions` with `copilot-requests: write`
-- [ ] `gh aw compile` exits with no errors and produces `daily-report-status.lock.yml`
-- [ ] Both `daily-report-status.md` and `daily-report-status.lock.yml` are committed and pushed to `main`
-- [ ] The workflow appears in the **Actions** tab of your repository under "Daily Report Status"
-- [ ] You are ready to choose the workflow's billing and authentication method
+- [ ] L’accès à Copilot a été confirmé dans Copilot CLI avant de commencer, avec une réponse au prompt de test
+- [ ] `.github/workflows/daily-report-status.md` existe et contient un trigger `on: schedule:` dans le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/)
+- [ ] Le fichier inclut `permissions` avec `copilot-requests: write`
+- [ ] `gh aw compile` se termine sans erreur et produit `daily-report-status.lock.yml`
+- [ ] `daily-report-status.md` et `daily-report-status.lock.yml` sont tous les deux commités et poussés vers `main`
+- [ ] Le workflow apparaît dans l’onglet **Actions** de votre dépôt sous le nom "Daily Report Status"
+- [ ] Vous êtes prêt à choisir la méthode de facturation et d’authentification du workflow
 
 <!-- journey: all -->
-**Next:** [Confirm Model Access](07d-confirm-model-access.md)
+
+**Étape suivante :** [Confirmer l’accès au modèle](07d-confirm-model-access.md)
+
 <!-- /journey -->

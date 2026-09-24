@@ -1,40 +1,41 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest 13-03: Pattern — PR Review Checklist
 
-## :dart: What You'll Do
+# Quête Annexe 13-03 : Pattern — Checklist De Revue De PR
 
-Build a workflow that evaluates every new pull request against a short review checklist and posts a pass/fail summary. Reviewers can see at a glance which criteria are already met before they open the diff.
+## :dart: Ce Que Vous Allez Faire
 
-## :clipboard: Before You Start
+Construisez un workflow qui évalue chaque nouvelle pull request à l'aide d'une courte checklist de revue et publie un résumé pass/fail. Les relecteurs peuvent voir d'un coup d'oeil quels critères sont déjà remplis avant même d'ouvrir le diff.
 
-- Complete [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
+## :clipboard: Avant De Commencer
 
-## Why a Checklist Workflow?
+- Terminez [Build Your First Event-Driven Workflow: PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
 
-Review checklists enforce team standards consistently. Instead of relying on every reviewer to remember to check the same things, you automate the inspection and surface the results as a [comment](https://github.github.com/gh-aw/reference/safe-outputs/#comment-creation-add-comment). Reviewers can then focus their time on the things that require human judgment.
+## Pourquoi Un Workflow De Checklist ?
 
-The pattern is a structured evaluation loop: for each item on the checklist, the agent decides whether the PR satisfies the criterion, explains its reasoning in one sentence, and marks it with :white_check_mark: (pass) or :warning: (needs attention).
+Les checklists de revue appliquent de manière cohérente les standards de l'équipe. Au lieu de compter sur chaque relecteur pour se souvenir de vérifier les mêmes points, vous automatisez l'inspection et exposez les résultats sous forme de [comment](https://github.github.com/gh-aw/reference/safe-outputs/#comment-creation-add-comment). Les relecteurs peuvent alors consacrer leur temps aux sujets qui nécessitent un jugement humain.
+
+Le pattern consiste en une boucle d'évaluation structurée : pour chaque élément de la checklist, l'agent décide si la PR satisfait le critère, explique son raisonnement en une phrase et le marque avec :white_check_mark: ou :warning:.
 
 > [!TIP]
-> See the [pull request trigger](https://github.github.com/gh-aw/reference/triggers/#pull-request-triggers-pullrequest) reference for all available event types.
+> Consultez la référence [pull request trigger](https://github.github.com/gh-aw/reference/triggers/#pull-request-triggers-pullrequest) pour voir tous les types d'événements disponibles.
 
-## The Checklist Workflow
+## Le Workflow De Checklist
 
-Create `.github/workflows/pr-checklist.md`:
+Créez `.github/workflows/pr-checklist.md` :
 
 ```markdown
 ---
 name: PR Review Checklist
 on:
-  pull_request:
-    types: [opened, synchronize]
+    pull_request:
+        types: [opened, synchronize]
 permissions:
-  pull-requests: read
-  contents: read
+    pull-requests: read
+    contents: read
 safe-outputs:
-  add-comment:
-    limit: 1
+    add-comment:
+        limit: 1
 ---
 
 You are a code review assistant. When a pull request is opened or updated, evaluate it
@@ -43,7 +44,7 @@ against the checklist below. For each item, write one sentence of evidence and m
 
 Checklist:
 
-- **Description**: The PR description explains *what* changed and *why*.
+- **Description**: The PR description explains _what_ changed and _why_.
 - **Scope**: The PR is focused on a single concern (not a mix of features, fixes, and refactors).
 - **Tests**: At least one test file is included or updated (based on file names).
 - **Documentation**: If any public interface or user-facing file changed, a `.md` file is also present.
@@ -53,18 +54,18 @@ Post the results as a comment on the pull request using this format:
 
 ## Review Checklist
 
-| Criterion | Result | Evidence |
-|-----------|--------|----------|
-| Description | ✅ / ⚠️ | _one sentence_ |
-| Scope | ✅ / ⚠️ | _one sentence_ |
-| Tests | ✅ / ⚠️ | _one sentence_ |
+| Criterion     | Result  | Evidence       |
+| ------------- | ------- | -------------- |
+| Description   | ✅ / ⚠️ | _one sentence_ |
+| Scope         | ✅ / ⚠️ | _one sentence_ |
+| Tests         | ✅ / ⚠️ | _one sentence_ |
 | Documentation | ✅ / ⚠️ | _one sentence_ |
-| Size | ✅ / ⚠️ | _one sentence_ |
+| Size          | ✅ / ⚠️ | _one sentence_ |
 
 Do not add any text outside the table and heading.
 ```
 
-Compile and push:
+Compilez puis poussez :
 
 ```bash
 gh aw compile
@@ -73,29 +74,33 @@ git commit -m "feat: add PR review checklist workflow"
 git push
 ```
 
-## Test It
+## Testez-Le
 
-Open a test pull request with no description and no test files. The workflow should post a checklist with **Description** and **Tests** marked :warning:. Then update the PR description and push a new commit — the workflow fires again (on `synchronize`) and the checklist should re-evaluate.
+Ouvrez une pull request de test sans description et sans fichiers de test. Le workflow doit publier une checklist avec **Description** et **Tests** marqués :warning:. Mettez ensuite à jour la description de la PR et poussez un nouveau commit : le workflow se déclenche à nouveau sur `synchronize` et la checklist doit être réévaluée.
 
-## Hands-On Exercise: Add a Team-Specific Criterion
+## Exercice Pratique : Ajoutez Un Critère Propre À Votre Équipe
 
-The five criteria above are generic. Replace one with something meaningful for your practice repository.
+Les cinq critères ci-dessus sont génériques. Remplacez-en un par quelque chose de pertinent pour votre dépôt d'entraînement.
 
-Ideas:
-- **Changelog**: A `CHANGELOG.md` entry was added or updated.
-- **Screenshot**: If any UI file changed, a screenshot is linked in the PR description.
-- **Ticket link**: The PR title or description contains a reference to an issue number (`#NNN`).
+Idées :
 
-Update the checklist in the [workflow brief](https://github.github.com/gh-aw/reference/markdown/), recompile, and open a fresh PR to verify the new criterion appears in the table.
+- **Changelog** : une entrée `CHANGELOG.md` a été ajoutée ou mise à jour.
+- **Screenshot** : si un fichier d'UI a changé, une capture d'écran est liée dans la description de la PR.
+- **Ticket link** : le titre ou la description de la PR contient une référence à un numéro d'issue (`#NNN`).
+
+Mettez à jour la checklist dans le [workflow brief](https://github.github.com/gh-aw/reference/markdown/), recompilez, puis ouvrez une nouvelle PR pour vérifier que le nouveau critère apparaît dans le tableau.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I created `.github/workflows/pr-checklist.md` with a `pull_request` trigger
-- [ ] `gh aw compile` completed without errors and `.lock.yml` is committed and pushed
-- [ ] I opened a test PR without a description and confirmed **Description** was marked :warning:
-- [ ] I updated the PR description and confirmed the checklist refreshed on the next push
-- [ ] I added at least one team-specific criterion to the checklist
-- [ ] I can explain why using :white_check_mark: / :warning: instead of pass/fail makes the output more constructive
+- [ ] J'ai créé `.github/workflows/pr-checklist.md` avec un trigger `pull_request`
+- [ ] `gh aw compile` s'est terminé sans erreur et `.lock.yml` est validé puis poussé
+- [ ] J'ai ouvert une PR de test sans description et confirmé que **Description** était marqué :warning:
+- [ ] J'ai mis à jour la description de la PR et confirmé que la checklist s'est rafraîchie au push suivant
+- [ ] J'ai ajouté au moins un critère spécifique à mon équipe à la checklist
+- [ ] Je peux expliquer pourquoi l'usage de :white_check_mark: et :warning: au lieu de pass/fail rend la sortie plus constructive
 
 <!-- journey: all -->
+
+Revenez à [Créer votre premier workflow événementiel : PR Auto-Reviewer](14b-pr-reviewer-workflow.md).
+
 <!-- /journey -->

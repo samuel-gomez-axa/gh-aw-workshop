@@ -1,137 +1,138 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Storing Credentials with GitHub Secrets
 
-> _Optional: work through this guide when your workflow needs a token or API key that shouldn't appear in plain text, then return to your main path._
+# Quête annexe : stocker des identifiants avec GitHub Secrets
 
-## :clipboard: Before You Start
+> _Facultatif : suivez ce guide lorsque votre workflow a besoin d'un token ou d'une cle API qui ne doit pas apparaitre en clair, puis revenez a votre parcours principal._
 
-- Familiarity with [Connect a Live Data Source to Your Workflow](16-connect-data-source.md) is helpful.
-- You understand what GitHub Actions workflow YAML looks like.
+## :clipboard: Avant de commencer
 
----
-
-GitHub Actions workflows run in a shared environment where code, logs, and configuration are visible to collaborators. Hard-coding credentials is dangerous — they end up in version history and log output. **[GitHub Secrets](https://github.github.com/gh-aw/reference/safe-outputs/)** gives you a secure vault for sensitive values that workflows can read without exposing.
+- Il est utile d’être familier avec [Connecter une source de données en direct à votre workflow](16-connect-data-source.md).
+- Vous comprenez a quoi ressemble un YAML de workflow GitHub Actions.
 
 ---
 
-## What is a GitHub Secret?
+Les workflows GitHub Actions s’exécutent dans un environnement partagé où le code, les logs et la configuration sont visibles par les collaborateurs. Écrire des identifiants en dur est dangereux : ils se retrouvent dans l’historique des versions et dans les logs. **[GitHub Secrets](https://github.github.com/gh-aw/reference/safe-outputs/)** vous fournit un coffre-fort sécurisé pour les valeurs sensibles que les workflows peuvent lire sans les exposer.
 
-A secret is a named, encrypted value stored in your repository settings. Your workflow reads it with `${{ secrets.SECRET_NAME }}` at runtime. Secrets:
+---
 
-- Are **never** shown in plain text in the UI after you save them.
-- Are **masked** in workflow logs — if a secret's value appears in output, GitHub replaces it with `***`.
+## Qu’est-ce qu’un GitHub Secret ?
+
+Un secret est une valeur nommée et chiffrée stockée dans les paramètres de votre dépôt. Votre workflow la lit avec `${{ secrets.SECRET_NAME }}` à l’exécution. Les secrets :
+
+- ne sont **jamais** affichés en clair dans l’interface après leur enregistrement.
+- sont **masqués** dans les logs du workflow : si la valeur d’un secret apparaît dans la sortie, GitHub la remplace par `***`.
 
 > [!NOTE]
-> This side quest focuses on repository secrets. If several repositories need the same credential, you can also store it as an organisation secret and grant access to selected repositories.
+> Cette quête annexe se concentre sur les secrets de dépôt. Si plusieurs dépôts ont besoin du même secret, vous pouvez aussi le stocker comme secret d’organisation et accorder l’accès aux dépôts sélectionnés.
 
 ---
 
-## When do you need a secret?
+## Quand avez-vous besoin d’un secret ?
 
-You need a secret whenever your workflow authenticates to an external service. Common cases:
+Vous avez besoin d’un secret chaque fois que votre workflow s’authentifie à un service externe. Cas courants :
 
-| Scenario | Secret you'd store |
-|---|---|
-| Calling a third-party API (Slack, Jira, etc.) | API key or bearer token |
-| Posting to an external webhook | Webhook URL (treat URLs with tokens as secrets) |
-| Connecting an [MCP server](https://github.github.com/gh-aw/reference/mcp-gateway/) that requires auth | Server-specific token |
+| Scénario                                                                                                           | Secret à stocker                                              |
+| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- |
+| Appel d’une API tierce (Slack, Jira, etc.)                                                                         | Clé API ou bearer token                                       |
+| Publication vers un webhook externe                                                                                | URL du webhook (traitez les URL avec token comme des secrets) |
+| Connexion à un [MCP server](https://github.github.com/gh-aw/reference/mcp-gateway/) qui exige une authentification | Token spécifique au serveur                                   |
 
-## Choose the right GitHub token
+## Choisir le bon token GitHub
 
-Use this quick comparison when your workflow needs GitHub access:
+Utilisez cette comparaison rapide lorsque votre workflow a besoin d’accéder à GitHub :
 
-| If you need to... | Use | Why |
-|---|---|---|
-| Read or act on the same repository during a workflow run | `${{ secrets.GITHUB_TOKEN }}` | GitHub creates it automatically for each run, and it expires when the run ends. |
-| Reach outside this repository — for example, access another repository or trigger a workflow elsewhere — or use scopes the built-in token does not have | A PAT stored as a repository secret | You create it yourself and can give it the specific extra access you need. |
+| Si vous devez...                                                                                                                                        | Utiliser                            | Pourquoi                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Lire ou agir sur le même dépôt pendant l’exécution d’un workflow                                                                                        | `${{ secrets.GITHUB_TOKEN }}`       | GitHub le crée automatiquement pour chaque exécution, et il expire à la fin de l’exécution.       |
+| Aller au-delà de ce dépôt, par exemple accéder à un autre dépôt ou déclencher un workflow ailleurs, ou utiliser des scopes que le token intégré n’a pas | Un PAT stocké comme secret de dépôt | Vous le créez vous-même et pouvez lui donner l’accès supplémentaire précis dont vous avez besoin. |
 
 ---
 
-## Add a secret to your repository
+## Ajouter un secret à votre dépôt
 
-### GitHub UI (recommended)
+### GitHub UI (recommandée)
 
-1. Open your repository on GitHub.
-2. Click **Settings** → **Secrets and variables** → **Actions**.
-3. Click **New repository secret**.
-4. Enter a name (e.g. `SLACK_WEBHOOK_URL`) and the secret value.
-5. Click **Add secret**.
+1. Ouvrez votre depot sur GitHub.
+2. Cliquez sur **Settings** → **Secrets and variables** → **Actions**.
+3. Cliquez sur **New repository secret**.
+4. Saisissez un nom, par exemple `SLACK_WEBHOOK_URL`, ainsi que la valeur du secret.
+5. Cliquez sur **Add secret**.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/side-quest-secrets-settings-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="images/side-quest-secrets-settings-light.svg">
-  <img alt="Repository secrets page" src="images/side-quest-secrets-settings-light.svg">
+  <img alt="Page des secrets du dépôt" src="images/side-quest-secrets-settings-light.svg">
 </picture>
 
 > [!TIP]
-> Secret names must use only uppercase letters, digits, and underscores. By convention, use `SCREAMING_SNAKE_CASE`.
+> Les noms de secrets doivent utiliser uniquement des lettres majuscules, des chiffres et des underscores. Par convention, utilisez `SCREAMING_SNAKE_CASE`.
 
 ---
 
-## :pencil2: Try it: Verify masking
+## :pencil2: Essayez : vérifier le masquage
 
-Add a placeholder secret named `WORKSHOP_TOKEN` with any throwaway value, then prove GitHub masks it in logs.
+Ajoutez un secret de test nommé `WORKSHOP_TOKEN` avec n’importe quelle valeur jetable, puis vérifiez que GitHub le masque dans les logs.
 
-1. Create `WORKSHOP_TOKEN` in **Settings** → **Secrets and variables** → **Actions**.
-2. Add this temporary step to a workflow you can run manually:
+1. Créez `WORKSHOP_TOKEN` dans **Settings** → **Secrets and variables** → **Actions**.
+2. Ajoutez cette étape temporaire à un workflow que vous pouvez lancer manuellement :
 
 ```markdown
 - name: Confirm secret masking
   run: echo "token=${{ secrets.WORKSHOP_TOKEN }}"
 ```
 
-1. Trigger a manual run from the **Actions** tab.
-2. Open the run logs and confirm the output shows `token=***`, not the value you entered.
-3. Remove the temporary step after you verify masking.
+1. Déclenchez une exécution manuelle depuis l’onglet **Actions**.
+2. Ouvrez les logs de l’exécution et confirmez que la sortie affiche `token=***`, et non la valeur saisie.
+3. Supprimez l’étape temporaire après avoir vérifié le masquage.
 
 ---
 
-## Reference a secret in your workflow
+## Référencer un secret dans votre workflow
 
-Inside any workflow step, reference a secret with `${{ secrets.SECRET_NAME }}`:
+Dans n’importe quelle étape du workflow, référencez un secret avec `${{ secrets.SECRET_NAME }}` :
 
 ```markdown
 - name: Notify Slack
   run: |
-    curl -s -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
-      -H "Content-Type: application/json" \
-      -d '{"text": "Daily status report is ready."}'
+  curl -s -X POST "${{ secrets.SLACK_WEBHOOK_URL }}" \
+   -H "Content-Type: application/json" \
+   -d '{"text": "Daily status report is ready."}'
 ```
 
-## Going deeper
+## Aller plus loin
 
-<details>
-<summary>Learn about using the built-in `GITHUB_TOKEN` for GitHub API calls</summary>
+<details open>
+<summary>En savoir plus sur l’utilisation du `GITHUB_TOKEN` intégré pour les appels à l’API GitHub</summary>
 
-Most GitHub API calls in this workshop work with the automatically provided [`GITHUB_TOKEN`](https://github.github.com/gh-aw/reference/environment-variables/#system-injected-runtime-variables):
+La plupart des appels à l’API GitHub dans cet atelier fonctionnent avec le [`GITHUB_TOKEN`](https://github.github.com/gh-aw/reference/environment-variables/#system-injected-runtime-variables) fourni automatiquement :
 
 ```markdown
 - name: List open pull requests
   env:
-    GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   run: gh pr list --state open
 ```
 
-The `gh` CLI reads `GH_TOKEN` automatically when it is set as an environment variable.
+La CLI `gh` lit `GH_TOKEN` automatiquement lorsqu’il est défini comme variable d’environnement.
 
 </details>
 
-<details>
-<summary>Learn how permissions frontmatter controls the built-in `GITHUB_TOKEN`</summary>
+<details open>
+<summary>Comprendre comment le `frontmatter` `permissions` contrôle le `GITHUB_TOKEN` intégré</summary>
 
-gh-aw workflows declare required [permissions](https://github.github.com/gh-aw/reference/permissions/) in [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/). Only request what you need:
+Les workflows gh-aw déclarent les [permissions](https://github.github.com/gh-aw/reference/permissions/) requises dans le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/). Ne demandez que ce dont vous avez besoin :
 
 ```markdown
 ---
 permissions:
-  contents: read
-  issues: read
-  pull-requests: read
+    contents: read
+    issues: read
+    pull-requests: read
 ---
 ```
 
-If a `GITHUB_TOKEN` call fails with a 403, check that the required permission is listed in frontmatter. Keeping permissions minimal reduces the blast radius if a workflow is ever misused.
+Si un appel avec `GITHUB_TOKEN` échoue avec une erreur 403, vérifiez que la permission requise est bien listée dans le frontmatter. Garder des permissions minimales réduit le blast radius si un workflow est un jour mal utilisé.
 
 </details>
 
@@ -139,12 +140,13 @@ If a `GITHUB_TOKEN` call fails with a 403, check that the required permission is
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can add a secret to your repository via the GitHub UI
-- [ ] You know how to reference a secret with `${{ secrets.SECRET_NAME }}`
-- [ ] You understand when to use `GITHUB_TOKEN` vs. a manually created PAT
-- [ ] You can explain why hard-coding credentials in workflow files is risky
+- [ ] Vous pouvez ajouter un secret à votre dépôt via la GitHub UI
+- [ ] Vous savez comment referencer un secret avec `${{ secrets.SECRET_NAME }}`
+- [ ] Vous comprenez quand utiliser `GITHUB_TOKEN` plutôt qu’un PAT créé manuellement
+- [ ] Vous pouvez expliquer pourquoi il est risqué d’écrire des identifiants en dur dans des fichiers de workflow
 
 <!-- journey: all -->
-**Return to:** [Connect a Live Data Source to Your Workflow](16-connect-data-source.md) or [Give Your Agent More Tools with MCP](17-add-mcp-tools.md)
-<!-- /journey -->
 
+**Retour à :** [Connecter une source de données en direct à votre workflow](16-connect-data-source.md) ou [Donner plus d’outils à votre agent avec MCP](17-add-mcp-tools.md)
+
+<!-- /journey -->

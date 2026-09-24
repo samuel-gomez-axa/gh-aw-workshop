@@ -1,56 +1,57 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Writing a Clear Agent Brief
 
-> _Optional: use this quick exercise to shape your brief before you return to [Step 10](09-agentic-editing.md) or move on to [Step 11](07-your-first-workflow.md)._
+# Quête Annexe : Rédiger Un Brief Agent Clair
 
-## :dart: What You'll Do
+> _Facultatif : utilisez cet exercice rapide pour structurer votre brief avant de revenir à [Step 10](09-agentic-editing.md) ou de passer à [Step 11](07-your-first-workflow.md)._
 
-Build your brief in a scratch file in five steps. By the end, you'll have a daily status brief you can paste into your workflow and reuse.
+## :dart: Ce Que Vous Allez Faire
 
-## :clipboard: Before You Start
+Construisez votre brief dans un fichier brouillon en cinq étapes. À la fin, vous aurez un brief de statut quotidien que vous pourrez coller dans votre workflow et réutiliser.
 
-- You've completed [Reading Workflow Output](08b-interpret-your-run.md)
-- You have a practice repository created during [Codespace setup](02a-setup-codespace.md) or the optional [Local Terminal side quest](side-quest-02-01-local-terminal.md)
+## :clipboard: Avant De Commencer
 
----
-
-## At a Glance
-
-For each step: **write first, check your draft, then expand "Why this works" for the reasoning**.
-
-| Step | Write first | Check before you move on |
-|------|-------------|--------------------------|
-| Goal | One sentence that starts with "Every day, I want the agent to..." | Describes one action with one outcome |
-| Inputs | 3-5 bullets with the data you need | Every input supports a report field |
-| Output | A literal report skeleton | Uses a consistent format with placeholders |
-| Guardrails | Short rules for limits and fallbacks | Prevents duplicates and guessing |
-| Review | A quick pass over the whole brief | Brief uses concrete, observable language throughout |
+- Vous avez terminé [Interpreting Workflow Output](08b-interpret-your-run.md)
+- Vous avez un dépôt d'entraînement créé pendant [Codespace Setup](02a-setup-codespace.md) ou la quête annexe facultative [Local Terminal](side-quest-02-01-local-terminal.md)
 
 ---
 
-## State the Goal in One Sentence
+## En Un Coup D'oeil
 
-Replace the bracketed example below with your own one-sentence goal.
+Pour chaque étape : **écrivez d'abord, vérifiez votre brouillon, puis développez "Pourquoi cela fonctionne" pour comprendre le raisonnement**.
+
+| Étape      | Écrivez d'abord                                                 | Vérifiez avant de continuer                               |
+| ---------- | --------------------------------------------------------------- | --------------------------------------------------------- |
+| Objectif   | Une phrase qui commence par "Every day, I want the agent to..." | Décrit une action et son résultat                         |
+| Entrées    | 3-5 puces avec les données dont vous avez besoin                | Chaque entrée alimente un champ du rapport                |
+| Sortie     | Un squelette de rapport littéral                                | Utilise un format cohérent avec des espaces réservés      |
+| Garde-fous | De courtes règles pour les limites et les solutions de repli    | Évite les doublons et les suppositions                    |
+| Relecture  | Une passe rapide sur l'ensemble du brief                        | Le brief utilise partout un langage concret et observable |
+
+---
+
+## Formulez L'objectif En Une Phrase
+
+Remplacez l'exemple entre crochets ci-dessous par votre propre objectif en une phrase.
 
 ```text
 Every day, I want the agent to [summarize open pull requests and post a health report as an issue comment].
 ```
 
-Before moving on, confirm your goal is one sentence that describes one action and says where the result will appear.
+Avant de continuer, vérifiez que votre objectif tient en une phrase, décrit une action et précise où le résultat apparaîtra.
 
 <details>
-<summary>Why this works</summary>
+<summary>Pourquoi cela fonctionne</summary>
 
-A one-sentence goal forces scope. If you need multiple outcomes, you probably need multiple workflows or a tighter brief.
+Un objectif en une phrase impose un périmètre clair. Si vous avez besoin de plusieurs résultats, il vous faut probablement plusieurs workflows ou un brief plus resserré.
 
 </details>
 
 ---
 
-## List the Inputs
+## Listez Les Entrées
 
-List the data the agent must collect before it can write the report. Mark uncertain items with a `?` so you can verify them later.
+Listez les données que l'agent doit collecter avant de pouvoir rédiger le rapport. Marquez les éléments incertains avec un `?` afin de pouvoir les vérifier plus tard.
 
 ```md
 - [input] — [why you need it]
@@ -58,22 +59,22 @@ List the data the agent must collect before it can write the report. Mark uncert
 - [input] — [why you need it]?
 ```
 
-Add a `?` only on the lines you are not sure about yet.
+Ajoutez un `?` uniquement sur les lignes dont vous n'êtes pas encore sûr.
 
-Before moving on, confirm you have at least three inputs, each linked to a field in your report, and that you've marked uncertain items with `?`.
+Avant de continuer, vérifiez que vous avez au moins trois entrées, que chacune correspond à un champ de votre rapport et que vous avez marqué les éléments incertains avec `?`.
 
 <details>
-<summary>Why this works</summary>
+<summary>Pourquoi cela fonctionne</summary>
 
-Inputs turn "summarize the repo" into a concrete data request. They also make it easier to spot missing [permissions](https://github.github.com/gh-aw/reference/permissions/) or [tools](https://github.github.com/gh-aw/reference/tools/) when you build the workflow.
+Les entrées transforment "summarize the repo" en une demande de données concrète. Elles facilitent aussi l'identification des [permissions](https://github.github.com/gh-aw/reference/permissions/) ou des [tools](https://github.github.com/gh-aw/reference/tools/) manquants quand vous construisez le workflow.
 
 </details>
 
 ---
 
-## Sketch the Output
+## Esquissez La Sortie
 
-Show the agent the format you want instead of describing it loosely. Start with a simple skeleton and customize the fields you want to track.
+Montrez à l'agent le format voulu au lieu de le décrire vaguement. Commencez par un squelette simple, puis adaptez les champs que vous souhaitez suivre.
 
 ```text
 📊 Daily Repo Status — {date}
@@ -83,20 +84,20 @@ CI: {status}
 Health check: {one sentence}
 ```
 
-Before moving on, confirm your skeleton has a title or heading, every placeholder maps to one of your inputs, and you can scan the whole report in a few seconds.
+Avant de continuer, vérifiez que votre squelette comporte un titre ou un en-tête, que chaque espace réservé correspond à l'une de vos entrées et que l'ensemble du rapport se parcourt en quelques secondes.
 
 <details>
-<summary>Why this works</summary>
+<summary>Pourquoi cela fonctionne</summary>
 
-A literal skeleton gives the agent fewer format decisions to make. Consistent output is easier to scan, compare, and debug after the first run.
+Un squelette littéral laisse moins de décisions de format à l'agent. Une sortie cohérente est plus facile à lire, comparer et déboguer après le premier run.
 
 </details>
 
 ---
 
-## Write the Guardrails
+## Rédigez Les Garde-Fous
 
-Add short rules that limit write operations, such as posting comments, and tell the agent what to do when data is missing.
+Ajoutez de courtes règles qui limitent les opérations d'écriture, comme la publication de commentaires, et indiquez à l'agent quoi faire lorsqu'il manque des données.
 
 ```md
 - Do not [undesired action].
@@ -105,43 +106,44 @@ Add short rules that limit write operations, such as posting comments, and tell 
 ```
 
 > [!TIP]
-> Skipping guardrails can lead to duplicate comments or guessed data.
+> Omettre les garde-fous peut entraîner des commentaires en double ou des données inventées.
 
-Before moving on, confirm your guardrails include something the agent must not do, a maximum number of writes, and a fallback for missing data.
+Avant de continuer, vérifiez que vos garde-fous incluent une action que l'agent ne doit pas effectuer, un nombre maximum d'écritures et une solution de repli en cas de données manquantes.
 
 <details>
-<summary>Why this works</summary>
+<summary>Pourquoi cela fonctionne</summary>
 
-Guardrails prevent duplicate posts, made-up numbers, and unclear fallback behavior. They are the fastest way to reduce noisy runs.
+Les garde-fous évitent les publications en double, les chiffres inventés et les comportements de repli flous. C'est le moyen le plus rapide de réduire les runs bruyants.
 
 </details>
 
 ---
 
-## Review the Brief
+## Relisez Le Brief
 
-Read the draft once. Replace vague words like "recent" with "within the last 7 days" or "important" with "labeled priority-1".
+Relisez le brouillon une fois. Remplacez des mots vagues comme "recent" par "within the last 7 days" ou "important" par "labeled priority-1".
 
-Before moving on, confirm that your goal, inputs, output format, and guardrails all use concrete, observable language and that you've replaced at least one vague phrase.
+Avant de continuer, vérifiez que votre objectif, vos entrées, votre format de sortie et vos garde-fous utilisent tous un langage concret et observable, et que vous avez remplacé au moins une expression vague.
 
 <details>
-<summary>Why this works</summary>
+<summary>Pourquoi cela fonctionne</summary>
 
-Most first-run problems come from ambiguity, not from the agent ignoring instructions. A final review usually reveals what still needs a concrete rule, field, or example.
+La plupart des problèmes au premier run viennent de l'ambiguïté, pas d'un agent qui ignore les instructions. Une relecture finale révèle généralement ce qui a encore besoin d'une règle, d'un champ ou d'un exemple concret.
 
 </details>
 
 ---
 
-## Put It Together
+## Assemblez Le Tout
 
-If you want a starter scaffold, paste this into your scratch file and fill in the blanks with your own choices.
+Si vous voulez une base de départ, collez ceci dans votre fichier brouillon et complétez les blancs avec vos propres choix.
 
 ```md
 Goal:
 Every day, I want the agent to [summarize X and post Y].
 
 Inputs:
+
 - [input]
 - [input]
 - [input]
@@ -153,26 +155,29 @@ Output:
 [line 3]
 
 Guardrails:
+
 - Do not [undesired action].
 - Post at most [number of comments or writes].
 - If [data is missing or a prerequisite is absent], then [fallback].
 ```
 
 > [!TIP]
-> Once your brief is clear, you can ask Copilot to turn it into a workflow with the `agentic-workflows` skill, which handles [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) syntax and [permission scopes](https://github.github.com/gh-aw/reference/permissions/) for you.
+> Une fois votre brief clair, vous pouvez demander à Copilot de le transformer en workflow avec la skill `agentic-workflows`, qui gère pour vous la syntaxe du [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) et les [permission scopes](https://github.github.com/gh-aw/reference/permissions/).
 
 ---
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I've written a one-sentence goal for my daily status report.
-- [ ] I've listed at least three inputs the agent will need.
-- [ ] I've sketched the report format with placeholders.
-- [ ] I've written guardrails for limits and missing data.
-- [ ] I've reviewed the full brief and removed vague wording.
+- [ ] J'ai rédigé un objectif en une phrase pour mon rapport de statut quotidien.
+- [ ] J'ai listé au moins trois entrées dont l'agent aura besoin.
+- [ ] J'ai esquissé le format du rapport avec des espaces réservés.
+- [ ] J'ai rédigé des garde-fous pour les limites et les données manquantes.
+- [ ] J'ai relu l'ensemble du brief et supprimé les formulations vagues.
 
 ---
 
 <!-- journey: all -->
-Return to [Design Your Daily Repo Status Report](09-agentic-editing.md) or continue to [Build Your Daily Repo Status Workflow](07-your-first-workflow.md).
+
+Revenez à [Design Your Daily Repo Status Report](09-agentic-editing.md) ou continuez vers [Build Your Daily Repo Status Workflow](07-your-first-workflow.md).
+
 <!-- /journey -->

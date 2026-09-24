@@ -1,28 +1,29 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest 09-01a: Pattern — Long `[plan]` Chains
 
-## :dart: What You'll Do
+# Side Quest 09-01a : Motif — longues chaînes `[plan]`
 
-You will learn how to spot a planning loop and rewrite your workflow brief so the agent starts with an explicit first [tool](https://github.github.com/gh-aw/reference/tools/) call.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Vous allez apprendre à repérer une boucle de planification et à réécrire le brief de votre workflow pour que l’agent commence par un premier appel explicite de [tool](https://github.github.com/gh-aw/reference/tools/).
 
-- Complete [Side Quest: Diagnosing Common Agent Output Patterns](side-quest-09-01-debug-output.md)
+## :clipboard: Avant de commencer
 
-When you see many consecutive `[plan]` lines and no `[tool]` line, the agent is thinking but not acting. This usually means your brief leaves too much room for interpretation. A goal like "find the most important issue" sounds clear to you, but it does not tell the agent what data to fetch first or how to rank results.
+- Terminez [Side Quest : Diagnostiquer les motifs courants de sortie d’agent](side-quest-09-01-debug-output.md)
 
-Use this structure in your brief:
+Lorsque vous voyez de nombreuses lignes `[plan]` consécutives et aucune ligne `[tool]`, l’agent réfléchit mais n’agit pas. Cela signifie généralement que votre brief laisse trop de place à l’interprétation. Un objectif comme "find the most important issue" peut vous sembler clair, mais il n’indique pas à l’agent quelles données récupérer d’abord ni comment classer les résultats.
 
-- Start action: "Call `github.list_issues` to list open issues."
-- Ranking rule: "Sort by reactions and pick the top item."
-- Output rule: "Post one comment that includes the selected issue URL and reason."
+Utilisez cette structure dans votre brief :
 
-If you need help tightening wording, ask the `agentic-workflows` skill to rewrite your brief or run [`gh aw compile --watch`](https://github.github.com/gh-aw/setup/cli/#compile).
+- Action de départ : "Call `github.list_issues` to list open issues."
+- Règle de classement : "Sort by reactions and pick the top item."
+- Règle de sortie : "Post one comment that includes the selected issue URL and reason."
 
-## Hands-On Exercise
+Si vous avez besoin d’aide pour resserrer la formulation, demandez au skill `agentic-workflows` de réécrire votre brief ou exécutez [`gh aw compile --watch`](https://github.github.com/gh-aw/setup/cli/#compile).
 
-Read this snippet and identify the pattern before you open the answer.
+## Exercice pratique
+
+Lisez cet extrait et identifiez le motif avant d’ouvrir la réponse.
 
 ```text
 🤔 [plan] Need the highest-impact issue
@@ -33,19 +34,19 @@ Read this snippet and identify the pattern before you open the answer.
 ```
 
 <details>
-<summary>Show answer</summary>
+<summary>Afficher la réponse</summary>
 
-Pattern: **Long `[plan]` chain with no `[tool]` call**. Fix by adding an explicit first call and ranking rule.
+Motif : **Long `[plan]` chain without `[tool]` call**. Corrigez-le en ajoutant un premier appel explicite et une règle de classement.
 
 </details>
 
 <!-- journey: all -->
+
 ## :white_check_mark: Checkpoint
 
-- [ ] I can recognize a planning loop from log lines alone
-- [ ] I can explain why ambiguous goals create delayed tool use
-- [ ] I can add a concrete first tool call to my workflow brief
-- [ ] I can define a clear ranking rule the agent can execute
+- [ ] Je peux reconnaître une boucle de planification à partir des seules lignes du journal
+- [ ] Je peux expliquer pourquoi des objectifs ambigus retardent l’utilisation des tools
+- [ ] Je peux ajouter un premier appel de tool concret au brief de mon workflow
+- [ ] Je peux définir une règle de classement claire que l’agent peut exécuter
 
 <!-- /journey -->
-

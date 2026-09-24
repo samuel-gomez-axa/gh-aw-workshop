@@ -1,80 +1,81 @@
 <!-- page-journey: local -->
 <!-- page-adventure: side-quest -->
-# Side Quest: Install `gh-aw` in a Local Terminal
 
-> _Optional: install `gh-aw` on your own machine instead of in the recommended Codespace._
+# Side Quest : Installer `gh-aw` dans un terminal local
 
-Using a Codespace instead? Return to [Install the gh-aw CLI Extension](06-install-gh-aw.md).
+> _Facultatif : installez `gh-aw` sur votre propre machine plutôt que dans le Codespace recommandé._
 
-## :dart: What You'll Do
+Vous utilisez plutôt un Codespace ? Revenez à [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md).
 
-You'll verify the `gh` CLI is authenticated, install the `gh-aw` extension, and run one quick diagnostic to confirm your local terminal is ready for [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) setup.
+## :dart: Ce que vous allez faire
 
-## :clipboard: Before You Start
+Vous allez vérifier que le CLI `gh` est authentifié, installer l’extension `gh-aw`, puis lancer un diagnostic rapide pour confirmer que votre terminal local est prêt pour la configuration d’un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/).
 
-- You've completed [What Are Agentic Workflows?](05-agentic-workflows-intro.md)
-- You've completed [Side Quest: Set Up Your Local Terminal](side-quest-02-01-local-terminal.md)
-- The `gh` CLI is installed and authenticated (completed in [Authenticate the `gh` CLI](side-quest-02-01-local-terminal.md#authenticate-the-gh-cli))
+## :clipboard: Avant de commencer
 
-Run this to confirm `gh` is authenticated before continuing:
+- Vous avez terminé [Que sont les agentic workflows ?](05-agentic-workflows-intro.md)
+- Vous avez terminé [Side Quest : Configurer votre terminal local](side-quest-02-01-local-terminal.md)
+- Le CLI `gh` est installé et authentifié (voir [Authentifier le CLI `gh`](side-quest-02-01-local-terminal.md#authentifier-le-cli-gh))
+
+Exécutez ceci pour confirmer que `gh` est authentifié avant de continuer :
 
 ```bash
 gh auth status
 ```
 
-Expected output: `Logged in to github.com as <your-username>`. If you see an error about `gh` not being installed, return to [Prerequisites](01-prerequisites.md). For [authentication](https://github.github.com/gh-aw/reference/auth/) errors, return to [Authenticate the `gh` CLI](side-quest-02-01-local-terminal.md#authenticate-the-gh-cli).
+Sortie attendue : `Logged in to github.com as <your-username>`. Si vous voyez une erreur indiquant que `gh` n’est pas installé, revenez à [Prérequis](01-prerequisites.md). Pour les erreurs d’[authentication](https://github.github.com/gh-aw/reference/auth/), revenez à [Authentifier le CLI `gh`](side-quest-02-01-local-terminal.md#authentifier-le-cli-gh).
 
-## Install from terminal
+## Installer depuis le terminal
 
-Check whether `gh-aw` is already installed, then install or update accordingly:
+Vérifiez si `gh-aw` est déjà installé, puis installez-le ou mettez-le à jour selon le cas :
 
 ```bash
 gh aw --version
 ```
 
-- **Version shown?** Update the extension: `gh extension upgrade github/gh-aw`
-- **Command not found?** Install the extension (open your terminal — in [VS Code](side-quest-01-02-environment-reference.md#visual-studio-code-vs-code) use `` Ctrl+` `` / `` Cmd+` ``):
+- **Version shown?** Mettez l’extension à jour : `gh extension upgrade github/gh-aw`
+- **Command not found?** Installez l’extension (ouvrez votre terminal ; dans [VS Code](side-quest-01-02-environment-reference.md#visual-studio-code-vs-code), utilisez `` Ctrl+` `` / `` Cmd+` ``) :
 
 ```bash
 gh extension install github/gh-aw
 ```
 
-<details>
-<summary>Troubleshooting: 403 Forbidden on install</summary>
+<details open>
+<summary>Dépannage : 403 Forbidden à l’installation</summary>
 
-Your org token may not allow public extension installs. Use the fallback installer:
+Le token de votre organisation n’autorise peut-être pas l’installation d’extensions publiques. Utilisez l’installateur de secours :
 
 ```bash
 curl -sL https://raw.githubusercontent.com/github/gh-aw/main/install-gh-aw.sh | bash
 ```
 
-Need more help? See [Side Quest: Install gh-aw Troubleshooting](side-quest-06-01-install-troubleshooting.md).
+Besoin d’aide supplémentaire ? Consultez [Side Quest : Dépannage de l’installation de `gh-aw`](side-quest-06-01-install-troubleshooting.md).
 
 </details>
 
-Verify the extension is ready:
+Vérifiez que l’extension est prête :
 
 ```bash
 gh aw --version
 ```
 
-You should see output like `gh-aw version 0.88.2`.
+Vous devriez voir une sortie comme `gh-aw version 0.88.2`.
 
-## Run a quick diagnostic
+## Lancer un diagnostic rapide
 
-Now run:
+Exécutez maintenant :
 
 ```bash
 gh aw doctor
 ```
 
-This verifies your GitHub CLI [authentication](https://github.github.com/gh-aw/reference/auth/) using the same setup checks `gh-aw` expects before later authoring and compile steps.
+Cette commande vérifie l’[authentication](https://github.github.com/gh-aw/reference/auth/) de votre GitHub CLI à l’aide des mêmes contrôles de configuration que `gh-aw` attend avant les étapes ultérieures de rédaction et de compilation.
 
-Expected result: a success message confirming GitHub CLI authentication. If it fails, use [Side Quest: Install gh-aw Troubleshooting](side-quest-06-01-install-troubleshooting.md), then rerun `gh aw doctor`.
+Résultat attendu : un message de succès confirmant l’authentication du GitHub CLI. En cas d’échec, utilisez [Side Quest: Install gh-aw Troubleshooting](side-quest-06-01-install-troubleshooting.md), puis relancez `gh aw doctor`.
 
-## Initialize [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) skills
+## Initialiser les skills d’[agentic workflow](https://github.github.com/gh-aw/introduction/overview/)
 
-Before you author your first workflow, initialize and push the generated skill files:
+Avant de rédiger votre premier workflow, initialisez puis poussez les fichiers de skill générés :
 
 ```bash
 gh aw init
@@ -83,35 +84,32 @@ git commit -m "Initialize agentic workflow skills"
 git push
 ```
 
-This configures `.gitattributes` and `.vscode/settings.json`, creates
-`.github/skills/agentic-workflows/SKILL.md`, and removes legacy prompt files from
-`.github/prompts/` if they exist.
+Cette commande configure `.gitattributes` et `.vscode/settings.json`, crée `.github/skills/agentic-workflows/SKILL.md` et supprime les anciens fichiers de prompt dans `.github/prompts/` s’ils existent.
 
-When you run `gh aw init --engine copilot`, it also creates
-`.github/agents/agentic-workflows.md`. Unless you pass `--no-mcp`, it also creates
-`.github/workflows/copilot-setup-steps.yml` and `.github/mcp.json`.
+Lorsque vous exécutez `gh aw init --engine copilot`, la commande crée aussi `.github/agents/agentic-workflows.md`. À moins de passer `--no-mcp`, elle crée également `.github/workflows/copilot-setup-steps.yml` et `.github/mcp.json`.
 
-If any workflow uses `expires`, `gh aw init` also generates
-`.github/workflows/agentics-maintenance.yml`.
+Si un workflow utilise `expires`, `gh aw init` génère aussi `.github/workflows/agentics-maintenance.yml`.
 
-## :running_man: Try It
+## :running_man: Essayez
 
-Run `gh aw --help` and scan the list of sub-commands.
+Exécutez `gh aw --help` et parcourez la liste des sous-commandes.
 
-Which one sub-command do you expect to use in Step 7 when you create and run your first workflow?
+Quelle sous-commande pensez-vous utiliser à Step 7 lorsque vous créerez puis exécuterez votre premier workflow ?
 
 ## :white_check_mark: Checkpoint
 
-- [ ] `gh auth status` shows you are logged in to github.com
-- [ ] `gh aw --version` returns a version number
-- [ ] `gh aw doctor` completes successfully
-- [ ] `gh aw init` has been run in your practice repository
-- [ ] All files generated by `gh aw init` are committed and pushed
-- [ ] You can name one `gh aw` sub-command from `gh aw --help`
+- [ ] `gh auth status` indique que vous êtes connecté à github.com
+- [ ] `gh aw --version` renvoie un numéro de version
+- [ ] `gh aw doctor` se termine avec succès
+- [ ] `gh aw init` a été exécuté dans votre dépôt d’exercice
+- [ ] Tous les fichiers générés par `gh aw init` sont validés et poussés
+- [ ] Vous pouvez citer une sous-commande `gh aw` issue de `gh aw --help`
 
-Want to understand how Copilot authenticates with your workflow?
-:arrow_right: **[Side Quest: Configure GitHub Copilot for Agentic Workflows](side-quest-06-03-copilot-token.md)**
+Vous voulez comprendre comment Copilot s’authentifie auprès de votre workflow ?
+:arrow_right: **[Side Quest : Configurer GitHub Copilot pour les agentic workflows](side-quest-06-03-copilot-token.md)**
 
 <!-- journey: local -->
-**Next:** [Write Your First Agentic Workflow](07-your-first-workflow.md)
+
+**Suite :** [Écrire votre premier agentic workflow](07-your-first-workflow.md)
+
 <!-- /journey -->

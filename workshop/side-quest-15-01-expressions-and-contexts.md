@@ -1,43 +1,44 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
-# Side Quest: GitHub Actions Expressions and Contexts
 
-> _The `${{ }}` syntax unlocks a whole language inside your workflow — learn to read it and you can make workflows that adapt to anything._
+# Quête Annexe : Expressions Et Contextes GitHub Actions
 
-## :dart: What You'll Do
+> _La syntaxe `${{ }}` déverrouille tout un langage dans votre workflow : apprenez à la lire et vous pourrez créer des workflows qui s'adaptent à tout._
 
-Explore the expression and context system that powers GitHub Actions conditions, output references, and dynamic values. By the end, the `${{ steps.recent.outputs.commit_count }}` style syntax in your conditional workflow will feel natural.
+## :dart: Ce Que Vous Allez Faire
 
-## :clipboard: Before You Start
+Explorez le système d'expressions et de contextes qui alimente les conditions GitHub Actions, les références de sortie et les valeurs dynamiques. À la fin, la syntaxe de type `${{ steps.recent.outputs.commit_count }}` dans votre workflow conditionnel vous semblera naturelle.
 
-- You have completed [Make Your Workflow Smarter with Conditional Logic](15-conditional-logic.md).
+## :clipboard: Avant De Commencer
 
-## Steps
+- Vous avez terminé [Make Your Workflow Smarter with Conditional Logic](15-conditional-logic.md).
 
-### Understand the expression syntax
+## Étapes
 
-Anywhere in a [GitHub Actions](https://github.github.com/gh-aw/introduction/how-they-work/) YAML file, you can embed a dynamic value using double curly braces:
+### Comprendre La Syntaxe Des Expressions
+
+N'importe où dans un fichier YAML [GitHub Actions](https://github.github.com/gh-aw/introduction/how-they-work/), vous pouvez intégrer une valeur dynamique à l'aide de doubles accolades :
 
 ```markdown
 ${{ <expression> }}
 ```
 
-An **expression** is a mini-language. It can reference context objects, compare values, call built-in functions, and combine them with operators. GitHub evaluates the expression at runtime and substitutes the result before running the step.
+Une **expression** est un mini-langage. Elle peut référencer des objets de contexte, comparer des valeurs, appeler des fonctions intégrées et les combiner avec des opérateurs. GitHub évalue l'expression à l'exécution et remplace le résultat avant d'exécuter l'étape.
 
-### Know your contexts
+### Connaître Vos Contextes
 
-A **context** is a named object that GitHub Actions populates automatically. The ones you'll use most often:
+Un **contexte** est un objet nommé que GitHub Actions remplit automatiquement. Voici ceux que vous utiliserez le plus souvent :
 
-| Context | What it holds |
-|---------|--------------|
-| `github` | Event metadata — repo name, branch, commit SHA, actor |
-| `steps.<id>.outputs` | Outputs written by a previous step using [`$GITHUB_OUTPUT`](https://github.github.com/gh-aw/reference/steps-jobs/#custom-steps-steps) |
-| `env` | [Environment variables](https://github.github.com/gh-aw/reference/environment-variables/) set in the workflow or step |
-| `secrets` | Repository or organisation [secrets](https://github.github.com/gh-aw/reference/environment-variables/#mcp-server-with-secrets) |
-| `runner` | Information about the runner OS and temp directory |
-| `job` | Current job status |
+| Contexte             | Ce qu'il contient                                                                                                                                 |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `github`             | Métadonnées d'événement : nom du dépôt, branche, SHA de commit, acteur                                                                            |
+| `steps.<id>.outputs` | Sorties écrites par une étape précédente à l'aide de [`$GITHUB_OUTPUT`](https://github.github.com/gh-aw/reference/steps-jobs/#custom-steps-steps) |
+| `env`                | [Variables d'environnement](https://github.github.com/gh-aw/reference/environment-variables/) définies dans le workflow ou l'étape                |
+| `secrets`            | [Secrets](https://github.github.com/gh-aw/reference/environment-variables/#mcp-server-with-secrets) du dépôt ou de l'organisation                 |
+| `runner`             | Informations sur l'OS du runner et son répertoire temporaire                                                                                      |
+| `job`                | Statut du job courant                                                                                                                             |
 
-You can read a context value anywhere an expression is allowed:
+Vous pouvez lire une valeur de contexte partout où une expression est autorisée :
 
 ```markdown
 run: echo "Running on ${{ runner.os }}"
@@ -50,8 +51,9 @@ if: github.event_name == 'workflow_dispatch'
 ```
 
 > [!TIP]
+>
 > <details>
-> <summary>You can see the full contents of every context by adding a debug step:</summary>
+> <summary>Vous pouvez voir le contenu complet de chaque contexte en ajoutant une étape de debug :</summary>
 >
 > ```markdown
 > - name: Dump contexts
@@ -60,29 +62,29 @@ if: github.event_name == 'workflow_dispatch'
 >
 > </details>
 
-### Use outputs between steps
+### Utiliser Les Sorties Entre Les Étapes
 
-When a step writes a value to `$GITHUB_OUTPUT`, later steps can read it via the `steps` context:
+Lorsqu'une étape écrit une valeur dans `$GITHUB_OUTPUT`, les étapes suivantes peuvent la lire via le contexte `steps` :
 
 ```markdown
 ---
 steps:
-  - name: Produce a value
-    id: my-step
-    run: echo "result=hello" >> $GITHUB_OUTPUT
+    - name: Produce a value
+      id: my-step
+      run: echo "result=hello" >> $GITHUB_OUTPUT
 
-  - name: Use that value
-    run: echo "Got ${{ steps.my-step.outputs.result }}"
+    - name: Use that value
+      run: echo "Got ${{ steps.my-step.outputs.result }}"
 ---
 ```
 
-The `id:` field is the key. Without it, the `steps` context has no name to look up.
+Le champ `id:` sert de clé. Sans lui, le contexte `steps` n'a aucun nom à rechercher.
 
-### Write readable conditions
+### Écrire Des Conditions Lisibles
 
-The `if:` key accepts any expression. It evaluates to a boolean — if false, the step (or job) is skipped.
+La clé `if:` accepte n'importe quelle expression. Elle est évaluée en booléen : si le résultat est faux, l'étape, ou le job, est ignoré.
 
-Common patterns:
+Patterns courants :
 
 ```markdown
 ---
@@ -101,22 +103,22 @@ if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 ```
 
 > [!NOTE]
-> Values from `$GITHUB_OUTPUT` are always strings. Compare them with quotes: `== '0'`, not `== 0`.
+> Les valeurs provenant de `$GITHUB_OUTPUT` sont toujours des chaînes. Comparez-les avec des guillemets : `== '0'`, pas `== 0`.
 
-### Use built-in functions
+### Utiliser Les Fonctions Intégrées
 
-GitHub Actions provides a small set of helper functions inside expressions:
+GitHub Actions fournit un petit ensemble de fonctions utilitaires dans les expressions :
 
-| Function | What it does |
-|----------|-------------|
-| `toJSON(value)` | Serialise any context to a JSON string |
-| `fromJSON(string)` | Parse a JSON string into an object |
-| `contains(haystack, needle)` | True if string/array includes the value |
-| `startsWith(string, prefix)` | True if string starts with prefix |
-| `endsWith(string, suffix)` | True if string ends with suffix |
-| `format(template, …)` | String interpolation |
+| Fonction                     | Ce qu'elle fait                                    |
+| ---------------------------- | -------------------------------------------------- |
+| `toJSON(value)`              | Sérialise n'importe quel contexte en chaîne JSON   |
+| `fromJSON(string)`           | Analyse une chaîne JSON en objet                   |
+| `contains(haystack, needle)` | Vrai si la chaîne ou le tableau contient la valeur |
+| `startsWith(string, prefix)` | Vrai si la chaîne commence par le préfixe          |
+| `endsWith(string, suffix)`   | Vrai si la chaîne se termine par le suffixe        |
+| `format(template, …)`        | Interpolation de chaîne                            |
 
-Example — check whether a commit message contains a keyword:
+Exemple : vérifier si un message de commit contient un mot-clé :
 
 ```markdown
 ---
@@ -125,11 +127,11 @@ if: contains(github.event.head_commit.message, '[skip ci]')
 ```
 
 > [!NOTE]
-> Expressions are evaluated on the GitHub Actions runner, not inside the AI agent. Use them for workflow control flow, not for shaping the AI prompt at runtime — pass values to the prompt via environment variables in your brief instead.
+> Les expressions sont évaluées sur le runner GitHub Actions, pas à l'intérieur de l'agent IA. Utilisez-les pour le contrôle de flux du workflow, pas pour façonner le prompt IA à l'exécution. Passez plutôt les valeurs au prompt via des variables d'environnement dans votre brief.
 
-### Combine multiple conditions
+### Combiner Plusieurs Conditions
 
-The `&&` (AND) and `||` (OR) operators let you build composite conditions that express more nuanced rules than a single comparison allows. When combining multiple shell-derived outputs, keep in mind that all values written to `$GITHUB_OUTPUT` arrive as strings, so always compare them against quoted literals.
+Les opérateurs `&&` et `||` vous permettent de construire des conditions composites qui expriment des règles plus nuancées qu'une simple comparaison. Quand vous combinez plusieurs sorties issues du shell, gardez à l'esprit que toutes les valeurs écrites dans `$GITHUB_OUTPUT` arrivent sous forme de chaînes ; comparez-les donc toujours à des littéraux entre guillemets.
 
 ```markdown
 ---
@@ -144,11 +146,11 @@ if: steps.day.outputs.day != 'Saturday' && steps.day.outputs.day != 'Sunday'
 ---
 ```
 
-### Gather time-based context with shell steps
+### Collecter Un Contexte Temporel Avec Des Étapes Shell
 
-Some conditions require information that is not available in any context object — for example, the current day of the week or the number of commits since a given timestamp. You can capture this data in a dedicated shell step and then reference it like any other output.
+Certaines conditions nécessitent des informations indisponibles dans les objets de contexte, par exemple le jour actuel de la semaine ou le nombre de commits depuis un certain timestamp. Vous pouvez capturer ces données dans une étape shell dédiée puis les référencer comme n'importe quelle autre sortie.
 
-A step that exposes the current day name:
+Une étape qui expose le nom du jour courant :
 
 ```markdown
 - name: Check day of week
@@ -156,7 +158,7 @@ A step that exposes the current day name:
   run: echo "day=$(date +%A)" >> $GITHUB_OUTPUT
 ```
 
-Once this step runs, `steps.day.outputs.day` holds a value like `Monday` or `Saturday`. Combine it with a commit-count check to build a condition that skips the agent job on both quiet days and weekends:
+Une fois cette étape exécutée, `steps.day.outputs.day` contient une valeur comme `Monday` ou `Saturday`. Combinez-la avec une vérification du nombre de commits pour construire une condition qui ignore le job d'agent à la fois les jours calmes et le week-end :
 
 ```markdown
 ---
@@ -164,19 +166,19 @@ if: steps.recent.outputs.commit_count != '0' && steps.day.outputs.day != 'Saturd
 ---
 ```
 
-This pattern — deterministic shell step produces a string output, `if:` expression reads that output — applies broadly wherever you need workflow control flow based on data that is not already in a GitHub Actions context object.
+Ce pattern, une étape shell déterministe produit une sortie chaîne et l'expression `if:` lit cette sortie, s'applique largement partout où vous avez besoin d'un contrôle de flux de workflow basé sur des données qui ne sont pas déjà présentes dans un objet de contexte GitHub Actions.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You can explain what `${{ }}` does and when GitHub evaluates it
-- [ ] You can name at least three context objects and what they contain
-- [ ] You understand how `id:` connects a step's output to the `steps` context
-- [ ] You can write an `if:` condition that skips a step based on a previous output
-- [ ] You can combine two or more conditions using `&&` and `||`
-- [ ] You can write a shell step that captures time-based data (day of week, date) as a step output
+- [ ] Vous pouvez expliquer ce que fait `${{ }}` et à quel moment GitHub l'évalue
+- [ ] Vous pouvez nommer au moins trois objets de contexte et ce qu'ils contiennent
+- [ ] Vous comprenez comment `id:` relie la sortie d'une étape au contexte `steps`
+- [ ] Vous pouvez écrire une condition `if:` qui ignore une étape en fonction d'une sortie précédente
+- [ ] Vous pouvez combiner deux conditions ou plus avec `&&` et `||`
+- [ ] Vous pouvez écrire une étape shell qui capture des données temporelles, jour de la semaine, date, comme sortie d'étape
 
 <!-- journey: all -->
-**Next:** [Connect a Live Data Source to Your Workflow](16-connect-data-source.md)
+
+**Suite :** [Connecter une source de données réelle à votre workflow](16-connect-data-source.md)
+
 <!-- /journey -->
-
-

@@ -14,51 +14,51 @@
 </research-metadata>
 -->
 
-# Split Complex Workflows with [Inline Sub-Agents](https://github.github.com/gh-aw/reference/inline-sub-agents/)
+# Decoupez les workflows complexes avec des [Inline Sub-Agents](https://github.github.com/gh-aw/reference/inline-sub-agents/)
 
-> _One workflow file, multiple specialised agents — each doing exactly one thing, at the right cost._
+> _Un seul fichier de workflow, plusieurs agents spécialisés, chacun faisant exactement une chose, au bon coût._
 
-## :dart: What You'll Do
+## :dart: Ce que vous allez faire
 
-You'll add a sub-agent to your daily-status workflow so the parent agent can stay focused on planning and final writing while a focused sub-agent handles one repeated task. By the end of this step, your workflow will be easier to scale without turning the whole prompt into one long, repetitive brief.
+Vous allez ajouter un sous-agent à votre workflow daily-status afin que l'agent parent reste concentré sur la planification et la rédaction finale, tandis qu'un sous-agent ciblé prend en charge une tâche répétitive. À la fin de cette étape, votre workflow sera plus facile à faire évoluer sans transformer l'ensemble du prompt en un brief long et répétitif.
 
-## :clipboard: Before You Start
+## :clipboard: Avant de commencer
 
-- You have a working agentic workflow from the build steps ([Step 7](07-your-first-workflow.md) or equivalent).
-- You understand YAML [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) from [Write Your First Agentic Workflow](07-your-first-workflow.md).
-- You know how to compile a workflow from [Side Quest: Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md).
+- Vous disposez d'un workflow agentique fonctionnel issu des étapes de création ([Step 7](07-your-first-workflow.md) ou équivalent).
+- Vous comprenez le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) YAML depuis [Write Your First Agentic Workflow](07-your-first-workflow.md).
+- Vous savez compiler un workflow grâce à [Side Quest: Using `gh aw compile` to Catch Errors Early](side-quest-07-01-compile-workflow.md).
 
-## Understand the parent agent and sub-agent split
+## Comprendre la séparation entre agent parent et sous-agent
 
-When your workflow repeats the same small job for many items, keep the parent agent focused on the overall plan and final output. Move the repeated item-by-item work into a sub-agent.
+Lorsque votre workflow répète la même petite tâche sur de nombreux éléments, gardez l'agent parent concentré sur le plan global et la sortie finale. Déplacez le travail répétitif élément par élément vers un sous-agent.
 
 <picture>
    <source media="(prefers-color-scheme: dark)" srcset="images/21-inline-sub-agents-dark.svg">
    <source media="(prefers-color-scheme: light)" srcset="images/21-inline-sub-agents-light.svg">
-   <img alt="Inline sub-agent pattern: parent agent plans and delegates repeated tasks to sub-agents, then assembles the final output" src="images/21-inline-sub-agents-light.svg">
+  <img alt="Modèle d'Inline Sub-Agent : l'agent parent planifie et délègue les tâches répétitives à des sous-agents, puis assemble la sortie finale" src="images/21-inline-sub-agents-light.svg">
 </picture>
 
-A sub-agent is just a helper you define inside the same workflow file. In this step, you only need one syntax rule: start the helper with a level-2 heading that begins with `## agent:` and a backtick-wrapped name. Put the helper brief under that heading. If you want, add a short frontmatter block with fields such as `description` or `model`. Then call that helper by name from the parent workflow brief.
+Un sous-agent est simplement un assistant que vous définissez dans le même fichier de workflow. Dans cette étape, vous n'avez besoin que d'une seule règle de syntaxe : commencez l'assistant par un titre de niveau 2 qui débute par `## agent:` et un nom entouré de backticks. Placez le brief de l'assistant sous ce titre. Si vous le souhaitez, ajoutez un court bloc de frontmatter avec des champs comme `description` ou `model`. Appelez ensuite cet assistant par son nom depuis le brief du workflow parent.
 
-> :thinking: **Predict:** Look at your current workflow. Which instruction repeats once per issue, pull request, or file? Keep that answer in mind for the next section.
+> :thinking: **Predict:** Regardez votre workflow actuel. Quelle instruction se répète une fois par issue, pull request ou fichier ? Gardez cette réponse en tête pour la section suivante.
 >
 > [!TIP]
-> Want the full rules for names, frontmatter, [model aliases](https://github.github.com/gh-aw/reference/engines/#available-coding-agents), and block placement? See the existing [Side Quest: Sub-Agent Syntax Reference](side-quest-21-01-sub-agent-syntax.md). Stay on this page if you only want the main path.
+> Vous voulez les règles complètes pour les noms, le frontmatter, les [model aliases](https://github.github.com/gh-aw/reference/engines/#available-coding-agents) et le positionnement des blocs ? Consultez [Side Quest: Sub-Agent Syntax Reference](side-quest-21-01-sub-agent-syntax.md). Restez sur cette page si vous ne voulez suivre que le parcours principal.
 
-## Apply the pattern to your workflow
+## Appliquer ce modèle à votre workflow
 
-### Pick one repeated task
+### Choisir une tâche répétitive
 
-Open your workflow file and choose one bounded task that repeats for each item, such as summarizing one issue or classifying one pull request.
+Ouvrez votre fichier de workflow et choisissez une tâche bien délimitée qui se répète pour chaque élément, comme résumer une issue ou classifier une pull request.
 
-**Action:** Before you edit, choose these two things:
+**Action :** Avant de modifier le fichier, choisissez ces deux éléments :
 
-- the sub-agent name you want to use
-- the one-sentence job that sub-agent should do
+- le nom du sous-agent que vous voulez utiliser
+- la mission en une phrase que ce sous-agent doit accomplir
 
-### Add one sub-agent block
+### Ajouter un bloc de sous-agent
 
-In your AI agent, run this prompt:
+Dans votre agent IA, lancez ce prompt :
 
 ```prompt
 /agentic-workflows update .github/workflows/daily-status.md to add an inline
@@ -67,39 +67,42 @@ one-sentence summary. Use model: small. Also update the parent brief to call
 this sub-agent once per open issue and compile the summaries into a numbered list.
 ```
 
-The skill appends the sub-agent block at the bottom of the file and updates the parent brief. Review the diff before committing.
+La skill ajoute le bloc de sous-agent en bas du fichier et met à jour le brief parent. Examinez le diff avant de commit.
 
-Here is the sub-agent syntax the skill will add:
+Voici la syntaxe de sous-agent que la skill ajoutera :
 
 ```markdown .github/workflows/daily-status.md
 ## agent: `issue-summarizer`
+
 ---
+
 description: Summarizes a single open issue in one sentence
 model: small
+
 ---
 
 Read the title and body of one GitHub issue. Return exactly one sentence
 that explains what the issue is asking for and its current status.
 ```
 
-Keep the sub-agent brief narrow. If it processes one item at a time and returns a single result, it belongs here.
+Gardez le brief du sous-agent resserré. S'il traite un élément à la fois et renvoie un seul résultat, alors il a sa place ici.
 
-<details>
+<details open>
 <summary>:desktop_computer: Terminal path</summary>
 
-After your parent workflow brief, at the bottom of the file, add the sub-agent block shown above. Then update the parent brief to call it by name. For example:
+Après le brief de votre workflow parent, ajoutez en bas du fichier le bloc de sous-agent montré ci-dessus. Puis mettez à jour le brief parent pour l'appeler par son nom. Par exemple :
 
 ```markdown .github/workflows/daily-status.md
 For each issue, use the `issue-summarizer` agent to produce a one-sentence summary.
 ```
 
-After editing both, run `gh aw compile` to regenerate the [lock file](https://github.github.com/gh-aw/reference/compilation-process/).
+Après avoir édité les deux, lancez `gh aw compile` pour régénérer le [lock file](https://github.github.com/gh-aw/reference/compilation-process/).
 
 </details>
 
-### Verify the diff and commit
+### Vérifier le diff et committer
 
-The skill edits both the sub-agent block and the parent brief in one step. Review the diff, then commit:
+La skill modifie en une seule étape le bloc du sous-agent et le brief parent. Examinez le diff, puis committez :
 
 ```bash
 git add .
@@ -107,21 +110,22 @@ git commit -m "feat: add issue-summarizer sub-agent to daily-status"
 git push
 ```
 
-### Run and verify
+### Exécuter et vérifier
 
-Trigger a manual run. In the Actions log, confirm the parent agent calls your sub-agent and then uses the sub-agent result in the final summary.
+Déclenchez une exécution manuelle. Dans le journal Actions, vérifiez que l'agent parent appelle votre sous-agent puis utilise son résultat dans le résumé final.
 
 ## :white_check_mark: Checkpoint
 
-- [ ] You identified one repeated task in your workflow that fits a sub-agent
-- [ ] You wrote a sub-agent name and one-sentence job before editing the file
-- [ ] Your workflow file now includes at least one `## agent: \`name\`` block
-- [ ] You updated the main brief to call the sub-agent by name
-- [ ] The compiled lock file was updated and committed alongside the workflow source
-- [ ] A manual run completed and the Actions log showed the sub-agent being called
-- [ ] The final workflow output used the sub-agent result
+- [ ] Vous avez identifié une tâche répétitive dans votre workflow qui se prête bien à un sous-agent
+- [ ] Vous avez défini un nom de sous-agent et une mission en une phrase avant d'éditer le fichier
+- [ ] Votre fichier de workflow inclut maintenant au moins un bloc `## agent: \`name\``
+- [ ] Vous avez mis à jour le brief principal pour appeler le sous-agent par son nom
+- [ ] Le lock file compilé a été mis à jour et committé avec la source du workflow
+- [ ] Une exécution manuelle s'est terminée et le journal Actions a montré l'appel du sous-agent
+- [ ] La sortie finale du workflow a utilisé le résultat du sous-agent
 
 <!-- journey: all -->
-**Next:** [Make Your Workflows Resilient to Failure](22-error-handling-and-resilience.md)
-<!-- /journey -->
 
+**Suite :** [Rendez vos workflows resilients face aux erreurs](22-error-handling-and-resilience.md)
+
+<!-- /journey -->

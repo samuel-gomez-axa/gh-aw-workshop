@@ -1,61 +1,61 @@
 <!-- page-journey: all -->
 <!-- page-adventure: side-quest -->
 
-# Side Quest: Fuzzy Schedule Expressions
+# Quête Annexe : Expressions De Schedule Floues
 
-> _Optional: use this quick reference if you want help choosing a schedule expression for [Refine, Test, and Improve Your Workflow](09-agentic-editing.md), then return to the main adventure._
+> _Facultatif : utilisez cette référence rapide si vous voulez de l'aide pour choisir une expression de schedule pour [Affiner, tester et améliorer votre workflow](09-agentic-editing.md), puis revenez à l'aventure principale._
 
-## :clipboard: Before You Start
+## :clipboard: Avant De Commencer
 
-- You have completed [Refine, Test, and Improve Your Workflow](09-agentic-editing.md) or are working through it now.
-- You understand that [GitHub Actions](https://github.github.com/gh-aw/reference/triggers/) schedules use **cron expressions** (e.g., `0 9 * * 1` runs at 09:00 UTC every Monday).
-- You know how to run `gh aw compile` to regenerate a workflow's lock file.
+- Vous avez terminé [Refine, Test, and Improve Your Workflow](09-agentic-editing.md) ou êtes en train de la suivre.
+- Vous comprenez que les schedules de [GitHub Actions](https://github.github.com/gh-aw/reference/triggers/) utilisent des **cron expressions**, par exemple `0 9 * * 1` s'exécute à 09:00 UTC chaque lundi.
+- Vous savez exécuter `gh aw compile` pour régénérer le lock file d'un workflow.
 
-## :dart: What You'll Do
+## :dart: Ce Que Vous Allez Faire
 
-You'll learn how `gh-aw`'s plain-English schedule syntax maps to GitHub Actions cron schedules. By the end, you'll know which [fuzzy expression](https://github.github.com/gh-aw/reference/schedule-syntax/#fuzzy-schedules) fits your workflow, how to verify the compiled cron value, and how agentic workflows differ from classic Actions YAML when it comes to scheduling.
+Vous allez apprendre comment la syntaxe de schedule en anglais courant de `gh-aw` se traduit en schedules cron GitHub Actions. À la fin, vous saurez quelle [fuzzy expression](https://github.github.com/gh-aw/reference/schedule-syntax/#fuzzy-schedules) convient à votre workflow, comment vérifier la valeur cron compilée et en quoi les agentic workflows diffèrent du YAML classique d'Actions pour la planification.
 
-## Cron in one minute
+## Cron En Une Minute
 
-GitHub Actions stores schedules as **[cron expressions](https://github.github.com/gh-aw/reference/triggers/)** — five fields: `minute hour day-of-month month day-of-week`.
+GitHub Actions stocke les schedules sous forme de **[cron expressions](https://github.github.com/gh-aw/reference/triggers/)** : cinq champs, `minute hour day-of-month month day-of-week`.
 
-You do **not** need to write cron by hand for common cases. In `gh-aw`, you can write a [fuzzy expression](https://github.github.com/gh-aw/reference/triggers/) like `daily on weekdays`, then let `gh aw compile` convert it for you.
+Vous n'avez **pas** besoin d'écrire du cron à la main pour les cas courants. Dans `gh-aw`, vous pouvez écrire une [fuzzy expression](https://github.github.com/gh-aw/reference/triggers/) comme `daily on weekdays`, puis laisser `gh aw compile` la convertir pour vous.
 
-## Fuzzy schedule reference
+## Référence Des Fuzzy Schedules
 
-| Fuzzy expression              | Example compiled cron | Best used when…                                                                        |
-| ----------------------------- | --------------------- | -------------------------------------------------------------------------------------- |
-| `schedule: hourly`            | `30 */1 * * *`        | You want fast feedback while experimenting or monitoring something that changes often. |
-| `schedule: every 6 hours`     | `14 */6 * * *`        | You want several updates per day without generating hourly noise.                      |
-| `schedule: daily`             | `49 23 * * *`         | You need a standard once-a-day summary.                                                |
-| `schedule: daily on weekdays` | `50 11 * * 1-5`       | The workflow matters during the work week but can stay quiet on weekends.              |
-| `schedule: weekly`            | `20 4 * * 5`          | You want a low-noise roundup or audit-style report.                                    |
+| Expression floue              | Exemple de cron compilé | À utiliser de préférence quand…                                                                |
+| ----------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------- |
+| `schedule: hourly`            | `30 */1 * * *`          | Vous voulez un retour rapide pendant une phase d'expérimentation ou de surveillance fréquente. |
+| `schedule: every 6 hours`     | `14 */6 * * *`          | Vous voulez plusieurs mises à jour par jour sans bruit horaire.                                |
+| `schedule: daily`             | `49 23 * * *`           | Vous avez besoin d'un résumé standard une fois par jour.                                       |
+| `schedule: daily on weekdays` | `50 11 * * 1-5`         | Le workflow est utile pendant la semaine de travail mais peut rester silencieux le week-end.   |
+| `schedule: weekly`            | `20 4 * * 5`            | Vous voulez un récapitulatif peu bruyant ou un rapport de type audit.                          |
 
 > [!TIP]
-> `gh-aw` **scatters** schedules across different minutes or hours so not every workflow runs at the same time. Your compiled cron value may differ from the examples above — treat your own [lock file](https://github.github.com/gh-aw/reference/workflow-structure/#lock-file-header) as the source of truth.
+> `gh-aw` répartit les schedules sur différentes minutes ou heures afin que tous les workflows ne s'exécutent pas en même temps. Votre valeur cron compilée peut différer des exemples ci-dessus ; traitez votre propre [lock file](https://github.github.com/gh-aw/reference/workflow-structure/#lock-file-header) comme la source de vérité.
 
-## Verify the compiled cron after `gh aw compile`
+## Vérifiez Le Cron Compilé Après `gh aw compile`
 
-Run:
+Exécutez :
 
 ```bash
 gh aw compile
 ```
 
-Then open the generated lock file and look for the `cron:` line under `on.schedule`:
+Ouvrez ensuite le lock file généré et recherchez la ligne `cron:` sous `on.schedule` :
 
 ```markdown
 on:
 schedule: - cron: "50 11 \* \* 1-5" # Friendly format: daily on weekdays (scattered)
 ```
 
-This is the exact schedule GitHub Actions will register for **your** workflow.
+C'est le schedule exact que GitHub Actions enregistrera pour **votre** workflow.
 
-## When should you use raw cron?
+## Quand Faut-Il Utiliser Du Cron Brut ?
 
-Raw cron expressions belong in **classic GitHub Actions YAML** workflows — not in [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) `.md` files. In an agentic workflow, always use a fuzzy expression; `gh aw compile` generates the cron value in the `.lock.yml` automatically.
+Les raw cron expressions ont leur place dans les workflows **classic GitHub Actions YAML**, pas dans les fichiers `.md` d'[agentic workflow](https://github.github.com/gh-aw/introduction/overview/). Dans un agentic workflow, utilisez toujours une fuzzy expression ; `gh aw compile` génère automatiquement la valeur cron dans le `.lock.yml`.
 
-If none of the fuzzy options match your exact timing need, choose the closest fuzzy expression. The fuzzy expressions cover the most common cadences, and the compiler scatters the exact minute and hour to avoid load spikes.
+Si aucune option fuzzy ne correspond exactement à votre besoin de planification, choisissez l'expression fuzzy la plus proche. Ces expressions couvrent les cadences les plus courantes, et le compilateur répartit la minute et l'heure exactes pour éviter les pics de charge.
 
 > In a classic Actions workflow you would write cron directly:
 >
@@ -80,14 +80,14 @@ If none of the fuzzy options match your exact timing need, choose the closest fu
 
 ## :white_check_mark: Checkpoint
 
-- [ ] I can explain what a cron expression is at a high level
-- [ ] I know which fuzzy schedule expression best matches my workflow cadence
-- [ ] I know that `gh aw compile` turns fuzzy syntax into a concrete cron value in the `.lock.yml`
-- [ ] I know where to look for the compiled `cron:` line after compilation
-- [ ] I know that raw cron belongs in classic Actions YAML, not in agentic workflow `.md` files
+- [ ] Je peux expliquer à haut niveau ce qu'est une cron expression
+- [ ] Je sais quelle fuzzy schedule expression correspond le mieux à la cadence de mon workflow
+- [ ] Je sais que `gh aw compile` transforme la syntaxe fuzzy en une valeur cron concrète dans le `.lock.yml`
+- [ ] Je sais où chercher la ligne `cron:` compilée après la compilation
+- [ ] Je sais que le cron brut a sa place dans le YAML classique d'Actions, pas dans les fichiers `.md` d'agentic workflow
 
 ---
 
-Return to the main adventure: [Refine, Test, and Improve Your Workflow](09-agentic-editing.md).
+Retour à l'aventure principale : [Affiner, tester et améliorer votre workflow](09-agentic-editing.md).
 
 <!-- /journey -->
