@@ -64,7 +64,7 @@ permissions:
 
 Une injection demandant à l’agent d’ouvrir une issue ou de publier un commentaire échouera, car ces opérations n’ont aucun chemin d’exécution.
 
-### `network.allowed` bloque l’exfiltration sortante
+### [`network.allowed`](https://github.github.com/gh-aw/reference/network/#caller-extensible-allowlist-networkallowed-input) bloque l’exfiltration sortante
 
 gh-aw vous permet de déclarer une liste de domaines autorisés par le [firewall](https://github.github.com/gh-aw/reference/network/) que le runner du workflow peut contacter. Toute connexion sortante vers un domaine absent de cette liste est rejetée.
 

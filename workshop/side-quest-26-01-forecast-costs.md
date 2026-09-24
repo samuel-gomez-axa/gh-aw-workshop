@@ -12,7 +12,7 @@
 
 `gh aw forecast` examine votre historique réel d’exécutions et lance une simulation Monte Carlo pour projeter la consommation future d’[AIC](https://github.github.com/gh-aw/reference/cost-management/#ai-credits-aic). Il tient compte de :
 
-- la fréquence d’exécution, c’est-à-dire la fréquence des [triggers](https://github.github.com/gh-aw/reference/triggers/) du workflow ;
+- la fréquence d’exécution, c’est-à-dire la fréquence des [triggers](https://github.github.com/gh-aw/reference/triggers/#trigger-types) du workflow ;
 - l’usage par exécution, soit combien d’AIC chaque exécution a consommé ;
 - le taux de succès, car même les exécutions échouées consomment une partie des tokens.
 

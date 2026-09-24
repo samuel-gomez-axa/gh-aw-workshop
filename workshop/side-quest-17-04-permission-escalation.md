@@ -32,6 +32,7 @@ Voilà le problème. L’auteur du workflow a demandé un certain niveau d’aut
 Un pipeline CI/CD classique exécute un script fixe. Si le script dit de lancer des tests, il lance des tests. Il n’invente pas d’étapes supplémentaires.
 
 Un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) est différent. Vous fixez des limites en amont. Mais l’agent décide à l’exécution quels tools appeler et s’il doit utiliser une surface d’écriture. Chaque permission supplémentaire augmente le risque. Si la tâche n’a besoin que d’un accès en lecture, tout chemin d’écriture ouvert augmente le blast radius d’un agent mal orienté.
+Un [agentic workflow](https://github.github.com/gh-aw/introduction/overview/) est différent. Vous fixez des limites en amont. Mais l’agent décide à l’exécution quels tools appeler et s’il doit utiliser une surface d’écriture. Chaque permission supplémentaire augmente le risque. Si la tâche n’a besoin que d’un accès en lecture, tout chemin d’écriture ouvert augmente le [blast radius](https://github.github.com/gh-aw/introduction/architecture/#threat-model) d’un agent mal orienté.
 
 ---
 

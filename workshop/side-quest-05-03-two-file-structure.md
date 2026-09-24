@@ -98,6 +98,12 @@ Avant de révéler les réponses ci-dessous, écrivez une définition en une phr
 
 Un agent opère toujours en **read-only**. Toute écriture, comme publier un commentaire ou créer une issue, passe par les [safe outputs](https://github.github.com/gh-aw/reference/safe-outputs/) et leurs garde-fous.
 
+<picture>
+   <source media="(prefers-color-scheme: dark)" srcset="images/05b-agent-safe-output-flow-dark.svg">
+   <source media="(prefers-color-scheme: light)" srcset="images/05b-agent-safe-output-flow-light.svg">
+   <img alt="Agent safe-output flow: the read-only agent inside its sandbox produces a structured output request, which a separate permission-scoped safe-outputs job validates before writing the comment or issue to GitHub" src="images/05b-agent-safe-output-flow-light.svg">
+</picture>
+
 **Essayez :** ouvrez le `.lock.yml` que vous avez compilé plus tôt. Trouvez le step ou le job qui gère la sortie de l’agent. Notez comment l’écriture est séparée du travail en read-only de l’agent.
 
 > [!TIP]

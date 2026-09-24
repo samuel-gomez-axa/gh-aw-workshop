@@ -38,14 +38,14 @@ Posez-vous la question : _que se passe-t-il si cette mémoire est perdue ?_
 
 > :thinking: **Prédiction :** Pour chaque scénario ci-dessous, décidez quelle primitive vous utiliseriez avant de lire la colonne « Recommended ». Cachez la colonne de droite, faites vos choix, puis révélez-la pour vérifier.
 
-| Scénario                                                                                 | Primitive recommandée |
-| ---------------------------------------------------------------------------------------- | --------------------- |
-| Quelques alertes en double lors de l’expiration du cache sont tolérables                 | `cache-memory`        |
-| Perdre l’état inonderait votre équipe de faux positifs                                   | `repo-memory`         |
-| Vous avez besoin d’une baseline qui survive à un clonage ou à un transfert du dépôt      | `repo-memory`         |
-| Vous voulez la configuration la plus simple, sans permissions supplémentaires            | `cache-memory`        |
-| Vous devez inspecter ou modifier manuellement l’état stocké                              | `repo-memory`         |
-| Vous vous attendez à ce que le workflow s’exécute rarement, moins d’une fois par semaine | `repo-memory`         |
+| Scénario                                                                                                                                                        | Primitive recommandée |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| Quelques alertes en double lors de l’expiration du cache sont tolérables                                                                                        | `cache-memory`        |
+| Perdre l’état inonderait votre équipe de faux positifs                                                                                                          | `repo-memory`         |
+| Vous avez besoin d’une baseline qui survive à un clonage ou à un transfert du dépôt                                                                             | `repo-memory`         |
+| Vous voulez la configuration la plus simple, sans [permissions](https://github.github.com/gh-aw/reference/frontmatter/#permissions-permissions) supplémentaires | `cache-memory`        |
+| Vous devez inspecter ou modifier manuellement l’état stocké                                                                                                     | `repo-memory`         |
+| Vous vous attendez à ce que le workflow s’exécute rarement, moins d’une fois par semaine                                                                        | `repo-memory`         |
 
 Pour la plupart des cas de dédoublonnage, `cache-memory` est le bon point de départ. Passez à `repo-memory` seulement lorsque le coût d’une perte d’état est trop élevé, par exemple si cette perte inondera votre équipe de faux positifs ou exigera un nettoyage manuel avant que le workflow ne refonctionne correctement.
 

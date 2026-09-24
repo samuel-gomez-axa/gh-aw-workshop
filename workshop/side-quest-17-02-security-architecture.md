@@ -28,6 +28,9 @@ Le sandbox donne à votre assistant des règles claires :
 - Il ne peut utiliser que les tools que vous avez autorisés.
 - Il ne peut faire que des actions couvertes par les permissions que vous avez déclarées.
 - Il ne peut pas atteindre des endroits arbitraires en dehors de l’environnement du workflow.
+- Il ne peut utiliser que les tools que vous avez autorisés.
+- Il ne peut faire que des actions couvertes par les [permissions](https://github.github.com/gh-aw/reference/permissions/) que vous avez déclarées.
+- Il ne peut pas atteindre des endroits arbitraires en dehors de l’environnement du workflow.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="images/side-quest-17-02-sandbox-dark.svg">
@@ -99,6 +102,7 @@ network:
 ```
 
 > :thinking: **Prédiction :** Que se passerait-il si vous supprimiez `network.allowed` du frontmatter ci-dessus et qu’un prompt injecté demandait à l’agent d’envoyer des données vers une URL externe ?
+> :thinking: **Prédiction :** Que se passerait-il si vous supprimiez [`network.allowed`](https://github.github.com/gh-aw/reference/network/#caller-extensible-allowlist-networkallowed-input) du frontmatter ci-dessus et qu’un prompt injecté demandait à l’agent d’envoyer des données vers une URL externe ?
 
 ---
 

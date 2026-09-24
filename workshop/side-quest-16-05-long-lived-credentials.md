@@ -24,6 +24,7 @@ Un **personal access token (PAT)** est un identifiant que vous générez manuell
 Le `GITHUB_TOKEN` intégré est différent. GitHub le crée au début de chaque exécution et l’invalide au moment même où elle se termine. Pas de rotation. Pas d’étape de révocation. Aucun identifiant qui persiste après la fin du job.
 
 Pour un workflow agentique planifié, sans supervision, qui s’exécute chaque jour, cette différence compte énormément.
+Pour un workflow agentique [planifié](https://github.github.com/gh-aw/reference/triggers/#scheduled-triggers-schedule), sans supervision, qui s’exécute chaque jour, cette différence compte énormément.
 
 ---
 

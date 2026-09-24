@@ -19,9 +19,9 @@ Les runners just-in-time, ou JIT, sont provisionnés à la demande puis désenre
 > [!TIP]
 > Les ephemeral et JIT runners sont le modèle recommandé pour les [agentic workflows](https://github.github.com/gh-aw/introduction/overview/#what-are-agentic-workflows) en environnement enterprise : ils éliminent l’état résiduel et garantissent que chaque exécution commence dans un environnement propre et connu.
 
-## Exigences proxy et réseau
+## Exigences proxy et [réseau](https://github.github.com/gh-aw/reference/network/#configuration)
 
-Dans les environnements enterprise, les self-hosted runners se trouvent souvent derrière un proxy sortant. L’[agentic engine](https://github.github.com/gh-aw/reference/engines/) doit pouvoir joindre les endpoints du modèle et les API GitHub.
+Les [self-hosted runners](https://github.github.com/gh-aw/reference/self-hosted-runners/) des environnements enterprise se trouvent souvent derrière un proxy sortant. L’[agentic engine](https://github.github.com/gh-aw/reference/engines/) doit pouvoir joindre les endpoints du modèle et les API GitHub.
 
 Si votre runner utilise un proxy, définissez ces variables d’environnement dans la configuration système du runner **avant** de l’enregistrer, ou demandez à votre administrateur de confirmer qu’elles sont déjà définies :
 
@@ -38,7 +38,7 @@ Vous n’avez **pas** besoin de les ajouter au fichier de workflow lui-même : l
 
 ## Isolation réseau
 
-Si votre runner opère dans un environnement air-gapped ou restreint, assurez-vous qu’il peut joindre l’API GitHub, l’endpoint de votre modèle et tous les MCP tool servers appelés par votre workflow. Travaillez avec votre administrateur réseau pour placer ces endpoints en allowlist avant d’exécuter des agentic workflows.
+Si votre runner opère dans un environnement air-gapped ou restreint, assurez-vous qu’il peut joindre l’API GitHub, l’endpoint de votre modèle et tous les [MCP](https://github.github.com/gh-aw/guides/mcps/) tool servers appelés par votre workflow. Travaillez avec votre administrateur réseau pour placer ces endpoints en allowlist avant d’exécuter des agentic workflows.
 
 Vous pouvez utiliser le champ de frontmatter `network.allowed` pour déclarer explicitement les domaines dont votre workflow a besoin :
 

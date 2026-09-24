@@ -63,7 +63,7 @@ Avant de faire confiance à un serveur comme celui-ci, vérifiez qui le publie, 
 Adoptez ces habitudes lorsque vous travaillez avec des MCP servers :
 
 1. **Épinglez le serveur que vous exécutez.** Préférez une version précise ou un digest d’image plutôt qu’une valeur mutable comme `latest`.
-2. **Restreignez les permissions et les sorties.** Gardez `permissions:` minimal et ne déclarez dans `safe-outputs` que les surfaces d’écriture dont vous avez réellement besoin.
+2. **Restreignez les [permissions](https://github.github.com/gh-aw/reference/permissions/) et les sorties.** Gardez `permissions:` minimal et ne déclarez dans `safe-outputs` que les surfaces d’écriture dont vous avez réellement besoin.
 3. **Auditez les noms de tools avant de les ajouter.** Confirmez l’éditeur, vérifiez le nom de serveur attendu, et gardez une liste de tools restreinte.
 
 gh-aw vous aide en vous obligeant à déclarer explicitement `tools:`, à limiter les destinations [network](https://github.github.com/gh-aw/reference/network/) avec `network.allowed`, et à réduire ce que le workflow peut écrire avec `permissions:` et `safe-outputs`.

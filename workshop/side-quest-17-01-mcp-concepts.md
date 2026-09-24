@@ -54,6 +54,7 @@ L’agent peut entrelacer appels d’outils et raisonnement autant de fois que n
 ## Exercice pratique
 
 Ouvrez le frontmatter YAML de votre workflow. Contient-il un bloc [`tools:`](https://github.github.com/gh-aw/reference/tools/) ? Si oui, identifiez quel MCP server est configuré et écrivez-le dans l’espace ci-dessous ou dans un commentaire temporaire du fichier.
+Ouvrez le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/) YAML de votre workflow. Contient-il un bloc [`tools:`](https://github.github.com/gh-aw/reference/tools/) ? Si oui, identifiez quel MCP server est configuré et écrivez-le dans l’espace ci-dessous ou dans un commentaire temporaire du fichier.
 
 ```text
 MCP server configuré :

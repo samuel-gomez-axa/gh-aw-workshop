@@ -99,6 +99,7 @@ Exemple de sortie :
 ### Explorer les appels MCP tool
 
 Téléchargez les artifacts d’une exécution, puis ouvrez le dossier `mcp-logs/`. Chaque fichier correspond à un MCP server et liste chaque appel de tool effectué par l’agent.
+Téléchargez les artifacts d’une exécution, puis ouvrez le dossier `mcp-logs/`. Chaque fichier correspond à un [MCP](https://github.github.com/gh-aw/guides/mcps/) server et liste chaque appel de tool effectué par l’agent.
 
 ```bash
 gh aw logs <your-workflow-id> --artifacts all

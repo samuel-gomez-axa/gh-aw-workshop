@@ -27,6 +27,7 @@ Chaque étape est un processus enfant distinct. Les [variables d’environnement
 ## Valeurs sur une seule ligne
 
 Ajoutez une paire `key=value` au chemin de fichier stocké dans la variable d’environnement `$GITHUB_OUTPUT` :
+Ajoutez une paire `key=value` au chemin de fichier stocké dans la variable d’environnement [`$GITHUB_OUTPUT`](https://github.github.com/gh-aw/reference/environment-variables/#system-injected-runtime-variables) :
 
 ```bash
 # ✅ Write a single-line value

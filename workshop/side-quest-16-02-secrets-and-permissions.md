@@ -114,7 +114,7 @@ La plupart des appels à l’API GitHub dans cet atelier fonctionnent avec le [`
   run: gh pr list --state open
 ```
 
-La CLI `gh` lit `GH_TOKEN` automatiquement lorsqu’il est défini comme variable d’environnement.
+La CLI `gh` lit `GH_TOKEN` automatiquement lorsqu’il est défini comme [variable d’environnement](https://github.github.com/gh-aw/reference/environment-variables/).
 
 </details>
 
@@ -132,7 +132,7 @@ permissions:
 ---
 ```
 
-Si un appel avec `GITHUB_TOKEN` échoue avec une erreur 403, vérifiez que la permission requise est bien listée dans le frontmatter. Garder des permissions minimales réduit le blast radius si un workflow est un jour mal utilisé.
+Si un appel avec `GITHUB_TOKEN` échoue avec une erreur 403, vérifiez que la permission requise est bien listée dans le frontmatter. Garder des permissions minimales réduit le [blast radius](https://github.github.com/gh-aw/introduction/architecture/#threat-model) si un workflow est un jour mal utilisé.
 
 </details>
 

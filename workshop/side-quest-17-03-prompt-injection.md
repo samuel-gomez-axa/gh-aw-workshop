@@ -60,6 +60,7 @@ Gardez votre bloc `permissions:` minimal. Ne demandez que ce dont votre workflow
 
 > [!TIP]
 > **Essayez :** Ouvrez votre fichier de workflow `daily-status.md` et regardez le frontmatter. Quel paramètre autorise le workflow à créer des issues, et le bloc `permissions:` a-t-il besoin de changer ?
+> **Essayez :** Ouvrez votre fichier de workflow `daily-status.md` et regardez le [frontmatter](https://github.github.com/gh-aw/reference/frontmatter/). Quel paramètre autorise le workflow à créer des issues, et le bloc `permissions:` a-t-il besoin de changer ?
 
 <details>
 <summary>Indice</summary>

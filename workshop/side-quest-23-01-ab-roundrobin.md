@@ -7,7 +7,7 @@
 
 ## :dart: Ce que vous allez faire
 
-Vous allez examiner le fonctionnement interne de l’assignation `experiments:` et apprendre exactement ce que gh-aw fait à chaque exécution, afin de pouvoir prédire quelle variante vient ensuite et lire l’[artifact](https://github.github.com/gh-aw/reference/artifacts/) `experiment` en toute confiance.
+Vous allez examiner le fonctionnement interne de l’assignation `experiments:` et apprendre exactement ce que gh-aw fait à chaque exécution, afin de pouvoir prédire quelle variante vient ensuite et lire l’[artifact](https://github.github.com/gh-aw/reference/artifacts/#quick-reference) `experiment` en toute confiance.
 
 ## Comprendre comment fonctionne le [round-robin](https://github.github.com/gh-aw/experimental/experiments/#statistical-balancing)
 

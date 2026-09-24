@@ -44,7 +44,7 @@ Vous n’avez pas besoin d’un seul mode pour tout le workflow. La plupart des 
 Suivez cette structure pour des flux de statut de dépôt, de triage d’incidents et de reporting :
 
 1. **Extraction déterministe** : exécutez des commandes fixes (`gh`, `git`, appels d’API) pour collecter les données.
-2. **Mise en forme déterministe** : normalisez et étiquetez les sorties (`$GITHUB_OUTPUT`, champs JSON, comptages).
+2. **Mise en forme déterministe** : normalisez et étiquetez les sorties ([`$GITHUB_OUTPUT`](https://github.github.com/gh-aw/reference/environment-variables/#system-injected-runtime-variables), champs JSON, comptages).
 3. **Interprétation agentique** : demandez à l’agent d’identifier les risques, les priorités et les motifs notables.
 4. **Communication agentique** : demandez une sortie adaptée au rôle visé (digest engineering, résumé pour la direction, transmission d’astreinte).
 
