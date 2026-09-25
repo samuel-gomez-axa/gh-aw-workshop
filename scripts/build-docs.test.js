@@ -51,7 +51,7 @@ test('workshop SPA renders a single document h1', () => {
     assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
     assert.ok(
         html.includes(
-            '<h1 class="site-title"><a href="#00-welcome">GitHub Agentic Workflows Workshop</a></h1>',
+            '<h1 class="site-title"><a href="#000-design-system">GitHub Agentic Workflows Workshop</a></h1>',
         ),
     );
     assert.equal(

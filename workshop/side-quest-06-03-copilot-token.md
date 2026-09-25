@@ -46,6 +46,14 @@ Si vous avez un doute, vérifiez d’abord à qui appartient votre dépôt d’e
 - [ ] Mon workflow source et son [lock file](https://github.github.com/gh-aw/reference/glossary/#workflow-lock-file-lockyml) compilé utilisent uniquement la méthode choisie.
 - [ ] Je suis revenu à mon parcours principal de l’atelier.
 
+## Autre Ressources
+
+- [Guide officiel sur l’authentification Copilot pour GitHub Actions](https://github.github.com/gh-aw/reference/auth/#copilotgithubtoken)
+- [Documentation sur les permissions spéciales Copilot Requests](https://github.github.com/gh-aw/reference/permissions/#special-permission-copilot-requests-write)
+- [Documentation sur les moteurs Copilot](https://github.github.com/gh-aw/reference/engines/)
+- [Documentation sur la permission Copilot Requests Write](https://github.github.com/gh-aw/reference/auth/#copilot-requests-write-permission)
+- [Documentation sur la facturation Copilot](https://github.github.com/gh-aw/reference/billing/)
+
 <!-- journey: all -->
 
 **Retour :** [Installer l’extension `gh-aw` CLI](06-install-gh-aw.md) | [Écrire votre premier agentic workflow](07-your-first-workflow.md)

@@ -6,9 +6,6 @@
 
 ![Usine à agents de Mona](images/00-welcome-monas-agent-factory.png)
 
-> [!NOTE]
-> **Microsoft and GitHub employees:** utilisez le [Golden Ticket](https://aka.ms/golden-ticket) pour configurer votre environnement d’atelier.
-
 À la fin de cet atelier, un véritable agent IA créera chaque jour une issue contenant un résumé de l’activité de votre dépôt sur les dernières 24 h, sans que vous ayez à écrire de code de workflow en shell script.
 
 <picture>

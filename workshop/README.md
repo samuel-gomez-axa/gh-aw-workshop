@@ -6,6 +6,7 @@ Un atelier pratique qui vous emmène de zéro à un workflow entièrement automa
 
 | #   | Étape                                                                                                      |
 | --- | ---------------------------------------------------------------------------------------------------------- |
+| 000 | [Contexte : Design System AXA France Canopée](000-design-system.md)                                        |
 | 0   | [Bienvenue — ce que vous allez construire](00-welcome.md)                                                  |
 | 1   | [Ce qu’il vous faut avant de commencer](01-prerequisites.md)                                               |
 | 2   | [Configurer votre terminal local](02a-setup-codespace.md)                                                  |
@@ -111,4 +112,4 @@ Un atelier pratique qui vous emmène de zéro à un workflow entièrement automa
 
 ## Commencer
 
-Commencez par [Bienvenue](00-welcome.md) : cette page montre ce que vous allez construire et vous prépare à réussir.
+Commencez par [Contexte : Design System AXA France Canopée](000-design-system.md), puis continuez avec [Bienvenue](00-welcome.md).
