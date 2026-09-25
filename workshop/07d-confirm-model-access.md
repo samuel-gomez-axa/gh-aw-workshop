@@ -33,6 +33,27 @@ gh copilot
 > [!IMPORTANT]
 > Si vous voyez une erreur au lieu d’une réponse, vérifiez sur [github.com/settings/copilot](https://github.com/settings/copilot) que Copilot est activé. Si le problème persiste, consultez [Side Quest: Configure GitHub Copilot for Agentic Workflows](side-quest-06-03-copilot-token.md), puis revenez ici.
 
+> [!IMPORTANT]
+> Un token **COPILOT_GITHUB_TOKEN** est déjà présent sur le repo, celui-ci a été généré avec un compte gratuit.
+> Pour cette raison, il faudra spécifier un **model** dans les workflows à créer explicitement.
+
+> [!IMPORTANT]
+> Voici la liste des modèles disponibles que vous pouvez spécifier dans vos workflows :
+> gpt-4.1 claude-fable-5.1 claude-fable-5 claude-opus-4.7 claude-opus-4.8-fast claude-opus-4.8 claude-opus-5 claude-sonnet-5 copilot-search-a copilot-search-b copilot-search-c exec-agent-a exec-agent-b exec-agent-c gpt-5.4-mini gpt-5.4 gpt-5.5 gpt-5.6-luna gpt-5.6-sol gpt-5.6-terra gpt-5.6-luna-utility gpt-6-astra grok-4.5 grok-4.6 kimi-k2.7-code kimi-k3 mai-code-1.1-flash trajectory-compaction gpt-5-mini gpt-3.5-turbo gpt-3.5-turbo-0613 gpt-4o-mini gpt-4o-mini-2024-07-18 copilot-preview-4o-mini-a1cfd608 gpt-4 gpt-4-0613 copilot-preview-gpt4-centralus gpt-4o gpt-4o-2024-11-20 gpt-4o-2024-05-13 gpt-4-o-preview gpt-4o-japanwest copilot-preview-gpt4o-centralus gpt-4o-2024-08-06 claude-haiku-4.5 gpt-4.1-2025-04-14 goldeneye-secondary gpt-5.2 gpt-5.6-luna-free-auto
+> (cette liste peut évoluer avec le temps, vérifiez régulièrement les mises à jour sur GitHub [ici](https://github.com/settings/copilot).)
+
+Exemple :
+
+```markdown .github/workflows/daily-report-status.md
+---
+name: Daily Report Status
+engine:
+    id: copilot
+    model: gpt-4.1
+...
+---
+```
+
 Si vous arrivez du contrôle d’accès de l’étape 07 et que le prompt de test a réussi, retournez maintenant à [Write Your First Agentic Workflow](07-your-first-workflow.md).
 
 <picture>
@@ -62,3 +83,7 @@ Suivez toutes les étapes de configuration dans [Side Quest: Copilot Billing Pat
 **Étape suivante :** [Lancer et observer votre workflow](08-run-your-workflow.md)
 
 <!-- /journey -->
+
+```
+
+```
