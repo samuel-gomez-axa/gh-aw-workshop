@@ -39,8 +39,7 @@ gh copilot
 
 > [!IMPORTANT]
 > Voici la liste des modèles disponibles que vous pouvez spécifier dans vos workflows :
-> gpt-4.1 claude-fable-5.1 claude-fable-5 claude-opus-4.7 claude-opus-4.8-fast claude-opus-4.8 claude-opus-5 claude-sonnet-5 copilot-search-a copilot-search-b copilot-search-c exec-agent-a exec-agent-b exec-agent-c gpt-5.4-mini gpt-5.4 gpt-5.5 gpt-5.6-luna gpt-5.6-sol gpt-5.6-terra gpt-5.6-luna-utility gpt-6-astra grok-4.5 grok-4.6 kimi-k2.7-code kimi-k3 mai-code-1.1-flash trajectory-compaction gpt-5-mini gpt-3.5-turbo gpt-3.5-turbo-0613 gpt-4o-mini gpt-4o-mini-2024-07-18 copilot-preview-4o-mini-a1cfd608 gpt-4 gpt-4-0613 copilot-preview-gpt4-centralus gpt-4o gpt-4o-2024-11-20 gpt-4o-2024-05-13 gpt-4-o-preview gpt-4o-japanwest copilot-preview-gpt4o-centralus gpt-4o-2024-08-06 claude-haiku-4.5 gpt-4.1-2025-04-14 goldeneye-secondary gpt-5.2 gpt-5.6-luna-free-auto
-> (cette liste peut évoluer avec le temps, vérifiez régulièrement les mises à jour sur GitHub [ici](https://github.com/settings/copilot).)
+> gpt-4o-mini, gpt-4o, gpt-4.1, gpt-4.1-mini, gpt-5, gpt-5-mini, claude-3-5-sonnet, claude-3-5-haiku, gemini-1.5-pro
 
 Exemple :
 
