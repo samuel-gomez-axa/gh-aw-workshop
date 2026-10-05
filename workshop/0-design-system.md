@@ -310,6 +310,6 @@ Un bon workflow sur ce dépôt devra donc souvent savoir faire trois choses à l
 
 <!-- journey: all -->
 
-**Étape suivante :** [Bienvenue — ce que vous allez construire](00-welcome.md)
+**Étape suivante :** [Des exercices à une stratégie de maintenance](0.5-strategie-maintenance.md)
 
 <!-- /journey -->

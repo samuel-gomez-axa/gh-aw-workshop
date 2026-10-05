@@ -1,47 +1,206 @@
+<!-- page-journey: all -->
+<!-- page-adventure: core -->
+<!-- learning:false -->
+
 # Visite de l’atelier GitHub Agentic Workflows
 
-Un atelier pratique qui vous emmène de zéro à un workflow entièrement automatisé, propulsé par l’IA, exécuté selon un planning ou sur des événements dans GitHub Actions.
+Un atelier pratique pour créer un workflow automatisé avec l’IA, puis apprendre à le faire évoluer dans GitHub Actions. Parcourez le programme pour voir le résultat visé, les activités et les apprentissages de chaque étape.
 
-## Programme — Partie 1 : Créez votre premier workflow
+## Partie 1 — Créez votre premier workflow
 
-| #   | Étape                                                                                                      |
-| --- | ---------------------------------------------------------------------------------------------------------- |
-| 000 | [Contexte : Design System AXA France Canopée](000-design-system.md)                                        |
-| 0   | [Bienvenue — ce que vous allez construire](00-welcome.md)                                                  |
-| 1   | [Ce qu’il vous faut avant de commencer](01-prerequisites.md)                                               |
-| 2   | [Configurer votre terminal local](02a-setup-codespace.md)                                                  |
-| 4   | [Qu’est-ce que GitHub Actions ?](04-github-actions-intro.md)                                               |
-| 5   | [Qu’est-ce qu’un Agentic Workflow ?](05-agentic-workflows-intro.md)                                        |
-| 5b  | [Comment les Agentic Workflows restent sûrs](05b-agentic-workflows-security.md)                            |
-| 5c  | [Exercice : reconnaître les Agentic Workflows](05c-agentic-workflows-practice.md)                          |
-| 6   | [Installer l’extension CLI gh-aw](06-install-gh-aw.md)                                                     |
-| 7   | [Rédiger votre premier Agentic Workflow](07-your-first-workflow.md)                                        |
-| 7d  | [Confirmer l’accès au modèle](07d-confirm-model-access.md)                                                 |
-| 8   | [Lancer et observer votre workflow](08-run-your-workflow.md)                                               |
-| 8b  | [Interpréter votre première exécution](08b-interpret-your-run.md)                                          |
-| 9   | [Affiner, tester et améliorer votre workflow](09-agentic-editing.md)                                       |
-| 14  | [Et ensuite ? Continuez à explorer](14-next-steps.md)                                                      |
-| 14b | [Créez votre premier workflow déclenché par événement : relecteur auto de PR](14b-pr-reviewer-workflow.md) |
+### Contexte — [Design System AXA France Canopée](0-design-system.md)
 
-## Programme — Partie 2 : Allez plus loin
+- **À l’issue :** vous savez où un workflow peut intervenir dans le dépôt Canopée.
+- **Vous faites :** explorez ses univers, ses packages, ses thèmes, ses composants et ses surfaces de contribution.
+- **Vous apprenez :** à repérer l’architecture et les conventions utiles avant d’automatiser une tâche.
 
-| #   | Étape                                                                                                |
-| --- | ---------------------------------------------------------------------------------------------------- |
-| 15  | [Rendez votre workflow plus intelligent avec la logique conditionnelle](15-conditional-logic.md)     |
-| 16  | [Connectez une source de données en direct à votre workflow](16-connect-data-source.md)              |
-| 17  | [Donnez plus d’outils à votre agent avec MCP](17-add-mcp-tools.md)                                   |
-| 18  | [Partagez et réutilisez vos Agentic Workflows](18-share-and-reuse.md)                                |
-| 19  | [Créez un nœud d’entraînement suivant guidé par la recherche](19-research-driven-training-node.md)   |
-| 20  | [Faites en sorte que votre workflow se souvienne d’une exécution à l’autre](20-persistent-memory.md) |
-| 21  | [Découpez les workflows complexes avec des inline sub-agents](21-inline-sub-agents.md)               |
-| 22  | [Rendez vos workflows résistants aux échecs](22-error-handling-and-resilience.md)                    |
-| 23  | [Testez vos idées de prompt avec des expériences A/B](23-ab-experiments.md)                          |
-| 24  | [Exécutez votre Agentic Workflow sur un self-hosted runner](24-self-hosted-runners.md)               |
-| 25  | [Auditez et observez vos Agentic Workflows](25-audit-and-observability.md)                           |
-| 26  | [Gérez les coûts et les budgets d’AI Credit](26-manage-costs-and-budgets.md)                         |
-| 27  | [Vérifiez la qualité de votre workflow avec des evals](27-evaluate-workflow-quality.md)              |
-| 28  | [Orchestrez plusieurs Agentic Workflows](28-orchestrate-workflows.md)                                |
-| 29  | [Apprenez à votre agent la connaissance métier avec des skills](29-skills-and-domain-knowledge.md)   |
+### Repère — [Des exercices à une stratégie de maintenance](0.5-strategie-maintenance.md)
+
+- **À l’issue :** vous comprenez que les exemples de l’atelier sont des points de départ pour réfléchir à la maintenance globale du dépôt.
+- **Vous faites :** examinez des pistes comme la CI, les cross-reviews spécialisées, la documentation, la sécurité, le backlog et les releases.
+- **Vous apprenez :** à composer une stratégie adaptée au Design System sans imposer une architecture, en choisissant les contrôles et le niveau d’autonomie de chaque workflow.
+
+### Étape 0 — [Bienvenue : ce que vous allez construire](00-welcome.md)
+
+- **À l’issue :** vous savez quel workflow vous allez créer : un rapport quotidien sur l’activité récente d’un dépôt.
+- **Vous faites :** découvrez le résultat attendu et le parcours de création, de compilation et d’amélioration.
+- **Vous apprenez :** comment un agent lit un dépôt, choisit les informations utiles et publie un résumé.
+
+### Étape 1 — [Ce qu’il vous faut avant de commencer](01-prerequisites.md)
+
+- **À l’issue :** votre compte GitHub, l’accès à Copilot et les outils nécessaires sont prêts.
+- **Vous faites :** vérifiez l’accès à GitHub Copilot et préparez-vous à travailler dans un terminal local.
+- **Vous apprenez :** quels comptes, outils et accès sont requis pour suivre l’atelier.
+
+### Étape 2 — [Configurer votre terminal local](02a-setup-codespace.md)
+
+- **À l’issue :** votre dépôt d’exercice est cloné et les commandes `git` et `gh` fonctionnent dans votre terminal.
+- **Vous faites :** créez le dépôt, clonez-le sur votre machine et vérifiez les outils CLI.
+- **Vous apprenez :** à préparer un environnement local utilisable pour les étapes suivantes.
+
+### Étape 4 — [Qu’est-ce que GitHub Actions ?](04-github-actions-intro.md)
+
+- **À l’issue :** vous savez lire un workflow GitHub Actions classique.
+- **Vous faites :** révisez triggers, jobs et steps, puis classez des exemples de workflows.
+- **Vous apprenez :** les primitives déterministes d’Actions qui servent de base aux agentic workflows.
+
+### Étape 5 — [Qu’est-ce qu’un Agentic Workflow ?](05-agentic-workflows-intro.md)
+
+- **À l’issue :** vous savez reconnaître quand une tâche a besoin du jugement d’un agent.
+- **Vous faites :** examinez la structure en deux fichiers, classez des exemples et rédigez un task brief.
+- **Vous apprenez :** le rôle du trigger, de l’agent, du brief et du fichier compilé.
+
+### Étape 5b — [Comment les Agentic Workflows restent sûrs](05b-agentic-workflows-security.md)
+
+- **À l’issue :** vous pouvez expliquer les deux frontières de sécurité d’un agentic workflow.
+- **Vous faites :** étudiez le rôle de la sandbox et des safe outputs, puis analysez deux scénarios.
+- **Vous apprenez :** comment le firewall, les permissions limitées et les garde-fous d’écriture réduisent les risques.
+
+### Étape 5c — [Exercice : reconnaître les Agentic Workflows](05c-agentic-workflows-practice.md)
+
+- **À l’issue :** vous avez rédigé un brief d’une phrase pour une tâche routinière.
+- **Vous faites :** choisissez entre un workflow standard et agentique pour plusieurs tâches, puis écrivez votre brief.
+- **Vous apprenez :** à préciser les données à lire, le résultat à publier et la cadence d’exécution.
+
+### Étape 6 — [Installer l’extension CLI gh-aw](06-install-gh-aw.md)
+
+- **À l’issue :** l’extension `gh-aw` est installée et votre terminal est prêt pour créer un workflow.
+- **Vous faites :** vérifiez l’authentification GitHub CLI, installez l’extension et lancez un diagnostic.
+- **Vous apprenez :** à vérifier l’environnement et à initialiser les outils de l’atelier.
+
+### Étape 7 — [Rédiger votre premier Agentic Workflow](07-your-first-workflow.md)
+
+- **À l’issue :** votre dépôt contient un workflow quotidien planifié et son fichier compilé.
+- **Vous faites :** demandez à Copilot de créer le workflow, ses permissions et ses safe outputs, puis compilez-le.
+- **Vous apprenez :** comment le brief et le frontmatter définissent le comportement et comment le fichier source devient un workflow exécutable.
+
+### Étape 7d — [Confirmer l’accès au modèle](07d-confirm-model-access.md)
+
+- **À l’issue :** vous avez confirmé l’accès à Copilot et configuré une méthode de facturation pour le workflow.
+- **Vous faites :** envoyez un prompt de test, choisissez le mode de facturation et appliquez la configuration correspondante.
+- **Vous apprenez :** à distinguer l’accès au modèle de la facturation des exécutions.
+
+### Étape 8 — [Lancer et observer votre workflow](08-run-your-workflow.md)
+
+- **À l’issue :** votre workflow s’est exécuté avec succès dans GitHub Actions.
+- **Vous faites :** déclenchez-le et observez son exécution dans l’onglet Actions.
+- **Vous apprenez :** à lancer une exécution et à en vérifier l’état.
+
+### Étape 8b — [Interpréter votre première exécution](08b-interpret-your-run.md)
+
+- **À l’issue :** vous savez retrouver le rapport produit et vérifier les problèmes courants.
+- **Vous faites :** lisez le journal d’exécution, inspectez la sortie et recherchez les motifs d’erreur.
+- **Vous apprenez :** à utiliser les traces pour comprendre le comportement de l’agent et diagnostiquer un échec.
+
+### Étape 9 — [Affiner, tester et améliorer votre workflow](09-agentic-editing.md)
+
+- **À l’issue :** votre rapport est plus utile et vous disposez d’une boucle d’itération réutilisable.
+- **Vous faites :** utilisez le skill `agentic-workflows` pour modifier, déboguer ou optimiser le workflow, puis comparez les exécutions.
+- **Vous apprenez :** à améliorer un brief à partir de résultats observés.
+
+### Étape 14 — [Et ensuite ? Continuez à explorer](14-next-steps.md)
+
+- **À l’issue :** vous avez choisi un sujet ou une ressource pour poursuivre.
+- **Vous faites :** faites le point sur le parcours et explorez les pistes proposées.
+- **Vous apprenez :** à identifier les prochaines compétences à approfondir selon vos besoins.
+
+### Étape 14b — [Créer un workflow de revue de pull request](14b-pr-reviewer-workflow.md)
+
+- **À l’issue :** vous avez un relecteur de pull request déclenché par événement, avec des constats étayés.
+- **Vous faites :** créez un workflow qui délègue l’inspection à un agent spécialisé et publie une revue via une safe output.
+- **Vous apprenez :** à séparer orchestration, agent, skill de revue et écriture contrôlée.
+
+## Partie 2 — Allez plus loin
+
+### Étape 15 — [Rendre votre workflow plus intelligent avec la logique conditionnelle](15-conditional-logic.md)
+
+- **À l’issue :** votre agent ne publie un résumé que si le dépôt a connu une activité récente.
+- **Vous faites :** comptez les commits dans une étape déterministe et reliez le résultat à une condition `if:`.
+- **Vous apprenez :** à transmettre des sorties entre étapes et à éviter une exécution agentique inutile.
+
+### Étape 16 — [Connecter une source de données en direct](16-connect-data-source.md)
+
+- **À l’issue :** votre résumé inclut les issues ouvertes en plus de l’activité de commits.
+- **Vous faites :** récupérez des données avec GitHub CLI et injectez-les dans le prompt.
+- **Vous apprenez :** à séparer la collecte déterministe des données et leur interprétation par l’agent.
+
+### Étape 17 — [Donner plus d’outils à votre agent avec MCP](17-add-mcp-tools.md)
+
+- **À l’issue :** votre agent peut appeler les outils d’un serveur MCP configuré.
+- **Vous faites :** ajoutez un serveur MCP au workflow, référencez ses outils dans le brief et observez leur utilisation.
+- **Vous apprenez :** comment MCP expose des outils et permet à l’agent d’interagir avec des sources de données.
+
+### Étape 18 — [Partager et réutiliser vos Agentic Workflows](18-share-and-reuse.md)
+
+- **À l’issue :** votre workflow est disponible comme modèle que vos collègues peuvent ajouter à leur dépôt.
+- **Vous faites :** choisissez une destination de partage, préparez le template et documentez son ajout.
+- **Vous apprenez :** comment distribuer et réutiliser un workflow entre dépôts.
+
+### Étape 19 — [Créer un prochain nœud d’entraînement guidé par la recherche](19-research-driven-training-node.md)
+
+- **À l’issue :** vous disposez d’une proposition de module de formation prête à être mise en œuvre.
+- **Vous faites :** examinez la documentation gh-aw, repérez un besoin des apprenants et formulez un contenu pour y répondre.
+- **Vous apprenez :** à utiliser des signaux de recherche pour décider quoi enseigner ensuite.
+
+### Étape 20 — [Faire mémoriser des informations à votre workflow entre les exécutions](20-persistent-memory.md)
+
+- **À l’issue :** votre workflow conserve les issues déjà signalées et évite les doublons.
+- **Vous faites :** configurez `cache-memory` et demandez à l’agent de lire et mettre à jour cet état.
+- **Vous apprenez :** comment une mémoire persistante ajoute un état entre les exécutions.
+
+### Étape 21 — [Découper les workflows complexes avec des inline sub-agents](21-inline-sub-agents.md)
+
+- **À l’issue :** une tâche répétitive est confiée à un sous-agent ciblé.
+- **Vous faites :** ajoutez un sous-agent au workflow et distinguez son travail de celui de l’agent parent.
+- **Vous apprenez :** à répartir les responsabilités sans alourdir le brief principal.
+
+### Étape 22 — [Rendre vos workflows résistants aux échecs](22-error-handling-and-resilience.md)
+
+- **À l’issue :** votre workflow dispose de consignes et de solutions de repli pour mieux gérer les erreurs.
+- **Vous faites :** repérez des modes d’échec et ajoutez un brief défensif, des limites de durée et un fallback de safe output.
+- **Vous apprenez :** à anticiper les erreurs d’outil, les délais dépassés et les sorties bloquées.
+
+### Étape 23 — [Tester vos idées de prompt avec des expériences A/B](23-ab-experiments.md)
+
+- **À l’issue :** vous avez comparé des variantes de prompt à partir de plusieurs exécutions.
+- **Vous faites :** configurez une expérience, exécutez les variantes et inspectez les résultats.
+- **Vous apprenez :** à comparer des changements de façon contrôlée plutôt que de vous fier à une seule sortie.
+
+### Étape 24 — [Exécuter votre Agentic Workflow sur un self-hosted runner](24-self-hosted-runners.md)
+
+- **À l’issue :** votre workflow cible un runner géré par votre organisation.
+- **Vous faites :** configurez le label du runner dans le frontmatter et vérifiez le chemin d’exécution.
+- **Vous apprenez :** comment diriger un workflow vers une infrastructure auto-hébergée.
+
+### Étape 25 — [Auditer et observer vos Agentic Workflows](25-audit-and-observability.md)
+
+- **À l’issue :** vous savez où chercher pour expliquer une exécution ou diagnostiquer un comportement inattendu.
+- **Vous faites :** consultez les journaux, auditez une exécution et inspectez les artifacts et la rétention.
+- **Vous apprenez :** à suivre l’activité, les coûts et les éléments utiles à l’audit.
+
+### Étape 26 — [Gérer les coûts et les budgets d’AI Credits](26-manage-costs-and-budgets.md)
+
+- **À l’issue :** vous avez estimé les dépenses de votre workflow et défini un moyen de les maîtriser.
+- **Vous faites :** examinez l’usage, projetez les coûts et appliquez une technique de réduction ou un budget.
+- **Vous apprenez :** à interpréter les AI Credits et à anticiper les coûts d’un workflow planifié.
+
+### Étape 27 — [Vérifier la qualité de votre workflow avec des evals](27-evaluate-workflow-quality.md)
+
+- **À l’issue :** votre workflow produit des résultats d’évaluation vérifiables et comparables entre exécutions.
+- **Vous faites :** ajoutez des questions binaires, lancez le workflow et inspectez l’artifact `evals`.
+- **Vous apprenez :** à définir des critères observables et à repérer des régressions de qualité.
+
+### Étape 28 — [Orchestrer plusieurs Agentic Workflows](28-orchestrate-workflows.md)
+
+- **À l’issue :** un workflow coordinateur route les tâches vers des workflows spécialistes.
+- **Vous faites :** créez l’orchestrateur, définissez sa logique de routage et vérifiez les workflows déclenchés.
+- **Vous apprenez :** à répartir le travail entre workflows et à déclencher un spécialiste avec une safe output.
+
+### Étape 29 — [Apprendre à votre agent des connaissances métier avec des skills](29-skills-and-domain-knowledge.md)
+
+- **À l’issue :** votre workflow applique une connaissance métier réutilisable décrite dans un skill.
+- **Vous faites :** rédigez un `SKILL.md`, référencez-le et choisissez comment l’injecter dans le workflow.
+- **Vous apprenez :** à structurer les consignes métier et à choisir entre découverte (`hint`) et intégration du contenu (`merge`).
 
 ## Quêtes annexes facultatives
 
@@ -112,4 +271,4 @@ Un atelier pratique qui vous emmène de zéro à un workflow entièrement automa
 
 ## Commencer
 
-Commencez par [Contexte : Design System AXA France Canopée](000-design-system.md), puis continuez avec [Bienvenue](00-welcome.md).
+Commencez par [Contexte : Design System AXA France Canopée](0-design-system.md), puis continuez avec [Bienvenue](00-welcome.md).

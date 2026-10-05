@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const { execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
+const vm = require('node:vm');
 const test = require('node:test');
 
 const repoDir = path.resolve(__dirname, '..');
@@ -29,6 +30,82 @@ function buildDocs() {
     };
 }
 
+test('manual theme choice updates picture source preferences', () => {
+    const sources = [
+        {
+            media: '(max-width: 767px) and (prefers-color-scheme: dark)',
+            dataset: {},
+        },
+        {
+            media: '(max-width: 767px) and (prefers-color-scheme: light)',
+            dataset: {},
+        },
+        { media: '(prefers-color-scheme: dark)', dataset: {} },
+        { media: '(prefers-color-scheme: light)', dataset: {} },
+        { media: '(min-width: 768px)', dataset: {} },
+    ];
+    const listeners = {};
+    const documentElement = {
+        colorMode: '',
+        setAttribute(_name, value) {
+            this.colorMode = value;
+        },
+        getAttribute() {
+            return this.colorMode;
+        },
+    };
+    const document = {
+        documentElement,
+        addEventListener(name, listener) {
+            listeners[name] = listener;
+        },
+        querySelectorAll(selector) {
+            return selector === '[data-theme]' ? [] : sources;
+        },
+    };
+    const localStorage = {
+        getItem() {
+            return 'auto';
+        },
+        setItem() {},
+    };
+    const themeScript = fs.readFileSync(
+        path.join(repoDir, 'scripts', 'static', 'docs-theme.js'),
+        'utf8',
+    );
+
+    vm.runInNewContext(themeScript, { document, localStorage });
+    listeners.DOMContentLoaded();
+    listeners.click({
+        target: { closest: () => ({ dataset: { theme: 'dark' } }) },
+    });
+
+    assert.deepEqual(
+        sources.map((source) => source.media),
+        [
+            '(max-width: 767px)',
+            'not all',
+            'all',
+            'not all',
+            '(min-width: 768px)',
+        ],
+    );
+
+    listeners.click({
+        target: { closest: () => ({ dataset: { theme: 'auto' } }) },
+    });
+    assert.deepEqual(
+        sources.map((source) => source.media),
+        [
+            '(max-width: 767px) and (prefers-color-scheme: dark)',
+            '(max-width: 767px) and (prefers-color-scheme: light)',
+            '(prefers-color-scheme: dark)',
+            '(prefers-color-scheme: light)',
+            '(min-width: 768px)',
+        ],
+    );
+});
+
 function renderSnippet(markdown) {
     return execFileSync(
         process.execPath,
@@ -51,9 +128,30 @@ test('workshop SPA renders a single document h1', () => {
     assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
     assert.ok(
         html.includes(
-            '<h1 class="site-title"><a href="#000-design-system">GitHub Agentic Workflows Workshop</a></h1>',
+            '<h1 class="site-title"><a href="#README">GitHub Agentic Workflows Workshop</a></h1>',
         ),
     );
+    assert.ok(html.includes('<details id="README" open>'));
+    assert.ok(
+        html.indexOf('<details id="README" open>') <
+            html.indexOf('<details id="0-design-system">'),
+    );
+    assert.ok(
+        html.indexOf('<details id="0-design-system">') <
+            html.indexOf('<details id="0.5-strategie-maintenance">'),
+    );
+    assert.ok(
+        html.indexOf('<details id="0.5-strategie-maintenance">') <
+            html.indexOf('<details id="00-welcome">'),
+    );
+    assert.match(
+        html,
+        /<h3>Main workshop<\/h3>\s*<ul><li><a href="#README" data-workshop-page-link>/,
+    );
+    assert.ok(html.includes('href="#0-design-system"'));
+    assert.ok(html.includes('À l’issue :'));
+    assert.ok(html.includes('Vous faites :'));
+    assert.ok(html.includes('Vous apprenez :'));
     assert.equal(
         (html.match(/<h1 id="[^"]+" class="workshop-page-title">/g) ?? [])
             .length,

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1120" viewBox="0 0 1200 1120" role="img" aria-labelledby="map-title map-desc" data-visual-kind="diagram" data-visual-id="maintenance-map-desktop-dark">
+  <title id="map-title">Des workflows complémentaires pour maintenir Canopée</title>
+  <desc id="map-desc">Lecture de haut en bas. Les changements, les échéances et le résultat de la CI activent les contrôles utiles : CI déterministe, cross-reviews spécialisées et maintenance planifiée. Leurs résultats convergent vers une décision des mainteneurs, puis vers des retours, des propositions ou une release autorisée.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="30" markerHeight="30" refX="24" refY="15" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2 2 L28 15 L2 28 Z" fill="#b6bfb8"/>
+    </marker>
+    <style>
+      text { font-family: "Mona Sans", Arial, sans-serif; fill: #f2f5f3; }
+      .muted { fill: #b6bfb8; }
+      .node { fill: #232925; stroke: #909692; stroke-width: 3; }
+      .accent { fill: #0a241b; stroke: #5fed83; stroke-width: 4; }
+      .flow { fill: none; stroke: #b6bfb8; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+      .arrow { fill: none; stroke: #b6bfb8; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect width="1200" height="1120" fill="#101411"/>
+  <text x="600" y="54" text-anchor="middle" font-size="34" font-weight="700">Stratégie de maintenance · Canopée</text>
+  <text x="600" y="96" text-anchor="middle" font-size="24" class="muted">Des workflows distincts collaborent, sans automatiser chaque décision</text>
+
+  <g data-node="repository-events">
+    <rect x="170" y="130" width="860" height="130" rx="12" class="accent"/>
+    <text x="600" y="184" text-anchor="middle" font-size="31" font-weight="700">Dépôt Design System</text>
+    <text x="600" y="226" text-anchor="middle" font-size="25" class="muted">PR, push, échéances planifiées et résultat de la CI</text>
+  </g>
+  <path d="M600 260 V310" class="flow"/>
+  <path d="M215 310 H985" class="flow"/>
+  <path d="M215 310 V360" class="arrow"/>
+  <path d="M600 310 V360" class="arrow"/>
+  <path d="M985 310 V360" class="arrow"/>
+
+  <g data-node="deterministic-ci">
+    <rect x="40" y="360" width="350" height="230" rx="12" class="node"/>
+    <text x="215" y="411" text-anchor="middle" font-size="30" font-weight="700">CI déterministe</text>
+    <text x="215" y="463" text-anchor="middle" font-size="26" class="muted">builds · tests</text>
+    <text x="215" y="505" text-anchor="middle" font-size="26" class="muted">contrôles de qualité</text>
+    <text x="215" y="547" text-anchor="middle" font-size="24" class="muted">PR et push</text>
+  </g>
+  <g data-node="cross-reviews">
+    <rect x="425" y="360" width="350" height="230" rx="12" class="node"/>
+    <text x="600" y="411" text-anchor="middle" font-size="30" font-weight="700">Cross-reviews</text>
+    <text x="600" y="463" text-anchor="middle" font-size="26" class="muted">sécurité · architecture</text>
+    <text x="600" y="505" text-anchor="middle" font-size="26" class="muted">UI · accessibilité</text>
+    <text x="600" y="547" text-anchor="middle" font-size="26" class="muted">documentation · PR</text>
+  </g>
+  <g data-node="scheduled-maintenance">
+    <rect x="810" y="360" width="350" height="230" rx="12" class="node"/>
+    <text x="985" y="411" text-anchor="middle" font-size="29" font-weight="700">Maintenance ciblée</text>
+    <text x="985" y="463" text-anchor="middle" font-size="26" class="muted">planning · packages</text>
+    <text x="985" y="505" text-anchor="middle" font-size="25" class="muted">rapports · backlog</text>
+    <text x="985" y="547" text-anchor="middle" font-size="24" class="muted">sécurité · documentation</text>
+  </g>
+
+  <path d="M215 590 V650 H600" class="flow"/>
+  <path d="M600 590 V700" class="flow"/>
+  <path d="M985 590 V650 H600" class="flow"/>
+  <path d="M600 650 V700" class="arrow"/>
+  <g data-node="maintainer-decision">
+    <rect x="270" y="700" width="660" height="175" rx="12" class="accent"/>
+    <text x="600" y="758" text-anchor="middle" font-size="31" font-weight="700">Décision des mainteneurs</text>
+    <text x="600" y="804" text-anchor="middle" font-size="26" class="muted">prioriser · demander une correction</text>
+    <text x="600" y="844" text-anchor="middle" font-size="26" class="muted">autoriser ou bloquer</text>
+  </g>
+  <path d="M600 875 V920" class="arrow"/>
+  <g data-node="controlled-outcomes">
+    <rect x="120" y="920" width="960" height="170" rx="12" class="node"/>
+    <text x="600" y="970" text-anchor="middle" font-size="30" font-weight="700">Sorties proportionnées au risque</text>
+    <text x="600" y="1018" text-anchor="middle" font-size="26" class="muted">retours · propositions · rapports</text>
+    <text x="600" y="1060" text-anchor="middle" font-size="25" class="muted">release après CI réussie et validation humaine</text>
+  </g>
+</svg>

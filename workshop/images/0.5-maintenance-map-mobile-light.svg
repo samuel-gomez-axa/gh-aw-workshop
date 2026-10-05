@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="3200" viewBox="0 0 960 3200" role="img" aria-labelledby="map-title map-desc" data-visual-kind="diagram" data-visual-id="maintenance-map-mobile">
+  <title id="map-title">Des workflows complémentaires pour maintenir Canopée</title>
+  <desc id="map-desc">Lecture de haut en bas. Les événements du dépôt dirigent vers trois familles de workflows : CI déterministe, cross-reviews spécialisées et maintenance planifiée. Leurs résultats rejoignent les mainteneurs, qui valident les propositions et contrôlent toute release.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="30" markerHeight="30" refX="24" refY="15" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M2 2 L28 15 L2 28 Z" fill="#52635a"/>
+    </marker>
+    <style>
+      text { font-family: "Mona Sans", Arial, sans-serif; fill: #101411; }
+      .muted { fill: #232925; }
+      .node { fill: #ffffff; stroke: #52635a; stroke-width: 8; }
+      .accent { fill: #e4ebe6; stroke: #08872b; stroke-width: 9; }
+      .flow { fill: none; stroke: #52635a; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+      .arrow { fill: none; stroke: #52635a; stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); }
+      .heading { font-size: 56px; font-weight: 700; }
+      .body { font-size: 46px; }
+    </style>
+  </defs>
+  <rect width="960" height="3200" fill="#f2f5f3"/>
+  <text x="480" y="72" text-anchor="middle" font-size="56" font-weight="700">Maintenance · Canopée</text>
+  <text x="480" y="132" text-anchor="middle" font-size="46" class="muted">Plusieurs workflows · décision humaine</text>
+
+  <g data-node="repository-events">
+    <rect x="96" y="160" width="768" height="340" rx="24" class="accent"/>
+    <text x="480" y="260" text-anchor="middle" class="heading">Dépôt Design System</text>
+    <text x="480" y="320" text-anchor="middle" class="body muted">PR · push · planning</text>
+    <text x="480" y="380" text-anchor="middle" class="body muted">chaque événement cible</text>
+    <text x="480" y="440" text-anchor="middle" class="body muted">les contrôles utiles</text>
+  </g>
+
+  <path d="M96 330 H40 V1840" class="flow"/>
+  <path d="M40 790 H96" class="arrow"/>
+  <path d="M40 1270 H96" class="arrow"/>
+  <path d="M40 1760 H96" class="arrow"/>
+
+  <g data-node="deterministic-ci">
+    <rect x="96" y="595" width="768" height="365" rx="24" class="node"/>
+    <text x="480" y="700" text-anchor="middle" class="heading">CI déterministe</text>
+    <text x="480" y="780" text-anchor="middle" class="body muted">PR / push · builds</text>
+    <text x="480" y="840" text-anchor="middle" class="body muted">tests · contrôles qualité</text>
+    <text x="480" y="900" text-anchor="middle" class="body muted">résultat vérifiable</text>
+  </g>
+  <g data-node="cross-reviews">
+    <rect x="96" y="1055" width="768" height="415" rx="24" class="node"/>
+    <text x="480" y="1160" text-anchor="middle" class="heading">Cross-reviews</text>
+    <text x="480" y="1240" text-anchor="middle" class="body muted">PR · revue ciblée</text>
+    <text x="480" y="1300" text-anchor="middle" class="body muted">sécurité · architecture</text>
+    <text x="480" y="1360" text-anchor="middle" class="body muted">UI · accessibilité</text>
+    <text x="480" y="1420" text-anchor="middle" class="body muted">documentation</text>
+  </g>
+  <g data-node="scheduled-maintenance">
+    <rect x="96" y="1545" width="768" height="405" rx="24" class="node"/>
+    <text x="480" y="1650" text-anchor="middle" class="heading">Maintenance ciblée</text>
+    <text x="480" y="1730" text-anchor="middle" class="body muted">planning · packages</text>
+    <text x="480" y="1790" text-anchor="middle" class="body muted">rapports · backlog</text>
+    <text x="480" y="1850" text-anchor="middle" class="body muted">sécurité · documentation</text>
+  </g>
+
+  <path d="M864 790 H920 V2350 H864" class="arrow"/>
+  <path d="M864 1270 H920" class="flow"/>
+  <path d="M864 1760 H920" class="flow"/>
+  <g data-node="maintainer-decision">
+    <rect x="96" y="2155" width="768" height="425" rx="24" class="accent"/>
+    <text x="480" y="2260" text-anchor="middle" class="heading">Décision humaine</text>
+    <text x="480" y="2340" text-anchor="middle" class="body muted">prioriser · ajuster</text>
+    <text x="480" y="2400" text-anchor="middle" class="body muted">demander correction</text>
+    <text x="480" y="2460" text-anchor="middle" class="body muted">valider ou bloquer</text>
+    <text x="480" y="2520" text-anchor="middle" class="body muted">selon le risque</text>
+  </g>
+  <path d="M480 2580 V2625" class="arrow"/>
+  <g data-node="controlled-outcomes">
+    <rect x="96" y="2625" width="768" height="455" rx="24" class="node"/>
+    <text x="480" y="2730" text-anchor="middle" class="heading">Sorties contrôlées</text>
+    <text x="480" y="2810" text-anchor="middle" class="body muted">retours · propositions</text>
+    <text x="480" y="2870" text-anchor="middle" class="body muted">rapports · suivi</text>
+    <text x="480" y="2930" text-anchor="middle" class="body muted">release après CI verte</text>
+    <text x="480" y="2990" text-anchor="middle" class="body muted">et validation humaine</text>
+  </g>
+</svg>
